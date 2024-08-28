@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class r_jurusan extends Model
 {
     use HasFactory;
-    protected $table = 'r_jurusans';
+    protected $table = 'r_jurusan';
     protected $primaryKey = 'id_jur';
     public $incrementing = false; // karena primary key bukan auto-increment
     protected $keyType = 'string'; // primary key bertipe char
