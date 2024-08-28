@@ -20,6 +20,5 @@ class t_all_prodi extends Model
         'status',
         'id_jenjang_pendidikan',
     ];
-    public $timestamps = true;
     
 }
