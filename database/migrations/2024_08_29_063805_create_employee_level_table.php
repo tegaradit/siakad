@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('employee_level', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 10);
-            $table->string('name', 100);
-            $table->tinyInteger('floor_position')->unsigned(); // tinyint(4)
-            $table->bigInteger('building_id')->unsigned()->change();
-            $table->smallInteger('capacity')->unsigned(); // smallint
+            $table->string('name', 200);
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('employee_level');
     }
 };

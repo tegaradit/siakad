@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('r_jenjang_pendidikan', function (Blueprint $table) {
+        Schema::create('education_level', function (Blueprint $table) {
             $table->tinyInteger('id_jenj_didik')->primary();
             $table->string('nm_jenj_didik', 50)->nullable();
             $table->tinyInteger('u_jenj_lemb')->nullable();
             $table->tinyInteger('u_jenj_org')->nullable();
             $table->tinyInteger('a_aktif')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('r_jenjang_pendidikan');
+        Schema::dropIfExists('education_level');
     }
+
 };
