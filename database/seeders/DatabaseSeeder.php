@@ -13,5 +13,11 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             PeriodPmbSeeder::class
         ]);
+
+        $this->call([
+            ActiveStatusSeeder::class,
+            CourseTypeSeeder::class,
+            CourseGroupSeeder::class,
+        ]);
     }
 }
