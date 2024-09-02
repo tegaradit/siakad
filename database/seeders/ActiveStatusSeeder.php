@@ -13,12 +13,12 @@ class ActiveStatusSeeder extends Seeder
     public function run(): void
     {
         DB::table('active_status')->insert([
-            ['id' => '1', 'name' => 'Aktif'],
-            ['id' => '2', 'name' => 'Tidak Aktif'],
-            ['id' => '20', 'name' => 'Cuti'],
-            ['id' => '24', 'name' => 'Ijin Belajar'],
-            ['id' => '25', 'name' => 'Tugas di Instansi Lain'],
-            ['id' => '27', 'name' => 'Tugas Belajar'],
+            ['id' => '1', 'name' => 'Aktif', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => '2', 'name' => 'Tidak Aktif', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => '20', 'name' => 'Cuti', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => '24', 'name' => 'Ijin Belajar', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => '25', 'name' => 'Tugas di Instansi Lain', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => '27', 'name' => 'Tugas Belajar', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            ActiveStatusSeeder::class
+            ActiveStatusSeeder::class,
+            CourseTypeSeeder::class,
+            CourseGroupSeeder::class,
         ]);
     }
 }
