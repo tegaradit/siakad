@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
 
             //FK
-            $table->foreign('semester_id')->references('semester_id')->on('semesters')->onDelete('cascade');
+            $table->foreign('semester_id')->references('semester_id')->on('semester')->onDelete('cascade');
             $table->foreign('calendar_type_id')->references('id')->on('calendar_types')->onDelete('cascade');
         });
     }

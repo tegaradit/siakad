@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('lecture_settings', function (Blueprint $table) {
             $table->id();
             $table->uuid('prodi_id');
-            $table->int('max_number_of_meets');
-            $table->int('min_number_of_presence');
+            $table->integer('max_number_of_meets');
+            $table->integer('min_number_of_presence');
             $table->boolean('kehadiranis_prodi');
             $table->timestamps();
 
