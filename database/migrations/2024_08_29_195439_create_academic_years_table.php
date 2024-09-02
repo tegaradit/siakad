@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('academic_years', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->char('id', 4)->primary();  // Mendefinisikan kolom id dengan tipe CHAR dan panjang 4
+            $table->string('name', 10);        // Menggunakan metode string untuk VARCHAR
+            $table->date('start_date');        // Menambahkan kolom tanggal untuk start_date
+            $table->date('end_date');          // Menambahkan kolom tanggal untuk end_date
+            $table->timestamps();              // Menambahkan kolom created_at dan updated_at
         });
     }
 
