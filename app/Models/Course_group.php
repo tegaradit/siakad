@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ActiveStatus extends Model
+class Course_group extends Model
 {
     use HasFactory;
     protected $table = 'active_status';
     protected $primaryKey = 'id';
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
         'name'
