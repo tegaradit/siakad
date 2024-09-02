@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('period_pbm', function (Blueprint $table) {
+        Schema::create('period_pmb', function (Blueprint $table) {
             $table->char('semester_id', 6)->primary();
             $table->tinyInteger('period_number');
             $table->date('start_date');
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('periode_pmbs');
+        Schema::dropIfExists('periode_pmb');
     }
 };

@@ -17,10 +17,10 @@ return new class extends Migration
             $table->uuid('course_id');  // Menggunakan UUID karena mengacu pada primary key UUID di tabel courses
 
             // Tambahkan foreign key yang mengacu pada kolom 'id' dari tabel dengan UUID
-            $table->foreign('curriculum_id')->references('id')->on('curriculums')->onDelete('cascade');
+            $table->foreign('curriculum_id')->references('curriculum_id')->on('curriculum')->onDelete('cascade');
 
             // Tambahkan foreign key yang mengacu pada kolom 'id' dari tabel courses yang juga menggunakan UUID
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('course')->onDelete('cascade');
 
             $table->integer('smt');
             $table->integer('sks_mk');

@@ -15,15 +15,15 @@ return new class extends Migration
             $table->uuid('id')->primary(); // UUID as primary key
             $table->string('code', 6); // varchar(6)
             $table->string('name', 255); // varchar(255)
-            $table->unsignedBigInteger('department_id'); // Foreign key to r_jurusan
-            $table->unsignedBigInteger('education_level_id'); // Foreign key to id_jenj_didik
+            $table->char('department_id'); // Foreign key to r_jurusan
+            $table->tinyInteger('education_level_id'); // Foreign key to id_jenj_didik
             $table->integer('credit_passed'); // integer
             $table->enum('status', ['A', 'H', 'B', 'N', 'K']); // enum
             $table->timestamps(); // created_at, updated_at
 
             // Foreign key constraints
-            $table->foreign('department_id')->references('id')->on('r_jurusan')->onDelete('cascade');
-            $table->foreign('education_level_id')->references('id')->on('id_jenj_didik')->onDelete('cascade');
+            $table->foreign('department_id')->references('id_jur')->on('r_jurusan')->onDelete('cascade');
+            $table->foreign('education_level_id')->references('id_jenj_didik')->on('education_level')->onDelete('cascade');
         });
     }
 

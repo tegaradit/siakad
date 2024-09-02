@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('course', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('prodi_id');
-            $table->tinyInteger('education_level_id')->unsigned();
+            $table->tinyInteger('education_level_id');
             $table->string('code', 10);
             $table->string('name', 200);
             $table->unsignedBigInteger('group_id');
