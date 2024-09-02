@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kode_pt', 10);
             $table->string('nama_pt', 100);
             $table->string('nama_singkat', 100)->charset('utf8mb4')->nullable();
+            $table->timestamps();
         });
     }
 

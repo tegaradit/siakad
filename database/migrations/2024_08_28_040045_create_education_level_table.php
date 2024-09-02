@@ -17,6 +17,7 @@ return new class extends Migration
             $table->tinyInteger('u_jenj_lemb')->nullable();
             $table->tinyInteger('u_jenj_org')->nullable();
             $table->tinyInteger('a_aktif')->nullable();
+            $table->timestamps();
         });
     }
 
