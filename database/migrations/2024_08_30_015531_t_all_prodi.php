@@ -14,6 +14,7 @@ return new class extends Migration
         schema::create('t_all_prodi', function(Blueprint $table){
             $table->string('id_prodi', 40)->primary();
             $table->string('id_pt', 40); //fk
+            $table->foreign('id_pt')->references('id_pt')->on('t_pt')->onDelete('cascade');
             $table->string('kode_prodi', 6);
             $table->string('nama_prodi', 50);
             $table->char('status', 2);
