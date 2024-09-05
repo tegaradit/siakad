@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        schema::create('t_all_prodi', function(Blueprint $table){
+        schema::create('all_prodi', function(Blueprint $table){
             $table->string('id_prodi', 40)->primary();
             $table->string('id_pt', 40); //fk
             $table->string('kode_prodi', 6);
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
 
             //foreign key
-            $table->foreign('id_pt')->references('id_pt')->on('t_pt')->onDelete('cascade');
+            $table->foreign('id_pt')->references('id_university')->on('university')->onDelete('cascade');
            
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('t_all_prodi');
+        Schema::dropIfExists('all_prodi');
     }
 };

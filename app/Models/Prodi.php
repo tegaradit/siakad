@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class t_prodi extends Model
+class Prodi extends Model
 {
     
-    protected $table = 't_prodi';
+    protected $table = 'prodi';
     
     // Use UUID instead of auto-incrementing ID
     public $incrementing = false;
@@ -26,11 +26,11 @@ class t_prodi extends Model
     // Define relationships
     public function department()
     {
-        return $this->belongsTo(r_jurusan::class, 'department_id');
+        return $this->belongsTo(Ruangan_jurusan::class, 'department_id');
     }
 
     public function educationLevel()
     {
-        return $this->belongsTo(education_level::class, 'education_level_id');
+        return $this->belongsTo(Education_level::class, 'education_level_id');
     }
 }
