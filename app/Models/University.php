@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class t_pt extends Model
+class University extends Model
 {
     use HasFactory;
-    protected $table = 't_pt';
-    protected $primaryKey = 'id_pt';
+    protected $table = 'university';
+    protected $primaryKey = 'id_university';
     public $incrementing = false; // karena primary key bukan auto-increment
     protected $keyType = 'string'; // primary key bertipe string
 
@@ -19,6 +19,4 @@ class t_pt extends Model
         'nama_singkat',
     ];
 
-    // Jika Anda tidak ingin menggunakan timestamps (created_at dan updated_at)
-    // public $timestamps = false;
 }

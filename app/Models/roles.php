@@ -1,15 +1,12 @@
-<?php
-
+<?php 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Calendar_type extends Model
+class Role extends Model
 {
     use HasFactory;
-    protected $table = 'calendar_type';
-    protected $fillable = [
-        'name',
-    ];
+
+    protected $fillable = ['name']; // Kolom 'name' adalah nama role, seperti 'admin', 'user', dll.
 }

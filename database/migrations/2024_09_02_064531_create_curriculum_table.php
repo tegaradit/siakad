@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
             
             // Foreign keys
-            $table->foreign('prodi_id')->references('id')->on('t_prodi');
+            $table->foreign('prodi_id')->references('id')->on('prodi');
             $table->foreign('education_level_id')->references('id_jenj_didik')->on('education_level');
             $table->foreign('semester_id')->references('semester_id')->on('semester');
         });

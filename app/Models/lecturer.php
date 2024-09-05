@@ -48,18 +48,18 @@ class Lecturer extends Model
     // Relasi ke tabel active_status
     public function ActiveStatus(): BelongsTo
     {
-        return $this->belongsTo(ActiveStatus::class, 'active_status_id', 'id');
+        return $this->belongsTo(Active_status::class, 'active_status_id', 'id');
     }
 
     // Relasi ke tabel employee_level
     public function employee_level(): BelongsTo
     {
-        return $this->belongsTo(employee_level::class, 'employee_level_id', 'id');
+        return $this->belongsTo(Employee_level::class, 'employee_level_id', 'id');
     }
 
     // Relasi ke tabel t_prodi
     public function t_prodi(): BelongsTo
     {
-        return $this->belongsTo(t_prodi::class, 'prodi_id', 'id');
+        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
     }
 }

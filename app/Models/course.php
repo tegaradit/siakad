@@ -6,24 +6,26 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class course extends Model
+class Course extends Model
 {
     use HasFactory;
     use HasUuids;
 
+    protected $table = 'course';
+
     public function t_prodi()
     {
-        return $this->belongsTo(t_prodi::class,'prodi_id');
+        return $this->belongsTo(Prodi::class,'prodi_id');
     }
 
     public function education_level()
     {
-        return $this->hasMany(education_level::class,'education_level_id');
+        return $this->hasMany(Education_level::class,'education_level_id');
     }
 
     public function course_group()
     {
-        return $this->hasOne(course_group::class,'group_id');
+        return $this->hasOne(Course_group::class,'group_id');
     }
 
     public function course_type()

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-          schema::create('t_satuan_pendidikan', function(Blueprint $table){
+        schema::create('satuan_pendidikan', function(Blueprint $table){
             $table->string('id_sp', 40)->primary();
             $table->string('nm_lemb', 100)->nullable();
             $table->char('nss', 12)->nullable();
@@ -62,6 +62,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema ::dropIfExists('t_satuan_pendidikan');
+        Schema ::dropIfExists('satuan_pendidikan');
     }
 };
