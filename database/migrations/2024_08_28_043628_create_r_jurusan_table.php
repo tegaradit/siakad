@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('id_induk_jurusan', 10)->nullable();
             $table->string('id_kel_bidang', 20)->nullable();
             $table->integer('a_aktif')->notNullable();
+            $table->timestamps();
         });
     }
 

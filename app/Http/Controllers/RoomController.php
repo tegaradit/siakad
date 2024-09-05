@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\room;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -10,8 +11,9 @@ class RoomController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
+
+    {   
+           
     }
 
     /**

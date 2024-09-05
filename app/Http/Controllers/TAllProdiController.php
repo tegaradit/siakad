@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\t_all_prodi;
 use Illuminate\Http\Request;
 
 class TAllProdiController extends Controller
