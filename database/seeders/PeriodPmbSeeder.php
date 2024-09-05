@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Periode_pmb;
+use App\Models\PeriodePmb;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

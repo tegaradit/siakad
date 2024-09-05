@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('code', 10);
             $table->string('name', 100);
             $table->tinyInteger('floor_position')->unsigned(); // tinyint(4)
-            $table->bigInteger('building_id')->unsigned()->change();
             $table->smallInteger('capacity')->unsigned(); // smallint
             $table->timestamps();
             $table->unsignedBigInteger('building_id');
