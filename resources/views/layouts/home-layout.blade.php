@@ -20,7 +20,7 @@
    <!-- END layout-wrapper -->
 
    <!-- Right Sidebar -->
-   @include('components.sidebar.home-right.sidebar')
+   @include('components.sidebar.home-right-sidebar')
    <!-- /Right-bar -->
 
    <!-- Right bar overlay-->
