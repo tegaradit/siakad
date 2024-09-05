@@ -1,0 +1,154 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+    <title>     Login | Satria Piranti Perkasa - Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="c6siOqEb1FdrkOodtJ70vywQitIqcGMgHgSx0FRf">
+    <meta content="Satria Piranti Perkasa" name="description" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="build/images/favicon.ico">
+
+    <!-- Bootstrap Css -->
+ <link href="build/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+ <!-- Icons Css -->
+ <link href="build/css/icons.min.css" rel="stylesheet" type="text/css" />
+ <!-- App Css-->
+ <link href="build/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+ <style>
+     th {
+         text-align: center;
+     }
+ </style>
+</head>
+
+
+    <body>
+    
+        <div class="auth-page">
+            <div class="container-fluid p-0">
+                <div class="row g-0">
+                    <div class="col-xxl-3 col-lg-4 col-md-5">
+                        <div class="auth-full-page-content d-flex p-sm-5 p-4">
+                            <div class="w-100">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="mb-4 mb-md-5 text-center">
+                                        <a href="login" class="d-block auth-logo">
+                                            <img src="build/images/logo_login.png" alt="" height="200">
+                                        </a>
+                                    </div>
+                                    <div class="auth-content my-auto">
+                                        <div class="text-center">
+                                            <h5 class="mb-0">Welcome Back !</h5>
+                                            <p class="text-muted mt-2">Sign in to continue to Trucking</p>
+                                        </div>
+                                        <form method="POST" action="login" class="custom-form mt-4 pt-2">
+                                            <input type="hidden" name="_token" value="c6siOqEb1FdrkOodtJ70vywQitIqcGMgHgSx0FRf">                                            <div class="mb-3">
+                                                <label class="form-label">Username</label>
+                                                <input id="email" type="email"
+                                                    class="form-control " name="email"
+                                                    placeholder="Enter Username" value="" required
+                                                    autocomplete="email" autofocus>
+
+                                                                                            </div>
+                                            <div class="mb-3">
+                                                <div class="d-flex align-items-start">
+                                                    <div class="flex-grow-1">
+                                                        <label class="form-label">Password</label>
+                                                    </div>
+                                                    <div class="flex-shrink-0">
+                                                        <div class="">
+                                                            <a href=" password/reset "
+                                                                class="text-muted">Forgot
+                                                                password?</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="input-group auth-pass-inputgroup">
+                                                    <input id="password" type="password" placeholder="Enter Password"
+                                                        class="form-control "
+                                                        name="password" value="" required
+                                                        autocomplete="current-password">
+
+                                                                                                        <button class="btn btn-light ms-0" type="button" id="password-addon"><i
+                                                            class="mdi mdi-eye-outline"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-4">
+                                                <div class="col">
+                                                    <div class="form-check">
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="mb-3">
+                                                <button class="btn btn-primary w-100 waves-effect waves-light"
+                                                    type="submit">Log In</button>
+                                            </div>
+                                        </form>
+
+
+
+
+                                    </div>
+                                    <div class="mt-4 mt-md-5 text-center">
+                                        <script>
+                                            document.write(new Date().getFullYear())
+                                        </script> © Satria Piranti Perkasa </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end auth full page content -->
+                    </div>
+                    <!-- end col -->
+                    <div class="col-xxl-9 col-lg-8 col-md-7">
+                        <div class="auth-bg pt-md-5 p-4 d-flex">
+                            <div class="bg-overlay bg-light"></div>
+                            <ul class="bg-bubbles">
+                                <li>Wingbox</li>
+                                <li>Tronton</li>
+                                <li>BM</li>
+                                <li>Fuso</li>
+                                <li>FSE</li>
+                                <li>BM48</li>
+                                <li>BM52</li>
+                                <li>CDD</li>
+                                <li>DDM</li>
+                                <li></li>
+                            </ul>
+                            <div >
+                                <img src="build/images/login.svg" alt="" class="img-fluid mx-auto d-block">
+                            </div>
+                            <!-- end bubble effect -->
+
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container fluid -->
+        </div>
+    
+<!-- JAVASCRIPT -->
+
+<script src="build/libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="build/libs/metismenu/metisMenu.min.js"></script>
+<script src="build/libs/simplebar/simplebar.min.js"></script>
+<script src="build/libs/node-waves/waves.min.js"></script>
+<script src="build/libs/feather-icons/feather.min.js"></script>
+<!-- pace js -->
+<script src="build/libs/pace-js/pace.min.js"></script>
+        <!-- password addon init -->
+        <script src="build/js/pages/pass-addon.init.js"></script>
+    </body>
+
+</html>
