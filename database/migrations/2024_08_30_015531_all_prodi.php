@@ -22,12 +22,8 @@ return new class extends Migration
             $table->timestamps();
 
             //foreign key
-<<<<<<< HEAD:database/migrations/2024_08_30_015531_t_all_prodi.php
-            $table->foreign('id_pt')->references('id_pt')->on('t_pt')->onDelete('cascade');
             $table->foreign('id_jenjang_pendidikan')->references('id_jenj_didik')->on('education_level')->onDelete('cascade');
-=======
             $table->foreign('id_pt')->references('id_university')->on('university')->onDelete('cascade');
->>>>>>> 94aa9a1dc6a7c0c20db96c2586ed287f19b6ac28:database/migrations/2024_08_30_015531_all_prodi.php
            
         });
     }
