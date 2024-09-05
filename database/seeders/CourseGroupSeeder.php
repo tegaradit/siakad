@@ -13,7 +13,7 @@ class CourseGroupSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('active_status')->insert([
+        DB::table('course_group')->insert([
             ['name' => 'MPK', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'MKK', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'MKB', 'created_at' => now(), 'updated_at' => now()],
