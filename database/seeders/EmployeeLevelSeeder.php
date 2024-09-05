@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
-class EmployeeLevel extends Seeder
+class EmployeeLevelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
