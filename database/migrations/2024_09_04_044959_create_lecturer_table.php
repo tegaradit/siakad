@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('birth_place', 100);
             $table->string('mothers_name', 200);
             $table->enum('mariage_status', ['belum kawin', 'kawin', 'cerai hidup', 'cerai mati']);
-            $table->unsignedBigInteger('employee_level_id');
+            $table->char('employee_level_id', 1);
             $table->enum('level_education', ['S1', 'S2', 'S3']);
             $table->string('phone_number', 13)->nullable();
             $table->string('email', 255)->nullable();

@@ -9,6 +9,9 @@ class Employee_level extends Model
 {
     use HasFactory;
     protected $table = 'employee_status';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    
     protected $fillable = [
         'name'
     ];

@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             ActiveStatusSeeder::class,
             CourseTypeSeeder::class,
             CourseGroupSeeder::class,
+            CourseGroupSeeder::class,
+            EmployeeLevelSeeder::class
         ]);
     }
 }
