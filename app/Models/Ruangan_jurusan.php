@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class r_jurusan extends Model
+class Ruangan_jurusan extends Model
 {
     use HasFactory;
-    protected $table = 'r_jurusan';
+    protected $table = 'ruangan_jurusan';
     protected $primaryKey = 'id_jur';
     public $incrementing = false; // karena primary key bukan auto-increment
     protected $keyType = 'string'; // primary key bertipe char

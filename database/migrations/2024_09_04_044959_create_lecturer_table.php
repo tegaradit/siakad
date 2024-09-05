@@ -36,7 +36,7 @@ return new class extends Migration
             // Foreign keys
             $table->foreign('active_status_id')->references('id')->on('active_status');
             $table->foreign('employee_level_id')->references('id')->on('employee_level');
-            $table->foreign('prodi_id')->references('id')->on('t_prodi');
+            $table->foreign('prodi_id')->references('id')->on('prodi');
         });
     }
 

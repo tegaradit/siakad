@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('r_jurusan', function (Blueprint $table) {
+        Schema::create('ruangan_jurusan', function (Blueprint $table) {
             $table->char('id_jur', 10)->primary();
             $table->string('nm_jur', 60)->nullable();
             $table->string('nm_intl_jur', 60)->nullable();

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class curriculum extends Model
+class Curriculum extends Model
 {
     use HasFactory;
     // Menentukan tabel yang digunakan oleh model
@@ -37,13 +37,13 @@ class curriculum extends Model
     // Relasi ke tabel t_prodi
     public function prodi(): BelongsTo
     {
-        return $this->belongsTo(t_prodi::class, 'prodi_id', 'id');
+        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
     }
 
     // Relasi ke tabel education_level
     public function education_level(): BelongsTo
     {
-        return $this->belongsTo(education_level::class, 'education_level_id', 'id_jenj_didik');
+        return $this->belongsTo(Education_level::class, 'education_level_id', 'id_jenj_didik');
     }
 
     // Relasi ke tabel semester

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('t_prodi', function (Blueprint $table) {
+        Schema::create('prodi', function (Blueprint $table) {
             $table->uuid('id')->primary(); // UUID as primary key
             $table->string('code', 6); // varchar(6)
             $table->string('name', 255); // varchar(255)
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps(); // created_at, updated_at
 
             // Foreign key constraints
-            $table->foreign('department_id')->references('id_jur')->on('r_jurusan')->onDelete('cascade');
+            $table->foreign('department_id')->references('id_jur')->on('ruangan_jurusan')->onDelete('cascade');
             $table->foreign('education_level_id')->references('id_jenj_didik')->on('education_level')->onDelete('cascade');
         });
     }
