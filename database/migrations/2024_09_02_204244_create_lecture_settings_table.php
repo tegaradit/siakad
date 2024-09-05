@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('kehadiranis_prodi');
             $table->timestamps();
 
-            //FK
+            //Foreign
             $table->foreign('prodi_id')->references('id')->on('t_prodi')->onDelete('cascade');
         });
     }
