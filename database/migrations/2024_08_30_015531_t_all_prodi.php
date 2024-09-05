@@ -23,6 +23,7 @@ return new class extends Migration
 
             //foreign key
             $table->foreign('id_pt')->references('id_pt')->on('t_pt')->onDelete('cascade');
+            $table->foreign('id_jenjang_pendidikan')->references('id_jenj_didik')->on('education_level')->onDelete('cascade');
            
         });
     }
