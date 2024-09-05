@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamps();
 
             //foreign key
+            $table->foreign('id_jenjang_pendidikan')->references('id_jenj_didik')->on('education_level')->onDelete('cascade');
             $table->foreign('id_pt')->references('id_university')->on('university')->onDelete('cascade');
            
         });
