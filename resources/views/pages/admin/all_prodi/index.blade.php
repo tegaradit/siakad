@@ -49,7 +49,7 @@
             $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('all_prodi.data') }}", // Mengambil data dari route prodi.data
+                ajax: "{{ route('all_prodi.data') }}",
                 columns: [{
                         data: 'id_prodi',
                         name: 'id_prodi'
@@ -69,12 +69,13 @@
                     {
                         data: 'status',
                         name: 'status'
-                    }
+                    },
                     {
                         data: 'id_jenjang_pendidikan',
                         name: 'id_jenjang_pendidikan'
                     }
                 ]
+                
             });
         });
     </script>

@@ -20,5 +20,10 @@ class All_prodi extends Model
         'status',
         'id_jenjang_pendidikan',
     ];
+
+     public function department()
+    {
+        return $this->belongsTo(Education_level::class, 'id_jenjang_pendidikan');
+    }
     
 }
