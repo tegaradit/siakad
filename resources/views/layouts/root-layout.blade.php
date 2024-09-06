@@ -9,7 +9,7 @@
    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
    <meta content="Themesbrand" name="author" />
    <!-- App favicon -->
-   <link rel="shortcut icon" href="assets/images/favicon.ico" />
+   <link rel="shortcut icon" href="minia/assets/images/favicon.ico" />
 
    <!-- choices css -->
    <link href="minia/assets/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css" />
@@ -61,6 +61,13 @@
 
    <!-- init js -->
    <script src="minia/assets/js/pages/form-advanced.init.js"></script>
+
+   <script src="minia/assets/js/app.js"></script>
+
+   <!-- Table Editable plugin -->
+   <script src="minia/assets/libs/table-edits/build/table-edits.min.js"></script>
+
+   <script src="minia/assets/js/pages/table-editable.int.js"></script>
 
    <script src="minia/assets/js/app.js"></script>
 </body>
