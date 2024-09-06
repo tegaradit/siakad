@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class BuildingsController extends Controller
 {
     public function index(){
-        $user = Auth::user();
+        // $user = Auth::user();
         return view('pages.admin.buildings.index');
     }
 }
