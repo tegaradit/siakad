@@ -16,3 +16,6 @@ Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin')
 
 //dosen 
 Route::get('/dosen',[DosenController::class, 'index'] )->name('dahboard.dosen');
+//All Prodi
+Route::get('/admin/all_prodi', [TAllProdiController::class, 'index']);
+Route::get('/admin/all_prodi/data', [TAllProdiController::class, 'getAllProdiData'])->name('all_prodi.data');
