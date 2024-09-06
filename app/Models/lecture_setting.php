@@ -9,7 +9,7 @@ class Lecture_setting extends Model
 {
     use HasFactory;
 
-    protected $table = 'lecture_setting';
+    protected $table = 'lecture_settings';
     protected $fillable =[
         'prodi_id',
         'max_number_of_meets',
