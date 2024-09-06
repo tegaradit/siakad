@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\t_all_prodi;
+use App\Models\All_prodi;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class TAllProdiController extends Controller
 {
@@ -12,54 +13,12 @@ class TAllProdiController extends Controller
      */
     public function index()
     {
-        //
+         return view('pages.admin.all_prodi.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getAllProdiData()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $allProdi = All_prodi::select(['id_prodi', 'id_pt', 'kode_prodi', 'nama_prodi', 'status', 'id_jenjang_pendidikan']);
+        return DataTables::of($allProdi)->make(true);
     }
 }
