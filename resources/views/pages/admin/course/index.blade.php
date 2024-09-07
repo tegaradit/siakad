@@ -13,9 +13,9 @@
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                   <li class="breadcrumb-item">
-                    <a href="javascript: void(0);">Data Umum</a>
+                    <a href="javascript: void(0);">Data Perkuliahan</a>
                   </li>
-                  <li class="breadcrumb-item active">Gedung</li>
+                  <li class="breadcrumb-item active">Mata Kuliah</li>
                 </ol>
               </div>
             </div>
@@ -27,20 +27,37 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Table Gedung</h4>
+                <h4 class="card-title">Table Mata Kuliah</h4>
                 <p class="card-title-desc">
-                  Table ini berisi code dan nama gedung perguruan tinggi.
+                  Table ini berisi mata kuliah yang ada.
                 </p>
               </div>
               <div class="card-body">
-                <a href="{{ route('buildings.create') }}" class="btn btn-primary">Tambah Gedung</a>
+                {{-- <a href="{{ route('course.create') }}" class="btn btn-primary">Tambah Mata Kuliah</a> --}}
                 <div class="table-responsive">
-                  <table class="table table-nowrap align-middle table-bordered" id="datatable">
+                  <table class="table table-nowrap align-middle table-edits table-bordered nowrap">
                     <thead>
                       <tr>
                         <th>No</th>
+                        <th>Course_id</th>
+                        <th>Prodi_id</th>
+                        <th>Education_level_id</th>
                         <th>Code</th>
                         <th>Name</th>
+                        <th>Group_id</th>
+                        <th>Type_id</th>
+                        <th>sks_mk</th>
+                        <th>sks_tm</th>
+                        <th>sks_pr</th>
+                        <th>sks_pl</th>
+                        <th>sks_sim</th>
+                        <th>status</th>
+                        <th>is_sap</th>
+                        <th>is_silabus</th>
+                        <th>is_teaching_material</th>
+                        <th>is_praktikum</th>
+                        <th>effective_starts_date</th>
+                        <th>effective_end_date</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -48,21 +65,15 @@
                       @forelse ($datas as $index => $data)
                         <tr data-id="1">
                           <td data-field="id" style="width: 40px">{{ $index+1 }}</td>
-                          <td data-field="name">{{ $data->code }}</td>
-                          <td data-field="age">{{ $data->name }}</td>
+                          <td data-field="name">{{ $data->course_id }}</td>
+                          <td data-field="age">{{ $data->prodi_id }}</td>
                           <td style="width: 80px">
-                            <a href="{{ route('buildings.edit', $data->id) }}" class="btn btn-warning">Edit</a>
-                            <!-- Delete form -->
-                            <form action="{{ route('buildings.destroy', $data->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form> 
+                              hapus edit
                           </td>
                         </tr>
                       @empty
                         <tr>
-                          <td colspan="4" class="text-center alert alert-danger">Data Gedung Kosong</td>
+                          <td colspan="21" class="text-center alert alert-danger">Data Mata Kuliah Kosong</td>
                         </tr>
                       @endforelse
                     </tbody>
@@ -98,5 +109,4 @@
       </div>
     </footer>
 </div>
-
 @endsection

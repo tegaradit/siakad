@@ -42,7 +42,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('buildings.index') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Gedung</span>
                     </a>
@@ -187,7 +187,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('course.index') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Mata Kuliah</span>
                     </a>

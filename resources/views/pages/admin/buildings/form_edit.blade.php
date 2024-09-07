@@ -7,7 +7,7 @@
             {{-- start page title --}}
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-itmes-center justify-content-between">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18"></h4>
 
                         <div class="page-title-right">
@@ -15,7 +15,7 @@
                                 <li class="breadcrumb-item">
                                     <a href="{{ route('buildings.index') }}">Gedung</a>
                                 </li>
-                                <li class="breadcrumb-item active">Tambah</li>
+                                <li class="breadcrumb-item active">Edit</li>
                             </ol>
                         </div>
                     </div>
@@ -23,24 +23,25 @@
             </div>
             {{-- end page title --}}
 
-            <!-- Form to create a new building -->
+            <!-- Form to edit an existing building -->
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Tambah Gedung</h4>
+                            <h4 class="card-title">Edit Gedung</h4>
                             <p class="card-title-desc">
-                              Isilah form untuk menambah data gedung.
+                              Isilah form untuk mengedit data gedung.
                             </p>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('buildings.store') }}" method="POST">
+                            <form action="{{ route('buildings.update', $building->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
 
                                 <!-- Code field -->
                                 <div class="form-group">
                                     <label for="code">Code</label>
-                                    <input type="text" name="code" class="form-control" value="{{ old('code') }}" required>
+                                    <input type="text" name="code" class="form-control" value="{{ old('code', $building->code) }}" required>
                                     @error('code')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -49,13 +50,13 @@
                                 <!-- Name field -->
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+                                    <input type="text" name="name" class="form-control" value="{{ old('name', $building->name) }}" required>
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                <button type="submit" class="btn btn-primary mt-3">Update</button>
                             </form>
                         </div>
                     </div>
