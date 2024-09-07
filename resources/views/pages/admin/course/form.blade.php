@@ -13,7 +13,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
-                                    <a href="{{ route('buildings.index') }}">Gedung</a>
+                                    <a href="javascript: void(0)">Mata Kuliah</a>
                                 </li>
                                 <li class="breadcrumb-item active">Tambah</li>
                             </ol>
@@ -28,13 +28,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Tambah Gedung</h4>
+                            <h4 class="card-title">Tambah Mata Kuliah</h4>
                             <p class="card-title-desc">
-                              Isilah form untuk menambah data gedung.
+                              Isilah form untuk menambah data mata kuliah.
                             </p>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('buildings.store') }}" method="POST">
+                            {{-- <form action="{{ route('buildings.store') }}" method="POST"> --}}
                                 @csrf
 
                                 <!-- Code field -->

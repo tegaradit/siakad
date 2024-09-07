@@ -1,6 +1,6 @@
 @extends('layouts.home-layout')
 
-@section('home-content')
+$@section('home-content')
 <div class="main-content">
     <div class="page-content">
       <div class="container-fluid">
@@ -13,9 +13,9 @@
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                   <li class="breadcrumb-item">
-                    <a href="javascript: void(0);">Data Umum</a>
+                    <a href="javascript: void(0);">Data Perkuliahan</a>
                   </li>
-                  <li class="breadcrumb-item active">Gedung</li>
+                  <li class="breadcrumb-item active">Kurikulum</li>
                 </ol>
               </div>
             </div>
@@ -27,20 +27,27 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Table Gedung</h4>
+                <h4 class="card-title">Table Kurikulum</h4>
                 <p class="card-title-desc">
-                  Table ini berisi code dan nama gedung perguruan tinggi.
+                  Table ini berisi data kurikulum yang ada.
                 </p>
               </div>
               <div class="card-body">
-                <a href="{{ route('buildings.create') }}" class="btn btn-primary">Tambah Gedung</a>
+                {{-- <a href="{{ route('course.create') }}" class="btn btn-primary">Tambah Mata Kuliah</a> --}}
                 <div class="table-responsive">
-                  <table class="table table-nowrap align-middle table-bordered" id="datatable">
+                  <table class="table table-nowrap align-middle table-edits table-bordered">
                     <thead>
                       <tr>
                         <th>No</th>
-                        <th>Code</th>
+                        <th>curriculum_id</th>
+                        <th>Prodi_id</th>
+                        <th>Education_level_id</th>
+                        <th>Semester_id</th>
                         <th>Name</th>
+                        <th>Normal_semester_number</th>
+                        <th>Pass_credit_number</th>
+                        <th>Mandatory_credit_number</th>
+                        <th>Choice_credit_number</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -51,18 +58,14 @@
                           <td data-field="name">{{ $data->code }}</td>
                           <td data-field="age">{{ $data->name }}</td>
                           <td style="width: 80px">
-                            <a href="{{ route('buildings.edit', $data->id) }}" class="btn btn-warning">Edit</a>
-                            <!-- Delete form -->
-                            <form action="{{ route('buildings.destroy', $data->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form> 
+                              <a class="btn btn-outline-secondary btn-sm edit" title="Edit">
+                                <i class="fas fa-pencil-alt"></i>
+                              </a>
                           </td>
                         </tr>
                       @empty
                         <tr>
-                          <td colspan="4" class="text-center alert alert-danger">Data Gedung Kosong</td>
+                          <td colspan="11" class="text-center alert alert-danger">Data Kurikulum Kosong</td>
                         </tr>
                       @endforelse
                     </tbody>
@@ -98,5 +101,4 @@
       </div>
     </footer>
 </div>
-
 @endsection
