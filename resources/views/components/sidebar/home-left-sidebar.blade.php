@@ -49,10 +49,10 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{route('room.index')}}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Ruangan</span>
-                    </a>
+                    </a> 
                 </li>
 
                 <li>

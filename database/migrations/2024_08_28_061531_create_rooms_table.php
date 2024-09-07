@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('code', 10);
             $table->string('name', 100);
             $table->tinyInteger('floor_position')->unsigned(); // tinyint(4)
-            $table->smallInteger('capacity')->unsigned(); // smallint
-            $table->timestamps();
             $table->unsignedBigInteger('building_id');
+            $table->smallInteger('capacity')->unsigned()->default(1); // smallint
+            $table->timestamps();
 
             //foreign key
             $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');

@@ -63,12 +63,14 @@
    <!-- datepicker js -->
    <script src={{asset("minia/assets/libs/flatpickr/flatpickr.min.js")}}></script>
 
+   <!-- DataTables JS -->
+   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
    <!-- init js -->
    <script src={{asset("minia/assets/js/pages/form-advanced.init.js")}}></script>
 
    <script src={{asset("minia/assets/js/app.js")}}></script>
 
-   <!-- DataTables JS -->
-   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+   
 </body>
 </html>

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\room;
 use Illuminate\Http\Request;
 
@@ -13,7 +12,8 @@ class RoomController extends Controller
     public function index()
 
     {   
-           
+         $rooms = Room::with('building')->get(); 
+         return view('pages.admin.room.index', compact('rooms'));  
     }
 
     /**
@@ -21,7 +21,9 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        $menu = 'data';
+        $submenu = 'room';
+        return view('pages.admin.room.form', compact('menu','submenu'));
     }
 
     /**
@@ -29,8 +31,27 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+       // Validasi input
+        $request->validate([
+            'code' => 'required|string|max:10|unique:rooms,code',
+            'name' => 'required|string|max:100',
+            'floor_position' => 'required|integer|min:1',
+            'building_id' => 'required|exists:buildings,id', // Pastikan tabel 'buildings' ada
+            'capacity' => 'required|integer|min:1',
+        ]);
+
+        // Simpan data room ke database
+        Room::create([
+            'code' => $request->input('code'),
+            'name' => $request->input('name'),
+            'floor_position' => $request->input('floor_position'),
+            'building_id' => $request->input('building_id'),
+            'capacity' => $request->input('capacity'),
+        ]);
+
+        // Redirect atau kembali ke halaman sebelumnya dengan pesan sukses
+        return redirect()->route('room.index')->with('success', 'Room has been created successfully.');
+        }
 
     /**
      * Display the specified resource.
