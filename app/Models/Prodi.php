@@ -8,8 +8,6 @@ class Prodi extends Model
 {
     
     protected $table = 'prodi';
-    
-    // Use UUID instead of auto-incrementing ID
     public $incrementing = false;
     protected $keyType = 'string';
     
@@ -23,7 +21,6 @@ class Prodi extends Model
         'status',
     ];
 
-    // Define relationships
     public function department()
     {
         return $this->belongsTo(Ruangan_jurusan::class, 'department_id');
