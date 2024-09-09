@@ -5,6 +5,7 @@ use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LectureSettingController;
+use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
@@ -50,3 +51,7 @@ Route::post('admin/room/store', [RoomController::class, 'store'])->name('room.st
 Route::get('/admin/room/{id}/edit', [RoomController::class, 'edit'])->name('room.edit');
 Route::put('/admin/room/{id}', [RoomController::class, 'update'])->name('room.update');
 Route::delete('/admin/room/{id}', [RoomController::class, 'destroy'])->name('room.destroy');
+
+// Prodi
+Route::get('/admin/prodi', [ProdiController::class, 'index'])->name('prodi');
+Route::get('/admin/prodi/data', [ProdiController::class, 'getProdiData'])->name('prodi.data');
