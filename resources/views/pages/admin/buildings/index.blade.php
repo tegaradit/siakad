@@ -51,13 +51,27 @@
                           <td data-field="name">{{ $data->code }}</td>
                           <td data-field="age">{{ $data->name }}</td>
                           <td style="width: 80px">
-                            <a href="{{ route('buildings.edit', $data->id) }}" class="btn btn-warning">Edit</a>
+                            {{-- <a href="{{ route('buildings.edit', $data->id) }}" class="btn btn-warning">Edit</a>
                             <!-- Delete form -->
                             <form action="{{ route('buildings.destroy', $data->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
-                            </form> 
+                            </form>  --}}
+                            <form id="delete-form-{{ $data->id }}"
+                              onsubmit="event.preventDefault(); confirmDelete({{ $data->id }});"
+                              action="{{ route('buildings.destroy', $data->id) }}" method="POST">
+                              <a href="{{ route('buildings.edit', $data->id) }}"
+                                  class="btn btn-outline-warning btn-sm edit"
+                                  title="Edit">
+                                  <i class="fas fa-pencil-alt"></i>
+                              </a>
+                              @csrf
+                              @method('DELETE')
+                              <button
+                                  type="submit"class="btn icon icon-left btn-outline-danger btn-sm delete"><i
+                                      class="fas fa-trash-alt"></i></button>
+                          </form>
                           </td>
                         </tr>
                       @empty
@@ -98,5 +112,27 @@
       </div>
     </footer>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      feather.replace();
+  });
+
+  function confirmDelete(id) {
+      Swal.fire({
+          title: 'Apakah Anda yakin?',
+          text: "Anda tidak akan dapat mengembalikan ini!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, hapus!',
+          cancelButtonText: 'Batal'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              document.getElementById('delete-form-' + id).submit();
+          }
+      });
+  }
+</script>
 
 @endsection
