@@ -63,8 +63,8 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $data->code }}</td>
                                         <td>{{ $data->name }}</td>
-                                        <td>{{ $data->t_prodi->name ?? 'N/A' }}</td>
-                                        <td>{{ $data->education_level->name ?? 'N/A' }}</td>
+                                        <td>{{ $data->prodi->name ?? 'N/A' }}</td>
+                                        <td>{{ $data->education_level->nm_jenj_didik ?? 'N/A' }}</td>
                                         <td>{{ $data->course_group->name ?? 'N/A' }}</td>
                                         <td>{{ $data->course_type->name ?? 'N/A' }}</td>
                                         <td>{{ $data->sks_mk }}</td>

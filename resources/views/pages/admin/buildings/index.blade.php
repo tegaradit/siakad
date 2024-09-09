@@ -33,7 +33,7 @@
                 </p>
               </div>
               <div class="card-body">
-                <a href="{{ route('buildings.create') }}" class="btn btn-primary">Tambah Gedung</a>
+                <a href="{{ route('buildings.create') }}" class="btn btn-primary mb-3">Tambah Gedung</a>
                 <div class="table-responsive">
                   <table class="table table-nowrap align-middle table-bordered" id="datatable">
                     <thead>
