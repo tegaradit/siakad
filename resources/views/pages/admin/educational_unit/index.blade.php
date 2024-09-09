@@ -45,7 +45,7 @@
                                                     <th>RT</th>
                                                     <th>RW</th>
                                                     <th>Nama Dusun</th>
-                                                    <th>Desa/Kelurahan</th>
+                                                    <th>Desa/Kelurahan</th>   
                                                     <th>Kode POS</th>
                                                     <th>Lintang</th>
                                                     <th>Bujur</th>
@@ -53,8 +53,9 @@
                                                     <th>No Fax</th>
                                                     <th>Email</th>
                                                     <th>Website</th>
-                                                    <th>Status</th>
-                                                    <th>Surat Keputusan Pendirian</th>
+                                                    <th>Status Satuan Pendidikan</th>
+                                                    <th>Surat Keputusan Pendidrian</th>
+                                                    <th>Tanggal Surat Keputusan Pendirian</th>
                                                     <th>Tanggal Berdiri</th>
                                                     <th>Surat Keputusan Izin Operasi</th>
                                                     <th>Tanggal Surat Keputusan Izin Operasi</th>
@@ -68,10 +69,12 @@
                                                     <th>A LPTK</th>
                                                     <th>Kode Registrasi</th>
                                                     <th>NPWP</th>
+                                                    <th>No NPWP</th>
                                                     <th>Flag</th>
                                                     <th>ID Pembina</th>
                                                     <th>ID Blob</th>
                                                     <th>ID Status Milik</th>
+                                                    <th>ID Wil</th>
                                                     <th>ID KK</th>
                                                     <th>ID BP</th>
                                                 </tr>

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('rt', 2, 0)->nullable();
             $table->decimal('rw', 2, 0)->nullable();
             $table->string('nm_dsn', 60)->nullable();
-            $table->string('ds_kel', 60)->nullable();
+            $table->string('ds_kel', 60)->nullable(); //10
             $table->char('kode_pos', 5)->nullable();
             $table->decimal('lintang', 11, 7)->nullable();
             $table->decimal('bujur', 11, 7)->nullable();
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('website', 256)->nullable();
             $table->char('stat_sp', 1)->nullable();
             $table->string('sk_pendirian_sp', 80)->nullable();
-            $table->date('tgl_sk_pendirian_sp')->nullable();
+            $table->date('tgl_sk_pendirian_sp')->nullable();//10
             $table->date('tgl_berdiri')->nullable();
             $table->string('sk_izin_operasi', 80)->nullable();
             $table->date('tgl_sk_izin_operasi')->nullable();
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('nm_rek', 50)->nullable();
             $table->decimal('a_mbs', 1, 0)->nullable();
             $table->decimal('luas_tanah_milik', 7, 0)->nullable();
-            $table->decimal('luas_tanah_bukan_milik', 7, 0)->nullable();
+            $table->decimal('luas_tanah_bukan_milik', 7, 0)->nullable();//10
             $table->decimal('a_lptk', 1, 0)->nullable();
             $table->bigInteger('kode_reg')->nullable();
             $table->char('npwp', 15)->nullable();
@@ -51,7 +51,7 @@ return new class extends Migration
             $table->string('id_blob', 40)->nullable();
             $table->decimal('id_stat_milik', 1, 0)->nullable();
             $table->char('id_wil', 8)->nullable();
-            $table->integer('id_kk')->nullable();
+            $table->integer('id_kk')->nullable();//10
             $table->smallInteger('id_bp')->nullable();
             $table->timestamps();
         });
