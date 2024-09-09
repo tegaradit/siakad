@@ -33,7 +33,7 @@
                                 </p>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('room.create') }}" class="btn btn-primary">Tambah Ruangan</a>
+                                <a href="{{ route('room.create') }}" class="btn btn-primary mb-3">Tambah Ruangan</a>
                                 <div class="table-responsive">
                                     <table class="table table-nowrap align-middle table-edits table-bordered">
                                         <thead>
@@ -44,7 +44,7 @@
                                                 <th>Posisi Lantai</th>
                                                 <th>ID Gedung</th>
                                                 <th>Kapasitas</th>
-                                                <th>Edit</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -57,15 +57,36 @@
                                                     <td data-field="building_id">{{ $data->building->name ?? 'N/A' }}</td>
                                                     <td data-field="capacity">{{ $data->capacity }}</td>
                                                     <td style="width: 80px">
-                                                        <a href="{{ route('room.edit', $data->id) }}"
+                                                        <form id="delete-form-{{ $data->id }}"
+                                                            onsubmit="event.preventDefault(); confirmDelete({{ $data->id }});"
+                                                            action="{{ route('room.destroy', $data->id) }}" method="POST">
+                                                            <a href="{{ route('room.edit', $data->id) }}"
+                                                                class="btn btn-outline-secondary btn-sm edit"
+                                                                title="Edit">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button
+                                                                type="submit"class="btn icon icon-left btn-outline-danger btn-sm delete"><i
+                                                                    class="fas fa-trash-alt"></i></button>
+                                                        </form>
+                                                        {{-- <a href="{{ route('room.edit', $data->id) }}"
                                                             class="btn btn-outline-secondary btn-sm edit" title="Edit">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn icon icon-left btn-outline-danger btn-sm delete"><i class="fas fa-trash-alt"></i></button> --}}
                                                     </td>
+
+
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="7" class="text-center alert alert-danger">Tidak ada data ruangan tersedia.</td>
+                                                    <td colspan="7" class="text-center alert alert-danger">Tidak ada data
+                                                        ruangan tersedia.</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>
@@ -101,4 +122,27 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            feather.replace();
+        });
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
 @endsection
