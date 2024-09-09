@@ -61,7 +61,7 @@
                                                             onsubmit="event.preventDefault(); confirmDelete({{ $data->id }});"
                                                             action="{{ route('room.destroy', $data->id) }}" method="POST">
                                                             <a href="{{ route('room.edit', $data->id) }}"
-                                                                class="btn btn-outline-secondary btn-sm edit"
+                                                                class="btn btn-outline-warning btn-sm edit"
                                                                 title="Edit">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
