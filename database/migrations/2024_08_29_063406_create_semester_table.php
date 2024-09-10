@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('semester', function (Blueprint $table) {
             $table->char('semester_id', 6)->primary();
             $table->string('name', 20);
-            $table->tinyInteger('smt');
+            $table->tinyInteger('smt');//(1 : Ganjil, 2: Genap, 3: pendek)
             $table->boolean('is_active');
             $table->date('start_date');
             $table->date('end_date');

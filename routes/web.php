@@ -7,6 +7,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LectureSettingController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
@@ -35,6 +36,13 @@ Route::post('/admin/course', [CourseController::class, 'store'])->name('course.s
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
+// admin/semester
+Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
+Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
+Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
+Route::get('/admin/semester/{id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
+Route::put('/admin/semester/{id}', [SemesterController::class, 'update'])->name('semester.update');
+Route::delete('/admin/semester/{id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 
 //dosen 
 Route::get('/dosen',[DosenController::class, 'index'] )->name('dahboard.dosen');
