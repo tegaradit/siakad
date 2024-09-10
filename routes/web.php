@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\LectureSettingController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
+use App\Models\Lecturer;
 use App\Models\Room;
 use Illuminate\Support\Facades\Route;
 
@@ -63,3 +65,10 @@ Route::delete('/admin/room/{id}', [RoomController::class, 'destroy'])->name('roo
 // Prodi
 Route::get('/admin/prodi', [ProdiController::class, 'index'])->name('prodi');
 Route::get('/admin/prodi/data', [ProdiController::class, 'getProdiData'])->name('prodi.data');
+//lecturer
+Route::get('/admin/lecturer',[LecturerController::class, 'index'])->name('lecturer.index');
+Route::get('admin/lecturer/create', [LecturerController::class, 'create'])->name('lecturer.create');
+Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name('lecturer.store');
+Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
+Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
+Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
