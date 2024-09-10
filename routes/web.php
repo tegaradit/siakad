@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\LectureSettingController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
@@ -43,9 +44,9 @@ Route::resource('lecture-setting', LectureSettingController::class);
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
 Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
 Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
-Route::get('/admin/semester/{id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
-Route::put('/admin/semester/{id}', [SemesterController::class, 'update'])->name('semester.update');
-Route::delete('/admin/semester/{id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
+Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
+Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'])->name('semester.update');
+Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 
 //dosen 
 Route::get('/dosen',[DosenController::class, 'index'] )->name('dahboard.dosen');

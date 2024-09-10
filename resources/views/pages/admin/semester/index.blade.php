@@ -52,33 +52,31 @@
                                         @forelse ($datas as $index => $data)
                                             <tr>
                                                 <td>{{ $index+1 }}</td>
-                                                <td>{{ $semester->semester_id }}</td>
-                                                <td>{{ $semester->name }}</td>
+                                                <td>{{ $data->semester_id }}</td>
+                                                <td>{{ $data->name }}</td>
                                                 <td>
-                                                    @switch($semester->smt)
+                                                    @switch($data->smt)
                                                         @case(1) Ganjil @break
                                                         @case(2) Genap @break
                                                         @case(3) Pendek @break
                                                     @endswitch
                                                 </td>
-                                                <td>{{ $semester->is_active ? 'Active' : 'Inactive' }}</td>
-                                                <td>{{ $semester->start_date->format('d-m-Y') }}</td>
-                                                <td>{{ $semester->end_date->format('d-m-Y') }}</td>
+                                                <td>{{ $data->is_active ? 'Active' : 'Inactive' }}</td>
+                                                <td>{{ $data->start_date }}</td>
+                                                <td>{{ $data->end_date }}</td>
                                                 <td>
-                                                    <form id="delete-form-{{ $data->id }}"
-                                                        onsubmit="event.preventDefault(); confirmDelete({{ $data->id }});"
-                                                        action="{{ route('semester.destroy', $data->id) }}" method="POST">
-                                                        <a href="{{ route('semester.edit', $data->id) }}"
-                                                            class="btn btn-outline-warning btn-sm edit"
-                                                            title="Edit">
+                                                    <form id="delete-form-{{ $data->semester_id }}"
+                                                        onsubmit="event.preventDefault(); confirmDelete({{ $data->semester_id }});"
+                                                        action="{{ route('semester.destroy', $data->semester_id) }}" method="POST">
+                                                        <a href="{{ route('semester.edit', $data->semester_id) }}" class="btn btn-outline-warning btn-sm edit" title="Edit">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button
-                                                            type="submit"class="btn icon icon-left btn-outline-danger btn-sm delete"><i
-                                                                class="fas fa-trash-alt"></i></button>
-                                                      </form>
+                                                        <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>                                                    
                                                 </td>
                                             </tr>
                                         @empty
