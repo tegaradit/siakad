@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\lecture_settingController;
 use App\Http\Controllers\LectureSettingController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
@@ -35,6 +36,8 @@ Route::post('/admin/course', [CourseController::class, 'store'])->name('course.s
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
+//lecturesetting
+Route::resource('lecture-setting', LectureSettingController::class);
 
 //dosen 
 Route::get('/dosen',[DosenController::class, 'index'] )->name('dahboard.dosen');
