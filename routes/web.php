@@ -4,13 +4,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenController;
-use App\Http\Controllers\lecture_settingController;
 use App\Http\Controllers\LectureSettingController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
+use App\Models\Lecturer;
 use App\Models\Room;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,13 @@ Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('cou
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
 //lecturesetting
 Route::resource('lecture-setting', LectureSettingController::class);
+// admin/semester
+Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
+Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
+Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
+Route::get('/admin/semester/{id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
+Route::put('/admin/semester/{id}', [SemesterController::class, 'update'])->name('semester.update');
+Route::delete('/admin/semester/{id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 
 //dosen 
 Route::get('/dosen',[DosenController::class, 'index'] )->name('dahboard.dosen');
@@ -58,3 +66,10 @@ Route::delete('/admin/room/{id}', [RoomController::class, 'destroy'])->name('roo
 // Prodi
 Route::get('/admin/prodi', [ProdiController::class, 'index'])->name('prodi');
 Route::get('/admin/prodi/data', [ProdiController::class, 'getProdiData'])->name('prodi.data');
+//lecturer
+Route::get('/admin/lecturer',[LecturerController::class, 'index'])->name('lecturer.index');
+Route::get('admin/lecturer/create', [LecturerController::class, 'create'])->name('lecturer.create');
+Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name('lecturer.store');
+Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
+Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
+Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');

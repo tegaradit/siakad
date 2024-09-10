@@ -35,7 +35,7 @@ class Course extends Model
         'effective_end_date',
     ];
 
-    public function t_prodi()
+    public function prodi()
     {
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
     }

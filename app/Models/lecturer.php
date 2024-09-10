@@ -34,7 +34,7 @@ class Lecturer extends Model
         'birth_place',
         'mothers_name',
         'mariage_status',
-        'employee_status_id',
+        'employee_level_id',
         'level_education',
         'phone_number',
         'email',
