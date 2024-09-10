@@ -15,7 +15,7 @@
                   <li class="breadcrumb-item">
                     <a href="javascript: void(0);">Data Perkuliahan</a>
                   </li>
-                  <li class="breadcrumb-item active">Setting Perkuliahan</li>
+                  <li class="breadcrumb-item active">Tipe Kalender</li>
                 </ol>
               </div>
             </div>
@@ -27,22 +27,19 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Tabel Setting Perkuliahan</h4>
+                <h4 class="card-title">Tabel Tipe Kalender</h4>
                 <p class="card-title-desc">
-                  Tabel ini menyimpan data konfigurasi maksimal dan minimal pertemuan untuk setiap prodi.
+                  Tabel ini menyimpan data tipe dari kalender akademik.
                 </p>
               </div>
               <div class="card-body">
-                <a href="{{ route('lecture-setting.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                <a href="#" class="btn btn-primary mb-3">Tambah</a>
                 <div class="table-responsive">
                   <table class="table table-nowrap align-middle table-edits table-bordered">
                     <thead>
                       <tr>
                         <th>No</th>
-                        <th>Prodi ID</th>
-                        <th>Maks Jum. Pertemuan</th>
-                        <th>Min Jum. Pertemuan</th>
-                        <th>is Prodi</th>
+                        <th>Nama Tipe Kalender</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -50,18 +47,15 @@
                       @forelse ($datas as $index => $data)
                       <tr data-id="1">
                         <td data-field="id" style="width: 40px">{{ $index+1 }}</td>
-                        <td>{{ $data->prodi->name }}</td> <!-- Menampilkan nama prodi -->
-                        <td>{{ $data->max_number_of_meets }}</td>
-                        <td>{{ $data->min_number_of_presence }}</td>
-                        <td>{{ $data->is_prodi ? 'Yes' : 'No' }}</td>
+                        <td>{{$data->name}}</td>
                         <td style="width: 80px">
-                            <a href="{{ route('lecture-setting.edit', $data->id) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit">
+                            <a href="#" class="btn btn-outline-secondary btn-sm edit" title="Edit">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a href="{{ route('lecture-setting.destroy', $data->id) }}" class="btn btn-outline-secondary btn-sm delete" title="delete" onclick="event.preventDefault(); if(confirm('Are you sure?')) { document.getElementById('delete-form-{{ $data->id }}').submit(); }">
+                            <a href="#" class="btn btn-outline-secondary btn-sm delete" title="delete" onclick="event.preventDefault(); if(confirm('Are you sure?')) { document.getElementById('delete-form-{{ $data->id }}').submit(); }">
                                 <i class="fas fa-backspace"></i>
                             </a>
-                            <form id="delete-form-{{ $data->id }}" action="{{ route('lecture-setting.destroy', $data->id) }}" method="POST" style="display: none;">
+                            <form id="delete-form-{{ $data->id }}" action="#" method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')
                             </form>
@@ -70,7 +64,7 @@
                     
                       @empty
                         <tr>
-                          <td colspan="11" class="text-center alert alert-danger">Data Kurikulum Kosong</td>
+                          <td colspan="11" class="text-center alert alert-danger">Data Tipe Kalender Akademik Kosong</td>
                         </tr>
                       @endforelse
                     </tbody>

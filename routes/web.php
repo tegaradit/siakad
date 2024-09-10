@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
+use App\Http\Controllers\CalendarTypeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LecturerController;
@@ -40,6 +41,8 @@ Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('cou
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
 //lecturesetting
 Route::resource('lecture-setting', LectureSettingController::class);
+//tipe kalender
+Route::resource('calendar_type', CalendarTypeController::class);
 // admin/semester
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
 Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
