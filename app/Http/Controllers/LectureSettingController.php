@@ -10,13 +10,16 @@ class LectureSettingController extends Controller
 {
     // Menampilkan daftar data setting perkuliahan
     public function index()
-    {
-        $menu = 'lecture_setting';
-        $submenu = 'lecture_setting';
-        $datas = Lecture_setting::orderBy('id', 'asc')->paginate(5);
+{
+    $menu = 'lecture_setting';
+    $submenu = 'lecture_setting';
 
-        return view('pages.admin.lecture_setting.index', compact('datas', 'menu', 'submenu'));
-    }   
+    // Menggabungkan eager loading 'prodi' dengan pagination
+    $datas = Lecture_setting::with('prodi')->orderBy('id', 'asc')->paginate(5);
+
+    return view('pages.admin.lecture_setting.index', compact('datas', 'menu', 'submenu'));
+}
+
 
     // Menampilkan form untuk menambah data baru
     public function create()

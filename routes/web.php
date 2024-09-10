@@ -39,6 +39,8 @@ Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('cou
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
 //lecturesetting
 Route::resource('lecture-setting', LectureSettingController::class);
+//tipe kalender
+Route::resource('calendar_type', CalendarTypeController::class);
 // admin/semester
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
 Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
