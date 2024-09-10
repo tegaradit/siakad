@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
+use App\Http\Controllers\CalendarTypeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LectureSettingController;
