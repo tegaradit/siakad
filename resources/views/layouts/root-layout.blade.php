@@ -70,9 +70,9 @@
    <script src={{asset("minia/assets/js/pages/form-advanced.init.js")}}></script>
 
    <script src={{asset("minia/assets/js/app.js")}}></script>
+   {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://unpkg.com/feather-icons"></script>
 
-
-   
 </body>
 </html>

@@ -85,4 +85,13 @@ class SemesterController extends Controller
         // Redirect to the index page with success message
         return redirect()->route('semester.index')->with('success', 'Semester updated successfully.');
     }
+
+    // Remove the specified resource from storage
+    public function destroy($semester_id)
+    {
+        $semester = Semester::findOrFail($semester_id); // Correct variable name
+        $semester->delete();
+
+        return redirect()->route('semester.index')->with('success', 'Curriculum deleted successfully.');
+    }
 }
