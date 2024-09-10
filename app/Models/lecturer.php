@@ -58,7 +58,7 @@ class Lecturer extends Model
     }
 
     // Relasi ke tabel t_prodi
-    public function t_prodi(): BelongsTo
+    public function prodi(): BelongsTo
     {
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
     }

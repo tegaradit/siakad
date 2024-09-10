@@ -41,6 +41,8 @@
                                                 <th>NUPTK</th>
                                                 <th>NIDN</th>
                                                 <th>NIK</th>
+                                                <th>gender</th>
+                                                <th>name</th>
                                                 <th>active_status_id</th>
                                                 <th>birth_date</th>
                                                 <th>birth_place</th>
@@ -60,11 +62,14 @@
                                         </thead>
                                         <tbody>
                                             @forelse ($lecturers as $index => $data)
-                                                <tr data-id="{{ $data->id_sp }}">
-                                                    <td data-field="id" style="width: 40px">{{ $index + 1 }}</td>
+                                                <tr data-id="{{ $data->id }}">
+                                                    {{-- Hapus nomor urut jika tidak diperlukan --}}
+                                                    {{-- <td data-field="id" style="width: 40px">{{ $index + 1 }}</td> --}}
                                                     <td data-field="nuptk">{{ $data->nuptk ?? 'N/A' }}</td>
                                                     <td data-field="nidn">{{ $data->nidn ?? 'N/A' }}</td>
                                                     <td data-field="nik">{{ $data->nik ?? 'N/A' }}</td>
+                                                    <td data-field="gender">{{ $data->gender ?? 'N/A' }}</td>
+                                                    <td data-field="name">{{ $data->name ?? 'N/A' }}</td>
                                                     <td data-field="active_status_id">{{ $data->active_status_id ?? 'N/A' }}
                                                     </td>
                                                     <td data-field="birth_date">{{ $data->birth_date ?? 'N/A' }}</td>
@@ -87,11 +92,11 @@
                                                     <td data-field="exit_date">{{ $data->exit_date ?? 'N/A' }}</td>
                                                     <td data-field="id_prodi">{{ $data->id_prodi ?? 'N/A' }}</td>
                                                     <td style="width: 80px">
-                                                        <form id="delete-form-{{ $data->id_sp }}"
-                                                            onsubmit="event.preventDefault(); confirmDelete({{ $data->id_sp }});"
-                                                            action="{{ route('lecturer.destroy', $data->id_sp) }}"
+                                                        <form id="delete-form-{{ $data->nuptk }}"
+                                                            onsubmit="event.preventDefault(); confirmDelete({{ $data->nuptk }});"
+                                                            action="{{ route('lecturer.destroy', $data->nuptk) }}"
                                                             method="POST">
-                                                            <a href="{{ route('lecturer.edit', $data->id_sp) }}"
+                                                            <a href="{{ route('lecturer.edit', $data->nuptk) }}"
                                                                 class="btn btn-outline-secondary btn-sm edit"
                                                                 title="Edit">
                                                                 <i class="fas fa-pencil-alt"></i>
@@ -107,10 +112,12 @@
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="18" class="text-center alert alert-danger">Tidak Ada Tabel yang Tersedia</td>
+                                                    <td colspan="18" class="text-center alert alert-danger">Tidak Ada
+                                                        Tabel yang Tersedia</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>
+
                                     </table>
                                 </div>
                             </div>
@@ -146,7 +153,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            feather.replace();
+            feather.replace(); // Pastikan Feather Icons terpasang dengan benar
         });
 
         function confirmDelete(id) {

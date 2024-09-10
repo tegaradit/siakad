@@ -61,6 +61,6 @@ Route::get('/admin/prodi/data', [ProdiController::class, 'getProdiData'])->name(
 Route::get('/admin/lecturer',[LecturerController::class, 'index'])->name('lecturer.index');
 Route::get('admin/lecturer/create', [LecturerController::class, 'create'])->name('lecturer.create');
 Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name('lecturer.store');
-Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
-Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
-Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+Route::get('/admin/lecturer/{nuptk}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
+Route::put('/admin/lecturer/{nuptk}', [LecturerController::class, 'update'])->name('lecturer.update');
+Route::delete('/admin/lecturer/{nuptk}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
