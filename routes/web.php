@@ -34,6 +34,7 @@ Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin')
 Route::resource('admin/setting_perkuliahan', LectureSettingController::class);
 //admin/buildings(gedung)
 Route::get('/admin/buildings', [BuildingsController::class, 'index'])->name('buildings.index');
+Route::get('/buildings/data', [BuildingsController::class, 'data'])->name('buildings.data');
 Route::get('/admin/buildings/create', [BuildingsController::class, 'create'])->name('buildings.create');
 Route::post('/admin/buildings', [BuildingsController::class, 'store'])->name('buildings.store');
 Route::get('/admin/buildings/{id}/edit', [BuildingsController::class, 'edit'])->name('buildings.edit');
@@ -48,6 +49,7 @@ Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('cou
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
 // admin/semester
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
+Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data');
 Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
 Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
 Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
