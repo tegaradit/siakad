@@ -42,7 +42,7 @@
                                             <th>Semester ID</th>
                                             <th>Name</th>
                                             <th>Type</th>
-                                            <th>SMT</th>
+                                            <th>SMT</th>roo
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Action</th>

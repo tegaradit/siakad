@@ -35,7 +35,7 @@
                             <div class="card-body">
                                 <a href="{{ route('room.create') }}" class="btn btn-primary mb-3">Tambah Ruangan</a>
                                 <div class="table-responsive">
-                                    <table class="table table-nowrap align-middle table-edits table-bordered">
+                                    <table class="table table-nowrap align-middle table-edits table-striped">
                                         <thead>
                                             <tr>
                                                 <th>No</th>

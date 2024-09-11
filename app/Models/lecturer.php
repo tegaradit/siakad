@@ -14,13 +14,13 @@ class Lecturer extends Model
     protected $table = 'lecturer';
 
     // Menentukan primary key dari tabel
-    protected $primaryKey = 'nuptk';
+    protected $primaryKey = 'id';
 
     // Menentukan tipe primary key (string)
-    protected $keyType = 'string';
+    protected $keyType = 'int';
 
     // Menonaktifkan incrementing, karena nuptk bukan auto-increment
-    public $incrementing = false;
+    public $incrementing = true;
 
     // Menentukan kolom-kolom yang bisa diisi secara massal
     protected $fillable = [
@@ -58,7 +58,7 @@ class Lecturer extends Model
     }
 
     // Relasi ke tabel t_prodi
-    public function t_prodi(): BelongsTo
+    public function prodi(): BelongsTo
     {
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
     }

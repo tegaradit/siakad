@@ -4,166 +4,105 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                <!-- start page title -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0 font-size-18"></h4>
+                <div class="wrapper">
+                    <!-- Sidebar -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0 font-size-18">Data Dosen</h4>
 
-                            <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item">
-                                        <a href="javascript: void(0);">Data Umum</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">Dosen</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end page title -->
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Table Dosen</h4>
-                                <p class="card-title-desc">
-                                    Table ini berisi code dan nama ruangan perguruan tinggi.
-                                </p>
-                            </div>
-                            <div class="card-body">
-                                <a href="{{ route('lecturer.create') }}" class="btn btn-primary mb-3">Tambah</a>
-                                <div class="table-responsive">
-                                    <table class="table table-nowrap align-middle table-edits table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>NUPTK</th>
-                                                <th>NIDN</th>
-                                                <th>NIK</th>
-                                                <th>active_status_id</th>
-                                                <th>birth_date</th>
-                                                <th>birth_place</th>
-                                                <th>mother_name</th>
-                                                <th>mariage_status</th>
-                                                <th>employee_level_id</th>
-                                                <th>level_education</th>
-                                                <th>phone_number</th>
-                                                <th>email</th>
-                                                <th>assign_letter_number</th>
-                                                <th>assign_letter_date</th>
-                                                <th>assign_letter_tmt</th>
-                                                <th>exit_date</th>
-                                                <th>ID Prodi</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @forelse ($lecturers as $index => $data)
-                                                <tr data-id="{{ $data->id_sp }}">
-                                                    <td data-field="id" style="width: 40px">{{ $index + 1 }}</td>
-                                                    <td data-field="nuptk">{{ $data->nuptk ?? 'N/A' }}</td>
-                                                    <td data-field="nidn">{{ $data->nidn ?? 'N/A' }}</td>
-                                                    <td data-field="nik">{{ $data->nik ?? 'N/A' }}</td>
-                                                    <td data-field="active_status_id">{{ $data->active_status_id ?? 'N/A' }}
-                                                    </td>
-                                                    <td data-field="birth_date">{{ $data->birth_date ?? 'N/A' }}</td>
-                                                    <td data-field="birth_place">{{ $data->birth_place ?? 'N/A' }}</td>
-                                                    <td data-field="mother_name">{{ $data->mother_name ?? 'N/A' }}</td>
-                                                    <td data-field="mariage_status">{{ $data->mariage_status ?? 'N/A' }}
-                                                    </td>
-                                                    <td data-field="employee_level_id">
-                                                        {{ $data->employee_level_id ?? 'N/A' }}</td>
-                                                    <td data-field="level_education">{{ $data->level_education ?? 'N/A' }}
-                                                    </td>
-                                                    <td data-field="phone_number">{{ $data->phone_number ?? 'N/A' }}</td>
-                                                    <td data-field="email">{{ $data->email ?? 'N/A' }}</td>
-                                                    <td data-field="assign_letter_number">
-                                                        {{ $data->assign_letter_number ?? 'N/A' }}</td>
-                                                    <td data-field="assign_letter_date">
-                                                        {{ $data->assign_letter_date ?? 'N/A' }}</td>
-                                                    <td data-field="assign_letter_tmt">
-                                                        {{ $data->assign_letter_tmt ?? 'N/A' }}</td>
-                                                    <td data-field="exit_date">{{ $data->exit_date ?? 'N/A' }}</td>
-                                                    <td data-field="id_prodi">{{ $data->id_prodi ?? 'N/A' }}</td>
-                                                    <td style="width: 80px">
-                                                        <form id="delete-form-{{ $data->id_sp }}"
-                                                            onsubmit="event.preventDefault(); confirmDelete({{ $data->id_sp }});"
-                                                            action="{{ route('lecturer.destroy', $data->id_sp) }}"
-                                                            method="POST">
-                                                            <a href="{{ route('lecturer.edit', $data->id_sp) }}"
-                                                                class="btn btn-outline-secondary btn-sm edit"
-                                                                title="Edit">
-                                                                <i class="fas fa-pencil-alt"></i>
-                                                            </a>
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn icon icon-left btn-outline-danger btn-sm delete">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="18" class="text-center alert alert-danger">Tidak Ada Tabel yang Tersedia</td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item">
+                                            <a href="javascript: void(0);">Data Umum</a>
+                                        </li>
+                                        <li class="breadcrumb-item active">Data Dosen</li>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- container-fluid -->
-        </div>
-        <!-- End Page-content -->
 
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        © Minia.
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="text-sm-end d-none d-sm-block">
-                            Design & Develop by
-                            <a href="#!" class="text-decoration-underline">Themesbrand</a>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Data Dosen</h4>
+                                    <p class="card-title-desc">Berikut adalah daftar seluruh dosen.</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>NUPTK</th>
+                                                    <th>NIDN</th>
+                                                    <th>NIK</th>
+                                                    <th>Gender</th>
+                                                    <th>Nama</th>
+                                                    <th>Status Aktif</th>
+                                                    <th>Tanggal Lahir</th>
+                                                    <th>Tempat Lahir</th>
+                                                    <th>Nama Ibu</th>
+                                                    <th>Status Pernikahan</th>
+                                                    <th>Level Pegawai</th>
+                                                    <th>Level Pendidikan</th>
+                                                    <th>Telepon</th>
+                                                    <th>Email</th>
+                                                    <th>No Surat Tugas</th>
+                                                    <th>Tanggal Surat Tugas</th>
+                                                    <th>Tanggal TMT Surat Tugas</th>
+                                                    <th>Tanggal Keluar</th>
+                                                    <th>Prodi ID</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            feather.replace();
-        });
-
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: "Anda tidak akan dapat mengembalikan ini!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: "{{ route('lecturer.data') }}",
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'nuptk', name: 'nuptk' },
+                    { data: 'nidn', name: 'nidn' },
+                    { data: 'nik', name: 'nik' },
+                    { data: 'gender', name: 'gender' },
+                    { data: 'name', name: 'name' },
+                    { data: 'active_status_id', name: 'active_status_id' },
+                    { data: 'birth_date', name: 'birth_date' },
+                    { data: 'birth_place', name: 'birth_place' },
+                    { data: 'mothers_name', name: 'mothers_name' },
+                    { data: 'mariage_status', name: 'mariage_status' },
+                    { data: 'employee_level_id', name: 'employee_level_id' },
+                    { data: 'level_education', name: 'level_education' },
+                    { data: 'phone_number', name: 'phone_number' },
+                    { data: 'email', name: 'email' },
+                    { data: 'assign_letter_number', name: 'assign_letter_number' },
+                    { data: 'assign_letter_date', name: 'assign_letter_date' },
+                    { data: 'assign_letter_tmt', name: 'assign_letter_tmt' },
+                    { data: 'exit_date', name: 'exit_date' },
+                    { data: 'prodi_id', name: 'prodi_id' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                ]
             });
-        }
+        });
     </script>
 @endsection
