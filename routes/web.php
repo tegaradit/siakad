@@ -70,11 +70,11 @@ Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'dest
 //admin/curriculum(kurikulum)
 Route::resource('/admin/curriculum', CurriculumController::class);
 //lecturesetting
-Route::resource('lecture-setting', LectureSettingController::class);
+Route::resource('/admin/lecture-setting', LectureSettingController::class);
 //tipe kalender
-Route::resource('calendar_type', CalendarTypeController::class);
+Route::resource('/admin/calendar-type', CalendarTypeController::class);
 //kalender akademik
-Route::resource('kalender_akademik', AcademicCalendarController::class);
+Route::resource('/admin/kalender-akademik', AcademicCalendarController::class);
 
 
 //dosen 
@@ -92,6 +92,7 @@ Route::post('admin/room/store', [RoomController::class, 'store'])->name('room.st
 Route::get('/admin/room/{id}/edit', [RoomController::class, 'edit'])->name('room.edit');
 Route::put('/admin/room/{id}', [RoomController::class, 'update'])->name('room.update');
 Route::delete('/admin/room/{id}', [RoomController::class, 'destroy'])->name('room.destroy');
+Route::get('/room/data', [RoomController::class, 'data'])->name('room.data');
 
 // Prodi
 Route::get('/admin/prodi', [ProdiController::class, 'index'])->name('prodi');
@@ -103,3 +104,4 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
