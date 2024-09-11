@@ -4,7 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\LectureSettingController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
@@ -38,17 +40,19 @@ Route::post('/admin/course', [CourseController::class, 'store'])->name('course.s
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
-//lecturesetting
-Route::resource('lecture-setting', LectureSettingController::class);
-//tipe kalender
-Route::resource('calendar_type', CalendarTypeController::class);
 // admin/semester
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
 Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
 Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
-Route::get('/admin/semester/{id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
-Route::put('/admin/semester/{id}', [SemesterController::class, 'update'])->name('semester.update');
-Route::delete('/admin/semester/{id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
+Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
+Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'])->name('semester.update');
+Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
+//admin/curriculum(kurikulum)
+Route::resource('/admin/curriculum', CurriculumController::class);
+//lecturesetting
+Route::resource('lecture-setting', LectureSettingController::class);
+//tipe kalender
+Route::resource('calendar_type', CalendarTypeController::class);
 
 //dosen 
 Route::get('/dosen',[DosenController::class, 'index'] )->name('dahboard.dosen');

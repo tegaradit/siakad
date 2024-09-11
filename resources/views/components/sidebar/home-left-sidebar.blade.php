@@ -159,7 +159,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('semester.index') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Semester</span>
                     </a>
@@ -194,7 +194,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('curriculum.index') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Kurikulum</span>
                     </a>

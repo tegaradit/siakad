@@ -14,6 +14,7 @@ class Semester extends Model
     protected $keyType = 'string'; // primary key bertipe char
 
     protected $fillable = [
+        'semester_id',
         'name',
         'smt',
         'is_active',

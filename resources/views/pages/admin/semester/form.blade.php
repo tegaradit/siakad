@@ -71,11 +71,11 @@
                                 <div class="form-group">
                                     <label for="smt">SMT</label>
                                     <select name="smt" id="smt" class="form-control" required>
-                                        <option>Pilih...</option>
+                                        <option value="">Pilih...</option>
                                         <option value="1" {{ old('smt', $semester->smt ?? '') == 1 ? 'selected' : '' }}>Ganjil</option>
                                         <option value="2" {{ old('smt', $semester->smt ?? '') == 2 ? 'selected' : '' }}>Genap</option>
                                         <option value="3" {{ old('smt', $semester->smt ?? '') == 3 ? 'selected' : '' }}>Pendek</option>
-                                    </select>
+                                    </select>                                    
                                     @error('smt')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -85,13 +85,16 @@
                                 <div class="form-group">
                                     <label for="is_active">Is Active?</label>
                                     <div class="radio-group">
-                                        <input type="radio" class="form-check-input" name="is_active" value="1" id="is_active_yes" required>
+                                        <input type="radio" class="form-check-input" name="is_active" value="1" id="is_active_yes" {{ old('is_active', $semester->is_active ?? '') == 1 ? 'checked' : '' }} required>
                                         <label class="form-check-label" for="is_active_yes">Yes</label>
-                                  
-                                        <input type="radio" class="form-check-input" name="is_active" value="0" id="is_active_no" required>
+                                
+                                        <input type="radio" class="form-check-input" name="is_active" value="0" id="is_active_no" {{ old('is_active', $semester->is_active ?? '') == 0 ? 'checked' : '' }} required>
                                         <label class="form-check-label" for="is_active_no">No</label>
                                     </div>
-                                </div>
+                                    @error('is_active')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>                                
 
                                 <!-- Start Date field -->
                                 <div class="form-group">
