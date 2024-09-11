@@ -5,14 +5,49 @@ namespace App\Http\Controllers;
 use App\Models\Building;
 use App\Models\room;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class RoomController extends Controller
 {
-    public function index()
+    // public function index()
 
-    {   
-         $rooms = Room::with('building')->get(); 
-         return view('pages.admin.room.index', compact('rooms'));  
+    // {   
+    //      $rooms = Room::with('building')->get(); 
+    //      return view('pages.admin.room.index', compact('rooms'));  
+    // }
+    public function index()
+    {
+        // Kirimkan view tanpa data karena DataTables akan meng-handle data secara AJAX
+        return view('pages.admin.room.index');
+    }
+
+    public function data(Request $request)
+    {
+        if ($request->ajax()) {
+            $room = room::query();
+
+            return DataTables::of($room)
+                ->addIndexColumn() // Menambahkan kolom index secara otomatis
+                ->addColumn('action', function ($data) {
+                    // Mengembalikan HTML untuk kolom aksi, misalnya tombol edit
+                    return '<a href="'.route('room.edit', $data->id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <form id="delete-form-' . $data->id . '" 
+                              onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
+                              action="' . route('room.destroy', $data->id) . '" 
+                              method="POST" style="display:inline;">
+                            ' . csrf_field() . method_field('DELETE') . '
+                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>';
+            })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return abort(404);
     }
 
     public function create()
