@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcademicCalendarController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
@@ -53,6 +54,9 @@ Route::resource('/admin/curriculum', CurriculumController::class);
 Route::resource('lecture-setting', LectureSettingController::class);
 //tipe kalender
 Route::resource('calendar_type', CalendarTypeController::class);
+//kalender akademik
+Route::resource('kalender_akademik', AcademicCalendarController::class);
+
 
 //dosen 
 Route::get('/dosen',[DosenController::class, 'index'] )->name('dahboard.dosen');
