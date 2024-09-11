@@ -51,11 +51,11 @@ Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'dest
 //admin/curriculum(kurikulum)
 Route::resource('/admin/curriculum', CurriculumController::class);
 //lecturesetting
-Route::resource('lecture-setting', LectureSettingController::class);
+Route::resource('/admin/lecture-setting', LectureSettingController::class);
 //tipe kalender
 Route::resource('calendar_type', CalendarTypeController::class);
 //kalender akademik
-Route::resource('kalender_akademik', AcademicCalendarController::class);
+Route::resource('/admin/kalender-akademik', AcademicCalendarController::class);
 
 
 //dosen 
