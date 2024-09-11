@@ -5,7 +5,7 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('dashboard.admin') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Dashboard</span>
                     </a>
@@ -159,7 +159,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('semester.index') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Semester</span>
                     </a>
@@ -194,7 +194,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('curriculum.index') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Kurikulum</span>
                     </a>

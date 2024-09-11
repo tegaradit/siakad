@@ -1,104 +1,116 @@
 @extends('layouts.home-layout')
 
-$@section('home-content')
+@section('home-content')
 <div class="main-content">
     <div class="page-content">
-      <div class="container-fluid">
-        <!-- start page title -->
-        <div class="row">
-          <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 class="mb-sm-0 font-size-18"></h4>
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18"></h4>
 
-              <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item">
-                    <a href="javascript: void(0);">Data Perkuliahan</a>
-                  </li>
-                  <li class="breadcrumb-item active">Kurikulum</li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end page title -->
-
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title">Table Kurikulum</h4>
-                <p class="card-title-desc">
-                  Table ini berisi data kurikulum yang ada.
-                </p>
-              </div>
-              <div class="card-body">
-                {{-- <a href="{{ route('course.create') }}" class="btn btn-primary">Tambah Mata Kuliah</a> --}}
-                <div class="table-responsive">
-                  <table class="table table-nowrap align-middle table-edits table-bordered">
-                    <thead>
-                      <tr>
-                        <th>No</th>
-                        <th>curriculum_id</th>
-                        <th>Prodi_id</th>
-                        <th>Education_level_id</th>
-                        <th>Semester_id</th>
-                        <th>Name</th>
-                        <th>Normal_semester_number</th>
-                        <th>Pass_credit_number</th>
-                        <th>Mandatory_credit_number</th>
-                        <th>Choice_credit_number</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @forelse ($datas as $index => $data)
-                        <tr data-id="1">
-                          <td data-field="id" style="width: 40px">{{ $index+1 }}</td>
-                          <td data-field="name">{{ $data->code }}</td>
-                          <td data-field="age">{{ $data->name }}</td>
-                          <td style="width: 80px">
-                              <a class="btn btn-outline-secondary btn-sm edit" title="Edit">
-                                <i class="fas fa-pencil-alt"></i>
-                              </a>
-                          </td>
-                        </tr>
-                      @empty
-                        <tr>
-                          <td colspan="11" class="text-center alert alert-danger">Data Kurikulum Kosong</td>
-                        </tr>
-                      @endforelse
-                    </tbody>
-                  </table>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item">
+                                    <a href="javascript: void(0);">Data Perkuliahan</a>
+                                </li>
+                                <li class="breadcrumb-item active">Kurikulum</li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <!-- end col -->
-        </div>
-        <!-- end row -->
-      </div>
-      <!-- container-fluid -->
-    </div>
-    <!-- End Page-content -->
+            <!-- end page title -->
 
-    <footer class="footer">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-6">
-            <script>
-              document.write(new Date().getFullYear());
-            </script>
-            © Minia.
-          </div>
-          <div class="col-sm-6">
-            <div class="text-sm-end d-none d-sm-block">
-              Design & Develop by
-              <a href="#!" class="text-decoration-underline">Themesbrand</a>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Tabel Kurikulumm</h4>
+                            <p class="card-title-desc">Tabel ini berisi data kurikulum.</p>
+                        </div>
+                        <div class="card-body">
+                            <a href="{{ route('curriculum.create') }}" class="btn btn-primary mb-3">Tambah Kurikulum</a>
+                            <div class="table-responsive">
+                                <table class="table table-nowrap align-middle table-bordered" id="datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Nama</th>
+                                            <th>Prodi</th>
+                                            <th>Jenjang Pendidikan</th>
+                                            <th>Semester</th>
+                                            <th>Normal Semester</th>
+                                            <th>Pass Credit</th>
+                                            <th>Mandatory Credit</th>
+                                            <th>Choice Credit</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($datas as $index => $data)
+                                            <tr>
+                                                <td>{{ $index+1 }}</td>
+                                                <td>{{ $data->name }}</td>
+                                                <td>{{ $data->prodi->name }}</td>
+                                                <td>{{ $data->education_level->nm_jenj_didik }}</td>
+                                                <td>{{ $data->semester->name }}</td>
+                                                <td>{{ $data->normal_semester_number }}</td>
+                                                <td>{{ $data->pass_credit_number }}</td>
+                                                <td>{{ $data->mandatory_credit_number }}</td>
+                                                <td>{{ $data->choice_credit_number }}</td>
+                                                <td>
+                                                    <form id="delete-form-{{ $data->curriculum_id }}"
+                                                        onsubmit="event.preventDefault(); confirmDelete('{{ $data->curriculum_id }}');"
+                                                        action="{{ route('curriculum.destroy', $data->curriculum_id) }}" method="POST">
+                                                        <a href="{{ route('curriculum.edit', $data->curriculum_id) }}" class="btn btn-outline-warning btn-sm" title="Edit">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>                                                    
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="10" class="text-center alert alert-danger">Data Kurikulum kosong</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </footer>
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        feather.replace();
+    });
+
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        });
+    }
+</script>
 @endsection
