@@ -31,6 +31,7 @@
                                     <p class="card-title-desc">Berikut adalah daftar seluruh dosen.</p>
                                 </div>
                                 <div class="card-body">
+                                    <a href="{{ route('lecturer.create') }}" class="btn btn-primary mb-3">Tambah</a>
                                     <div class="table-responsive">
                                         <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
                                             <thead>
@@ -79,30 +80,122 @@
                 serverSide: true,
                 responsive: true,
                 ajax: "{{ route('lecturer.data') }}",
-                columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'nuptk', name: 'nuptk' },
-                    { data: 'nidn', name: 'nidn' },
-                    { data: 'nik', name: 'nik' },
-                    { data: 'gender', name: 'gender' },
-                    { data: 'name', name: 'name' },
-                    { data: 'active_status_id', name: 'active_status_id' },
-                    { data: 'birth_date', name: 'birth_date' },
-                    { data: 'birth_place', name: 'birth_place' },
-                    { data: 'mothers_name', name: 'mothers_name' },
-                    { data: 'mariage_status', name: 'mariage_status' },
-                    { data: 'employee_level_id', name: 'employee_level_id' },
-                    { data: 'level_education', name: 'level_education' },
-                    { data: 'phone_number', name: 'phone_number' },
-                    { data: 'email', name: 'email' },
-                    { data: 'assign_letter_number', name: 'assign_letter_number' },
-                    { data: 'assign_letter_date', name: 'assign_letter_date' },
-                    { data: 'assign_letter_tmt', name: 'assign_letter_tmt' },
-                    { data: 'exit_date', name: 'exit_date' },
-                    { data: 'prodi_id', name: 'prodi_id' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                columns: [{
+                        data: null,
+                        name: 'no',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart +
+                                1; // nomor urut yang dinamis
+                        }
+                    },
+                    {
+                        data: 'nuptk',
+                        name: 'nuptk'
+                    },
+                    {
+                        data: 'nidn',
+                        name: 'nidn'
+                    },
+                    {
+                        data: 'nik',
+                        name: 'nik'
+                    },
+                    {
+                        data: 'gender',
+                        name: 'gender'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'active_status_id',
+                        name: 'active_status_id'
+                    },
+                    {
+                        data: 'birth_date',
+                        name: 'birth_date'
+                    },
+                    {
+                        data: 'birth_place',
+                        name: 'birth_place'
+                    },
+                    {
+                        data: 'mothers_name',
+                        name: 'mothers_name'
+                    },
+                    {
+                        data: 'mariage_status',
+                        name: 'mariage_status'
+                    },
+                    {
+                        data: 'employee_level_id',
+                        name: 'employee_level_id'
+                    },
+                    {
+                        data: 'level_education',
+                        name: 'level_education'
+                    },
+                    {
+                        data: 'phone_number',
+                        name: 'phone_number'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'assign_letter_number',
+                        name: 'assign_letter_number'
+                    },
+                    {
+                        data: 'assign_letter_date',
+                        name: 'assign_letter_date'
+                    },
+                    {
+                        data: 'assign_letter_tmt',
+                        name: 'assign_letter_tmt'
+                    },
+                    {
+                        data: 'exit_date',
+                        name: 'exit_date'
+                    },
+                    {
+                        data: 'prodi_id',
+                        name: 'prodi_id'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
                 ]
             });
         });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            feather.replace();
+        });
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
     </script>
 @endsection
