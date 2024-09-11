@@ -10,9 +10,13 @@ class CalendarTypeController extends Controller
 {
     public function index()
     {
-        $datas = Calendar_type::orderBy('id', 'asc')->paginate(5);
+        $datas = Calendar_type::orderBy('name', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->paginate();
         return view('pages.admin.type_calendar.index', compact('datas'));
     }
+
+
 
     public function create()
     {
@@ -21,6 +25,9 @@ class CalendarTypeController extends Controller
 
     public function store(Request $request)
     {
+        // Cek semua data yang dikirim dari form
+        // dd($request->all());
+
         $validated = $request->validate([
             'name' => 'required|string|min:3|max:255',
         ]);
@@ -29,8 +36,10 @@ class CalendarTypeController extends Controller
         $calendarType->name = $validated['name'];
         $calendarType->save();
 
-        return redirect()->route('calendar_type.index')->with('success', 'Tipe Kalender berhasil ditambahkan.');
+        return redirect()->route('calendar-type.index')->with('success', 'Tipe Kalender berhasil ditambahkan.');
     }
+
+
 
     public function update(Request $request, $id)
     {
@@ -42,7 +51,7 @@ class CalendarTypeController extends Controller
         $calendarType->name = $validated['name'];
         $calendarType->save();
 
-        return redirect()->route('calendar_type.index')->with('success', 'Tipe Kalender berhasil diperbarui.');
+        return redirect()->route('calendar-type.index')->with('success', 'Tipe Kalender berhasil diperbarui.');
     }
 
 
@@ -57,6 +66,6 @@ class CalendarTypeController extends Controller
         $calendarType = Calendar_type::findOrFail($id);
         $calendarType->delete();
 
-        return redirect()->route('calendar_type.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('calendar-type.index')->with('success', 'Data berhasil dihapus.');
     }
 }

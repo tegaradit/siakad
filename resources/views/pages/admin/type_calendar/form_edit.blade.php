@@ -13,7 +13,7 @@
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item">
-                                        <a href="{{ route('calendar_type.index') }}">Data Perkuliahan</a>
+                                        <a href="{{ route('calendar-type.index') }}">Data Perkuliahan</a>
                                     </li>
                                     <li class="breadcrumb-item active">Edit Tipe Kalender</li>
                                 </ol>
@@ -34,7 +34,7 @@
                             </div>
                             <div class="card-body">
                                 <!-- Form Start -->
-                                <form action="{{ route('calendar_type.update', $calendarType->id) }}" method="POST">
+                                <form action="{{ route('calendar-type.update', $calendarType->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')
 
@@ -54,7 +54,7 @@
                                         <button type="submit" class="btn btn-primary">
                                             Update
                                         </button>
-                                        <a href="{{ route('calendar_type.index') }}" class="btn btn-secondary">Kembali</a>
+                                        <a href="{{ route('calendar-type.index') }}" class="btn btn-secondary">Kembali</a>
                                     </div>
                                 </form>
                                 <!-- Form End -->

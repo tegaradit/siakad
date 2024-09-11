@@ -49,7 +49,7 @@
                             </div>
                             <div class="card-body">
                                 <form
-                                    action="{{ isset($calendarType) ? route('calendar_type.update', $calendarType->id) : route('calendar_type.store') }}"
+                                    action="{{ isset($calendarType) ? route('calendar-type.update', $calendarType->id) : route('calendar-type.store') }}"
                                     method="POST">
                                     @csrf
                                     @if (isset($calendarType))
@@ -75,7 +75,7 @@
                                                 Simpan
                                             @endif
                                         </button>
-                                        <a href="{{ route('calendar_type.index') }}" class="btn btn-secondary">Kembali</a>
+                                        <a href="{{ route('calendar-type.index') }}" class="btn btn-secondary">Kembali</a>
                                     </div>
 
                                 </form>
