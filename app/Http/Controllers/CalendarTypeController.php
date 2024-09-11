@@ -10,50 +10,53 @@ class CalendarTypeController extends Controller
 {
     public function index()
     {
-        $menu = 'data';
-        $submenu = 'calendar_type';
-        $datas = Calendar_type::latest()->paginate(5);
-        return view('admin.post_category.index', compact('datas', 'menu', 'submenu'));
-    }
-    public function create(){
-        $menu = 'data';
-        $submenu = 'calendar_type';
-        return view('admin.post_category.form', compact('menu', 'submenu'));
-    }
-    function store(Request $request){
-        $post = new Calendar_type();
-        $post->name=$request->name;
-        $post->save();
-        Session::flash('success', 'Data berhasil disimpan.');
-        return redirect('admin/post_category');
-    }
-    function show($id){
-        $menu = 'data';
-        $submenu = 'post_category';
-        $post_category = Calendar_type::find($id);
-        return view('admin.post_category.show', compact('post_category', 'menu', 'submenu'));
-    }
-    function edit($id){
-        $menu = 'data';
-        $submenu = 'post_category';
-        $post_category = Calendar_type::find($id);
-        return view('admin.post_category.form_edit', compact('post_category', 'menu', 'submenu'));
+        $datas = Calendar_type::orderBy('id', 'asc')->paginate(5);
+        return view('pages.admin.type_calendar.index', compact('datas'));
     }
 
-    function update(Request $request, $id)
+    public function create()
     {
-        $this->validate($request,[
-            'name'=>'required|min:5'
+        return view('pages.admin.type_calendar.form');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
         ]);
-        $post_category = Calendar_type::findOrFail($id);
-        $post_category-> update(['name'=>$request->name]);
-        return redirect()->route('post_category.index')->with(['success'=>'Data berhasil diubah!']);
+
+        $calendarType = new Calendar_type();
+        $calendarType->name = $validated['name'];
+        $calendarType->save();
+
+        return redirect()->route('calendar_type.index')->with('success', 'Tipe Kalender berhasil ditambahkan.');
     }
 
-    function destroy( $id)
+    public function update(Request $request, $id)
     {
-        $post_category=Calendar_type::findOrFail($id);
-        $post_category->delete();
-        return redirect()->route('post_category.index')->with(['success'=> 'Data berhasil di hapus.']);
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+        ]);
+
+        $calendarType = Calendar_type::findOrFail($id);
+        $calendarType->name = $validated['name'];
+        $calendarType->save();
+
+        return redirect()->route('calendar_type.index')->with('success', 'Tipe Kalender berhasil diperbarui.');
+    }
+
+
+    public function edit($id)
+    {
+        $calendarType = Calendar_type::findOrFail($id);
+        return view('pages.admin.type_calendar.form_edit', compact('calendarType'));
+    }
+
+    public function destroy($id)
+    {
+        $calendarType = Calendar_type::findOrFail($id);
+        $calendarType->delete();
+
+        return redirect()->route('calendar_type.index')->with('success', 'Data berhasil dihapus.');
     }
 }
