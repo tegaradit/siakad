@@ -15,14 +15,19 @@ use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Lecturer;
 use App\Models\Room;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.welcome');
 });
 Route::post('/login', [UserController::class, 'action'])->name('login');
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
 //admin
 Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin');

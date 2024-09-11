@@ -8,5 +8,5 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name']; // Kolom 'name' adalah nama role, seperti 'admin', 'user', dll.
+    protected $fillable = ['name']; 
 }
