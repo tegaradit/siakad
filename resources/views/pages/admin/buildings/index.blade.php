@@ -35,7 +35,7 @@
               <div class="card-body">
                 <a href="{{ route('buildings.create') }}" class="btn btn-primary mb-3">Tambah Gedung</a>
                 <div class="table-responsive">
-                  <table class="table table-nowrap align-middle table-bordered" id="datatable">
+                  <table class="table table-nowrap align-middle table-striped" id="datatable">
                     <thead>
                       <tr>
                         <th>No</th>
