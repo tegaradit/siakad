@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Calendar_type extends Model
 {
     use HasFactory;
-    protected $table = 'calendar_type';
+    protected $table = 'calendar_types';
     protected $fillable = [
         'name',
     ];

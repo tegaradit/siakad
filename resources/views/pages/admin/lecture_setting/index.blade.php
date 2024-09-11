@@ -55,10 +55,10 @@
                         <td>{{ $data->min_number_of_presence }}</td>
                         <td>{{ $data->is_prodi ? 'Yes' : 'No' }}</td>
                         <td style="width: 80px">
-                            <a href="{{ route('lecture-setting.edit', $data->id) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit">
+                            <a href="{{ route('lecture-setting.edit', $data->id) }}" class="btn btn-outline-warning btn-sm edit" title="Edit">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a href="{{ route('lecture-setting.destroy', $data->id) }}" class="btn btn-outline-secondary btn-sm delete" title="delete" onclick="event.preventDefault(); if(confirm('Are you sure?')) { document.getElementById('delete-form-{{ $data->id }}').submit(); }">
+                            <a href="{{ route('lecture-setting.destroy', $data->id) }}" class="btn btn-outline-danger btn-sm delete" title="delete" onclick="event.preventDefault(); if(confirm('Are you sure?')) { document.getElementById('delete-form-{{ $data->id }}').submit(); }">
                                 <i class="fas fa-backspace"></i>
                             </a>
                             <form id="delete-form-{{ $data->id }}" action="{{ route('lecture-setting.destroy', $data->id) }}" method="POST" style="display: none;">
