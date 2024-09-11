@@ -22,12 +22,26 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', function () {
-    return view('pages.welcome');
+    return view('welcome');
 });
 Route::post('/login', [UserController::class, 'action'])->name('login');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+//user
+
+
+
+Route::get('/users', [UserController::class, 'users'])->name('users.index');
+Route::get('/users/data', [UserController::class, 'getUsers'])->name('users.getUsers');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create'); // Tambah user
+Route::post('/users', [UserController::class, 'store'])->name('users.store'); // Simpan user
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+
 
 //admin
 Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin');

@@ -56,7 +56,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('users.index') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Pengguna</span>
                     </a>
