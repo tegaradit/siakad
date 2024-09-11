@@ -11,7 +11,7 @@
                 <!-- Form to edit an existing lecturer -->
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('lecturer.update', $lecturer->nuptk) }}" method="POST">
+                        <form action="{{ route('lecturer.update', $lecturer->id) }}" method="POST">
                             @csrf
                             @method('PUT') <!-- Method PUT untuk mengupdate data -->
 

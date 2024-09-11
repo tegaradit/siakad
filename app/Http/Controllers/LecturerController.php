@@ -7,13 +7,37 @@ use App\Models\Employee_level;
 use App\Models\Lecturer;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class LecturerController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $lecturers = Lecturer::all(); // Ambil semua data dosen
+    //     return view('pages.admin.lecturer.index', compact('lecturers')); // Kirim data ke view
+    // }
+    
+  public function index()
     {
-        $lecturers = Lecturer::all(); // Ambil semua data dosen
-        return view('pages.admin.lecturer.index', compact('lecturers')); // Kirim data ke view
+        // Kirimkan view tanpa data karena DataTables akan meng-handle data secara AJAX
+        return view('pages.admin.lecturer.index');
+    }
+
+    public function data(Request $request)
+    {
+        if ($request->ajax()) {
+            $lecturer = Lecturer::query();
+
+            return DataTables::of($lecturer)
+                ->addIndexColumn() // Menambahkan kolom index secara otomatis
+                ->addColumn('action', function ($data) {
+                    // Mengembalikan HTML untuk kolom aksi, misalnya tombol edit
+                    return '<a href="' . route('lecturer.edit', $data->id) . '" class="btn btn-primary btn-sm">Edit</a>';
+                })
+                ->make(true);
+        }
+
+        return abort(404);
     }
 
     // Show the form for creating a new lecturer
@@ -30,7 +54,7 @@ class LecturerController extends Controller
     {
         $request->validate([
             'nuptk' => 'required|string|max:16|unique:lecturer,nuptk',
-            'nidn' => 'nullable|string|max:10',
+            'nidn' => 'nullable|string|max:10|unique:lecturer,nidn',
             'nik' => 'nullable|string|max:16',
             'gender' => 'required|in:Laki-laki,Perempuan',
             'name' => 'required|string|max:200',
@@ -56,9 +80,9 @@ class LecturerController extends Controller
     }
 
     // Show the form for editing the specified lecturer
-    public function edit($nuptk)
+    public function edit($id)
     {
-        $lecturer = Lecturer::where('nuptk', $nuptk)->firstOrFail();
+        $lecturer = Lecturer::findOrFail($id); // Menggunakan id sebagai primary key
         $activeStatuses = Active_status::all();
         $employeeLevels = Employee_level::all();
         $prodiList = Prodi::all();
@@ -67,11 +91,11 @@ class LecturerController extends Controller
     }
 
     // Update the specified lecturer in the database
-    public function update(Request $request, $nuptk)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'nuptk' => 'required|string|max:16|exists:lecturer,nuptk',
-            'nidn' => 'nullable|string|max:10',
+            'nuptk' => 'required|string|max:16|unique:lecturer,nuptk,' . $id, // NUPTK unik, tetapi boleh null, dan abaikan dosen yang sedang diupdate
+            'nidn' => 'nullable|string|max:10|unique:lecturer,nidn,' . $id,
             'nik' => 'nullable|string|max:16',
             'gender' => 'required|in:Laki-laki,Perempuan',
             'name' => 'required|string|max:200',
@@ -91,8 +115,8 @@ class LecturerController extends Controller
             'prodi_id' => 'required|exists:prodi,id',
         ]);
 
-        // Cari lecturer berdasarkan nuptk
-        $lecturer = Lecturer::findOrFail($nuptk);
+        // Cari lecturer berdasarkan id
+        $lecturer = Lecturer::findOrFail($id);
 
         // Update data lecturer dengan data dari request
         $lecturer->update($request->all());
@@ -102,9 +126,9 @@ class LecturerController extends Controller
     }
 
     // Remove the specified lecturer from the database
-    public function destroy( $nuptk)
+    public function destroy($id)
     {
-        $lecturer = Lecturer::where('nuptk', $nuptk)->firstOrFail();
+        $lecturer = Lecturer::findOrFail($id); // Menggunakan id untuk pencarian
         $lecturer->delete();
 
         return redirect()->route('lecturer.index')->with('success', 'Lecturer deleted successfully.');
