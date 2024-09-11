@@ -16,12 +16,13 @@ return new class extends Migration
             $table->uuid('prodi_id');
             $table->integer('max_number_of_meets');
             $table->integer('min_number_of_presence');
-            $table->boolean('kehadiranis_prodi');
+            $table->boolean('is_prodi');
             $table->timestamps();
-
-            //Foreign
+        
+            // Foreign key harus mengarah ke tabel `prodi`
             $table->foreign('prodi_id')->references('id')->on('prodi')->onDelete('cascade');
         });
+        
     }
 
     /**

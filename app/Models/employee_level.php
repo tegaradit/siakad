@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Employee_level extends Model
 {
     use HasFactory;
-    protected $table = 'employee_status';
+    protected $table = 'employee_level';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    
     protected $fillable = [
         'name'
     ];

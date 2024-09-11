@@ -13,24 +13,45 @@ class Course extends Model
 
     protected $table = 'course';
 
-    public function t_prodi()
+    // Add the fillable property
+    protected $fillable = [
+        'prodi_id',
+        'education_level_id',
+        'code',
+        'name',
+        'group_id',
+        'type_id',
+        'sks_mk',
+        'sks_tm',
+        'sks_pr',
+        'sks_pl',
+        'sks_sim',
+        'status',
+        'is_sap',
+        'is_silabus',
+        'is_teaching_material',
+        'is_praktikum',
+        'effective_start_date',
+        'effective_end_date',
+    ];
+
+    public function prodi()
     {
-        return $this->belongsTo(Prodi::class,'prodi_id');
+        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
     }
 
     public function education_level()
     {
-        return $this->hasMany(Education_level::class,'education_level_id');
+        return $this->belongsTo(Education_level::class, 'education_level_id', 'id_jenj_didik');
     }
 
     public function course_group()
     {
-        return $this->hasOne(Course_group::class,'group_id');
+        return $this->belongsTo(Course_group::class, 'group_id', 'id');
     }
 
     public function course_type()
     {
-        return $this->hasOne(course_type::class,'type_id');
+        return $this->belongsTo(Course_type::class, 'type_id', 'id');
     }
-
 }
