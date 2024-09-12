@@ -14,7 +14,7 @@
                 <li class="menu-title" data-key="t-menu">Data Umum</li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="/admin/identitas-pt">
                         <i data-feather="target"></i>
                         <span data-key="t-dashboard">Identitas PT</span>
                     </a>
