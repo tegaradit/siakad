@@ -24,7 +24,7 @@ class ProdiController extends Controller
                     'ruangan_jurusan.nm_jur',
                     'education_level.nm_jenj_didik',
                     'prodi.sks_lulus',
-                    'prodi.status'
+                    'prodi.prodi AS status'
                 ])
                 ->join('ruangan_jurusan', 'prodi.id_jur', '=', 'ruangan_jurusan.id_jur')
                 ->join('education_level', 'prodi.id_jenj_didik', '=', 'education_level.id_jenj_didik')
