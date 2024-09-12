@@ -91,10 +91,10 @@ Route::get('/tahun-akademik/data', [AcademicYearController::class, 'data'])->nam
 //dosen 
 Route::get('/dosen',[DosenController::class, 'index'] )->name('dahboard.dosen');
 //All Prodi
-Route::get('/admin/all_prodi', [TAllProdiController::class, 'index']);
+Route::get('/admin/all_prodi', [TAllProdiController::class, 'index'])->name('all_prodi.index');
 Route::get('/admin/all_prodi/data', [TAllProdiController::class, 'getAllProdiData'])->name('all_prodi.data');
 //Educational Unit
-Route::get('/admin/educational_unit', [TSatuanPendidikanController::class, 'index']);
+Route::get('/admin/educational_unit', [TSatuanPendidikanController::class, 'index'])->name('educational_unit.index');
 Route::get('/admin/educational_unit/data', [TSatuanPendidikanController::class, 'getEducationalUnitData'])->name('educational_unit.data');
 //room
 Route::get('/admin/room',[RoomController::class, 'index'])->name('room.index');

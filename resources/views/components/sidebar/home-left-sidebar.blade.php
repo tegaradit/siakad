@@ -6,7 +6,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
                     <a href="{{ route('dashboard.admin') }}">
-                        <i data-feather="edit"></i>
+                        <i data-feather="home"></i>
                         <span data-key="dashboard">Dashboard</span>
                     </a>
                 </li>
@@ -15,49 +15,49 @@
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="target"></i>
                         <span data-key="t-dashboard">Identitas PT</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
+                    <a href="{{ route('educational_unit.index') }}">
+                        <i data-feather="server"></i>
                         <span data-key="t-dashboard">Daftar PT</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
-                        <i data-feather="home"></i>
+                    <a href="{{ route('all_prodi.index') }}">
+                        <i data-feather="menu"></i>
                         <span data-key="t-dashboard">Daftar Program Studi</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="file-text"></i>
                         <span data-key="t-dashboard">Program Studi PT</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{ route('buildings.index') }}">
-                        <i data-feather="home"></i>
+                        <i data-feather="codesandbox"></i>
                         <span data-key="t-dashboard">Gedung</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{route('room.index')}}">
-                        <i data-feather="home"></i>
+                        <i data-feather="codepen"></i>
                         <span data-key="t-dashboard">Ruangan</span>
                     </a> 
                 </li>
 
                 <li>
                     <a href="{{ route('users.index') }}">
-                        <i data-feather="home"></i>
+                        <i data-feather="users"></i>
                         <span data-key="t-dashboard">Pengguna</span>
                     </a>
                 </li>
@@ -146,63 +146,69 @@
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="airplay"></i>
                         <span data-key="t-dashboard">PMB</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
+                    <a href="{{ route('tahun-akademik.index') }}">
+                        <i data-feather="calendar"></i>
                         <span data-key="t-dashboard">Tahun Akademik</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{ route('semester.index') }}">
-                        <i data-feather="home"></i>
+                        <i data-feather="book-open"></i>
                         <span data-key="t-dashboard">Semester</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
+                    <a href="{{ route('lecture-setting.index') }}">
+                        <i data-feather="settings"></i>
                         <span data-key="t-dashboard">Setting Perkuliahan</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
+                    <a href="{{ route('calendar-type.index') }}">
+                        <i data-feather="list"></i>
+                        <span data-key="t-dashboard"> Tipe Kalender</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('kalender-akademik.index') }}">
+                        <i data-feather="bar-chart-2"></i>
                         <span data-key="t-dashboard">Kalender Akademik</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{route('lecturer.index')}}">
-                        <i data-feather="home"></i>
+                        <i data-feather="user-check"></i>
                         <span data-key="t-dashboard">Dosen</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{ route('course.index') }}">
-                        <i data-feather="home"></i>
+                        <i data-feather="book"></i>
                         <span data-key="t-dashboard">Mata Kuliah</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{ route('curriculum.index') }}">
-                        <i data-feather="home"></i>
+                        <i data-feather="bookmark"></i>
                         <span data-key="t-dashboard">Kurikulum</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="user"></i>
                         <span data-key="t-dashboard">Mahasiswa</span>
                     </a>
                 </li>
@@ -211,21 +217,21 @@
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="align-justify"></i>
                         <span data-key="t-dashboard">Kelompok Komponen</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="pause"></i>
                         <span data-key="t-dashboard">Komponen Penilaian</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="pen-tool"></i>
                         <span data-key="t-dashboard">Penilaian</span>
                     </a>
                 </li>
@@ -234,21 +240,21 @@
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="clock"></i>
                         <span data-key="t-dashboard">Waktu Perkuliahan</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="sliders"></i>
                         <span data-key="t-dashboard">Jadwal Kuliah</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="bar-chart"></i>
                         <span data-key="t-dashboard">Jadwal Ujian</span>
                     </a>
                 </li>
@@ -271,49 +277,49 @@
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="layout"></i>
                         <span data-key="t-dashboard">Aktivitas Kuliah Mahasiswa</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="hexagon"></i>
                         <span data-key="t-dashboard">Aktivitas Mahasiswa</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="framer"></i>
                         <span data-key="t-dashboard">KHS</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="archive"></i>
                         <span data-key="t-dashboard">Transkrip</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="database"></i>
                         <span data-key="t-dashboard">Daftar Mahasiswa Lulus/DO</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="chevrons-right"></i>
                         <span data-key="t-dashboard">Pelaksanaan Wisuda</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="index.html">
-                        <i data-feather="home"></i>
+                        <i data-feather="file-plus"></i>
                         <span data-key="t-dashboard">Pendaftaran Wisuda</span>
                     </a>
                 </li>
