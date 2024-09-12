@@ -63,6 +63,7 @@ Route::post('/admin/course', [CourseController::class, 'store'])->name('course.s
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
+Route::get('/admin/course/{id}', [CourseController::class, 'show'])->name('course.show');
 // admin/semester
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
 Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data');

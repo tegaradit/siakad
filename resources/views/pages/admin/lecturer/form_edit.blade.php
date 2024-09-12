@@ -63,7 +63,7 @@
 
                             <!-- Name field -->
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">Nama</label>
                                 <input type="text" name="name" class="form-control"
                                     value="{{ old('name', $lecturer->name) }}" required>
                                 @error('name')
@@ -73,7 +73,7 @@
 
                             <!-- Active Status field -->
                             <div class="form-group">
-                                <label for="active_status_id">Active Status</label>
+                                <label for="active_status_id">Status Aktif</label>
                                 <select name="active_status_id" class="form-control">
                                     @foreach ($activeStatuses as $status)
                                         <option value="{{ $status->id }}"
@@ -88,7 +88,7 @@
 
                             <!-- Birth Date field -->
                             <div class="form-group">
-                                <label for="birth_date">Birth Date</label>
+                                <label for="birth_date">Tanggal Lahir</label>
                                 <input type="date" name="birth_date" class="form-control"
                                     value="{{ old('birth_date', $lecturer->birth_date) }}" required>
                                 @error('birth_date')
@@ -98,7 +98,7 @@
 
                             <!-- Birth Place field -->
                             <div class="form-group">
-                                <label for="birth_place">Birth Place</label>
+                                <label for="birth_place">Tempat Lahir</label>
                                 <input type="text" name="birth_place" class="form-control"
                                     value="{{ old('birth_place', $lecturer->birth_place) }}" required>
                                 @error('birth_place')
@@ -108,7 +108,7 @@
 
                             <!-- Mother's Name field -->
                             <div class="form-group">
-                                <label for="mothers_name">Mother's Name</label>
+                                <label for="mothers_name">Nama Ibu</label>
                                 <input type="text" name="mothers_name" class="form-control"
                                     value="{{ old('mothers_name', $lecturer->mothers_name) }}" required>
                                 @error('mothers_name')
@@ -118,7 +118,7 @@
 
                             <!-- Mariage Status field -->
                             <div class="form-group">
-                                <label for="mariage_status">Marriage Status</label>
+                                <label for="mariage_status">Status Pernikahan</label>
                                 <select name="mariage_status" class="form-control">
                                     <option value="belum kawin"
                                         {{ old('mariage_status', $lecturer->mariage_status) == 'belum kawin' ? 'selected' : '' }}>
@@ -140,7 +140,7 @@
 
                             <!-- Employee Level field -->
                             <div class="form-group">
-                                <label for="employee_level_id">Employee Level</label>
+                                <label for="employee_level_id">Level Pegawai</label>
                                 <select name="employee_level_id" class="form-control">
                                     @foreach ($employeeLevels as $level)
                                         <option value="{{ $level->id }}"
@@ -155,7 +155,7 @@
 
                             <!-- Level Education field -->
                             <div class="form-group">
-                                <label for="level_education">Level Education</label>
+                                <label for="level_education">Level Pendidikan</label>
                                 <select name="level_education" class="form-control">
                                     <option value="S1"
                                         {{ old('level_education', $lecturer->level_education) == 'S1' ? 'selected' : '' }}>
@@ -174,7 +174,7 @@
 
                             <!-- Phone Number field -->
                             <div class="form-group">
-                                <label for="phone_number">Phone Number</label>
+                                <label for="phone_number">No Telepon</label>
                                 <input type="text" name="phone_number" class="form-control"
                                     value="{{ old('phone_number', $lecturer->phone_number) }}">
                                 @error('phone_number')
@@ -194,7 +194,7 @@
 
                             <!-- Assign Letter Number field -->
                             <div class="form-group">
-                                <label for="assign_letter_number">Assign Letter Number</label>
+                                <label for="assign_letter_number">No Surat Tugas</label>
                                 <input type="text" name="assign_letter_number" class="form-control"
                                     value="{{ old('assign_letter_number', $lecturer->assign_letter_number) }}">
                                 @error('assign_letter_number')
@@ -204,7 +204,7 @@
 
                             <!-- Assign Letter Date field -->
                             <div class="form-group">
-                                <label for="assign_letter_date">Assign Letter Date</label>
+                                <label for="assign_letter_date">Tanggal Surat Tugas</label>
                                 <input type="date" name="assign_letter_date" class="form-control"
                                     value="{{ old('assign_letter_date', $lecturer->assign_letter_date) }}">
                                 @error('assign_letter_date')
@@ -214,7 +214,7 @@
 
                             <!-- Assign Letter TMT field -->
                             <div class="form-group">
-                                <label for="assign_letter_tmt">Assign Letter TMT</label>
+                                <label for="assign_letter_tmt">Tanggal TMT Surat Tugas</label>
                                 <input type="date" name="assign_letter_tmt" class="form-control"
                                     value="{{ old('assign_letter_tmt', $lecturer->assign_letter_tmt) }}">
                                 @error('assign_letter_tmt')
@@ -224,7 +224,7 @@
 
                             <!-- Exit Date field -->
                             <div class="form-group">
-                                <label for="exit_date">Exit Date</label>
+                                <label for="exit_date">Tanggal Keluar</label>
                                 <input type="date" name="exit_date" class="form-control"
                                     value="{{ old('exit_date', $lecturer->exit_date) }}">
                                 @error('exit_date')
@@ -234,7 +234,7 @@
 
                             <!-- Prodi ID field -->
                             <div class="form-group">
-                                <label for="prodi_id">Program Studi</label>
+                                <label for="prodi_id">Program ID</label>
                                 <select name="prodi_id" class="form-control">
                                     @foreach ($prodiList as $prodi)
                                         <option value="{{ $prodi->id }}"
@@ -249,7 +249,7 @@
 
                             <!-- Submit button -->
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Update Lecturer</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </div>
 
                         </form>

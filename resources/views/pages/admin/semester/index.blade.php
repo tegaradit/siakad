@@ -1,6 +1,11 @@
 @extends('layouts.home-layout')
 
 @section('home-content')
+<style>
+    #datatable td, #datatable th {
+        text-align: center; /* This applies to all table headers and cells */
+    }
+</style>
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -27,23 +32,23 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Tabel Semester</h4>
-                            <p class="card-title-desc">Tabel ini berisi data semester.</p>
+                            <h4 class="card-title">Daftar Semester</h4>
+                            <p class="card-title-desc">Berikut adalah daftar mata kuliah yang tersedia di sistem.</p>
                         </div>
                         <div class="card-body">
                             <a href="{{ route('semester.create') }}" class="btn btn-primary mb-3">Tambah Semester</a>
                             <div class="table-responsive">
-                                <table class="table table-bordered dt-responsive nowrap w-100" id="datatable">
+                                <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="datatable">
                                     <thead>
                                         <tr style="text-align: center">
                                             <th style="width: 30px">No.</th>
                                             <th>Semester ID</th>
-                                            <th>Name</th>
-                                            <th>Type</th>
+                                            <th>Nama</th>
+                                            <th>Tipe</th>
                                             <th>SMT</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Action</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Berhenti</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -72,9 +77,9 @@
                     render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1; // nomor urut yang dinamis
                     },
-                    createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('text-align', 'center'); // Align center
-                    }
+                    // createdCell: function (td, cellData, rowData, row, col) {
+                    //     $(td).css('text-align', 'center'); // Align center
+                    // }
                 },
                 { data: 'semester_id', name: 'semester_id' },
                 { data: 'name', name: 'name' },
@@ -110,7 +115,7 @@
                     data: 'action', 
                     name: 'action', 
                     orderable: false, 
-                    searchable: false 
+                    searchable: false, 
                 }
             ]
         });

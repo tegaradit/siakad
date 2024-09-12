@@ -128,23 +128,22 @@ use App\Models\Role;
         
         public function getUsers(Request $request) {
             if ($request->ajax()) {
-                $data = User::with('role')->select('users.*')->chunk(100, function ($users) {
-                    return DataTables::of($users)
-                        ->addColumn('role', function ($row) {
-                            return $row->role ? $row->role->name : 'N/A';
-                        })
-                        ->addColumn('action', function ($row) {
-                            $btn = '<a href="'.route('users.edit', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
-                            $btn .= ' <a href="javascript:void(0)" data-id="'.$row->id.'" class="delete btn btn-danger btn-sm deleteUser">Delete</a>';
-                            return $btn;
-                        })
-                        ->rawColumns(['action'])
-                        ->make(true);
-                });
+                $data = User::with('role')->select('users.*');
+                return DataTables::of($data)
+                    ->addColumn('role', function ($row) {
+                        return $row->role ? $row->role->name : 'N/A';
+                    })
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="'.route('users.edit', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
+                        $btn .= ' <a href="javascript:void(0)" data-id="'.$row->id.'" class="delete btn btn-danger btn-sm deleteUser">Delete</a>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
             }
         }
         
-        //make method create
+        //make method createF
         public function create(){
             $roles = Role::all();
             return view('pages.admin.users.create', compact('roles'));

@@ -31,29 +31,17 @@
                         <div class="card-body">
                             <a href="{{ route('course.create') }}" class="btn btn-primary mb-3">Tambah Mata Kuliah</a>
                             <div class="table-responsive">
-                                <table class="table table-nowrap align-middle table-edits table-bordered nowrap" id="course-table">
+                                <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="course-table">
                                     <thead>
-                                        <tr>
-                                            <th>No</th>
+                                        <tr style="text-align: center">
+                                            <th style="width: 30px">No</th>
                                             <th>Code</th>
-                                            <th>Name</th>
+                                            <th>Nama</th>
                                             <th>Prodi</th>
-                                            <th>Education Level</th>
-                                            <th>Group_id</th>
-                                            <th>Type_id</th>
-                                            <th>sks_mk</th>
-                                            <th>sks_tm</th>
-                                            <th>sks_pr</th>
-                                            <th>sks_pl</th>
-                                            <th>sks_sim</th>
-                                            <th>status</th>
-                                            <th>is_sap</th>
-                                            <th>is_silabus</th>
-                                            <th>is_teaching_material</th>
-                                            <th>is_praktikum</th>
-                                            <th>effective_starts_date</th>
-                                            <th>effective_end_date</th>
-                                            <th>Action</th>
+                                            <th>Jenjang Pendidikan</th>
+                                            <th>Grup</th>
+                                            <th>Tipe</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -106,23 +94,11 @@
                 { data: 'education_level.nm_jenj_didik', name: 'education_level.nm_jenj_didik' },
                 { data: 'course_group.name', name: 'course_group.name' },
                 { data: 'course_type.name', name: 'course_type.name' },
-                { data: 'sks_mk', name: 'sks_mk' },
-                { data: 'sks_tm', name: 'sks_tm' },
-                { data: 'sks_pr', name: 'sks_pr' },
-                { data: 'sks_pl', name: 'sks_pl' },
-                { data: 'sks_sim', name: 'sks_sim' },
-                { data: 'status', name: 'status' },
-                { data: 'is_sap', name: 'is_sap' },
-                { data: 'is_silabus', name: 'is_silabus' },
-                { data: 'is_teaching_material', name: 'is_teaching_material' },
-                { data: 'is_praktikum', name: 'is_praktikum' },
-                { data: 'effective_start_date', name: 'effective_start_date' },
-                { data: 'effective_end_date', name: 'effective_end_date' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ],
             columnDefs: [
                 { targets: [0], className: 'text-center' }, // Center align No column
-                { targets: [18], className: 'text-center' } // Center align Action column
+                { targets: [7], className: 'text-center' } // Center align Action column
             ],
             "language": {
                 "emptyTable": "Data Mata Kuliah Kosong"

@@ -35,15 +35,15 @@
                             <div class="card-body">
                                 <a href="{{ route('lecture-setting.create') }}" class="btn btn-primary mb-3">Tambah</a>
                                 <div class="table-responsive">
-                                    <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                                    <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
+                                                <th style="text-align: center">No</th>
                                                 <th>Prodi ID</th>
                                                 <th>Maks Jum. Pertemuan</th>
                                                 <th>Min Jum. Pertemuan</th>
                                                 <th>is Prodi</th>
-                                                <th>Action</th>
+                                                <th style="text-align: center">Action</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -95,6 +95,9 @@
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
+                        },
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
                         }
                     },
                     {
@@ -117,7 +120,10 @@
                         data: 'action',
                         name: 'action',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     }
                 ]
             });
