@@ -49,12 +49,7 @@
                                 {{-- Prodi --}}
                                 <div class="form-group">
                                     <label for="prodi_id">Prodi</label>
-                                    <select name="prodi_id" id="prodi_id" class="form-control" required>
-                                        <option value="">Pilih...</option>
-                                        @foreach($prodis as $prodi)
-                                            <option value="{{ $prodi->id }}">{{ $prodi->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <select name="prodi_id" id="prodi_id" class="form-control" required></select>
                                 </div>
 
                                 {{-- Education Level --}}
@@ -208,4 +203,33 @@
         </div>
     </div>
 </div>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+    $('#prodi_id').select2({
+        placeholder: 'Pilih Prodi...',
+        minimumInputLength: 2,
+        ajax: {
+            url: '{{ route('course.search') }}',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term  // Query yang akan dikirim
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.items  // Sesuai dengan format JSON dari controller
+                };
+            },
+            cache: true
+        }
+    });
+});
+</script>
+
+
 @endsection
