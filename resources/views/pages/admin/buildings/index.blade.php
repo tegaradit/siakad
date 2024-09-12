@@ -1,6 +1,11 @@
 @extends('layouts.home-layout')
 
 @section('home-content')
+    {{-- <style>
+        #datatable td, #datatable th {
+            text-align: center; /* This applies to all table headers and cells */
+        }
+    </style> --}}
   <div class="main-content">
       <div class="page-content">
           <div class="container-fluid">
@@ -25,21 +30,19 @@
                   <div class="col-12">
                       <div class="card">
                           <div class="card-header">
-                              <h4 class="card-title">Table Gedung</h4>
-                              <p class="card-title-desc">
-                                  Table ini berisi code dan nama gedung perguruan tinggi.
-                              </p>
+                              <h4 class="card-title">Daftar Gedung</h4>
+                              <p class="card-title-desc">Berikut adalah daftar mata kuliah yang tersedia di sistem.</p>
                           </div>
                           <div class="card-body">
                               <a href="{{ route('buildings.create') }}" class="btn btn-primary mb-3">Tambah Gedung</a>
                               <div class="table-responsive">
-                                  <table class="table table-bordered dt-responsive nowrap w-100" id="datatable">
+                                  <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="datatable">
                                       <thead>
                                           <tr style="text-align: center">
                                               <th style="width: 30px">No</th>
-                                              <th>Code</th>
-                                              <th>Name</th>
-                                              <th>Action</th>
+                                              <th style="width: 100px">Code</th>
+                                              <th>Nama</th>
+                                              <th style="width: 80px">Aksi</th>
                                           </tr>
                                       </thead>
                                   </table>
@@ -99,7 +102,10 @@
                     data: 'action', 
                     name: 'action', 
                     orderable: false, 
-                    searchable: false 
+                    searchable: false,
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('text-align', 'center'); // Align center
+                    } 
                 }
             ]
         });

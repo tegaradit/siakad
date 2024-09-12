@@ -9,12 +9,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0 font-size-18">Data Dosen</h4>
+                                <h4 class="mb-sm-0 font-size-18"></h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item">
-                                            <a href="javascript: void(0);">Data Umum</a>
+                                            <a href="javascript: void(0);">Data Perkuliahan</a>
                                         </li>
                                         <li class="breadcrumb-item active">Data Dosen</li>
                                     </ol>
@@ -33,7 +33,7 @@
                                 <div class="card-body">
                                     <a href="{{ route('lecturer.create') }}" class="btn btn-primary mb-3">Tambah</a>
                                     <div class="table-responsive">
-                                        <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -49,7 +49,7 @@
                                                     <th>Status Pernikahan</th>
                                                     <th>Level Pegawai</th>
                                                     <th>Level Pendidikan</th>
-                                                    <th>Telepon</th>
+                                                    <th>No Telepon</th>
                                                     <th>Email</th>
                                                     <th>No Surat Tugas</th>
                                                     <th>Tanggal Surat Tugas</th>

@@ -87,14 +87,14 @@
 
                                     {{-- Name --}}
                                     <div class="form-group">
-                                        <label for="name">Name</label>
+                                        <label for="name">Nama</label>
                                         <input type="text" name="name" id="name" class="form-control"
                                             maxlength="200" required>
                                     </div>
 
                                     {{-- Active Status --}}
                                     <div class="form-group">
-                                        <label for="active_status_id">Active Status</label>
+                                        <label for="active_status_id">Status Aktif</label>
                                         <select name="active_status_id" id="active_status_id" class="form-control" required>
                                             <option value="">Pilih...</option>
                                             @foreach ($activeStatuses as $status)
@@ -105,28 +105,28 @@
 
                                     {{-- Birth Date --}}
                                     <div class="form-group">
-                                        <label for="birth_date">Birth Date</label>
+                                        <label for="birth_date">Tanggal Lahir</label>
                                         <input type="date" name="birth_date" id="birth_date" class="form-control"
                                             required>
                                     </div>
 
                                     {{-- Birth Place --}}
                                     <div class="form-group">
-                                        <label for="birth_place">Birth Place</label>
+                                        <label for="birth_place">Tempat Lahir</label>
                                         <input type="text" name="birth_place" id="birth_place" class="form-control"
                                             maxlength="100" required>
                                     </div>
 
                                     {{-- Mother's Name --}}
                                     <div class="form-group">
-                                        <label for="mothers_name">Mother's Name</label>
+                                        <label for="mothers_name">Nama Ibu</label>
                                         <input type="text" name="mothers_name" id="mothers_name" class="form-control"
                                             maxlength="200" required>
                                     </div>
 
                                     {{-- Marital Status --}}
                                     <div class="form-group">
-                                        <label for="mariage_status">Marital Status</label>
+                                        <label for="mariage_status">Status Pernikahan</label>
                                         <select name="mariage_status" id="mariage_status" class="form-control" required>
                                             <option value="">Pilih...</option>
                                             <option value="belum kawin">Belum Kawin</option>
@@ -138,7 +138,7 @@
 
                                     {{-- Employee Level --}}
                                     <div class="form-group">
-                                        <label for="employee_level_id">Employee Level</label>
+                                        <label for="employee_level_id">Level Pegawai</label>
                                         <select name="employee_level_id" id="employee_level_id" class="form-control"
                                             required>
                                             <option value="">Pilih...</option>
@@ -150,7 +150,7 @@
 
                                     {{-- Level of Education --}}
                                     <div class="form-group">
-                                        <label for="level_education">Level of Education</label>
+                                        <label for="level_education">Level Pendidikan</label>
                                         <select name="level_education" id="level_education" class="form-control"
                                             required>
                                             <option value="">Pilih...</option>
@@ -162,7 +162,7 @@
 
                                     {{-- Phone Number --}}
                                     <div class="form-group">
-                                        <label for="phone_number">Phone Number</label>
+                                        <label for="phone_number">No Telepon</label>
                                         <input type="text" name="phone_number" id="phone_number" class="form-control"
                                             maxlength="13">
                                     </div>
@@ -176,34 +176,34 @@
 
                                     {{-- Assign Letter Number --}}
                                     <div class="form-group">
-                                        <label for="assign_letter_number">Assign Letter Number</label>
+                                        <label for="assign_letter_number">No Surat Tugas</label>
                                         <input type="text" name="assign_letter_number" id="assign_letter_number"
                                             class="form-control" maxlength="30">
                                     </div>
 
                                     {{-- Assign Letter Date --}}
                                     <div class="form-group">
-                                        <label for="assign_letter_date">Assign Letter Date</label>
+                                        <label for="assign_letter_date">Tanggal Surat Tugas</label>
                                         <input type="date" name="assign_letter_date" id="assign_letter_date"
                                             class="form-control">
                                     </div>
 
                                     {{-- Assign Letter TMT --}}
                                     <div class="form-group">
-                                        <label for="assign_letter_tmt">Assign Letter TMT</label>
+                                        <label for="assign_letter_tmt">Tanggal TMT Surat Tugas</label>
                                         <input type="date" name="assign_letter_tmt" id="assign_letter_tmt"
                                             class="form-control">
                                     </div>
 
                                     {{-- Exit Date --}}
                                     <div class="form-group">
-                                        <label for="exit_date">Exit Date</label>
+                                        <label for="exit_date">Tanggal Keluar</label>
                                         <input type="date" name="exit_date" id="exit_date" class="form-control">
                                     </div>
 
                                     {{-- Prodi --}}
                                     <div class="form-group">
-                                        <label for="prodi_id">Prodi</label>
+                                        <label for="prodi_id">Prodi ID</label>
                                         <select name="prodi_id" id="prodi_id" class="form-control" required>
                                             <option value="">Pilih...</option>
                                             @foreach ($prodiList as $prodi)

@@ -9,16 +9,40 @@ use Yajra\DataTables\Facades\DataTables;
 class TAllProdiController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan halaman index All Prodi.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-         return view('pages.admin.all_prodi.index');
+        return view('pages.admin.all_prodi.index');
     }
 
-    public function getAllProdiData()
+    /**
+     * Mengambil data All Prodi untuk DataTables melalui permintaan AJAX.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    public function getAllProdiData(Request $request)
     {
-        $allProdi = All_prodi::select(['id_prodi', 'id_pt', 'kode_prodi', 'nama_prodi', 'status', 'id_jenjang_pendidikan']);
-        return DataTables::of($allProdi)->make(true);
+        // Mengecek apakah request yang masuk adalah AJAX
+        if ($request->ajax()) {
+            // Mengambil data dari tabel all_prodi
+            $allProdi = All_prodi::select([
+                'id_prodi',
+                'id_pt',
+                'kode_prodi',
+                'nama_prodi',
+                'status',
+                'id_jenjang_pendidikan'
+            ]);
+
+            // Mengembalikan data dalam format yang kompatibel dengan DataTables
+            return DataTables::of($allProdi)->make(true);
+        }
+
+        // Jika bukan permintaan AJAX, kembalikan error 403 Unauthorized
+        return abort(403, 'Unauthorized action.');
     }
 }
