@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0 font-size-18">Data Dosen</h4>
+                                <h4 class="mb-sm-0 font-size-18"></h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
@@ -33,15 +33,15 @@
                                 <div class="card-body">
                                     <a href="{{ route('room.create') }}" class="btn btn-primary mb-3">Tambah </a>
                                     <div class="table-responsive">
-                                        <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Code</th>
-                                                    <th>Name</th>
-                                                    <th>Floor Position</th>
-                                                    <th>Building ID</th>
-                                                    <th>Capacity</th>
+                                                    <th>Kode</th>
+                                                    <th>Nama</th>
+                                                    <th>Posisi Lantai</th>
+                                                    <th>Gedung ID</th>
+                                                    <th>Kapasitas</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>

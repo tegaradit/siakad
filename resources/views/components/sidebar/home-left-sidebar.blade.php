@@ -28,7 +28,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="#">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Daftar Program Studi</span>
                     </a>
@@ -180,7 +180,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{route('lecturer.index')}}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Dosen</span>
                     </a>

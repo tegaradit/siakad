@@ -16,7 +16,7 @@
 
                             <!-- Code field -->
                             <div class="form-group">
-                                <label for="code">Code</label>
+                                <label for="code">Kode</label>
                                 <input type="text" name="code" class="form-control" value="{{ old('code') }}"
                                     required>
                                 @error('code')
@@ -26,7 +26,7 @@
 
                             <!-- Name field -->
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">Nama</label>
                                 <input type="text" name="name" class="form-control" value="{{ old('name') }}"
                                     required>
                                 @error('name')
@@ -36,7 +36,7 @@
 
                             <!-- Floor Position field -->
                             <div class="form-group">
-                                <label for="floor_position">Floor Position</label>
+                                <label for="floor_position">Posisi Lantai</label>
                                 <input type="number" name="floor_position" class="form-control"
                                     value="{{ old('floor_position') }}" required>
                                 @error('floor_position')
@@ -46,7 +46,7 @@
 
                             <!-- Building ID field -->
                             <div class="form-group">
-                                <label for="building_id">Building</label>
+                                <label for="building_id">Gedung ID</label>
                                 <select name="building_id" class="form-control" required>
                                     <option value="">Select Building</option>
                                     @foreach ($buildings as $building)
@@ -63,7 +63,7 @@
 
                             <!-- Capacity field -->
                             <div class="form-group">
-                                <label for="capacity">Capacity</label>
+                                <label for="capacity">Kapasitas</label>
                                 <input type="number" name="capacity" class="form-control" value="{{ old('capacity', 1) }}"
                                     required>
                                 @error('capacity')
