@@ -35,7 +35,7 @@
                             <div class="card-body">
                                 <a href="{{ route('kalender-akademik.create') }}" class="btn btn-primary mb-3">Tambah</a>
                                 <div class="table-responsive">
-                                    <table class="table table-nowrap align-middle table-edits table-bordered">
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
                                         <thead>
                                             <tr>
                                                 <th style="width: 35px">No</th>
@@ -47,44 +47,6 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @forelse ($datas as $index => $data)
-                                                <tr data-id="1">
-                                                    <td data-field="id">{{ $index + 1 }}</td>
-                                                    <td>{{ $data->start_date }}</td>
-                                                    <td>{{ $data->end_date }}</td>
-                                                    <td>{{ $data->description }}</td>
-                                                    <td>{{ $data->semester ? $data->semester->name : 'N/A' }}</td>
-                                                    <td>{{ $data->calendar_type ? $data->calendar_type->name : 'N/A' }}</td>
-
-                                                    <td style="width: 80px">
-                                                        <a href="{{ route('kalender-akademik.edit', $data->id) }}"
-                                                            class="btn btn-outline-warning btn-sm edit" title="Edit">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-
-                                                        <a href="#" class="btn btn-outline-danger btn-sm delete"
-                                                            title="delete"
-                                                            onclick="event.preventDefault(); if(confirm('Are you sure?')) { document.getElementById('delete-form-{{ $data->id }}').submit(); }">
-                                                            <i class="fas fa-backspace"></i>
-                                                        </a>
-                                                        <form id="delete-form-{{ $data->id }}"
-                                                            action="{{ route('kalender-akademik.destroy', $data->id) }}"
-                                                            method="POST" style="display: none;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                        </form>
-
-                                                    </td>
-                                                </tr>
-
-                                            @empty
-                                                <tr>
-                                                    <td colspan="11" class="text-center alert alert-danger">Data Masih
-                                                        Kosong</td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -117,4 +79,79 @@
             </div>
         </footer>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: "{{ route('kalender-akademik.data') }}",
+                columns: [{
+                        data: null,
+                        name: 'no',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart +
+                                1; // nomor urut yang dinamis
+                        },
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
+                    },
+                    {
+                        data: 'start_date',
+                        name: 'start_date'
+                    },
+                    {
+                        data: 'end_date',
+                        name: 'end_date'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {
+                        data: 'semester_id',
+                        name: 'semester_id'
+                    },
+                    {
+                        data: 'calendar_type_id',
+                        name: 'calendar_type_id'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            feather.replace();
+        });
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
 @endsection

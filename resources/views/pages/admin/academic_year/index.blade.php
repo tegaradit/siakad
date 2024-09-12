@@ -15,7 +15,7 @@
                                     <li class="breadcrumb-item">
                                         <a href="javascript: void(0);">Data Perkuliahan</a>
                                     </li>
-                                    <li class="breadcrumb-item active">Setting Perkuliahan</li>
+                                    <li class="breadcrumb-item active">Tahun Akademik</li>
                                 </ol>
                             </div>
                         </div>
@@ -27,23 +27,23 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tabel Setting Perkuliahan</h4>
+                                <h4 class="card-title">TabelTahun Akademik</h4>
                                 <p class="card-title-desc">
-                                    Tabel ini menyimpan data konfigurasi maksimal dan minimal pertemuan untuk setiap prodi.
+                                    Tabel ini berisi data tahun ajaran.
                                 </p>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('lecture-setting.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                                <a href="{{ route('tahun-akademik.create') }}" class="btn btn-primary mb-3">Tambah</a>
                                 <div class="table-responsive">
                                     <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Prodi ID</th>
-                                                <th>Maks Jum. Pertemuan</th>
-                                                <th>Min Jum. Pertemuan</th>
-                                                <th>is Prodi</th>
-                                                <th>Action</th>
+                                                <th style="width: 35px text-align: center">No</th>
+                                                <th>ID</th>
+                                                <th>Nama</th>
+                                                <th>Tanggal Mulai</th>
+                                                <th>Tanggal Selesai</th>
+                                                <th style="width: 45px">Action</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -87,31 +87,35 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: "{{ route('lecture-setting.data') }}",
+                ajax: "{{ route('tahun-akademik.data') }}",
                 columns: [{
                         data: null,
                         name: 'no',
                         orderable: false,
                         searchable: false,
                         render: function(data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
+                            return meta.row + meta.settings._iDisplayStart +
+                                1; // nomor urut yang dinamis
+                        },
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
                         }
                     },
                     {
-                        data: 'prodi_id',
-                        name: 'prodi_id'
+                        data: 'id',
+                        name: 'id'
                     },
                     {
-                        data: 'max_number_of_meets',
-                        name: 'max_number_of_meets'
+                        data: 'name',
+                        name: 'name'
                     },
                     {
-                        data: 'min_number_of_presence',
-                        name: 'min_number_of_presence'
+                        data: 'start_date',
+                        name: 'start_date'
                     },
                     {
-                        data: 'is_prodi',
-                        name: 'is_prodi'
+                        data: 'end_date',
+                        name: 'end_date'
                     },
                     {
                         data: 'action',
@@ -121,7 +125,6 @@
                     }
                 ]
             });
-
         });
     </script>
     <script>

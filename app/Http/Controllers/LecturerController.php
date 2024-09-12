@@ -16,8 +16,8 @@ class LecturerController extends Controller
     //     $lecturers = Lecturer::all(); // Ambil semua data dosen
     //     return view('pages.admin.lecturer.index', compact('lecturers')); // Kirim data ke view
     // }
-    
-  public function index()
+
+    public function index()
     {
         // Kirimkan view tanpa data karena DataTables akan meng-handle data secara AJAX
         return view('pages.admin.lecturer.index');

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademicCalendarController;
+use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
@@ -56,11 +57,17 @@ Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'dest
 //admin/curriculum(kurikulum)
 Route::resource('/admin/curriculum', CurriculumController::class);
 //lecturesetting
+Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data');
 Route::resource('/admin/lecture-setting', LectureSettingController::class);
 //tipe kalender
+Route::get('/calendar-type/data', [CalendarTypeController::class, 'data'])->name('calendar-type.data');
 Route::resource('/admin/calendar-type', CalendarTypeController::class);
 //kalender akademik
 Route::resource('/admin/kalender-akademik', AcademicCalendarController::class);
+Route::get('/kalender-akademik/data', [AcademicCalendarController::class, 'data'])->name('kalender-akademik.data');
+//akademik year
+Route::resource('/admin/tahun-akademik', AcademicYearController::class);
+Route::get('/tahun-akademik/data', [AcademicYearController::class, 'data'])->name('tahun-akademik.data');
 
 
 //dosen 
@@ -89,6 +96,7 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+
 
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
