@@ -52,7 +52,7 @@
                   </div>
                   <div class="card-body">
                      <div class="table-responsive">
-                        <table class="table table-bordered" id="prodi-table">
+                        <table class="table table-striped" id="prodi-table">
                            <thead>
                               <tr>
                                  <th>ID</th>
@@ -73,29 +73,29 @@
       </div> <!-- container -->
    </div> <!-- content -->
 </div> <!-- wrapper -->
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <script>
-      $(document).ready(function() {
-         $.ajaxSetup({
-            headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-         });
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   $(document).ready(function () {
+      $.ajaxSetup({
+         headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         }
+      });
 
-         $('#prodi-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{!! route('prodi.data') !!}',
-            columns: [
-               { data: 'id', name: 'id' },
-               { data: 'kode', name: 'kode' },
-               { data: 'nama_prodi', name: 'nama_prodi' },
-               { data: 'nm_jur', name: 'nm_jur' },
-               { data: 'nm_jenj_didik', name: 'nm_jenj_didik' },
-               { data: 'sks_lulus', name: 'sks_lulus' },
-               { data: 'status', name: 'status' },
-            ]
-         });
-      })
-   </script>
+      $('#prodi-table').DataTable({
+         processing: true,
+         serverSide: true,
+         ajax: '{!! route('prodi.data') !!}',
+         columns: [
+            { data: 'id', name: 'id' },
+            { data: 'kode', name: 'kode' },
+            { data: 'nama_prodi', name: 'nama_prodi' },
+            { data: 'nm_jur', name: 'nm_jur' },
+            { data: 'nm_jenj_didik', name: 'nm_jenj_didik' },
+            { data: 'sks_lulus', name: 'sks_lulus' },
+            { data: 'status', name: 'status' },
+         ]
+      });
+   })
+</script>
 @endsection
