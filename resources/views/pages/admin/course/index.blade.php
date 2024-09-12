@@ -90,7 +90,7 @@
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'code', name: 'code' },
                 { data: 'name', name: 'name' },
-                { data: 'prodi.name', name: 'prodi.name' },
+                { data: 'prodi.nama_prodi', name: 'prodi.nama_prodi' },
                 { data: 'education_level.nm_jenj_didik', name: 'education_level.nm_jenj_didik' },
                 { data: 'course_group.name', name: 'course_group.name' },
                 { data: 'course_type.name', name: 'course_type.name' },

@@ -85,7 +85,7 @@
                     }
                 },
                 { data: 'name', name: 'name' },
-                { data: 'prodi.name', name: 'prodi.name' },
+                { data: 'prodi.nama_prodi', name: 'prodi.nama_prodi' },
                 { data: 'education_level.nm_jenj_didik', name: 'education_level.nm_jenj_didik' },
                 { data: 'semester.semester_id', name: 'semester.semester_id' },
                 { data: 'normal_semester_number', name: 'normal_semester_number' },
