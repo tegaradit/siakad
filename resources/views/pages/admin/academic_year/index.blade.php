@@ -27,7 +27,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">TabelTahun Akademik</h4>
+                                <h4 class="card-title">Tabel Tahun Akademik</h4>
                                 <p class="card-title-desc">
                                     Tabel ini berisi data tahun ajaran.
                                 </p>
