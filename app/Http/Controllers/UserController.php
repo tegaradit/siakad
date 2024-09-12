@@ -143,7 +143,7 @@ use App\Models\Role;
             }
         }
         
-        //make method create
+        //make method createF
         public function create(){
             $roles = Role::all();
             return view('pages.admin.users.create', compact('roles'));
@@ -238,4 +238,14 @@ use App\Models\Role;
 
             return response()->json(['success' => 'User deleted successfully']);
         }
+        public function logout(Request $request)
+{
+    Auth::logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return view('pages.welcome')->with('success', 'You have been logged out successfully.');
+}
+
     }
