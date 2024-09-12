@@ -11,13 +11,7 @@ use Yajra\DataTables\DataTables;
 
 class LecturerController extends Controller
 {
-    // public function index()
-    // {
-    //     $lecturers = Lecturer::all(); // Ambil semua data dosen
-    //     return view('pages.admin.lecturer.index', compact('lecturers')); // Kirim data ke view
-    // }
-
-    public function index()
+  public function index()
     {
         // Kirimkan view tanpa data karena DataTables akan meng-handle data secara AJAX
         return view('pages.admin.lecturer.index');
@@ -32,8 +26,20 @@ class LecturerController extends Controller
                 ->addIndexColumn() // Menambahkan kolom index secara otomatis
                 ->addColumn('action', function ($data) {
                     // Mengembalikan HTML untuk kolom aksi, misalnya tombol edit
-                    return '<a href="' . route('lecturer.edit', $data->id) . '" class="btn btn-primary btn-sm">Edit</a>';
-                })
+                    return '<a href="'.route('lecturer.edit', $data->id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <form id="delete-form-' . $data->id . '" 
+                              onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
+                              action="' . route('lecturer.destroy', $data->id) . '" 
+                              method="POST" style="display:inline;">
+                            ' . csrf_field() . method_field('DELETE') . '
+                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>';
+            })
+                ->rawColumns(['action'])
                 ->make(true);
         }
 

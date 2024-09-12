@@ -23,18 +23,33 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', function () {
-    return view('pages.welcome');
+    return view('welcome');
 });
 Route::post('/login', [UserController::class, 'action'])->name('login');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
+//user
+
+
+
+Route::get('/users', [UserController::class, 'users'])->name('users.index');
+Route::get('/users/data', [UserController::class, 'getUsers'])->name('users.getUsers');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create'); // Tambah user
+Route::post('/users', [UserController::class, 'store'])->name('users.store'); // Simpan user
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+
+
 //admin
 Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin');
 Route::resource('admin/setting_perkuliahan', LectureSettingController::class);
 //admin/buildings(gedung)
 Route::get('/admin/buildings', [BuildingsController::class, 'index'])->name('buildings.index');
+Route::get('/buildings/data', [BuildingsController::class, 'data'])->name('buildings.data');
 Route::get('/admin/buildings/create', [BuildingsController::class, 'create'])->name('buildings.create');
 Route::post('/admin/buildings', [BuildingsController::class, 'store'])->name('buildings.store');
 Route::get('/admin/buildings/{id}/edit', [BuildingsController::class, 'edit'])->name('buildings.edit');
@@ -49,6 +64,7 @@ Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('cou
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
 // admin/semester
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
+Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data');
 Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
 Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
 Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
@@ -85,6 +101,7 @@ Route::post('admin/room/store', [RoomController::class, 'store'])->name('room.st
 Route::get('/admin/room/{id}/edit', [RoomController::class, 'edit'])->name('room.edit');
 Route::put('/admin/room/{id}', [RoomController::class, 'update'])->name('room.update');
 Route::delete('/admin/room/{id}', [RoomController::class, 'destroy'])->name('room.destroy');
+Route::get('/room/data', [RoomController::class, 'data'])->name('room.data');
 
 // Prodi
 Route::get('/admin/prodi', [ProdiController::class, 'index'])->name('prodi');
@@ -96,7 +113,5 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
-
-
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');

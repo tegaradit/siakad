@@ -4,13 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\Semester;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class SemesterController extends Controller
 {
     public function index()
     {
-        $datas = Semester::all();
-        return view('pages.admin.semester.index', compact('datas'));
+        // $datas = Semester::all();
+        return view('pages.admin.semester.index');
+    }
+
+    public function data(Request $request)
+    {
+        if ($request->ajax()) {
+            $semester = Semester::query();
+
+            return DataTables::of($semester)
+            ->addColumn('action', function ($row) {
+                return '<a href="'.route('semester.edit', $row->semester_id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <form id="delete-form-' . $row->semester_id . '" 
+                              onsubmit="event.preventDefault(); confirmDelete(' . $row->semester_id . ');" 
+                              action="' . route('semester.destroy', $row->semester_id) . '" 
+                              method="POST" style="display:inline;">
+                            ' . csrf_field() . method_field('DELETE') . '
+                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+
+        return abort(404);
     }
 
     // Display the form to create a new semester
