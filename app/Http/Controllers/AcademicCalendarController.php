@@ -6,6 +6,7 @@ use App\Models\Academic_calendar;
 use App\Models\Calendar_type;
 use App\Models\Semester;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class AcademicCalendarController extends Controller
 {
@@ -24,6 +25,37 @@ class AcademicCalendarController extends Controller
         return view('pages.admin.akademik_kalender.form', compact('calendar_types', 'semesters'));
     }
 
+    // AcademicCalendarController.php
+    public function data(Request $request)
+    {
+        if ($request->ajax()) {
+            $academic_calendar = Academic_calendar::with(['semester', 'calendar_type'])->get();
+
+            return DataTables::of($academic_calendar)
+                ->addIndexColumn()
+                ->addColumn('semester_id', function ($data) {
+                    return $data->semester ? $data->semester->name : 'N/A';
+                })
+                ->addColumn('calendar_type_id', function ($data) {
+                    return $data->calendar_type ? $data->calendar_type->name : 'N/A';
+                })
+                ->addColumn('action', function ($data) {
+                    return '<a href="' . route('kalender-akademik.edit', $data->id) . '" class="btn btn-outline-warning btn-sm edit"><i class="fas fa-pencil-alt"></i></a>
+                        <form id="delete-form-' . $data->id . '" 
+                              onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
+                              action="' . route('kalender-akademik.destroy', $data->id) . '" 
+                              method="POST" style="display:inline;">
+                            ' . csrf_field() . method_field('DELETE') . '
+                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>';
+                })
+                ->make(true);
+        }
+
+        return abort(404);
+    }
 
 
     public function store(Request $request)

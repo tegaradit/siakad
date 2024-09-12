@@ -29,7 +29,7 @@
                                     Akademik</h4>
 
                                 <form
-                                    action="{{ isset($data) ? route('kalender_akademik.update', $data->id) : route('kalender_akademik.store') }}"
+                                    action="{{ isset($data) ? route('kalender-akademik.update', $data->id) : route('kalender-akademik.store') }}"
                                     method="POST">
                                     @csrf
                                     @if (isset($data))
@@ -85,7 +85,7 @@
 
                                     <button type="submit"
                                         class="btn btn-primary">{{ isset($data) ? 'Update' : 'Simpan' }}</button>
-                                    <a href="{{ route('kalender_akademik.index') }}" class="btn btn-secondary">Batal</a>
+                                    <a href="{{ route('kalender-akademik.index') }}" class="btn btn-secondary">Batal</a>
                                 </form>
                             </div>
                         </div>

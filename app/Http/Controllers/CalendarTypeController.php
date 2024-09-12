@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Calendar_type;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\DataTable;
+use Yajra\DataTables\Facades\DataTables;
 
 class CalendarTypeController extends Controller
 {
@@ -16,7 +17,31 @@ class CalendarTypeController extends Controller
         return view('pages.admin.type_calendar.index', compact('datas'));
     }
 
+    public function data(Request $request)
+    {
+        if ($request->ajax()) {
+            $calendarType = Calendar_type::query();
 
+            return DataTables::of($calendarType)
+                ->addIndexColumn() 
+                ->addColumn('action', function ($data) {
+                    return '<a href="' . route('calendar-type.edit', $data->id) . '" class="btn btn-outline-warning btn-sm edit"><i class="fas fa-pencil-alt"></i></a>
+                    <form id="delete-form-' . $data->id . '" 
+                              onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
+                              action="' . route('calendar-type.destroy', $data->id) . '" 
+                              method="POST" style="display:inline;">
+                            ' . csrf_field() . method_field('DELETE') . '
+                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>';
+                    
+                })
+                ->make(true);
+        }
+
+        return abort(404);
+    }
 
     public function create()
     {
@@ -25,9 +50,6 @@ class CalendarTypeController extends Controller
 
     public function store(Request $request)
     {
-        // Cek semua data yang dikirim dari form
-        // dd($request->all());
-
         $validated = $request->validate([
             'name' => 'required|string|min:3|max:255',
         ]);
