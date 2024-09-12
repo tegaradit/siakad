@@ -27,13 +27,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Tabel Kurikulum</h4>
-                            <p class="card-title-desc">Tabel ini berisi data kurikulum.</p>
+                            <h4 class="card-title">Daftar Kurikulum</h4>
+                            <p class="card-title-desc">Berikut adalah daftar mata kuliah yang tersedia di sistem.</p>
                         </div>
                         <div class="card-body">
                             <a href="{{ route('curriculum.create') }}" class="btn btn-primary mb-3">Tambah Kurikulum</a>
                             <div class="table-responsive">
-                                <table class="table table-bordered dt-responsive nowrap w-100" id="datatable">
+                                <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="datatable">
                                     <thead>
                                         <tr style="text-align: center">
                                             <th style="width: 30px">No.</th>
@@ -45,7 +45,7 @@
                                             <th>Pass Credit</th>
                                             <th>Mandatory Credit</th>
                                             <th>Choice Credit</th>
-                                            <th>Actions</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -87,7 +87,7 @@
                 { data: 'name', name: 'name' },
                 { data: 'prodi.name', name: 'prodi.name' },
                 { data: 'education_level.nm_jenj_didik', name: 'education_level.nm_jenj_didik' },
-                { data: 'semester.name', name: 'semester.name' },
+                { data: 'semester.semester_id', name: 'semester.semester_id' },
                 { data: 'normal_semester_number', name: 'normal_semester_number' },
                 { data: 'pass_credit_number', name: 'pass_credit_number' },
                 { data: 'mandatory_credit_number', name: 'mandatory_credit_number' },

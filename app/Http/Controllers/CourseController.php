@@ -34,13 +34,18 @@ class CourseController extends Controller
                 ->addColumn('action', function ($row) {
                     $editUrl = route('course.edit', $row->id);
                     $deleteUrl = route('course.destroy', $row->id);
+                    $viewUrl = route('course.show', $row->id); // URL for the view button
+
                     return '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" action="' . $deleteUrl . '" method="POST">
+                                <a href="' . $viewUrl . '" class="btn btn-outline-info btn-sm view" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                                 <a href="' . $editUrl . '" class="btn btn-outline-warning btn-sm edit" title="Edit">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 ' . csrf_field() . '
                                 ' . method_field('DELETE') . '
-                                <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
+                                <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete" title="Delete">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>';
@@ -67,6 +72,15 @@ class CourseController extends Controller
         }
 
         return view('pages.admin.course.index');
+    }
+
+    public function show($id)
+    {
+        // Find the course by ID or fail with 404 if not found
+        $course = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->findOrFail($id);
+
+        // Return the view with course details
+        return view('pages.admin.course.show', compact('course'));
     }
 
     public function create()
