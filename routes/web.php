@@ -22,9 +22,10 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.welcome');
 });
 Route::post('/login', [UserController::class, 'action'])->name('login');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');

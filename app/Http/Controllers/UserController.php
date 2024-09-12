@@ -128,18 +128,19 @@ use App\Models\Role;
         
         public function getUsers(Request $request) {
             if ($request->ajax()) {
-                $data = User::with('role')->select('users.*');
-                return DataTables::of($data)
-                    ->addColumn('role', function ($row) {
-                        return $row->role ? $row->role->name : 'N/A';
-                    })
-                    ->addColumn('action', function ($row) {
-                        $btn = '<a href="'.route('users.edit', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
-                        $btn .= ' <a href="javascript:void(0)" data-id="'.$row->id.'" class="delete btn btn-danger btn-sm deleteUser">Delete</a>';
-                        return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                $data = User::with('role')->select('users.*')->chunk(100, function ($users) {
+                    return DataTables::of($users)
+                        ->addColumn('role', function ($row) {
+                            return $row->role ? $row->role->name : 'N/A';
+                        })
+                        ->addColumn('action', function ($row) {
+                            $btn = '<a href="'.route('users.edit', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
+                            $btn .= ' <a href="javascript:void(0)" data-id="'.$row->id.'" class="delete btn btn-danger btn-sm deleteUser">Delete</a>';
+                            return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
+                });
             }
         }
         
@@ -238,4 +239,14 @@ use App\Models\Role;
 
             return response()->json(['success' => 'User deleted successfully']);
         }
+        public function logout(Request $request)
+{
+    Auth::logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return view('pages.welcome')->with('success', 'You have been logged out successfully.');
+}
+
     }

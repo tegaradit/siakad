@@ -1,4 +1,4 @@
-@extends('layouts.root-layout')
+@extends('layouts.home-layout')
 
 @section('root-content')
       <!-- <body data-layout="horizontal"> -->
