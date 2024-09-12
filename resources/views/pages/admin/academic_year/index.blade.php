@@ -35,15 +35,15 @@
                             <div class="card-body">
                                 <a href="{{ route('tahun-akademik.create') }}" class="btn btn-primary mb-3">Tambah</a>
                                 <div class="table-responsive">
-                                    <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                                    <table id="datatable" class="table table-bordered table-striped dt-responsive nowrap w-100">
                                         <thead>
                                             <tr>
-                                                <th style="width: 35px text-align: center">No</th>
+                                                <th style="width: 35px; text-align: center;">No</th>
                                                 <th>ID</th>
-                                                <th>Nama</th>
+                                                <th >Nama</th>
                                                 <th>Tanggal Mulai</th>
                                                 <th>Tanggal Selesai</th>
-                                                <th style="width: 45px">Action</th>
+                                                <th style="width: 45px; text-align: center;">Action</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -121,7 +121,10 @@
                         data: 'action',
                         name: 'action',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        createdCell: function(td) {
+                            $(td).css('text-align', 'center');
+                        }
                     }
                 ]
             });

@@ -35,12 +35,12 @@
                                 <div class="card-body">
                                     <a href="{{ route('calendar-type.create') }}" class="btn btn-primary mb-3">Tambah</a>
                                     <div class="table-responsive">
-                                        <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 30px">No</th>
+                                                    <th style="width: 30px" style="text-align: center">No</th>
                                                     <th>Nama Tipe Kalender</th>
-                                                    <th style="width: 50px">Action</th>
+                                                    <th style="width: 50px text-align: center">Action</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -107,7 +107,10 @@
                             data: 'action',
                             name: 'action',
                             orderable: false,
-                            searchable: false
+                            searchable: false,
+                            createdCell: function(td, cellData, rowData, row, col) {
+                                $(td).css('text-align', 'center');
+                            }
                         }
                     ]
                 });
