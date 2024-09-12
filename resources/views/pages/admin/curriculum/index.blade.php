@@ -27,16 +27,16 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Tabel Kurikulumm</h4>
-                            <p class="card-title-desc">Tabel ini berisi data kurikulum.</p>
+                            <h4 class="card-title">Daftar Kurikulum</h4>
+                            <p class="card-title-desc">Berikut adalah daftar mata kuliah yang tersedia di sistem.</p>
                         </div>
                         <div class="card-body">
                             <a href="{{ route('curriculum.create') }}" class="btn btn-primary mb-3">Tambah Kurikulum</a>
                             <div class="table-responsive">
-                                <table class="table table-nowrap align-middle table-bordered" id="datatable">
+                                <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="datatable">
                                     <thead>
-                                        <tr>
-                                            <th>No.</th>
+                                        <tr style="text-align: center">
+                                            <th style="width: 30px">No.</th>
                                             <th>Nama</th>
                                             <th>Prodi</th>
                                             <th>Jenjang Pendidikan</th>
@@ -45,42 +45,9 @@
                                             <th>Pass Credit</th>
                                             <th>Mandatory Credit</th>
                                             <th>Choice Credit</th>
-                                            <th>Actions</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @forelse ($datas as $index => $data)
-                                            <tr>
-                                                <td>{{ $index+1 }}</td>
-                                                <td>{{ $data->name }}</td>
-                                                <td>{{ $data->prodi->name }}</td>
-                                                <td>{{ $data->education_level->nm_jenj_didik }}</td>
-                                                <td>{{ $data->semester->name }}</td>
-                                                <td>{{ $data->normal_semester_number }}</td>
-                                                <td>{{ $data->pass_credit_number }}</td>
-                                                <td>{{ $data->mandatory_credit_number }}</td>
-                                                <td>{{ $data->choice_credit_number }}</td>
-                                                <td>
-                                                    <form id="delete-form-{{ $data->curriculum_id }}"
-                                                        onsubmit="event.preventDefault(); confirmDelete('{{ $data->curriculum_id }}');"
-                                                        action="{{ route('curriculum.destroy', $data->curriculum_id) }}" method="POST">
-                                                        <a href="{{ route('curriculum.edit', $data->curriculum_id) }}" class="btn btn-outline-warning btn-sm" title="Edit">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-outline-danger btn-sm">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>                                                    
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="10" class="text-center alert alert-danger">Data Kurikulum kosong</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -91,9 +58,43 @@
     </div>
 </div>
 
+<!-- Include JS libraries -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        feather.replace();
+    $(document).ready(function() {
+        $('#datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route('curriculum.index') }}',
+            columns: [
+                // { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                { 
+                    data: null, 
+                    name: 'no',
+                    orderable: false, 
+                    searchable: false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1; // nomor urut yang dinamis
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('text-align', 'center'); // Align center
+                    }
+                },
+                { data: 'name', name: 'name' },
+                { data: 'prodi.name', name: 'prodi.name' },
+                { data: 'education_level.nm_jenj_didik', name: 'education_level.nm_jenj_didik' },
+                { data: 'semester.semester_id', name: 'semester.semester_id' },
+                { data: 'normal_semester_number', name: 'normal_semester_number' },
+                { data: 'pass_credit_number', name: 'pass_credit_number' },
+                { data: 'mandatory_credit_number', name: 'mandatory_credit_number' },
+                { data: 'choice_credit_number', name: 'choice_credit_number' },
+                { data: 'action', name: 'action', orderable: false, searchable: false }
+            ]
+        });
     });
 
     function confirmDelete(id) {

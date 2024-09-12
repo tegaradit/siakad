@@ -1,26 +1,6 @@
-<!doctype html>
-<html lang="en">
+@extends('layouts.home-layout')
 
-<head>
-    <meta charset="utf-8" />
-    <title>Profile | Minia - Minimal Admin & Dashboard Template</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('minia/assets/images/favicon.ico') }}">
-
-    <!-- preloader css -->
-    <link rel="stylesheet" href="{{ asset('minia/assets/css/preloader.min.css') }}" type="text/css" />
-    <!-- Bootstrap Css -->
-    <link href="{{ asset('minia/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
-    <link href="{{ asset('minia/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
-    <link href="{{ asset('minia/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
+@section('home-content')
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
@@ -31,7 +11,7 @@
                             <h4 class="mb-sm-0 font-size-18">Profile</h4>
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Contacts</a></li>
+                                    
                                     <li class="breadcrumb-item active">Profile</li>
                                 </ol>
                             </div>
@@ -136,16 +116,4 @@
             </div>
         </div>
     </div>
-
-    <!-- JAVASCRIPT -->
-    <script src="{{ asset('minia/assets/libs/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('minia/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('minia/assets/libs/metismenu/metisMenu.min.js') }}"></script>
-    <script src="{{ asset('minia/assets/libs/simplebar/simplebar.min.js') }}"></script>
-    <script src="{{ asset('minia/assets/libs/node-waves/waves.min.js') }}"></script>
-    <script src="{{ asset('minia/assets/libs/feather-icons/feather.min.js') }}"></script>
-    <script src="{{ asset('minia/assets/libs/pace-js/pace.min.js') }}"></script>
-    <script src="{{ asset('minia/assets/js/app.js') }}"></script>
-</body>
-
-</html>
+@endsection

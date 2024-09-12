@@ -5,15 +5,40 @@ namespace App\Http\Controllers;
 use App\Models\Building;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class BuildingsController extends Controller
 {
     public function index(){
-        // $user = Auth::user();
-        $menu = 'buildings';
-        $submenu = 'buildings';
-        $datas = Building::latest()->paginate(10);
-        return view('pages.admin.buildings.index', compact('menu','submenu','datas'));
+        // $datas = Building::latest()->paginate(10);
+        return view('pages.admin.buildings.index');
+    }
+
+    public function data(Request $request)
+    {
+        if ($request->ajax()) {
+            $buildings = Building::query();
+
+            return DataTables::of($buildings)
+            ->addColumn('action', function ($row) {
+                return '<a href="'.route('buildings.edit', $row->id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <form id="delete-form-' . $row->id . '" 
+                              onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" 
+                              action="' . route('buildings.destroy', $row->id) . '" 
+                              method="POST" style="display:inline;">
+                            ' . csrf_field() . method_field('DELETE') . '
+                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+
+        return abort(404);
     }
 
     public function create()

@@ -31,75 +31,21 @@
                         <div class="card-body">
                             <a href="{{ route('course.create') }}" class="btn btn-primary mb-3">Tambah Mata Kuliah</a>
                             <div class="table-responsive">
-                                <table class="table table-nowrap align-middle table-edits table-bordered nowrap">
+                                <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="course-table">
                                     <thead>
-                                        <tr>
-                                            <th>No</th>
+                                        <tr style="text-align: center">
+                                            <th style="width: 30px">No</th>
                                             <th>Code</th>
-                                            <th>Name</th>
+                                            <th>Nama</th>
                                             <th>Prodi</th>
-                                            <th>Education Level</th>
-                                            <th>Group_id</th>
-                                            <th>Type_id</th>
-                                            <th>sks_mk</th>
-                                            <th>sks_tm</th>
-                                            <th>sks_pr</th>
-                                            <th>sks_pl</th>
-                                            <th>sks_sim</th>
-                                            <th>status</th>
-                                            <th>is_sap</th>
-                                            <th>is_silabus</th>
-                                            <th>is_teaching_material</th>
-                                            <th>is_praktikum</th>
-                                            <th>effective_starts_date</th>
-                                            <th>effective_end_date</th>
-                                            <th>Action</th>
+                                            <th>Jenjang Pendidikan</th>
+                                            <th>Grup</th>
+                                            <th>Tipe</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @forelse ($datas as $index => $data)
-                                            <tr data-id="{{ $data->id }}">
-                                                <td>{{ $index + 1 }}</td>
-                                                <td>{{ $data->code }}</td>
-                                                <td>{{ $data->name }}</td>
-                                                <td>{{ $data->prodi->name ?? 'N/A' }}</td>
-                                                <td>{{ $data->education_level->nm_jenj_didik ?? 'N/A' }}</td>
-                                                <td>{{ $data->course_group->name ?? 'N/A' }}</td>
-                                                <td>{{ $data->course_type->name ?? 'N/A' }}</td>
-                                                <td>{{ $data->sks_mk }}</td>
-                                                <td>{{ $data->sks_tm }}</td>
-                                                <td>{{ $data->sks_pr }}</td>
-                                                <td>{{ $data->sks_pl }}</td>
-                                                <td>{{ $data->sks_sim }}</td>
-                                                <td>{{ $data->status }}</td>
-                                                <td>{{ $data->is_sap ? 'Yes' : 'No' }}</td>
-                                                <td>{{ $data->is_silabus ? 'Yes' : 'No' }}</td>
-                                                <td>{{ $data->is_teaching_material ? 'Yes' : 'No' }}</td>
-                                                <td>{{ $data->is_praktikum ? 'Yes' : 'No' }}</td>
-                                                <td>{{ $data->effective_start_date }}</td>
-                                                <td>{{ $data->effective_end_date }}</td>
-                                                <td>
-                                                    <form id="delete-form-{{ $data->id }}" onsubmit="event.preventDefault(); confirmDelete('{{ $data->id }}');" action="{{ route('course.destroy', $data->id) }}" method="POST">
-                                                        <a href="{{ route('course.edit', $data->id) }}" class="btn btn-outline-warning btn-sm edit" title="Edit">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="20" class="text-center alert alert-danger">Data Mata Kuliah Kosong</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>                                  
                                 </table>
-                                <!-- Pagination -->
-                                {{ $datas->links() }}
+                                <!-- Pagination will be handled by DataTables -->
                             </div>
                         </div>
                     </div>
@@ -128,9 +74,36 @@
     </footer>
 </div>
 
+<!-- Include JS libraries -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        feather.replace();
+    $(document).ready(function() {
+        $('#course-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route('course.index') }}',
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                { data: 'code', name: 'code' },
+                { data: 'name', name: 'name' },
+                { data: 'prodi.name', name: 'prodi.name' },
+                { data: 'education_level.nm_jenj_didik', name: 'education_level.nm_jenj_didik' },
+                { data: 'course_group.name', name: 'course_group.name' },
+                { data: 'course_type.name', name: 'course_type.name' },
+                { data: 'action', name: 'action', orderable: false, searchable: false }
+            ],
+            columnDefs: [
+                { targets: [0], className: 'text-center' }, // Center align No column
+                { targets: [7], className: 'text-center' } // Center align Action column
+            ],
+            "language": {
+                "emptyTable": "Data Mata Kuliah Kosong"
+            }
+        });
     });
 
     function confirmDelete(id) {

@@ -9,19 +9,78 @@ use App\Models\Education_level;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\DataTables;
 
 class CourseController extends Controller
 {
-    public function index(){
-        // $user = Auth::user();
-        $menu = 'course';
-        $submenu = 'course';
+    // public function index(){
+    //     // $user = Auth::user();
+    //     $menu = 'course';
+    //     $submenu = 'course';
 
-        // Mengambil data mata kuliah dengan relasi yang diperlukan
-        $datas = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->latest()->paginate(10);
+    //     // Mengambil data mata kuliah dengan relasi yang diperlukan
+    //     $datas = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->latest()->paginate(10);
 
-        // Mengirim data ke view
-        return view('pages.admin.course.index', compact('datas'));
+    //     // Mengirim data ke view
+    //     return view('pages.admin.course.index', compact('datas'));
+    // }
+
+    public function index()
+    {
+        if (request()->ajax()) {
+            $courses = Course::with('prodi', 'education_level', 'course_group', 'course_type')->get();
+            return DataTables::of($courses)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $editUrl = route('course.edit', $row->id);
+                    $deleteUrl = route('course.destroy', $row->id);
+                    $viewUrl = route('course.show', $row->id); // URL for the view button
+
+                    return '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" action="' . $deleteUrl . '" method="POST">
+                                <a href="' . $viewUrl . '" class="btn btn-outline-info btn-sm view" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="' . $editUrl . '" class="btn btn-outline-warning btn-sm edit" title="Edit">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                ' . csrf_field() . '
+                                ' . method_field('DELETE') . '
+                                <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>';
+                })
+                ->editColumn('is_sap', function ($row) {
+                    return $row->is_sap ? 'Yes' : 'No';
+                })
+                ->editColumn('is_silabus', function ($row) {
+                    return $row->is_silabus ? 'Yes' : 'No';
+                })
+                ->editColumn('is_teaching_material', function ($row) {
+                    return $row->is_teaching_material ? 'Yes' : 'No';
+                })
+                ->editColumn('is_praktikum', function ($row) {
+                    return $row->is_praktikum ? 'Yes' : 'No';
+                })
+                ->editColumn('effective_start_date', function ($row) {
+                    return $row->effective_start_date ? \Carbon\Carbon::parse($row->effective_start_date)->format('d/m/Y') : 'N/A';
+                })
+                ->editColumn('effective_end_date', function ($row) {
+                    return $row->effective_end_date ? \Carbon\Carbon::parse($row->effective_end_date)->format('d/m/Y') : 'N/A';
+                })
+                ->make(true);
+        }
+
+        return view('pages.admin.course.index');
+    }
+
+    public function show($id)
+    {
+        // Find the course by ID or fail with 404 if not found
+        $course = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->findOrFail($id);
+
+        // Return the view with course details
+        return view('pages.admin.course.show', compact('course'));
     }
 
     public function create()

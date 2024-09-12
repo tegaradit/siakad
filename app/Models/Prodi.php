@@ -8,6 +8,7 @@ use Str;
 class Prodi extends Model
 {
     protected $table = 'prodi';
+    protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';
     
@@ -66,19 +67,19 @@ class Prodi extends Model
 
     public function department()
     {
-        return $this->belongsTo(Ruangan_jurusan::class, 'department_id');
+        return $this->belongsTo(Ruangan_jurusan::class, 'department_id', 'id_jur');
     }
 
     public function educationLevel()
     {
-        return $this->belongsTo(Education_level::class, 'education_level_id');
+        return $this->belongsTo(Education_level::class, 'education_level_id', 'id_jenj_didik');
     }
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($model) {
-            $model->id_prodi = Str::uuid();
+            $model->id = Str::uuid();
         });
     }
 }

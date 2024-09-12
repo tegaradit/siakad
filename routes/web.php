@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademicCalendarController;
+use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
@@ -25,15 +26,31 @@ Route::get('/', function () {
     return view('pages.welcome');
 });
 Route::post('/login', [UserController::class, 'action'])->name('login');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+//user
+
+
+
+Route::get('/users', [UserController::class, 'users'])->name('users.index');
+Route::get('/users/data', [UserController::class, 'getUsers'])->name('users.getUsers');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create'); // Tambah user
+Route::post('/users', [UserController::class, 'store'])->name('users.store'); // Simpan user
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+
 
 //admin
 Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin');
 Route::resource('admin/setting_perkuliahan', LectureSettingController::class);
 //admin/buildings(gedung)
 Route::get('/admin/buildings', [BuildingsController::class, 'index'])->name('buildings.index');
+Route::get('/buildings/data', [BuildingsController::class, 'data'])->name('buildings.data');
 Route::get('/admin/buildings/create', [BuildingsController::class, 'create'])->name('buildings.create');
 Route::post('/admin/buildings', [BuildingsController::class, 'store'])->name('buildings.store');
 Route::get('/admin/buildings/{id}/edit', [BuildingsController::class, 'edit'])->name('buildings.edit');
@@ -46,8 +63,10 @@ Route::post('/admin/course', [CourseController::class, 'store'])->name('course.s
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
+Route::get('/admin/course/{id}', [CourseController::class, 'show'])->name('course.show');
 // admin/semester
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
+Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data');
 Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
 Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
 Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
@@ -56,11 +75,17 @@ Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'dest
 //admin/curriculum(kurikulum)
 Route::resource('/admin/curriculum', CurriculumController::class);
 //lecturesetting
+Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data');
 Route::resource('/admin/lecture-setting', LectureSettingController::class);
 //tipe kalender
+Route::get('/calendar-type/data', [CalendarTypeController::class, 'data'])->name('calendar-type.data');
 Route::resource('/admin/calendar-type', CalendarTypeController::class);
 //kalender akademik
 Route::resource('/admin/kalender-akademik', AcademicCalendarController::class);
+Route::get('/kalender-akademik/data', [AcademicCalendarController::class, 'data'])->name('kalender-akademik.data');
+//akademik year
+Route::resource('/admin/tahun-akademik', AcademicYearController::class);
+Route::get('/tahun-akademik/data', [AcademicYearController::class, 'data'])->name('tahun-akademik.data');
 
 
 //dosen 
@@ -90,4 +115,5 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
