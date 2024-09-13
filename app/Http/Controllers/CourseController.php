@@ -28,7 +28,7 @@ class CourseController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $courses = Course::with('prodi', 'education_level', 'course_group', 'course_type')->get();
+            $courses = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->get();
             return DataTables::of($courses)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -93,6 +93,25 @@ class CourseController extends Controller
         // dd($group, $type); // Check what data is being passed
 
         return view('pages.admin.course.form', compact('prodis', 'education_levels', 'group', 'type'));
+    }
+
+    public function searchProdi(Request $request)
+    {
+        $search = $request->input('q');  // Input dari pencarian select2
+
+        $prodis = Prodi::where('nama_prodi', 'LIKE', "%{$search}%")
+            ->select('id', 'nama_prodi')  // Hanya ambil id dan nama_prodi
+            ->get();
+
+        $results = [];
+        foreach ($prodis as $prodi) {
+            $results[] = [
+                'id' => $prodi->id,
+                'text' => $prodi->nama_prodi,  // 'text' digunakan oleh select2 untuk menampilkan nama
+            ];
+        }
+
+        return response()->json(['items' => $results]);
     }
 
     public function store(Request $request)

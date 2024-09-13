@@ -8,6 +8,7 @@ use App\Http\Controllers\CalendarTypeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\IdentitasPTController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\LectureSettingController;
 use App\Http\Controllers\PeriodePmbController;
@@ -49,6 +50,11 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.de
 //admin
 Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin');
 Route::resource('admin/setting_perkuliahan', LectureSettingController::class);
+//admin/identitas_pt
+Route::get('admin/identitas-pt', [IdentitasPTController::class, 'index'])->name("identitas-pt.index");
+Route::post('admin/identitas-pt/update/{npsn}', [IdentitasPTController::class, 'update']);
+
+
 //admin/buildings(gedung)
 Route::get('/admin/buildings', [BuildingsController::class, 'index'])->name('buildings.index');
 Route::get('/buildings/data', [BuildingsController::class, 'data'])->name('buildings.data');
@@ -60,6 +66,7 @@ Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])-
 //admin/course(matakuliah)
 Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index');
 Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create');
+Route::get('/course/search', [CourseController::class, 'searchProdi'])->name('course.search');
 Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store');
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
