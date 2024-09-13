@@ -145,7 +145,7 @@
                 <li class="menu-title mt-2" data-key="t-components">Data Perkuliahan</li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('periode_pmb.index') }}">
                         <i data-feather="airplay"></i>
                         <span data-key="t-dashboard">PMB</span>
                     </a>

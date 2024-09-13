@@ -38,7 +38,7 @@ class Prodi extends Model
         "kpst_pd",
         "sks_lulus",
         "gelar_lulusan",
-        "prodi",
+        "stat_prodi",
         "polesei_nilai",
         "a_kependidikan",
         "sistem_ajar",

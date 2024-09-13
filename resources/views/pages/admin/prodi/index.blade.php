@@ -66,19 +66,19 @@
                 $('#prodi-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('prodi.data') !!}',
+                    ajax: '{!! route('prodi') !!}',
                     columns: [
                         { 
-                           data: null, 
-                           name: 'no',
-                           orderable: false, 
-                           searchable: false,
-                           render: function (data, type, row, meta) {
-                                 return meta.row + meta.settings._iDisplayStart + 1; // nomor urut yang dinamis
-                           },
-                           createdCell: function (td, cellData, rowData, row, col) {
-                                 $(td).css('text-align', 'center'); // Align center
-                           }
+                            data: null, 
+                            name: 'no',
+                            orderable: false, 
+                            searchable: false,
+                            render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1; // nomor urut yang dinamis
+                            },
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                    $(td).css('text-align', 'center'); // Align center
+                            }
                         },
                         {
                             data: 'kode',
