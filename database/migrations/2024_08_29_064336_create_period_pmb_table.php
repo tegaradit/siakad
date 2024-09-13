@@ -22,7 +22,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('period_pmb', function (Blueprint $table) {
-            $table->char('semester_id', 6)->primary();
+            $table->id();
+            $table->char('semester_id', 6);
+            $table->foreign('semester_id', 'period_semester_references')->references('semester_id')->on('semester')->onDelete('cascade');
             $table->tinyInteger('period_number');
             $table->date('start_date');
             $table->date('end_date');

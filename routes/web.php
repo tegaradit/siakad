@@ -125,9 +125,15 @@ Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->n
 
 // Periode PMB
 Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');
-Route::put('/admin/periode_pmb/edit', [PeriodePmbController::class, 'index'])->name('periode_pmb.edit');
-Route::delete('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.destroy');
-Route::get('/admin/periode_pmb/generate', [PeriodePmbController::class, 'generatePeriod'])->name('periode_pmb.generate');
+Route::get('/admin/periode_pmb/search_semester', [PeriodePmbController::class, 'searchSemester'])->name('periode_pmb.search_semester');
+
+Route::get('/admin/periode_pmb/create', [PeriodePmbController::class, 'create'])->name('periode_pmb.create');
+Route::post('/admin/periode_pmb/store', [PeriodePmbController::class, 'store'])->name('periode_pmb.store');
+
+Route::get('/admin/periode_pmb/edit/{id}', [PeriodePmbController::class, 'edit'])->name('periode_pmb.edit');
+Route::put('/admin/periode_pmb/update/{id}', [PeriodePmbController::class, 'update'])->name('periode_pmb.update');
+
+Route::delete('/admin/periode_pmb/delete/{id}', [PeriodePmbController::class, 'destroy'])->name('periode_pmb.destroy');
 
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');

@@ -29,7 +29,7 @@
                      <p class="card-title-desc">Berikut adalah daftar Periode Penerimaan Mahasiswa Baru yang tersedia di sistem.</p>
                   </div>
                   <div class="card-body">
-                     <a href="{{ route('course.generate') }}" class="btn btn-primary mb-3">Tambah Periode</a>
+                     <a href="{{ route('periode_pmb.create') }}" class="btn btn-primary mb-3">Tambah Periode</a>
                      <div class="table-responsive">
                         <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="periodePmb-table">
                            <thead>
