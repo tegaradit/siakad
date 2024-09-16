@@ -203,32 +203,41 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+    console.log($('#prodi_id').select2())
+</script>
+<script>
     $(document).ready(function() {
-    $('#prodi_id').select2({
-        placeholder: 'Pilih Prodi...',
-        minimumInputLength: 2,
-        ajax: {
-            url: '{{ route('course.search') }}',
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    q: params.term  // Query yang akan dikirim
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: data.items  // Sesuai dengan format JSON dari controller
-                };
-            },
-            cache: true
-        }
+        // if ($.fn.select2) {
+        //     console.log('Select2 loaded');
+            $('#prodi_id').select2({
+                placeholder: 'Pilih Prodi...',
+                minimumInputLength: 2,
+                ajax: {
+                    url: '{{ route('course.search') }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term  // Query yang akan dikirim
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data.items  // Sesuai dengan format JSON dari controller
+                        };
+                    },
+                    cache: true
+                }
+            });
+        // } else {
+        //     console.error('Select2 not loaded');
+        // }
     });
-});
 </script>
 
 
