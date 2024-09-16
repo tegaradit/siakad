@@ -11,6 +11,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\IdentitasPTController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\LectureSettingController;
+use App\Http\Controllers\PeriodePmbController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SemesterController;
@@ -114,7 +115,6 @@ Route::get('/room/data', [RoomController::class, 'data'])->name('room.data');
 
 // Prodi
 Route::get('/admin/prodi', [ProdiController::class, 'index'])->name('prodi');
-Route::get('/admin/prodi/data', [ProdiController::class, 'getProdiData'])->name('prodi.data');
 //lecturer
 Route::get('/admin/lecturer',[LecturerController::class, 'index'])->name('lecturer.index');
 Route::get('admin/lecturer/create', [LecturerController::class, 'create'])->name('lecturer.create');
@@ -122,5 +122,18 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+
+// Periode PMB
+Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');
+Route::get('/admin/periode_pmb/search_semester', [PeriodePmbController::class, 'searchSemester'])->name('periode_pmb.search_semester');
+
+Route::get('/admin/periode_pmb/create', [PeriodePmbController::class, 'create'])->name('periode_pmb.create');
+Route::post('/admin/periode_pmb/store', [PeriodePmbController::class, 'store'])->name('periode_pmb.store');
+
+Route::get('/admin/periode_pmb/edit/{id}', [PeriodePmbController::class, 'edit'])->name('periode_pmb.edit');
+Route::put('/admin/periode_pmb/update/{id}', [PeriodePmbController::class, 'update'])->name('periode_pmb.update');
+
+Route::delete('/admin/periode_pmb/delete/{id}', [PeriodePmbController::class, 'destroy'])->name('periode_pmb.destroy');
+
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');

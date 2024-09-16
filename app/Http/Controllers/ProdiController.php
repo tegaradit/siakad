@@ -8,12 +8,7 @@ use Yajra\DataTables\DataTables;
 
 class ProdiController extends Controller
 {
-    public function index()
-    {
-        return view('pages.admin.prodi.index');
-    }
-
-    public function getProdiData(Request $request)
+    public function index(Request $request)
     {
         if ($request->ajax()) {
             $statusName = [
@@ -32,20 +27,23 @@ class ProdiController extends Controller
                     'ruangan_jurusan.nm_jur',
                     'education_level.nm_jenj_didik',
                     'prodi.sks_lulus',
-                    'prodi.prodi AS status'
+                    'prodi.stat_prodi AS status'
                 ])
                 ->join('ruangan_jurusan', 'prodi.id_jur', '=', 'ruangan_jurusan.id_jur')
                 ->join('education_level', 'prodi.id_jenj_didik', '=', 'education_level.id_jenj_didik')
-                ->get()->toArray();
+                ->get();
 
-            $fullProdi = array_map(function ($arr) use ( $statusName ) {
-                return ['id' => $arr->id, 'kode' => $arr->kode, 'nama_prodi' => $arr->nama_prodi, 'nm_jur' => $arr->nm_jur, 'nm_jenj_didik' => $arr->nm_jenj_didik, 'sks_lulus' => $arr->sks_lulus, 'status' => $statusName[$arr->status]];
-            }, $prodi);
-
-    
-            return DataTables::of($fullProdi)->make(true);
+            return DataTables::of($prodi)
+                ->editColumn('status', function ($row) use ($statusName) {
+                    return $statusName[$row->status];
+                })
+                ->editColumn('kode', function ($row) {
+                    return $row->kode ?? '--belum di set--';
+                })
+                ->make(true);
         }
 
-        return abort(404);
+        return view('pages.admin.prodi.index');
     }
+
 }
