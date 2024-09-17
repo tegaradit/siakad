@@ -86,37 +86,23 @@
                                     <label for="is_active">Is Active?</label>
                                     <div class="radio-group">
                                         <input type="radio" class="form-check-input" name="is_active" value="1" id="is_active_yes" {{ old('is_active', $semester->is_active ?? '') == 1 ? 'checked' : '' }} required>
-                                        <label class="form-check-label" for="is_active_yes">Yes</label>
+                                        <label class="form-check-label" for="is_active_yes">Active</label>
                                 
                                         <input type="radio" class="form-check-input" name="is_active" value="0" id="is_active_no" {{ old('is_active', $semester->is_active ?? '') == 0 ? 'checked' : '' }} required>
-                                        <label class="form-check-label" for="is_active_no">No</label>
+                                        <label class="form-check-label" for="is_active_no">Non-Active</label>
                                     </div>
                                     @error('is_active')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>                                
+                                </div>                              
 
-                                <!-- Start Date field -->
                                 <div class="form-group">
-                                    <label for="start_date">Start Date</label>
-                                    <input type="date" name="start_date" id="datepicker-basic" class="form-control" value="{{ old('start_date', $semester->start_date ?? '') }}" required>
-                                    @error('start_date')
+                                    <label for="date_range" class="form-label">Rentang Tanggal</label>
+                                    <input type="text" class="form-control mb-3" id="datepicker-range-without-d-value" name="date_range"
+                                        value="{{ isset($semester) ? $semester->start_date . ' to ' . $semester->end_date : '' }}" required>
+                                    @error('date_range')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
-
-                                <!-- End Date field -->
-                                <div class="form-group">
-                                    <label for="end_date">End Date</label>
-                                    <input type="date" name="end_date" id="end_date" class="form-control" value="{{ old('end_date', $semester->end_date ?? '') }}" required>
-                                    @error('end_date')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label">Range</label>
-                                    <input type="text" class="form-control" id="datepicker-range"/>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary mt-3">{{ isset($semester) ? 'Update' : 'Submit' }}</button>
@@ -128,4 +114,5 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection
