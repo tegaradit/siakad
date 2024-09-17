@@ -19,14 +19,11 @@ use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Lecturer;
-use App\Models\Room;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', function () {
     return view('pages.welcome');
-});
+})->name('login.page');
 Route::post('/login', [UserController::class, 'action'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 

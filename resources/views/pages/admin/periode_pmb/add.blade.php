@@ -56,7 +56,13 @@
 
                                 <div class="form-group">
                                     <label for="period_number">Gelombang</label>
-                                    <input type="number" name="period_number" id="period_number" class="form-control" maxlength="1" required>
+                                    <input type="number" name="period_number" id="period_number" class="form-control"
+                                        maxlength="1" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Range</label>
+                                    <input type="text" class="form-control" id="datepicker-range" />
                                 </div>
 
                                 <div class="form-group">
@@ -88,13 +94,13 @@
         ajax: {
             delay: 250,
             url: '{{ url('/') }}/admin/periode_pmb/search_semester',
-            data (params) {
+            data(params) {
                 var query = {
                     semester_id: params.term,
                 }
                 return query;
             },
-            processResults (data) {
+            processResults(data) {
                 return {
                     results: data.map(item => ({
                         id: item.semester_id,  // The value for the option
@@ -104,7 +110,7 @@
             }
         },
         minimumInputLength: 1,
-        templateResult (res) {
+        templateResult(res) {
             return res.text
         }
     })
