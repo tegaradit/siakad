@@ -8,6 +8,7 @@ use App\Models\Lecturer;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Carbon\Carbon;
 
 class LecturerController extends Controller
 {
@@ -18,16 +19,22 @@ class LecturerController extends Controller
     }
 
     public function data(Request $request)
-    {
-        if ($request->ajax()) {
-            $lecturer = Lecturer::with(['prodi','employee_level','ActiveStatus']);
-            // courses = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->get();
+{
+    if ($request->ajax()) {
+        $lecturer = Lecturer::with(['prodi', 'employee_level', 'ActiveStatus'])->get();
 
-            return DataTables::of($lecturer)
-                ->addIndexColumn() // Menambahkan kolom index secara otomatis
-                ->addColumn('action', function ($data) {
-                    // Mengembalikan HTML untuk kolom aksi, misalnya tombol edit
-                    return '<a href="'.route('lecturer.edit', $data->id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
+        $lecturer = $lecturer->map(function($lecturer) {
+            $lecturer->birth_date = Carbon::parse($lecturer->birth_date)->format('d-m-Y');
+            $lecturer->assign_letter_date = $lecturer->assign_letter_date ? Carbon::parse($lecturer->assign_letter_date)->format('d-m-Y') : null;
+            $lecturer->assign_letter_tmt = $lecturer->assign_letter_tmt ? Carbon::parse($lecturer->assign_letter_tmt)->format('d-m-Y') : null;
+            $lecturer->exit_date = $lecturer->exit_date ? Carbon::parse($lecturer->exit_date)->format('d-m-Y') : null;
+            return $lecturer;
+        });
+
+        return DataTables::of($lecturer)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                return '<a href="'.route('lecturer.edit', $data->id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
                         <form id="delete-form-' . $data->id . '" 
@@ -38,14 +45,15 @@ class LecturerController extends Controller
                             <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
-                        </form>';
+                      </form>';
             })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return abort(404);
+            ->rawColumns(['action'])
+            ->make(true);
     }
+
+    return abort(404);
+}
+
 
     // Show the form for creating a new lecturer
     public function create()
@@ -63,33 +71,42 @@ class LecturerController extends Controller
     
     // Store a newly created lecturer in the database
     public function store(Request $request)
-    {
-        $request->validate([
-            'nuptk' => 'required|string|max:16|unique:lecturer,nuptk',
-            'nidn' => 'nullable|string|max:10|unique:lecturer,nidn',
-            'nik' => 'nullable|string|max:16',
-            'gender' => 'required|in:Laki-laki,Perempuan',
-            'name' => 'required|string|max:200',
-            'active_status_id' => 'required|exists:active_status,id',
-            'birth_date' => 'required|date',
-            'birth_place' => 'required|string|max:100',
-            'mothers_name' => 'required|string|max:200',
-            'mariage_status' => 'required|in:belum kawin,kawin,cerai hidup,cerai mati',
-            'employee_level_id' => 'required|exists:employee_level,id',
-            'level_education' => 'required|in:S1,S2,S3',
-            'phone_number' => 'nullable|string|max:13',
-            'email' => 'nullable|email|max:255',
-            'assign_letter_number' => 'nullable|string|max:30',
-            'assign_letter_date' => 'nullable|date',
-            'assign_letter_tmt' => 'nullable|date',
-            'exit_date' => 'nullable|date',
-            'prodi_id' => 'required|exists:prodi,id',
-        ]);
+{
+    // Ubah '-' menjadi null sebelum validasi
+    $request->merge([
+        'nuptk' => $request->nuptk === '-' ? null : $request->nuptk,
+        'nik' => $request->nik === '-' ? null : $request->nik,
+    ]);
 
-        Lecturer::create($request->all());
+    // Lakukan validasi setelah merubah data
+    $request->validate([
+        'nuptk' => 'nullable|string|max:16|unique:lecturer,nuptk', // Mengubah 'required' menjadi 'nullable'
+        'nidn' => 'nullable|string|max:10|unique:lecturer,nidn',
+        'nik' => 'nullable|string|max:16',
+        'gender' => 'required|in:Laki-laki,Perempuan',
+        'name' => 'required|string|max:200',
+        'active_status_id' => 'required|exists:active_status,id',
+        'birth_date' => 'required|date',
+        'birth_place' => 'required|string|max:100',
+        'mothers_name' => 'required|string|max:200',
+        'mariage_status' => 'required|in:belum kawin,kawin,cerai hidup,cerai mati',
+        'employee_level_id' => 'required|exists:employee_level,id',
+        'level_education' => 'required|in:S1,S2,S3',
+        'phone_number' => 'nullable|string|max:13',
+        'email' => 'nullable|email|max:255',
+        'assign_letter_number' => 'nullable|string|max:30',
+        'assign_letter_date' => 'nullable|date',
+        'assign_letter_tmt' => 'nullable|date',
+        'exit_date' => 'nullable|date',
+        'prodi_id' => 'required|exists:prodi,id',
+    ]);
 
-        return redirect()->route('lecturer.index')->with('success', 'Lecturer created successfully.');
-    }
+    // Simpan data
+    Lecturer::create($request->all());
+
+    return redirect()->route('lecturer.index')->with('success', 'Lecturer created successfully.');
+}
+
 
     // Show the form for editing the specified lecturer
     public function edit($id)
@@ -104,38 +121,42 @@ class LecturerController extends Controller
 
     // Update the specified lecturer in the database
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nuptk' => 'required|string|max:16|unique:lecturer,nuptk,' . $id, // NUPTK unik, tetapi boleh null, dan abaikan dosen yang sedang diupdate
-            'nidn' => 'nullable|string|max:10|unique:lecturer,nidn,' . $id,
-            'nik' => 'nullable|string|max:16',
-            'gender' => 'required|in:Laki-laki,Perempuan',
-            'name' => 'required|string|max:200',
-            'active_status_id' => 'required|exists:active_status,id',
-            'birth_date' => 'required|date',
-            'birth_place' => 'required|string|max:100',
-            'mothers_name' => 'required|string|max:200',
-            'mariage_status' => 'required|in:belum kawin,kawin,cerai hidup,cerai mati',
-            'employee_level_id' => 'required|exists:employee_level,id',
-            'level_education' => 'required|in:S1,S2,S3',
-            'phone_number' => 'nullable|string|max:13',
-            'email' => 'nullable|email|max:255',
-            'assign_letter_number' => 'nullable|string|max:30',
-            'assign_letter_date' => 'nullable|date',
-            'assign_letter_tmt' => 'nullable|date',
-            'exit_date' => 'nullable|date',
-            'prodi_id' => 'required|exists:prodi,id',
-        ]);
+{
+    // Ubah '-' menjadi null sebelum validasi
+    $request->merge([
+        'nuptk' => $request->nuptk === '-' ? null : $request->nuptk,
+        'nik' => $request->nik === '-' ? null : $request->nik,
+    ]);
 
-        // Cari lecturer berdasarkan id
-        $lecturer = Lecturer::findOrFail($id);
+    // Lakukan validasi setelah merubah data
+    $request->validate([
+        'nuptk' => 'nullable|string|max:16|unique:lecturer,nuptk,' . $id,
+        'nidn' => 'nullable|string|max:10|unique:lecturer,nidn,' . $id,
+        'nik' => 'nullable|string|max:16',
+        'gender' => 'required|in:Laki-laki,Perempuan',
+        'name' => 'required|string|max:200',
+        'active_status_id' => 'required|exists:active_status,id',
+        'birth_date' => 'required|date',
+        'birth_place' => 'required|string|max:100',
+        'mothers_name' => 'required|string|max:200',
+        'mariage_status' => 'required|in:belum kawin,kawin,cerai hidup,cerai mati',
+        'employee_level_id' => 'required|exists:employee_level,id',
+        'level_education' => 'required|in:S1,S2,S3',
+        'phone_number' => 'nullable|string|max:13',
+        'email' => 'nullable|email|max:255',
+        'assign_letter_number' => 'nullable|string|max:30',
+        'assign_letter_date' => 'nullable|date',
+        'assign_letter_tmt' => 'nullable|date',
+        'exit_date' => 'nullable|date',
+        'prodi_id' => 'required|exists:prodi,id',
+    ]);
 
-        // Update data lecturer dengan data dari request
-        $lecturer->update($request->all());
+    // Update data lecturer
+    $lecturer = Lecturer::findOrFail($id);
+    $lecturer->update($request->all());
 
-        // Redirect ke halaman index setelah update berhasil
-        return redirect()->route('lecturer.index')->with('success', 'Lecturer updated successfully.');
-    }
+    return redirect()->route('lecturer.index')->with('success', 'Lecturer updated successfully.');
+}
 
     // Remove the specified lecturer from the database
     public function destroy($id)
