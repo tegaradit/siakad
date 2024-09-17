@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class All_prodi extends Model
 {
@@ -21,9 +22,13 @@ class All_prodi extends Model
         'id_jenjang_pendidikan',
     ];
 
-     public function department()
+    public function university(): BelongsTo
     {
-        return $this->belongsTo(Education_level::class, 'id_jenjang_pendidikan');
+        return $this->belongsTo(University::class, 'id_pt', 'id_pt');
+    }
+   public function education_level()
+    {
+        return $this->belongsTo(Education_level::class, 'id_jenjang_pendidikan', 'id_jenj_didik');
     }
     
 }

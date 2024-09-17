@@ -19,14 +19,11 @@ use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Lecturer;
-use App\Models\Room;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', function () {
     return view('pages.welcome');
-});
+})->name('login.page');
 Route::post('/login', [UserController::class, 'action'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
@@ -123,6 +120,7 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+Route::get('/admin/course/search_prodi', [LecturerController::class, 'searchProdi'])->name('lecturer.search_prodi');
 
 // Periode PMB
 Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');
