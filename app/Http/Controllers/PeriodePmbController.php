@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Periode_pmb;
 use App\Models\Semester;
-use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
 
 class PeriodePmbController extends Controller
@@ -36,6 +36,7 @@ class PeriodePmbController extends Controller
                 ->editColumn('status', function ($row) {
                     return $row->status == 1 ? 'buka' : 'tutup';
                 })
+                
                 ->make(true);
         }
 
@@ -53,11 +54,19 @@ class PeriodePmbController extends Controller
 
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'semester_id' => ['required', 'numeric', Rule::exists('semester')],
+            'period_number' => ['required', 'numeric', 'max_digits:1'],
+            'period_range' => ['required', 'regex:/^\d{4}-\d{2}-\d{2}\s+to\s+\d{4}-\d{2}-\d{2}$/']
+        ]);
+
+        [$startDate, $endDate] = explode(' to ', $validatedData['period_range']);
+
         Periode_pmb::create([
-            'semester_id' => $request->semester_id, 
-            'period_number' => $request->period_number,
-            'start_date' => $request->start_date, 
-            'end_date' => $request->end_date,
+            'semester_id' => $validatedData['semester_id'], 
+            'period_number' => $validatedData['period_number'],
+            'start_date' => $startDate, 
+            'end_date' => $endDate,
             'status' => '1'
         ]);
 
@@ -78,7 +87,22 @@ class PeriodePmbController extends Controller
     }
 
     public function update (Request $request, string $id, Periode_pmb $periode_pmb) {
-        $periode_pmb->findOrFail($id)->update($request->except('_token'));
+        $validatedData = $request->validate([
+            'semester_id' => ['required', 'numeric', Rule::exists('semester')],
+            'period_number' => ['required', 'numeric', 'max_digits:1'],
+            'period_range' => ['required', 'regex:/^\d{4}-\d{2}-\d{2}\s+to\s+\d{4}-\d{2}-\d{2}$/'],
+            'status' => ['required', 'numeric', 'max_digits:1']
+        ]);
+
+        [$startDate, $endDate] = explode(' to ', $validatedData['period_range']);
+
+        $periode_pmb->findOrFail($id)->update([
+            'semester_id' => $validatedData['semester_id'], 
+            'period_number' => $validatedData['period_number'],
+            'start_date' => $startDate, 
+            'end_date' => $endDate,
+            'status' => $validatedData['status']
+        ]);
 
         return redirect()->route('periode_pmb.index');
     }

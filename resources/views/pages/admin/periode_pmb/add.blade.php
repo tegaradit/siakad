@@ -52,27 +52,26 @@
                                     <select id="semester-selector" name="semester_id" class="form-control" required>
                                         <option value="" selected>Pilih...</option>
                                     </select>
+                                    @error('semester_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="period_number">Gelombang</label>
                                     <input type="number" name="period_number" id="period_number" class="form-control"
                                         maxlength="1" required>
+                                    @error('period_number')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="form-label">Range</label>
-                                    <input type="text" class="form-control" id="datepicker-range" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="start_date">Tanggal Mulai</label>
-                                    <input type="date" name="start_date" id="start_date" class="form-control" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="end_date">Tanggal Selesai</label>
-                                    <input type="date" name="end_date" id="end_date" class="form-control" required>
+                                    <label class="form-label">Durasi</label>
+                                    <input type="text" class="form-control" id="datepicker-range" name="period_range" />
+                                    @error('period_range')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">

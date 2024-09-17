@@ -50,21 +50,25 @@
                                     <select id="semester-selector" name="semester_id" class="form-control" required>
                                         <option value="{{ $prev_semester_data->semester_id }}" selected>{{ $prev_semester_data->semester_id . ' - ' . $prev_semester_data->name }}</option>
                                     </select>
+                                    @error('semester_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="period_number">Gelombang</label>
                                     <input type="number" name="period_number" id="period_number" class="form-control" maxlength="1" required value="{{ $prev_period_data->period_number }}">
+                                    @error('period_number')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror    
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="start_date">Tanggal Mulai</label>
-                                    <input type="date" name="start_date" id="start_date" class="form-control" required value="{{ $prev_period_data->start_date }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="end_date">Tanggal Selesai</label>
-                                    <input type="date" name="end_date" id="end_date" class="form-control" required value="{{ $prev_period_data->end_date }}">
+                                    <label class="form-label">Durasi</label>
+                                    <input type="text" class="form-control" id="datepicker-range-without-d-value" name="period_range" required value="{{ $prev_period_data->start_date }} to {{ $prev_period_data->end_date }}" />
+                                    @error('period_range')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
