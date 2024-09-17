@@ -25,8 +25,6 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title mb-4">{{ isset($data) ? 'Form Edit' : 'Form Tambah' }} Kalender
-                                    Akademik</h4>
 
                                 <form
                                     action="{{ isset($data) ? route('kalender-akademik.update', $data->id) : route('kalender-akademik.store') }}"
@@ -36,16 +34,11 @@
                                         @method('PUT')
                                     @endif
 
-                                    <div class="mb-3">
-                                        <label for="start_date" class="form-label">Tanggal Mulai</label>
-                                        <input type="date" class="form-control" id="start_date" name="start_date"
-                                            value="{{ isset($data) ? $data->start_date : old('start_date') }}" required>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="end_date" class="form-label">Tanggal Selesai</label>
-                                        <input type="date" class="form-control" id="end_date" name="end_date"
-                                            value="{{ isset($data) ? $data->end_date : old('end_date') }}" required>
+                                    <div class="form-group">
+                                        <label for="date_range" class="form-label">Rentang Tanggal</label>
+                                        <input type="text" class="form-control mb-3" id="datepicker-range" name="date_range"
+                                            value="{{ isset($data) ? $data->start_date . ' - ' . $data->end_date : '' }}"
+                                            required>
                                     </div>
 
                                     <div class="mb-3">
@@ -87,6 +80,7 @@
                                         class="btn btn-primary">{{ isset($data) ? 'Update' : 'Simpan' }}</button>
                                     <a href="{{ route('kalender-akademik.index') }}" class="btn btn-secondary">Batal</a>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -94,4 +88,5 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection

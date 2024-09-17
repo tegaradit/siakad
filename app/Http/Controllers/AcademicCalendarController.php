@@ -60,18 +60,62 @@ class AcademicCalendarController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'date_range' => 'required',
             'description' => 'required|string',
             'semester_id' => 'required|exists:semester,semester_id|max:6',
             'calendar_type_id' => 'required|exists:calendar_types,id',
         ]);
 
-        Academic_calendar::create($request->all());
+        // Pisahkan start_date dan end_date dari date_range
+        $dates = explode(' to ', $request->input('date_range'));
+
+        // Ubah request untuk menambahkan start_date dan end_date
+        $request->merge([
+            'start_date' => $dates[0],
+            'end_date' => $dates[1],
+        ]);
+
+        // Debug hasil input
+        // dd($request->all()); // Menampilkan hasil debug di layar
+
+        // Simpan data ke dalam database
+        Academic_calendar::create([
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+            'description' => $request->input('description'),
+            'semester_id' => $request->input('semester_id'),
+            'calendar_type_id' => $request->input('calendar_type_id'),
+        ]);
 
         return redirect()->route('kalender-akademik.index')->with('success', 'Data berhasil ditambahkan.');
     }
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'date_range' => 'required',
+            'description' => 'required|string',
+            'semester_id' => 'required|exists:semester,semester_id|max:6',
+            'calendar_type_id' => 'required|exists:calendar_types,id',
+        ]);
+
+        $dates = explode(' - ', $request->input('date_range'));
+
+        $data = Academic_calendar::findOrFail($id);
+        $data->update([
+            'start_date' => $dates[0],
+            'end_date' => $dates[1],
+            'description' => $request->input('description'),
+            'semester_id' => $request->input('semester_id'),
+            'calendar_type_id' => $request->input('calendar_type_id'),
+        ]);
+
+        return redirect()->route('kalender-akademik.index')->with('success', 'Data berhasil diperbarui.');
+    }
+
 
     public function edit($id)
     {
@@ -84,22 +128,6 @@ class AcademicCalendarController extends Controller
         }
 
         return view('pages.admin.akademik_kalender.form', compact('data', 'calendar_types', 'semesters'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'description' => 'required|string',
-            'semester_id' => 'required|exists:semester,semester_id|max:6',
-            'calendar_type_id' => 'required|exists:calendar_types,id',
-        ]);
-
-        $data = Academic_calendar::findOrFail($id);
-        $data->update($request->all());
-
-        return redirect()->route('kalender-akademik.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function destroy($id)

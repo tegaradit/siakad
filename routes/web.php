@@ -19,6 +19,7 @@ use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -49,7 +50,7 @@ Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin')
 Route::resource('admin/setting_perkuliahan', LectureSettingController::class);
 //admin/identitas_pt
 Route::get('admin/identitas-pt', [IdentitasPTController::class, 'index'])->name("identitas-pt.index");
-Route::post('admin/identitas-pt/update/{npsn}', [IdentitasPTController::class, 'update']);
+Route::post('/identitas-pt/update/{npsn}', [IdentitasPTController::class, 'update']);
 
 
 //admin/buildings(gedung)

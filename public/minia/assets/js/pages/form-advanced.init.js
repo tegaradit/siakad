@@ -57,6 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
         defaultDate: new Date(),
     });
 
+    flatpickr('#datepicker-range-without-d-value', {
+        mode: "range"
+    })
+
     flatpickr("#datepicker-timepicker", {
         enableTime: true,
         noCalendar: true,

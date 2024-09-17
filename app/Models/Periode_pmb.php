@@ -19,4 +19,7 @@ class Periode_pmb extends Model
         'status'
     ];
 
+    function semester () {
+        return $this->belongsTo(Semester::class, 'semester_id', 'semester_id');
+    }
 }
