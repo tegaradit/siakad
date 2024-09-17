@@ -17,8 +17,8 @@ class Lecture_setting extends Model
         'is_prodi'
     ];
 
-    public function prodi()
+    public function all_prodi()
     {
-        return $this->belongsTo(Prodi::class, 'prodi_id');
+        return $this->belongsTo(All_prodi::class, 'all_prodi_id');
     }    
 }
