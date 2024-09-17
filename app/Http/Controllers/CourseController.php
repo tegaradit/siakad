@@ -95,23 +95,9 @@ class CourseController extends Controller
         return view('pages.admin.course.form', compact('prodis', 'education_levels', 'group', 'type'));
     }
 
-    public function searchProdi(Request $request)
-    {
-        $search = $request->input('q');  // Input dari pencarian select2
-
-        $prodis = Prodi::where('nama_prodi', 'LIKE', "%{$search}%")
-            ->select('id', 'nama_prodi')  // Hanya ambil id dan nama_prodi
-            ->get();
-
-        $results = [];
-        foreach ($prodis as $prodi) {
-            $results[] = [
-                'id' => $prodi->id,
-                'text' => $prodi->nama_prodi,  // 'text' digunakan oleh select2 untuk menampilkan nama
-            ];
-        }
-
-        return response()->json(['items' => $results]);
+    public function searchProdi (Request $request) {
+        $search = $request->query('nama_prodi') != '' ? $request->query('nama_prodi') : 'null';
+        return $request->ajax() ? Prodi::where('nama_prodi', 'like', "%$search%")->get() : abort(404);
     }
 
     public function store(Request $request)
