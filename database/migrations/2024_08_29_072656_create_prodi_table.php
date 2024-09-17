@@ -40,7 +40,7 @@ class CreateProdiTable extends Migration
             $table->decimal('kpst_pd', 5, 0)->nullable();
             $table->decimal('sks_lulus', 3, 0)->nullable();
             $table->string('gelar_lulusan', 10)->nullable();
-            $table->char('prodi', 1)->nullable();
+            $table->char('stat_prodi', 1)->nullable();
             $table->char('polesei_nilai', 1)->nullable();
             $table->decimal('a_kependidikan', 1, 0)->nullable();
             $table->decimal('sistem_ajar', 1, 0)->nullable();

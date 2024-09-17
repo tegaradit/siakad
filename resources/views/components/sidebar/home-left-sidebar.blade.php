@@ -14,7 +14,7 @@
                 <li class="menu-title" data-key="t-menu">Data Umum</li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="/admin/identitas-pt">
                         <i data-feather="target"></i>
                         <span data-key="t-dashboard">Identitas PT</span>
                     </a>
@@ -145,7 +145,7 @@
                 <li class="menu-title mt-2" data-key="t-components">Data Perkuliahan</li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('periode_pmb.index') }}">
                         <i data-feather="airplay"></i>
                         <span data-key="t-dashboard">PMB</span>
                     </a>

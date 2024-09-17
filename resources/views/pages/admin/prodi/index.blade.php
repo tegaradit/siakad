@@ -33,10 +33,10 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" id="prodi-table">
+                                        <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="prodi-table">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
+                                                    <th>No</th>
                                                     <th>Kode</th>
                                                     <th>Nama Prodi</th>
                                                     <th>Nama Jurusan</th>
@@ -66,10 +66,19 @@
                 $('#prodi-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('prodi.data') !!}',
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
+                    ajax: '{!! route('prodi') !!}',
+                    columns: [
+                        { 
+                            data: null, 
+                            name: 'no',
+                            orderable: false, 
+                            searchable: false,
+                            render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1; // nomor urut yang dinamis
+                            },
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                    $(td).css('text-align', 'center'); // Align center
+                            }
                         },
                         {
                             data: 'kode',

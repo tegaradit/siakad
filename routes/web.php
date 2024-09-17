@@ -8,8 +8,10 @@ use App\Http\Controllers\CalendarTypeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\IdentitasPTController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\LectureSettingController;
+use App\Http\Controllers\PeriodePmbController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SemesterController;
@@ -48,6 +50,11 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.de
 //admin
 Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin');
 Route::resource('admin/setting_perkuliahan', LectureSettingController::class);
+//admin/identitas_pt
+Route::get('admin/identitas-pt', [IdentitasPTController::class, 'index'])->name("identitas-pt.index");
+Route::post('admin/identitas-pt/update/{npsn}', [IdentitasPTController::class, 'update']);
+
+
 //admin/buildings(gedung)
 Route::get('/admin/buildings', [BuildingsController::class, 'index'])->name('buildings.index');
 Route::get('/buildings/data', [BuildingsController::class, 'data'])->name('buildings.data');
@@ -59,6 +66,7 @@ Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])-
 //admin/course(matakuliah)
 Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index');
 Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create');
+Route::get('/course/search', [CourseController::class, 'searchProdi'])->name('course.search');
 Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store');
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
@@ -107,7 +115,6 @@ Route::get('/room/data', [RoomController::class, 'data'])->name('room.data');
 
 // Prodi
 Route::get('/admin/prodi', [ProdiController::class, 'index'])->name('prodi');
-Route::get('/admin/prodi/data', [ProdiController::class, 'getProdiData'])->name('prodi.data');
 //lecturer
 Route::get('/admin/lecturer',[LecturerController::class, 'index'])->name('lecturer.index');
 Route::get('admin/lecturer/create', [LecturerController::class, 'create'])->name('lecturer.create');
@@ -115,5 +122,18 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+
+// Periode PMB
+Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');
+Route::get('/admin/periode_pmb/search_semester', [PeriodePmbController::class, 'searchSemester'])->name('periode_pmb.search_semester');
+
+Route::get('/admin/periode_pmb/create', [PeriodePmbController::class, 'create'])->name('periode_pmb.create');
+Route::post('/admin/periode_pmb/store', [PeriodePmbController::class, 'store'])->name('periode_pmb.store');
+
+Route::get('/admin/periode_pmb/edit/{id}', [PeriodePmbController::class, 'edit'])->name('periode_pmb.edit');
+Route::put('/admin/periode_pmb/update/{id}', [PeriodePmbController::class, 'update'])->name('periode_pmb.update');
+
+Route::delete('/admin/periode_pmb/delete/{id}', [PeriodePmbController::class, 'destroy'])->name('periode_pmb.destroy');
+
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
