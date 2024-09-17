@@ -49,7 +49,7 @@ Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin')
 Route::resource('admin/setting_perkuliahan', LectureSettingController::class);
 //admin/identitas_pt
 Route::get('admin/identitas-pt', [IdentitasPTController::class, 'index'])->name("identitas-pt.index");
-Route::post('admin/identitas-pt/update/{npsn}', [IdentitasPTController::class, 'update']);
+Route::post('/identitas-pt/update/{npsn}', [IdentitasPTController::class, 'update']);
 
 
 //admin/buildings(gedung)

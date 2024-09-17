@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers;
 
 use App\Models\Educational_unit;
@@ -7,9 +6,10 @@ use Illuminate\Http\Request;
 
 class IdentitasPTController extends Controller
 {
+    // Menampilkan data identitas perguruan tinggi berdasarkan NPSN
     public function index(Request $request)
     {
-        $npsn = $request->input('npsn', '053025');
+        $npsn = $request->input('npsn', '053025'); // Default NPSN
         $educationalUnit = Educational_unit::where('npsn', $npsn)->first();
 
         if (!$educationalUnit) {
@@ -19,9 +19,11 @@ class IdentitasPTController extends Controller
         return view('pages.admin.identitas_pt.index', compact('educationalUnit'));
     }
 
-    public function update(Request $request, $npsn)
+    // Update data perguruan tinggi
+    public function update(Request $request, string $npsn)
     {
-        $educationalUnit = Educational_unit::where('npsn', $npsn)->first();
+        return ["npsn" => $npsn];
+        $educationalUnit = Educational_unit::where('npsn', $npsn)->first()->get();
     
         if (!$educationalUnit) {
             return response()->json([
@@ -31,7 +33,7 @@ class IdentitasPTController extends Controller
     
         // Validate the request data
         $request->validate([
-            'npsn' => 'required|string|size:8', // Ensure this is in your validation rules
+            'npsn' => 'required|string|size:8', 
             // Other validation rules
         ]);
     
