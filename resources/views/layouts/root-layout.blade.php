@@ -36,6 +36,7 @@
    <link href={{asset("minia/assets/css/icons.min.css")}} rel="stylesheet" type="text/css" />
    <!-- App Css-->
    <link href={{asset("minia/assets/css/app.min.css")}} id="app-style" rel="stylesheet" type="text/css" />
+
    {{-- Datatables css --}}
    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
