@@ -122,6 +122,7 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+Route::get('/admin/course/search_prodi', [LecturerController::class, 'searchProdi'])->name('lecturer.search_prodi');
 
 // Periode PMB
 Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');

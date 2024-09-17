@@ -20,7 +20,8 @@ class LecturerController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax()) {
-            $lecturer = Lecturer::query();
+            $lecturer = Lecturer::with(['prodi','employee_level','ActiveStatus']);
+            // courses = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->get();
 
             return DataTables::of($lecturer)
                 ->addIndexColumn() // Menambahkan kolom index secara otomatis
@@ -55,6 +56,11 @@ class LecturerController extends Controller
         return view('pages.admin.lecturer.form', compact('activeStatuses', 'employeeLevels', 'prodiList'));
     }
 
+        public function searchProdi (Request $request) {
+        $search = $request->query('nama_prodi') != '' ? $request->query('nama_prodi') : 'null';
+        return $request->ajax() ? Prodi::where('nama_prodi', 'like', "%$search%")->get() : abort(404);
+    }
+    
     // Store a newly created lecturer in the database
     public function store(Request $request)
     {
