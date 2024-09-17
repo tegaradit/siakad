@@ -40,6 +40,9 @@
                   <div class="text-center">
                     <h5 class="mb-0">Welcome Back !</h5>
                     <p class="text-muted mt-2">Sign in to continue to Minia.</p>
+                    @foreach ($errors->all() as $error)
+                      <p class="text-center text-danger">{{ $error }}</p>
+                    @endforeach
                   </div>
                   <form class="mt-4 pt-2" action="{{ route('login') }}" method="POST">
                     @csrf
