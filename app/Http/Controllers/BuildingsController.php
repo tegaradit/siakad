@@ -51,7 +51,7 @@ class BuildingsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'code' => ['required', 'regex:/^G\d{1,10}$/', 'unique:buildings,code'],
+            'code' => 'required|string|unique:buildings,code',
             'name' => 'required|string|max:100',
         ]);
 

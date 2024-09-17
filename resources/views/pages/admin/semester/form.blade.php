@@ -99,7 +99,7 @@
                                 <!-- Start Date field -->
                                 <div class="form-group">
                                     <label for="start_date">Start Date</label>
-                                    <input type="date" name="start_date" id="start_date" class="form-control" value="{{ old('start_date', $semester->start_date ?? '') }}" required>
+                                    <input type="date" name="start_date" id="datepicker-basic" class="form-control" value="{{ old('start_date', $semester->start_date ?? '') }}" required>
                                     @error('start_date')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -112,6 +112,11 @@
                                     @error('end_date')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Range</label>
+                                    <input type="text" class="form-control" id="datepicker-range"/>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary mt-3">{{ isset($semester) ? 'Update' : 'Submit' }}</button>
