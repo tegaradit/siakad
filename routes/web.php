@@ -50,7 +50,7 @@ Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin')
 Route::resource('admin/setting_perkuliahan', LectureSettingController::class);
 //admin/identitas_pt
 Route::get('admin/identitas-pt', [IdentitasPTController::class, 'index'])->name("identitas-pt.index");
-Route::post('admin/identitas-pt/update/{npsn}', [IdentitasPTController::class, 'update']);
+Route::post('/identitas-pt/update/{npsn}', [IdentitasPTController::class, 'update']);
 
 
 //admin/buildings(gedung)
@@ -121,6 +121,7 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+Route::get('/admin/course/search_prodi', [LecturerController::class, 'searchProdi'])->name('lecturer.search_prodi');
 
 // Periode PMB
 Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');

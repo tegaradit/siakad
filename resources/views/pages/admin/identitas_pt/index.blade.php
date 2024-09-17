@@ -9,7 +9,7 @@
                     <h3 class="mb-3">Data Identitas Perguruan Tinggi</h3>
 
                     @if(session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
 
                     <!-- Edit NPSN Modal Trigger -->
@@ -95,7 +95,7 @@
                         </table>
                     </div>
                     @else
-                        <p>No data available.</p>
+                    <p>No data available.</p>
                     @endif
                 </div>
             </div>
@@ -128,35 +128,42 @@
     // Trigger fetch data on page load if input is empty
     window.addEventListener('DOMContentLoaded', (event) => {
         const npsnInput = document.getElementById('npsnInput');
-        if (!npsnInput) {
-            document.getElementById('fetchDataForm').submit();
+        if (npsnInput) {
+            document.getElementById('editNpsnForm').submit();
         }
     });
 
     document.getElementById('editNpsnForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const newNpsn = document.getElementById('newNpsn').value;
-    fetch(`/identitas-pt/update/${newNpsn}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ npsn: newNpsn })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message) {
-            window.location.reload();
-        } else {
-            alert('Failed to update NPSN');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred');
-    });
-});
+        event.preventDefault();
+        const newNpsn = document.getElementById('newNpsn').value;
 
+        console.log(document.querySelector('meta[name="csrf-token"]').getAttribute('content'))
+
+
+
+        fetch(`{{ url('identitas-pt/update/') }}/${newNpsn}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    npsn: newNpsn
+                })
+            })
+
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to update NPSN');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred');
+            });
+    });
 </script>
 @endsection

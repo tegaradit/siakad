@@ -111,8 +111,8 @@
                         name: 'name'
                     },
                     {
-                        data: 'active_status_id',
-                        name: 'active_status_id'
+                        data: 'active_status.name',
+                        name: 'active_status.name'
                     },
                     {
                         data: 'birth_date',
@@ -131,8 +131,8 @@
                         name: 'mariage_status'
                     },
                     {
-                        data: 'employee_level_id',
-                        name: 'employee_level_id'
+                        data: 'employee_level.name',
+                        name: 'employee_level.name'
                     },
                     {
                         data: 'level_education',
@@ -163,8 +163,8 @@
                         name: 'exit_date'
                     },
                     {
-                        data: 'prodi_id',
-                        name: 'prodi_id'
+                        data: 'prodi.nama_prodi',
+                        name: 'prodi.nama_prodi'
                     },
                     {
                         data: 'action',

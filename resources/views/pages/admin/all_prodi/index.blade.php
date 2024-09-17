@@ -33,15 +33,16 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
+                                        <table id="datatable"
+                                            class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
                                                     <th>ID Prodi</th>
-                                                    <th>ID PT</th>
+                                                    <th>Nama PT</th>
                                                     <th>Kode Prodi</th>
                                                     <th>Nama Prodi</th>
                                                     <th>Status</th>
-                                                    <th>ID Jenjang Pendidikan</th>
+                                                    <th>Jenjang Pendidikan</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -49,7 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,8 +75,8 @@
                         name: 'id_prodi'
                     },
                     {
-                        data: 'id_pt',
-                        name: 'id_pt'
+                        data: 'nama_pt',
+                        name: 'university.nama_pt'
                     },
                     {
                         data: 'kode_prodi',
@@ -90,9 +91,9 @@
                         name: 'status'
                     },
                     {
-                        data: 'id_jenjang_pendidikan',
-                        name: 'id_jenjang_pendidikan'
-                    }
+                        data: 'nm_jenj_didik',
+                        name: 'education_level.nm_jenj_didik'
+                    },
                 ]
             });
         });
