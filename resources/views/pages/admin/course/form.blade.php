@@ -55,13 +55,19 @@
                                 </div>
 
                                 {{-- Education Level --}}
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="education_level_id">Education Level</label>
                                     <select name="education_level_id" id="education_level_id" class="form-control" required>
                                         <option value="">Pilih...</option>
                                         @foreach($education_levels as $level)
                                             <option value="{{ $level->id_jenj_didik }}">{{ $level->nm_jenj_didik }}</option>
                                         @endforeach
+                                    </select>
+                                </div> --}}
+                                <div class="form-group">
+                                    <label for="education_level_id">Education Level</label>
+                                    <select name="education_level_id" id="edu-selector" class="form-control" required>
+                                        <option value="" selected>Pilih...</option>
                                     </select>
                                 </div>
 
@@ -234,5 +240,30 @@
         }
     })
 </script>
-
+<script>
+    $("#edu-selector").select2({
+        ajax: {
+            delay: 250,
+            url: '{{ url('/') }}/admin/course/search_edu_lev',
+            data (params) {
+                var query = {
+                    nm_jenj_didik: params.term,
+                }
+                return query;
+            },
+            processResults (data) {
+                return {
+                    results: data.map(item => ({
+                        id: item.id_jenj_didik,  // The value for the option
+                        text: `${item.nm_jenj_didik}`  // The displayed text
+                    }))
+                }
+            }
+        },
+        minimumInputLength: 1,
+        templateResult (res) {
+            return res.text
+        }
+    })
+</script>
 @endsection

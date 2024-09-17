@@ -81,6 +81,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
@@ -111,11 +112,17 @@
                     },
                     {
                         data: 'start_date',
-                        name: 'start_date'
+                        name: 'start_date',
+                        render: function(data) {
+                        return moment(data).format('DD-MM-YYYY'); // format tanggal
+                    }
                     },
                     {
                         data: 'end_date',
-                        name: 'end_date'
+                        name: 'end_date',
+                        render: function(data) {
+                        return moment(data).format('DD-MM-YYYY'); // format tanggal
+                    }
                     },
                     {
                         data: 'action',

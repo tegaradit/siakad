@@ -35,7 +35,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('prodi') }}">
+                    <a href="index.html">
                         <i data-feather="file-text"></i>
                         <span data-key="t-dashboard">Program Studi PT</span>
                     </a>

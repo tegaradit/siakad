@@ -19,14 +19,11 @@ use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Lecturer;
-use App\Models\Room;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', function () {
     return view('pages.welcome');
-});
+})->name('login.page');
 Route::post('/login', [UserController::class, 'action'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
@@ -67,6 +64,7 @@ Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])-
 Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index');
 Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create');
 Route::get('/admin/course/search_prodi', [CourseController::class, 'searchProdi'])->name('course.search_prodi');
+Route::get('/admin/course/search_edu_lev', [CourseController::class, 'searchEdLev'])->name('course.search_edu_lev');
 Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store');
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');

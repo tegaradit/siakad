@@ -100,6 +100,11 @@ class CourseController extends Controller
         return $request->ajax() ? Prodi::where('nama_prodi', 'like', "%$search%")->get() : abort(404);
     }
 
+    public function searchEdLev (Request $request) {
+        $search = $request->query('nm_jenj_didik') != '' ? $request->query('nm_jenj_didik') : 'null';
+        return $request->ajax() ? Prodi::where('nm_jenj_didik', 'like', "%$search%")->get() : abort(404);
+    }
+
     public function store(Request $request)
     {
         // Validasi input

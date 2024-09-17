@@ -26,7 +26,6 @@ class LectureSettingController extends Controller
     public function create()
     {
         $prodis = Prodi::all();
-        // dd($prodis);
         return view('pages.admin.lecture_setting.form', compact('prodis'));
     }
 
