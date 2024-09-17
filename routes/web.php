@@ -63,7 +63,8 @@ Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])-
 //admin/course(matakuliah)
 Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index');
 Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create');
-Route::get('/course/search', [CourseController::class, 'searchProdi'])->name('course.search');
+Route::get('/admin/course/search_prodi', [CourseController::class, 'searchProdi'])->name('course.search_prodi');
+Route::get('/admin/course/search_edu_lev', [CourseController::class, 'searchEdLev'])->name('course.search_edu_lev');
 Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store');
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');

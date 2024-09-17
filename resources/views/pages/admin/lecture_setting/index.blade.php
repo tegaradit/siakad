@@ -101,8 +101,8 @@
                         }
                     },
                     {
-                        data: 'prodi_id',
-                        name: 'prodi_id'
+                        data: 'prodi.name',
+                        name: 'prodi.name'
                     },
                     {
                         data: 'max_number_of_meets',

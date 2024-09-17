@@ -49,17 +49,25 @@
                                 {{-- Prodi --}}
                                 <div class="form-group">
                                     <label for="prodi_id">Prodi</label>
-                                    <select name="prodi_id" id="prodi_id" class="form-control" required></select>
+                                    <select name="prodi_id" id="prodi-selector" class="form-control" required>
+                                        <option value="" selected>Pilih...</option>
+                                    </select>
                                 </div>
 
                                 {{-- Education Level --}}
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="education_level_id">Education Level</label>
                                     <select name="education_level_id" id="education_level_id" class="form-control" required>
                                         <option value="">Pilih...</option>
                                         @foreach($education_levels as $level)
                                             <option value="{{ $level->id_jenj_didik }}">{{ $level->nm_jenj_didik }}</option>
                                         @endforeach
+                                    </select>
+                                </div> --}}
+                                <div class="form-group">
+                                    <label for="education_level_id">Education Level</label>
+                                    <select name="education_level_id" id="edu-selector" class="form-control" required>
+                                        <option value="" selected>Pilih...</option>
                                     </select>
                                 </div>
 
@@ -203,33 +211,59 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 <script>
-    $(document).ready(function() {
-    $('#prodi_id').select2({
-        placeholder: 'Pilih Prodi...',
-        minimumInputLength: 2,
+    $("#prodi-selector").select2({
         ajax: {
-            url: '{{ route('course.search') }}',
-            dataType: 'json',
             delay: 250,
-            data: function (params) {
-                return {
-                    q: params.term  // Query yang akan dikirim
-                };
+            url: '{{ url('/') }}/admin/course/search_prodi',
+            data (params) {
+                var query = {
+                    nama_prodi: params.term,
+                }
+                return query;
             },
-            processResults: function (data) {
+            processResults (data) {
                 return {
-                    results: data.items  // Sesuai dengan format JSON dari controller
-                };
-            },
-            cache: true
+                    results: data.map(item => ({
+                        id: item.id,  // The value for the option
+                        text: `${item.nama_prodi}`  // The displayed text
+                    }))
+                }
+            }
+        },
+        minimumInputLength: 1,
+        templateResult (res) {
+            return res.text
         }
-    });
-});
+    })
 </script>
-
-
+<script>
+    $("#edu-selector").select2({
+        ajax: {
+            delay: 250,
+            url: '{{ url('/') }}/admin/course/search_edu_lev',
+            data (params) {
+                var query = {
+                    nm_jenj_didik: params.term,
+                }
+                return query;
+            },
+            processResults (data) {
+                return {
+                    results: data.map(item => ({
+                        id: item.id_jenj_didik,  // The value for the option
+                        text: `${item.nm_jenj_didik}`  // The displayed text
+                    }))
+                }
+            }
+        },
+        minimumInputLength: 1,
+        templateResult (res) {
+            return res.text
+        }
+    })
+</script>
 @endsection
