@@ -14,7 +14,7 @@ return new class extends Migration
     {
         schema::create('all_prodi', function(Blueprint $table){
             $table->string('id_prodi', 40)->primary();
-            $table->string('id_pt', 40); //fk
+            $table->string('id_university', 40); //fk
             $table->string('kode_prodi', 6);
             $table->string('nama_prodi', 50);
             $table->char('status', 2);
@@ -23,7 +23,7 @@ return new class extends Migration
 
             //foreign key
             $table->foreign('id_jenjang_pendidikan')->references('id_jenj_didik')->on('education_level')->onDelete('cascade');
-            $table->foreign('id_pt')->references('id_university')->on('university')->onDelete('cascade');
+            $table->foreign('id_university')->references('id_university')->on('university')->onDelete('cascade');
            
         });
     }
