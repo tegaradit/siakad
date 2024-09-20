@@ -51,28 +51,39 @@ class SemesterController extends Controller
     // Store the new semester in the database
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        $request->validate([
+        // Validate the input data
+        $validatedData = $request->validate([
             'semester_id' => 'required|string|max:6|unique:semester,semester_id',
             'name' => 'required|string|max:20',
-            'smt' => 'required|integer|in:1,2,3',
+            'smt' => 'required|in:1,2,3',
             'is_active' => 'required|boolean',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'date_range' => 'required',
         ]);
 
-        // Create a new semester entry
+        // Pisahkan start_date dan end_date dari date_range
+        $dates = explode(' to ', $request->input('date_range'));
+
+        // Ubah request untuk menambahkan start_date dan end_date
+        $request->merge([
+            'start_date' => $dates[0],
+            'end_date' => $dates[1],
+        ]);
+
+        // Debug hasil input
+        // dd($request->all()); // Menampilkan hasil debug di layar
+
+        // Create the semester record
         Semester::create([
-            'semester_id' => $request->semester_id,
-            'name' => $request->name,
-            'smt' => $request->smt,
-            'is_active' => $request->is_active,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
+            'semester_id' => $request->input('semester_id'),
+            'name' => $request->input('name'),
+            'smt' => $request->input('smt'),
+            'is_active' => $request->input('is_active'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
         ]);
 
-        // Redirect to the index page with success message
-        return redirect()->route('semester.index')->with('success', 'Semester created successfully.');
+        // Redirect back to the semester index page with a success message
+        return redirect()->route('semester.index')->with('success', 'Semester berhasil ditambahkan.');
     }
 
     // Display the form to edit an existing semester
@@ -86,32 +97,37 @@ class SemesterController extends Controller
     }
 
     // Update the semester in the database
-    public function update(Request $request, $semester_id)
+    public function update(Request $request, $id)
     {
-        // Validate the incoming request data
-        $request->validate([
-            'semester_id' => 'required|string|max:6|exists:semester,semester_id',
+        // Validate the input data
+        $validated = $request->validate([
+            'semester_id' => 'required|string|max:6',
             'name' => 'required|string|max:20',
             'smt' => 'required|integer|in:1,2,3',
             'is_active' => 'required|boolean',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'date_range' => 'required|string', // We'll process this field separately
         ]);
 
-        // Find the semester by its ID
-        $semester = Semester::findOrFail($semester_id);
+        // Find the semester by ID
+        $semester = Semester::findOrFail($id);
+
+        // Split the date_range value into start_date and end_date
+        $dateRange = explode(' to ', $validated['date_range']);
+        $startDate = $dateRange[0];
+        $endDate = $dateRange[1];
 
         // Update the semester data
         $semester->update([
-            'name' => $request->name,
-            'smt' => $request->smt,
-            'is_active' => $request->is_active,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
+            'semester_id' => $validated['semester_id'],
+            'name' => $validated['name'],
+            'smt' => $validated['smt'],
+            'is_active' => $validated['is_active'],
+            'start_date' => $startDate,
+            'end_date' => $endDate,
         ]);
 
-        // Redirect to the index page with success message
-        return redirect()->route('semester.index')->with('success', 'Semester updated successfully.');
+        // Redirect back with success message
+        return redirect()->route('semester.index')->with('success', 'Semester updated successfully!');
     }
 
     // Remove the specified resource from storage
