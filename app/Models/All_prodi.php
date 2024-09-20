@@ -24,7 +24,7 @@ class All_prodi extends Model
 
     public function university(): BelongsTo
     {
-        return $this->belongsTo(University::class, 'id_pt', 'id_pt');
+        return $this->belongsTo(University::class, 'id_pt', 'id_university');
     }
    public function education_level()
     {
