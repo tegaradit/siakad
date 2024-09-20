@@ -17,7 +17,7 @@ class ProdiController extends Controller
         
         if ($request->ajax()) {
             $prodi = All_prodi::leftJoin('education_level', 'id_jenjang_pendidikan', '=', 'id_jenj_didik')
-                ->where('id_pt', '=', $current_identity[0]->current_id_sp)
+                ->where('id_university', '=', $current_identity[0]->current_id_sp)
                 ->get([
                     'kode_prodi AS kode',
                     'nama_prodi AS nama',
