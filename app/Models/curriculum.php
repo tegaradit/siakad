@@ -35,9 +35,9 @@ class Curriculum extends Model
     ];
 
     // Relasi ke tabel t_prodi
-    public function prodi(): BelongsTo
+    public function all_prodi(): BelongsTo
     {
-        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
+        return $this->belongsTo(All_prodi::class, 'prodi_id', 'id_prodi');
     }
 
     // Relasi ke tabel education_level

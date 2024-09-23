@@ -35,9 +35,9 @@ class Course extends Model
         'effective_end_date',
     ];
 
-    public function prodi()
+    public function all_prodi()
     {
-        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
+        return $this->belongsTo(All_prodi::class, 'prodi_id', 'id_prodi');
     }
 
     public function education_level()

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('course', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('prodi_id');
+            $table->string('prodi_id', 40);
             $table->tinyInteger('education_level_id');
             $table->string('code', 10);
             $table->string('name', 200);
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Foreign keys
-            $table->foreign('prodi_id', 'prodi_id_references')->references('id')->on('prodi')->onDelete('cascade');
+            $table->foreign('prodi_id', 'course_references_all_prodi')->references('id_prodi')->on('all_prodi')->onDelete('cascade');
             $table->foreign('education_level_id')->references('id_jenj_didik')->on('education_level')->onDelete('cascade');
             $table->foreign('group_id')->references('id')->on('course_group')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('course_type')->onDelete('cascade');

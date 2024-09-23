@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
         
             // Foreign key harus mengarah ke tabel `prodi`
-            $table->foreign('prodi_id')->references('id')->on('prodi')->onDelete('cascade');
+            $table->foreign('prodi_id')->references('id_prodi')->on('all_prodi')->onDelete('cascade');
         });
         
     }

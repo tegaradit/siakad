@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('curriculum', function (Blueprint $table) {
             $table->uuid('curriculum_id')->primary();
-            $table->uuid('prodi_id');
+            $table->string('prodi_id', 40);
             $table->tinyInteger('education_level_id');
             $table->char('semester_id', 6);
             $table->string('name', 200);
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
             
             // Foreign keys
-            $table->foreign('prodi_id')->references('id')->on('prodi');
+            $table->foreign('prodi_id')->references('id_prodi')->on('all_prodi');
             $table->foreign('education_level_id')->references('id_jenj_didik')->on('education_level');
             $table->foreign('semester_id')->references('semester_id')->on('semester');
         });
