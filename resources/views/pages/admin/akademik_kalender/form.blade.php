@@ -36,8 +36,8 @@
 
                                     <div class="form-group">
                                         <label for="date_range" class="form-label">Rentang Tanggal</label>
-                                        <input type="text" class="form-control mb-3" id="datepicker-range" name="date_range"
-                                            value="{{ isset($data) ? $data->start_date . ' - ' . $data->end_date : '' }}"
+                                        <input type="text" class="form-control mb-3" id="datepicker-range-without-d-value" name="date_range"
+                                            value="{{ isset($data) ? $data->start_date . ' to ' . $data->end_date : '' }}"
                                             required>
                                     </div>
 

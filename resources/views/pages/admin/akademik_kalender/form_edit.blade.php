@@ -26,27 +26,33 @@
                             <div class="card-body">
                                 <h4 class="card-title mb-4">Form Edit Kalender Akademik</h4>
 
-                                <form action="{{ route('kalender_akademik.update', $data->id) }}" method="POST">
+                                <form action="{{ route('kalender-akademik.update', $data->id) }}" method="POST">
                                     @csrf
                                     @method('PUT') {{-- Method PUT untuk edit/update --}}
 
+                                    <!-- Tanggal range -->
                                     <div class="mb-3">
-                                        <label for="start_date" class="form-label">Tanggal Mulai</label>
-                                        <input type="date" class="form-control" id="start_date" name="start_date"
-                                            value="{{ old('start_date', $data->start_date) }}" required>
+                                        <label for="date_range" class="form-label">Rentang Tanggal</label>
+                                        <input type="text" class="form-control" id="datepicker-range-without-d-value" name="date_range"
+                                            value="{{ old('start_date', $data->start_date) . ' to ' . old('end_date', $data->end_date) }}"
+                                            required>
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label for="end_date" class="form-label">Tanggal Selesai</label>
-                                        <input type="date" class="form-control" id="end_date" name="end_date"
-                                            value="{{ old('end_date', $data->end_date) }}" required>
-                                    </div>
+                                    <!-- Tanggal Mulai (Hidden) -->
+                                    <input type="hidden" id="start_date" name="start_date"
+                                        value="{{ old('start_date', $data->start_date) }}">
 
+                                    <!-- Tanggal Selesai (Hidden) -->
+                                    <input type="hidden" id="end_date" name="end_date"
+                                        value="{{ old('end_date', $data->end_date) }}">
+
+                                    <!-- Deskripsi -->
                                     <div class="mb-3">
                                         <label for="description" class="form-label">Deskripsi</label>
                                         <textarea class="form-control" id="description" name="description" rows="3" required>{{ old('description', $data->description) }}</textarea>
                                     </div>
 
+                                    <!-- Semester -->
                                     <div class="mb-3">
                                         <label for="semester_id" class="form-label">Semester</label>
                                         <select class="form-control" id="semester_id" name="semester_id" required>
@@ -60,6 +66,7 @@
                                         </select>
                                     </div>
 
+                                    <!-- Tipe Kalender -->
                                     <div class="mb-3">
                                         <label for="calendar_type_id" class="form-label">Tipe Kalender</label>
                                         <select class="form-control" id="calendar_type_id" name="calendar_type_id" required>
@@ -74,7 +81,7 @@
                                     </div>
 
                                     <button type="submit" class="btn btn-primary">Update</button>
-                                    <a href="{{ route('kalender_akademik.index') }}" class="btn btn-secondary">Batal</a>
+                                    <a href="{{ route('kalender-akademik.index') }}" class="btn btn-secondary">Batal</a>
                                 </form>
                             </div>
                         </div>
@@ -83,4 +90,23 @@
             </div>
         </div>
     </div>
+
+    <!-- Script untuk memisahkan date range -->
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize date range picker
+            $('#date_range').daterangepicker({
+                locale: {
+                    format: 'YYYY-MM-DD'
+                },
+                startDate: $('#start_date').val(),
+                endDate: $('#end_date').val(),
+            }, function(start, end, label) {
+                // Set the hidden input values
+                $('#start_date').val(start.format('YYYY-MM-DD'));
+                $('#end_date').val(end.format('YYYY-MM-DD'));
+            });
+        });
+    </script>
 @endsection

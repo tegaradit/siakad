@@ -63,7 +63,7 @@
                                             required maxlength="4">
                                         @error('id')
                                             <div class="invalid-feedback">
-                                                {{ $message }} <!-- Pesan error untuk ID -->
+                                                {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
@@ -75,34 +75,24 @@
                                             value="{{ old('name', $academicYear->name ?? '') }}" required>
                                         @error('name')
                                             <div class="invalid-feedback">
-                                                {{ $message }} <!-- Pesan error untuk Nama -->
+                                                {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
 
-                                    <div class="form-group mb-3">
-                                        <label for="start_date">Tanggal Mulai</label>
-                                        <input type="date" class="form-control @error('start_date') is-invalid @enderror"
-                                            id="start_date" name="start_date"
-                                            value="{{ old('start_date', $academicYear->start_date ?? '') }}" required>
-                                        @error('start_date')
-                                            <div class="invalid-feedback">
-                                                {{ $message }} <!-- Pesan error untuk Tanggal Mulai -->
-                                            </div>
-                                        @enderror
+                                    <div class="form-group">
+                                        <label for="date_range" class="form-label">Rentang Tanggal</label>
+                                        <input type="text" class="form-control mb-3"
+                                            id="datepicker-range-without-d-value" name="date_range"
+                                            value="{{ isset($data) ? $data->start_date . ' to ' . $data->end_date : '' }}"
+                                            required>
                                     </div>
 
-                                    <div class="form-group mb-3">
-                                        <label for="end_date">Tanggal Selesai</label>
-                                        <input type="date" class="form-control @error('end_date') is-invalid @enderror"
-                                            id="end_date" name="end_date"
-                                            value="{{ old('end_date', $academicYear->end_date ?? '') }}" required>
-                                        @error('end_date')
-                                            <div class="invalid-feedback">
-                                                {{ $message }} <!-- Pesan error untuk Tanggal Selesai -->
-                                            </div>
-                                        @enderror
-                                    </div>
+                                    <!-- Hidden input untuk Tanggal Mulai dan Selesai -->
+                                    <input type="hidden" id="start_date" name="start_date"
+                                        value="{{ old('start_date', $academicYear->start_date ?? '') }}">
+                                    <input type="hidden" id="end_date" name="end_date"
+                                        value="{{ old('end_date', $academicYear->end_date ?? '') }}">
 
                                     <div class="mt-3">
                                         <button type="submit" class="btn btn-primary">
@@ -146,4 +136,23 @@
             </div>
         </footer>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datepicker-range').daterangepicker({
+                locale: {
+                    format: 'YYYY-MM-DD'
+                },
+                startDate: $('#start_date').val() || moment().startOf('month').format('YYYY-MM-DD'),
+                endDate: $('#end_date').val() || moment().endOf('month').format('YYYY-MM-DD'),
+            }, function(start, end, label) {
+                // Set the hidden input values
+                $('#start_date').val(start.format('YYYY-MM-DD'));
+                $('#end_date').val(end.format('YYYY-MM-DD'));
+                // Update the date range input field
+                $('#datepicker-range').val(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        });
+    </script>
 @endsection

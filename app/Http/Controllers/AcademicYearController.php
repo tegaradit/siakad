@@ -21,8 +21,11 @@ class AcademicYearController extends Controller
             return DataTables::of($academicYears)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    return '<a href="' . route('tahun-akademik.edit', $data->id) . '" class="btn btn-outline-warning btn-sm edit"><i class="fas fa-pencil-alt"></i></a>
-                    <form id="delete-form-' . $data->id . '" 
+                    return '
+                        <a href="' . route('tahun-akademik.edit', $data->id) . '" class="btn btn-outline-warning btn-sm edit">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <form id="delete-form-' . $data->id . '" 
                               onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
                               action="' . route('tahun-akademik.destroy', $data->id) . '" 
                               method="POST" style="display:inline;">
@@ -30,7 +33,13 @@ class AcademicYearController extends Controller
                             <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
-                        </form>';
+                        </form>';
+                })
+                ->editColumn('start_date', function ($data) {
+                    return \Carbon\Carbon::parse($data->start_date)->format('d-m-Y');
+                })
+                ->editColumn('end_date', function ($data) {
+                    return \Carbon\Carbon::parse($data->end_date)->format('d-m-Y');
                 })
                 ->make(true);
         }
@@ -45,22 +54,34 @@ class AcademicYearController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'id' => 'required|string|size:4', // ID harus 4 karakter
-            'name' => 'required|string|min:3|max:10', // Nama harus antara 3-10 karakter
-            'start_date' => 'required|date', // Tanggal mulai harus format tanggal
-            'end_date' => 'required|date|after_or_equal:start_date', // Tanggal selesai harus setelah atau sama dengan tanggal mulai
+        // Validasi input
+        $request->validate([
+            'id' => 'required|string|size:4',
+            'name' => 'required|string|min:3|max:10',
+            'date_range' => 'required', // Validasi untuk date_range
         ]);
 
-        $academicYear = new Academic_year();
-        $academicYear->id = $validated['id'];
-        $academicYear->name = $validated['name'];
-        $academicYear->start_date = $validated['start_date'];
-        $academicYear->end_date = $validated['end_date'];
-        $academicYear->save();
+        // Pisahkan start_date dan end_date dari date_range
+        $dates = explode(' to ', $request->input('date_range'));
+
+        // Ubah request untuk menambahkan start_date dan end_date
+        $request->merge([
+            'start_date' => $dates[0],
+            'end_date' => $dates[1],
+        ]);
+
+        // Menyimpan data yang telah divalidasi
+        Academic_year::create([
+            'id' => $request->input('id'),
+            'name' => $request->input('name'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+        ]);
 
         return redirect()->route('tahun-akademik.index')->with('success', 'Tahun Akademik berhasil ditambahkan.');
     }
+
+
 
     public function edit($id)
     {
@@ -70,22 +91,41 @@ class AcademicYearController extends Controller
 
     public function update(Request $request, $id)
     {
+        $academicYear = Academic_year::findOrFail($id);
+
+        // Validasi input
         $validated = $request->validate([
-            'id' => 'required|string|size:4',
+            'id' => 'required|string|size:4|unique:academic_years,id,' . $academicYear->id,
             'name' => 'required|string|min:3|max:10',
+            'date_range' => 'required', // Tambahkan validasi untuk date_range
+        ]);
+
+        // Pisahkan start_date dan end_date dari date_range
+        $dates = explode(' to ', $request->input('date_range'));
+
+        // Ubah request untuk menambahkan start_date dan end_date
+        $request->merge([
+            'start_date' => $dates[0],
+            'end_date' => $dates[1],
+        ]);
+
+        // Validasi tanggal
+        $request->validate([
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
-        $academicYear = Academic_year::findOrFail($id);
-        $academicYear->id = $validated['id'];
-        $academicYear->name = $validated['name'];
-        $academicYear->start_date = $validated['start_date'];
-        $academicYear->end_date = $validated['end_date'];
-        $academicYear->save();
+        // Update data tahun akademik
+        $academicYear->update([
+            'id' => $validated['id'],
+            'name' => $validated['name'],
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+        ]);
 
         return redirect()->route('tahun-akademik.index')->with('success', 'Tahun Akademik berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {

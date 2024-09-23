@@ -76,11 +76,6 @@ class AcademicCalendarController extends Controller
             'start_date' => $dates[0],
             'end_date' => $dates[1],
         ]);
-
-        // Debug hasil input
-        // dd($request->all()); // Menampilkan hasil debug di layar
-
-        // Simpan data ke dalam database
         Academic_calendar::create([
             'start_date' => $request->input('start_date'),
             'end_date' => $request->input('end_date'),
@@ -95,26 +90,40 @@ class AcademicCalendarController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'date_range' => 'required',
+        // Ambil rentang tanggal
+        $date_range = $request->input('date_range');
+
+        // Pisahkan date_range menjadi start_date dan end_date
+        $dates = explode(' to ', $date_range);
+
+        if (count($dates) === 2) {
+            $start_date = $dates[0];
+            $end_date = $dates[1];
+        } else {
+            // Jika format salah, bisa memberikan default atau validasi error
+            return back()->withErrors(['date_range' => 'Format rentang tanggal tidak valid']);
+        }
+
+        // Validasi data yang lain
+        $validatedData = $request->validate([
             'description' => 'required|string',
-            'semester_id' => 'required|exists:semester,semester_id|max:6',
+            'semester_id' => 'required|exists:semester,semester_id',
             'calendar_type_id' => 'required|exists:calendar_types,id',
+            // Pastikan start_date dan end_date sudah benar
         ]);
 
-        $dates = explode(' - ', $request->input('date_range'));
+        // Update data
+        $academicCalendar = Academic_calendar::find($id);
+        $academicCalendar->start_date = $start_date;
+        $academicCalendar->end_date = $end_date;
+        $academicCalendar->description = $request->input('description');
+        $academicCalendar->semester_id = $request->input('semester_id');
+        $academicCalendar->calendar_type_id = $request->input('calendar_type_id');
+        $academicCalendar->save();
 
-        $data = Academic_calendar::findOrFail($id);
-        $data->update([
-            'start_date' => $dates[0],
-            'end_date' => $dates[1],
-            'description' => $request->input('description'),
-            'semester_id' => $request->input('semester_id'),
-            'calendar_type_id' => $request->input('calendar_type_id'),
-        ]);
-
-        return redirect()->route('kalender-akademik.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('kalender-akademik.index')->with('success', 'Data berhasil diupdate');
     }
+
 
 
     public function edit($id)
