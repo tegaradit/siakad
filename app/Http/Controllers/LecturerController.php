@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Active_status;
+use App\Models\All_prodi;
 use App\Models\Employee_level;
 use App\Models\Lecturer;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use Hamcrest\Core\AllOf;
 
 class LecturerController extends Controller
 {
@@ -60,13 +62,13 @@ class LecturerController extends Controller
     {
         $activeStatuses = Active_status::all();
         $employeeLevels = Employee_level::all();
-        $prodiList = Prodi::all();
+        $prodiList = All_prodi::all();
         return view('pages.admin.lecturer.form', compact('activeStatuses', 'employeeLevels', 'prodiList'));
     }
 
         public function searchProdi (Request $request) {
         $search = $request->query('nama_prodi') != '' ? $request->query('nama_prodi') : 'null';
-        return $request->ajax() ? Prodi::where('nama_prodi', 'like', "%$search%")->get() : abort(404);
+        return $request->ajax() ? All_prodi::where('nama_prodi', 'like', "%$search%")->get() : abort(404);
     }
     
     // Store a newly created lecturer in the database
@@ -114,7 +116,7 @@ class LecturerController extends Controller
         $lecturer = Lecturer::findOrFail($id); // Menggunakan id sebagai primary key
         $activeStatuses = Active_status::all();
         $employeeLevels = Employee_level::all();
-        $prodiList = Prodi::all();
+        $prodiList = All_prodi::all();
 
         return view('pages.admin.lecturer.form_edit', compact('lecturer', 'activeStatuses', 'employeeLevels', 'prodiList'));
     }

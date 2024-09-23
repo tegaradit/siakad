@@ -31,7 +31,7 @@ return new class extends Migration
             $table->date('assign_letter_date')->nullable();
             $table->date('assign_letter_tmt')->nullable();
             $table->date('exit_date')->nullable();
-            $table->char('prodi_id', 36);
+            $table->string('prodi_id', 40);
             $table->timestamps();
 
             // Foreign keys
