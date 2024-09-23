@@ -43,7 +43,7 @@
                                                 <th>Maks Jum. Pertemuan</th>
                                                 <th>Min Jum. Pertemuan</th>
                                                 <th>is Prodi</th>
-                                                <th style="text-align: center">Action</th>
+                                                <th style="text-align: center">Aksi</th>
                                             </tr>
                                         </thead>
                                     </table>

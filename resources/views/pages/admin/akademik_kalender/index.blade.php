@@ -45,7 +45,7 @@
                                                 <th>Deskripsi</th>
                                                 <th>Semester ID</th>
                                                 <th>Tipe Kalender</th>
-                                                <th style="text-align: center">Action</th>
+                                                <th style="text-align: center">Aksi</th>
                                             </tr>
                                         </thead>
                                     </table>
