@@ -29,7 +29,7 @@
                             <p class="card-title-desc">Berikut adalah daftar mata kuliah yang tersedia di sistem.</p>
                         </div>
                         <div class="card-body">
-                            <a href="{{ route('course.create') }}" class="btn btn-primary mb-3">Tambah Mata Kuliah</a>
+                            <a href="{{ route('course.create') }}" class="btn btn-primary mb-3">Tambah</a>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="course-table">
                                     <thead>

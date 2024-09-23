@@ -65,7 +65,6 @@ Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])-
 Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index');
 Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create');
 Route::get('/admin/course/search_prodi', [CourseController::class, 'searchProdi'])->name('course.search_prodi');
-Route::get('/admin/course/search_edu_lev', [CourseController::class, 'searchEdLev'])->name('course.search_edu_lev');
 Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store');
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
@@ -81,6 +80,7 @@ Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'
 Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 //admin/curriculum(kurikulum)
 Route::resource('/admin/curriculum', CurriculumController::class);
+Route::get('/curriculum/search_ed_lev', [CurriculumController::class, 'searchEdLevel'])->name('curriculum.search_ed_lev');
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data');
 Route::resource('/admin/lecture-setting', LectureSettingController::class);
