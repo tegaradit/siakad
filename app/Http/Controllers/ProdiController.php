@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\All_prodi;
+use App\Models\Educational_unit;
 use App\Models\IdentitasPt;
-use App\Models\University;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -13,11 +13,11 @@ class ProdiController extends Controller
     public function index(Request $request)
     {
         $current_identity = IdentitasPt::get(['current_id_sp']);
-        $current_university = University::where('id_university', '=', $current_identity[0]->current_id_sp)->get()[0];
+        $current_university = Educational_unit::where('id_sp', '=', $current_identity[0]->current_id_sp)->get()[0];
         
         if ($request->ajax()) {
-            $prodi = All_prodi::leftJoin('education_level', 'id_jenjang_pendidikan', '=', 'id_jenj_didik')
-                ->where('id_university', '=', $current_identity[0]->current_id_sp)
+            $prodi = All_prodi::leftJoin('education_level', 'all_prodi.id_jenj_didik', '=', 'education_level.id_jenj_didik')
+                ->where('id_sp', '=', $current_identity[0]->current_id_sp)
                 ->get([
                     'kode_prodi AS kode',
                     'nama_prodi AS nama',

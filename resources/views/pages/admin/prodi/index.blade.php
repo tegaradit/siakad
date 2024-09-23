@@ -28,7 +28,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Daftar Seluruh Prodi {{ $current_university->nama_pt }} {{ $current_university->nama_singkat ?? "($current_university->nama_singkat)"  }}</h4>
+                                    <h4 class="card-title">Daftar Seluruh Prodi {{ $current_university->nm_lemb }} {{ $current_university->nm_singkat ?? "($current_university->nm_singkat)"  }}</h4>
                                     <p class="card-title-desc">Berikut adalah daftar program studi perguruan tinggi saat ini yang tersedia.</p>
                                 </div>
                                 <div class="card-body">
