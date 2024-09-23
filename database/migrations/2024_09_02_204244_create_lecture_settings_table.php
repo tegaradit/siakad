@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lecture_settings', function (Blueprint $table) {
             $table->id();
-            $table->uuid('prodi_id');
+            $table->string('prodi_id', 40);
             $table->integer('max_number_of_meets');
             $table->integer('min_number_of_presence');
             $table->boolean('is_prodi');

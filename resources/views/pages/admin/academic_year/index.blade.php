@@ -44,7 +44,7 @@
                                                 <th>Nama</th>
                                                 <th>Tanggal Mulai</th>
                                                 <th>Tanggal Selesai</th>
-                                                <th style="width: 45px; text-align: center;">Action</th>
+                                                <th style="width: 45px; text-align: center;">Aksi</th>
                                             </tr>
                                         </thead>
                                     </table>
