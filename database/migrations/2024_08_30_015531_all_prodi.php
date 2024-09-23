@@ -44,7 +44,7 @@ return new class extends Migration
             $table->char('fungsi_selain_prak', 1)->nullable();
             $table->char('penggunaan_lab', 1)->nullable();
             $table->string('id_sp', 40)->nullable();
-            $table->decimal('id_jenj_didik', 2, 0)->nullable();
+            $table->tinyInteger('id_jenj_didik')->nullable();
             $table->decimal('id_jns_sms', 2, 0)->nullable();
             $table->char('id_fungsi_lab', 1)->nullable();
             $table->char('id_kel_usaha', 8)->nullable();
@@ -57,7 +57,7 @@ return new class extends Migration
             $table->tinyInteger('max_sks1')->nullable();
 
             $table->foreign('id_sp')->references('id_sp')->on('educational_unit')->onDelete('cascade');
-            $table->foreign('id_jenj_didik')->references('id')->on('education_level')->onDelete('cascade');
+            $table->foreign('id_jenj_didik')->references('id_jenj_didik')->on('education_level')->onDelete('cascade');
         });
     }
 
