@@ -50,7 +50,7 @@
                                 @endif
 
                                 <!-- Prodi field -->
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="prodi_id">Prodi</label>
                                     <select name="prodi_id" id="prodi_id" class="form-control" required>
                                         <option value="">Pilih Prodi</option>
@@ -61,7 +61,7 @@
                                     @error('prodi_id')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <!-- Education Level field -->
                                 <div class="form-group">

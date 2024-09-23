@@ -28,10 +28,10 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Daftar Kurikulum</h4>
-                            <p class="card-title-desc">Berikut adalah daftar mata kuliah yang tersedia di sistem.</p>
+                            <p class="card-title-desc">Berikut adalah daftar kurikulum yang tersedia di sistem.</p>
                         </div>
                         <div class="card-body">
-                            <a href="{{ route('curriculum.create') }}" class="btn btn-primary mb-3">Tambah Kurikulum</a>
+                            <a href="{{ route('curriculum.create') }}" class="btn btn-primary mb-3">Tambah</a>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="datatable">
                                     <thead>
