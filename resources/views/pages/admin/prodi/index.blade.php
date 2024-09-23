@@ -28,8 +28,8 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Data Prodi</h4>
-                                    <p class="card-title-desc">Berikut adalah daftar seluruh program studi yang tersedia.</p>
+                                    <h4 class="card-title">Daftar Seluruh Prodi {{ $current_university->nama_pt }} {{ $current_university->nama_singkat ?? "($current_university->nama_singkat)"  }}</h4>
+                                    <p class="card-title-desc">Berikut adalah daftar program studi perguruan tinggi saat ini yang tersedia.</p>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -39,9 +39,7 @@
                                                     <th>No</th>
                                                     <th>Kode</th>
                                                     <th>Nama Prodi</th>
-                                                    <th>Nama Jurusan</th>
                                                     <th>Jenjang Pendidikan</th>
-                                                    <th>SKS Lulus</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
@@ -74,10 +72,10 @@
                             orderable: false, 
                             searchable: false,
                             render: function (data, type, row, meta) {
-                                    return meta.row + meta.settings._iDisplayStart + 1; // nomor urut yang dinamis
+                                    return meta.row + meta.settings._iDisplayStart + 1;
                             },
                             createdCell: function (td, cellData, rowData, row, col) {
-                                    $(td).css('text-align', 'center'); // Align center
+                                    $(td).css('text-align', 'center');
                             }
                         },
                         {
@@ -85,20 +83,12 @@
                             name: 'kode'
                         },
                         {
-                            data: 'nama_prodi',
-                            name: 'nama_prodi'
-                        },
-                        {
-                            data: 'nm_jur',
-                            name: 'nm_jur'
+                            data: 'nama',
+                            name: 'nama'
                         },
                         {
                             data: 'nm_jenj_didik',
                             name: 'nm_jenj_didik'
-                        },
-                        {
-                            data: 'sks_lulus',
-                            name: 'sks_lulus'
                         },
                         {
                             data: 'status',

@@ -36,6 +36,12 @@ class PeriodePmbController extends Controller
                 ->editColumn('status', function ($row) {
                     return $row->status == 1 ? 'buka' : 'tutup';
                 })
+                ->editColumn('start_date', function ($row) {
+                    return date('d-m-Y', strtotime($row->start_date));
+                })
+                ->editColumn('end_date', function ($row) {
+                    return date('d-m-Y', strtotime($row->end_date));
+                })
                 
                 ->make(true);
         }

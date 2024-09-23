@@ -15,7 +15,7 @@ class All_prodi extends Model
     protected $keyType = 'string';
     protected $fillable = [
         'id_prodi',
-        'id_pt',
+        'id_university',
         'kode_prodi',
         'nama_prodi',
         'status',
@@ -24,7 +24,7 @@ class All_prodi extends Model
 
     public function university(): BelongsTo
     {
-        return $this->belongsTo(University::class, 'id_pt', 'id_pt');
+        return $this->belongsTo(University::class, 'id_university', 'id_university');
     }
    public function education_level()
     {

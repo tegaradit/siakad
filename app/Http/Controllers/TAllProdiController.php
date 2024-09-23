@@ -33,7 +33,7 @@ class TAllProdiController extends Controller
             // Mengambil data dari tabel all_prodi
             $allProdi = All_prodi::select([
                 'id_prodi',
-                'id_pt',
+                'id_university',
                 'kode_prodi',
                 'nama_prodi',
                 'status',
