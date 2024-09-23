@@ -32,28 +32,6 @@
                                     @csrf
                                     @method('PUT')
 
-                                    <!-- Rentang Tanggal -->
-                                    <div class="mb-3">
-                                        <label for="date_range" class="form-label">Rentang Tanggal</label>
-                                        <input type="text" id="datepicker-range-without-d-value"class="form-control @error('date_range') is-invalid @enderror"
-                                            id="date_range" name="date_range"
-                                            value="{{ old('start_date', $academicYear->start_date) . ' to ' . old('end_date', $academicYear->end_date) }}"
-                                            required>
-                                        @error('date_range')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-
-                                    <!-- Tanggal Mulai (Hidden) -->
-                                    <input type="hidden" id="start_date" name="start_date"
-                                        value="{{ old('start_date', $academicYear->start_date) }}">
-
-                                    <!-- Tanggal Selesai (Hidden) -->
-                                    <input type="hidden" id="end_date" name="end_date"
-                                        value="{{ old('end_date', $academicYear->end_date) }}">
-
                                     <div class="form-group mb-3">
                                         <label for="id">ID Tahun Akademik</label>
                                         <input type="text" class="form-control @error('id') is-invalid @enderror"
@@ -77,6 +55,28 @@
                                             </div>
                                         @enderror
                                     </div>
+
+                                    <!-- Rentang Tanggal -->
+                                    <div class="mb-3">
+                                        <label for="date_range" class="form-label">Rentang Tanggal</label>
+                                        <input type="text" id="datepicker-range-without-d-value"class="form-control @error('date_range') is-invalid @enderror"
+                                            id="date_range" name="date_range"
+                                            value="{{ old('start_date', $academicYear->start_date) . ' to ' . old('end_date', $academicYear->end_date) }}"
+                                            required>
+                                        @error('date_range')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Tanggal Mulai (Hidden) -->
+                                    <input type="hidden" id="start_date" name="start_date"
+                                        value="{{ old('start_date', $academicYear->start_date) }}">
+
+                                    <!-- Tanggal Selesai (Hidden) -->
+                                    <input type="hidden" id="end_date" name="end_date"
+                                        value="{{ old('end_date', $academicYear->end_date) }}">
 
                                     <div class="form-group mt-3">
                                         <button type="submit" class="btn btn-primary">Update</button>
