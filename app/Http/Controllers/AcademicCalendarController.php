@@ -20,12 +20,11 @@ class AcademicCalendarController extends Controller
 
     public function create()
     {
-        $calendar_types = Calendar_type::all(); // Memanggil all() pada model Calendar_type
-        $semesters = Semester::all(); // Memanggil all() pada model Semester
+        $calendar_types = Calendar_type::all();
+        $semesters = Semester::all();
         return view('pages.admin.akademik_kalender.form', compact('calendar_types', 'semesters'));
     }
 
-    // AcademicCalendarController.php
     public function data(Request $request)
     {
         if ($request->ajax()) {

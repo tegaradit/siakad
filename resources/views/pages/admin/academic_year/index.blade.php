@@ -115,16 +115,10 @@
                     {
                         data: 'start_date',
                         name: 'start_date',
-                        render: function(data) {
-                            return moment(data).format('DD-MM-YYYY');
-                        }
                     },
                     {
                         data: 'end_date',
                         name: 'end_date',
-                        render: function(data) {
-                            return moment(data).format('DD-MM-YYYY');
-                        }
                     },
                     {
                         data: 'action',
