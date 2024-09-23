@@ -99,6 +99,8 @@ class SemesterController extends Controller
     // Update the semester in the database
     public function update(Request $request, $id)
     {
+        $semester = Semester::findOrFail($id);
+
         // Validate the input data
         $validated = $request->validate([
             'semester_id' => 'required|string|max:6',
@@ -108,13 +110,20 @@ class SemesterController extends Controller
             'date_range' => 'required|string', // We'll process this field separately
         ]);
 
-        // Find the semester by ID
-        $semester = Semester::findOrFail($id);
+        // Pisahkan start_date dan end_date dari date_range
+        $dates = explode(' to ', $request->input('date_range'));
 
-        // Split the date_range value into start_date and end_date
-        $dateRange = explode(' to ', $validated['date_range']);
-        $startDate = $dateRange[0];
-        $endDate = $dateRange[1];
+        // Ubah request untuk menambahkan start_date dan end_date
+        $request->merge([
+            'start_date' => $dates[0],
+            'end_date' => $dates[1],
+        ]);
+
+        // Validasi tanggal
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
 
         // Update the semester data
         $semester->update([
@@ -122,8 +131,8 @@ class SemesterController extends Controller
             'name' => $validated['name'],
             'smt' => $validated['smt'],
             'is_active' => $validated['is_active'],
-            'start_date' => $startDate,
-            'end_date' => $endDate,
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
         ]);
 
         // Redirect back with success message

@@ -45,6 +45,11 @@ class CurriculumController extends Controller
         return view('pages.admin.curriculum.form', compact('prodi', 'educationLevels', 'semesters'));
     }
 
+    public function searchEducationLevel (Request $request) {
+        $search = $request->query('nm_jenj_didik') != '' ? $request->query('nm_jenj_didik') : 'null';
+        return $request->ajax() ? Prodi::where('nm_jenj_didik', 'like', "%$search%")->get() : abort(404);
+    }
+
     // Store a newly created resource in storage
     public function store(Request $request)
     {
