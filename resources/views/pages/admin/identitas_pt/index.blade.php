@@ -116,7 +116,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="newNpsn" class="form-label">NPSN</label>
-                        <input type="text" class="form-control" id="newNpsn" name="npsn" value="{{ request('npsn', '053025') }}" required>
+                        <input type="text" class="form-control" id="newNpsn" name="npsn" value="{{ request('npsn', $educationalUnit->npsn) }}" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Update NPSN</button>
                 </form>
