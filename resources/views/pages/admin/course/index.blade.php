@@ -33,15 +33,15 @@
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="course-table">
                                     <thead>
-                                        <tr style="text-align: center">
-                                            <th style="width: 30px">No</th>
-                                            <th>Code</th>
-                                            <th>Nama</th>
-                                            <th>Prodi</th>
-                                            <th>Jenjang Pendidikan</th>
-                                            <th>Grup</th>
-                                            <th>Tipe</th>
-                                            <th>Aksi</th>
+                                        <tr style="text-align: center; vertical-align: middle;">
+                                            <th style="width: 30px; text-align: center; vertical-align: middle;">No.</th>
+                                            <th style="text-align: center; vertical-align: middle;">Kode</th>
+                                            <th style="text-align: center; vertical-align: middle;">Nama</th>
+                                            <th style="text-align: center; vertical-align: middle;">Prodi</th>
+                                            <th style="text-align: center; vertical-align: middle;">Jenjang<br>Pendidikan</th>
+                                            <th style="text-align: center; vertical-align: middle;">Grup</th>
+                                            <th style="text-align: center; vertical-align: middle;">Tipe</th>
+                                            <th style="text-align: center; vertical-align: middle;">Aksi</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -90,7 +90,7 @@
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'code', name: 'code' },
                 { data: 'name', name: 'name' },
-                { data: 'prodi.nama_prodi', name: 'prodi.nama_prodi' },
+                { data: 'all_prodi.nama_prodi', name: 'all_prodi.nama_prodi' },
                 { data: 'education_level.nm_jenj_didik', name: 'education_level.nm_jenj_didik' },
                 { data: 'course_group.name', name: 'course_group.name' },
                 { data: 'course_type.name', name: 'course_type.name' },
