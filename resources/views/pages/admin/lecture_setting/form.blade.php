@@ -49,7 +49,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label for="prodi_id">Pilih Program Studi</label>
-                                        <select name="prodi_id" id="prodi_id" class="form-control">
+                                        <select name="prodi_id" id="prodi_id" class="form-control mb-3">
                                             <option value="">-- Pilih Program Studi --</option>
                                             @foreach ($prodis as $prodi)
                                                 <option value="{{ $prodi->id_prodi }}"
