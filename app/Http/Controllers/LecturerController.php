@@ -142,16 +142,13 @@ class LecturerController extends Controller
         return view('pages.admin.lecturer.form_edit', compact('lecturer', 'activeStatuses', 'employeeLevels', 'prodiList'));
     }
 
-    // Update the specified lecturer in the database
     public function update(Request $request, $id)
 {
-    // Ubah '-' menjadi null sebelum validasi
     $request->merge([
         'nuptk' => $request->nuptk === '-' ? null : $request->nuptk,
         'nik' => $request->nik === '-' ? null : $request->nik,
     ]);
 
-    // Lakukan validasi setelah merubah data
     $request->validate([
         'nuptk' => 'nullable|string|max:16|unique:lecturer,nuptk,' . $id,
         'nidn' => 'nullable|string|max:10|unique:lecturer,nidn,' . $id,
