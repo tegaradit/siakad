@@ -70,13 +70,14 @@ Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('cou
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy')->middleware(Authenticate::class);
 Route::get('/admin/course/{id}', [CourseController::class, 'show'])->name('course.show')->middleware(Authenticate::class);
 // admin/semester
-Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index')->middleware(Authenticate::class);
-Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data')->middleware(Authenticate::class);
-Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create')->middleware(Authenticate::class);
-Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store')->middleware(Authenticate::class);
-Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit')->middleware(Authenticate::class);
-Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'])->name('semester.update')->middleware(Authenticate::class);
-Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy')->middleware(Authenticate::class);
+Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
+Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data');
+Route::post('/semester/change-status/{id}', [SemesterController::class, 'changeStatus'])->name('semester.changeStatus');
+Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
+Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
+Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
+Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'])->name('semester.update');
+Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 //admin/curriculum(kurikulum)
 Route::resource('/admin/curriculum', CurriculumController::class)->middleware(Authenticate::class);
 //search education level
