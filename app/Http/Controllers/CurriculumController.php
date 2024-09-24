@@ -18,7 +18,7 @@ class CurriculumController extends Controller
     {
         if ($request->ajax()) {
             $datas = Curriculum::with(['all_prodi', 'education_level', 'semester'])->get();
-
+    
             return DataTables::of($datas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -26,16 +26,17 @@ class CurriculumController extends Controller
                     $deleteForm = '<form id="delete-form-' . $row->curriculum_id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $row->curriculum_id . '\');" action="' . route('curriculum.destroy', $row->curriculum_id) . '" method="POST">'
                         . csrf_field()
                         . method_field('DELETE')
-                        . '<a href="' . $editUrl . '" class="btn btn-outline-warning btn-sm" title="Edit"><i class="fas fa-pencil-alt"></i></a>'
-                        . '<button type="submit" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></button></form>';
+                        . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
+                        . '<button type="submit" class="btn btn-danger btn-sm delete ms-2 m-0"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
                     return $deleteForm;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
+    
         return view('pages.admin.curriculum.index');
     }
+    
 
     // Show the form for creating a new resource
     public function create()

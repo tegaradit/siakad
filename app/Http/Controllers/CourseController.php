@@ -38,16 +38,16 @@ class CourseController extends Controller
                     $viewUrl = route('course.show', $row->id); // URL for the view button
 
                     return '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" action="' . $deleteUrl . '" method="POST">
-                                <a href="' . $viewUrl . '" class="btn btn-outline-info btn-sm view" title="View">
-                                    <i class="fas fa-eye"></i>
+                                <a href="' . $viewUrl . '" class="btn btn-info btn-sm view m-0" title="View">
+                                    <i class="fas fa-eye"></i> Lihat
                                 </a>
-                                <a href="' . $editUrl . '" class="btn btn-outline-warning btn-sm edit" title="Edit">
-                                    <i class="fas fa-pencil-alt"></i>
+                                <a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit">
+                                    <i class="fas fa-pencil-alt"></i> Edit
                                 </a>
                                 ' . csrf_field() . '
                                 ' . method_field('DELETE') . '
-                                <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete" title="Delete">
-                                    <i class="fas fa-trash-alt"></i>
+                                <button type="submit" class="btn btn-danger btn-sm delete m-0" title="Delete">
+                                    <i class="fas fa-trash-alt"></i> Hapus
                                 </button>
                             </form>';
                 })

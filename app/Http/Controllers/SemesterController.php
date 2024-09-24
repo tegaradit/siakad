@@ -21,16 +21,16 @@ class SemesterController extends Controller
 
             return DataTables::of($semester)
             ->addColumn('action', function ($row) {
-                return '<a href="'.route('semester.edit', $row->semester_id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
-                            <i class="fas fa-pencil-alt"></i>
+                return '<a href="'.route('semester.edit', $row->semester_id).'" class="btn btn-warning btn-sm edit m-0" title="Edit">
+                            <i class="fas fa-pencil-alt"></i> Edit
                         </a>
                         <form id="delete-form-' . $row->semester_id . '" 
                               onsubmit="event.preventDefault(); confirmDelete(' . $row->semester_id . ');" 
                               action="' . route('semester.destroy', $row->semester_id) . '" 
                               method="POST" style="display:inline;">
                             ' . csrf_field() . method_field('DELETE') . '
-                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
-                                <i class="fas fa-trash-alt"></i>
+                            <button type="submit" class="btn btn-danger btn-sm delete m-0">
+                                <i class="fas fa-trash-alt"></i> Hapus
                             </button>
                         </form>';
             })
