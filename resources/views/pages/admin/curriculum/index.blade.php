@@ -36,17 +36,17 @@
                                     <table class="table table-striped table-bordered dt-responsive nowrap w-100"
                                         id="datatable">
                                         <thead>
-                                            <tr style="text-align: center">
-                                                <th style="width: 30px">No.</th>
-                                                <th>Nama</th>
-                                                <th>Prodi</th>
-                                                <th>Jenjang Pendidikan</th>
-                                                <th>Semester</th>
-                                                <th>Normal Semester</th>
-                                                <th>SKS Lulus</th>
-                                                <th>SKS Wajib</th>
-                                                <th>SKS Pilihan</th>
-                                                <th>Aksi</th>
+                                            <tr style="text-align: center; vertical-align: middle;">
+                                                <th style="width: 30px; text-align: center; vertical-align: middle;">No.</th>
+                                                <th style="text-align: center; vertical-align: middle;">Nama</th>
+                                                <th style="text-align: center; vertical-align: middle;">Prodi</th>
+                                                <th style="text-align: center; vertical-align: middle;">Jenjang<br>Pendidikan</th>
+                                                <th style="text-align: center; vertical-align: middle;">Semester</th>
+                                                <th style="text-align: center; vertical-align: middle;">Normal<br>Semester</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>Lulus</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>Wajib</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>Pilihan</th>
+                                                <th style="text-align: center; vertical-align: middle;">Aksi</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -117,33 +117,54 @@
                     },
                     {
                         data: 'education_level.nm_jenj_didik',
-                        name: 'education_level.nm_jenj_didik'
+                        name: 'education_level.nm_jenj_didik',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center'); // Align center
+                        }
                     },
                     {
                         data: 'semester.semester_id',
-                        name: 'semester.semester_id'
+                        name: 'semester.semester_id',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center'); // Align center
+                        }
                     },
                     {
                         data: 'normal_semester_number',
-                        name: 'normal_semester_number'
+                        name: 'normal_semester_number',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center'); // Align center
+                        }
                     },
                     {
                         data: 'pass_credit_number',
-                        name: 'pass_credit_number'
+                        name: 'pass_credit_number',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center'); // Align center
+                        }
                     },
                     {
                         data: 'mandatory_credit_number',
-                        name: 'mandatory_credit_number'
+                        name: 'mandatory_credit_number',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center'); // Align center
+                        }
                     },
                     {
                         data: 'choice_credit_number',
-                        name: 'choice_credit_number'
+                        name: 'choice_credit_number',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center'); // Align center
+                        }
                     },
                     {
                         data: 'action',
                         name: 'action',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center'); // Align center
+                        }
                     }
                 ]
             });
