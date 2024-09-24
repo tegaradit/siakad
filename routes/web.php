@@ -26,49 +26,49 @@ Route::get('/', function () {
     return view('pages.welcome');
 })->name('login.page');
 Route::post('/login', [UserController::class, 'action'])->name('login');
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware(Authenticate::class);
 
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index')->middleware(Authenticate::class);
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware(Authenticate::class);
 
 //user
 
 
 
-Route::get('/users', [UserController::class, 'users'])->name('users.index');
-Route::get('/users/data', [UserController::class, 'getUsers'])->name('users.getUsers');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create'); // Tambah user
-Route::post('/users', [UserController::class, 'store'])->name('users.store'); // Simpan user
-Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::get('/users', [UserController::class, 'users'])->name('users.index')->middleware(Authenticate::class);
+Route::get('/users/data', [UserController::class, 'getUsers'])->name('users.getUsers')->middleware(Authenticate::class);
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create')->middleware(Authenticate::class); // Tambah user
+Route::post('/users', [UserController::class, 'store'])->name('users.store')->middleware(Authenticate::class); // Simpan user
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware(Authenticate::class);
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update')->middleware(Authenticate::class);
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy')->middleware(Authenticate::class);
 
 
 
 //admin
-Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin');
-Route::resource('admin/setting_perkuliahan', LectureSettingController::class);
+Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin')->middleware(Authenticate::class);
+Route::resource('admin/setting_perkuliahan', LectureSettingController::class)->middleware(Authenticate::class);
 //admin/identitas_pt
-Route::get('admin/identitas-pt', [IdentitasPTController::class, 'index'])->name("identitas-pt.index");
-Route::post('/identitas-pt/update/', [IdentitasPTController::class, 'update'])->name("identitas-pt.update");
+Route::get('admin/identitas-pt', [IdentitasPTController::class, 'index'])->name("identitas-pt.index")->middleware(Authenticate::class);
+Route::post('/identitas-pt/update/', [IdentitasPTController::class, 'update'])->name("identitas-pt.update")->middleware(Authenticate::class);
 
 
 //admin/buildings(gedung)
-Route::get('/admin/buildings', [BuildingsController::class, 'index'])->name('buildings.index');
-Route::get('/buildings/data', [BuildingsController::class, 'data'])->name('buildings.data');
-Route::get('/admin/buildings/create', [BuildingsController::class, 'create'])->name('buildings.create');
-Route::post('/admin/buildings', [BuildingsController::class, 'store'])->name('buildings.store');
-Route::get('/admin/buildings/{id}/edit', [BuildingsController::class, 'edit'])->name('buildings.edit');
-Route::put('/admin/buildings/{id}', [BuildingsController::class, 'update'])->name('buildings.update');
-Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])->name('buildings.destroy');
+Route::get('/admin/buildings', [BuildingsController::class, 'index'])->name('buildings.index')->middleware(Authenticate::class);
+Route::get('/buildings/data', [BuildingsController::class, 'data'])->name('buildings.data')->middleware(Authenticate::class);
+Route::get('/admin/buildings/create', [BuildingsController::class, 'create'])->name('buildings.create')->middleware(Authenticate::class);
+Route::post('/admin/buildings', [BuildingsController::class, 'store'])->name('buildings.store')->middleware(Authenticate::class);
+Route::get('/admin/buildings/{id}/edit', [BuildingsController::class, 'edit'])->name('buildings.edit')->middleware(Authenticate::class);
+Route::put('/admin/buildings/{id}', [BuildingsController::class, 'update'])->name('buildings.update')->middleware(Authenticate::class);
+Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])->name('buildings.destroy')->middleware(Authenticate::class);
 //admin/course(matakuliah)
-Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index');
-Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create');
-Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store');
-Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
-Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
-Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
-Route::get('/admin/course/{id}', [CourseController::class, 'show'])->name('course.show');
+Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index')->middleware(Authenticate::class);
+Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create')->middleware(Authenticate::class);
+Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store')->middleware(Authenticate::class);
+Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit')->middleware(Authenticate::class);
+Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update')->middleware(Authenticate::class);
+Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy')->middleware(Authenticate::class);
+Route::get('/admin/course/{id}', [CourseController::class, 'show'])->name('course.show')->middleware(Authenticate::class);
 // admin/semester
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
 Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data');
@@ -79,21 +79,21 @@ Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'ed
 Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'])->name('semester.update');
 Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 //admin/curriculum(kurikulum)
-Route::resource('/admin/curriculum', CurriculumController::class);
+Route::resource('/admin/curriculum', CurriculumController::class)->middleware(Authenticate::class);
 //search education level
-Route::get('/curriculum/search_ed_lev', [CurriculumController::class, 'searchEdLevel'])->name('curriculum.search_ed_lev');
+Route::get('/curriculum/search_ed_lev', [CurriculumController::class, 'searchEdLevel'])->name('curriculum.search_ed_lev')->middleware(Authenticate::class);
 //lecturesetting
-Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data');
-Route::resource('/admin/lecture-setting', LectureSettingController::class);
+Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data')->middleware(Authenticate::class);
+Route::resource('/admin/lecture-setting', LectureSettingController::class)->middleware(Authenticate::class);
 //tipe kalender
-Route::get('/calendar-type/data', [CalendarTypeController::class, 'data'])->name('calendar-type.data');
-Route::resource('/admin/calendar-type', CalendarTypeController::class);
+Route::get('/calendar-type/data', [CalendarTypeController::class, 'data'])->name('calendar-type.data')->middleware(Authenticate::class);
+Route::resource('/admin/calendar-type', CalendarTypeController::class)->middleware(Authenticate::class);
 //kalender akademik
-Route::resource('/admin/kalender-akademik', AcademicCalendarController::class);
-Route::get('/kalender-akademik/data', [AcademicCalendarController::class, 'data'])->name('kalender-akademik.data');
+Route::resource('/admin/kalender-akademik', AcademicCalendarController::class)->middleware(Authenticate::class);
+Route::get('/kalender-akademik/data', [AcademicCalendarController::class, 'data'])->name('kalender-akademik.data')->middleware(Authenticate::class);
 //akademik year
-Route::resource('/admin/tahun-akademik', AcademicYearController::class);
-Route::get('/tahun-akademik/data', [AcademicYearController::class, 'data'])->name('tahun-akademik.data');
+Route::resource('/admin/tahun-akademik', AcademicYearController::class)->middleware(Authenticate::class);
+Route::get('/tahun-akademik/data', [AcademicYearController::class, 'data'])->name('tahun-akademik.data')->middleware(Authenticate::class);
 
 
 //dosen 

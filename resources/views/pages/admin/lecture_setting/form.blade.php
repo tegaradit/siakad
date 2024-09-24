@@ -49,7 +49,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label for="prodi_id">Pilih Program Studi</label>
-                                        <select name="prodi_id" id="prodi_id" class="form-control">
+                                        <select name="prodi_id" id="prodi_id" class="form-control mb-3">
                                             <option value="">-- Pilih Program Studi --</option>
                                             @foreach ($prodis as $prodi)
                                                 <option value="{{ $prodi->id_prodi }}"
@@ -64,9 +64,9 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="max_number_of_meets" class="form-label">Maks Jumlah Pertemuan</label>
+                                        <label for="max_number_of_meets" class="form-label">Maks Jumlah Pertemuan Hari</label>
                                         <input type="number" class="form-control" id="max_number_of_meets"
-                                            name="max_number_of_meets" placeholder="Masukkan Maks Jumlah Pertemuan"
+                                            name="max_number_of_meets" placeholder="Masukkan Maks Jumlah Pertemuan Hari"
                                             required>
                                         @error('max_number_of_meets')
                                             <div class="text-danger">{{ $message }}</div>
@@ -74,9 +74,9 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="min_number_of_presence" class="form-label">Min Jumlah Kehadiran</label>
+                                        <label for="min_number_of_presence" class="form-label">Min Jumlah Kehadiran Persen</label>
                                         <input type="number" class="form-control" id="min_number_of_presence"
-                                            name="min_number_of_presence" placeholder="Masukkan Min Jumlah Kehadiran"
+                                            name="min_number_of_presence" placeholder="Masukkan Min Jumlah Kehadiran Persen"
                                             required>
                                         @error('min_number_of_presence')
                                             <div class="text-danger">{{ $message }}</div>

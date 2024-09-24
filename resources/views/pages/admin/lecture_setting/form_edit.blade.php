@@ -67,20 +67,20 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="max_number_of_meets" class="form-label">Maks Jumlah Pertemuan</label>
+                                        <label for="max_number_of_meets" class="form-label">Maks Jumlah Pertemuan Hari</label>
                                         <input type="number" class="form-control" id="max_number_of_meets"
                                             name="max_number_of_meets" value="{{ $data->max_number_of_meets }}"
-                                            placeholder="Masukkan Maks Jumlah Pertemuan" required>
+                                            placeholder="Masukkan Maks Jumlah Pertemuan Hari" required>
                                         @error('max_number_of_meets')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="min_number_of_presence" class="form-label">Min Jumlah Kehadiran</label>
+                                        <label for="min_number_of_presence" class="form-label">Min Jumlah Kehadiran Hari</label>
                                         <input type="number" class="form-control" id="min_number_of_presence"
                                             name="min_number_of_presence" value="{{ $data->min_number_of_presence }}"
-                                            placeholder="Masukkan Min Jumlah Kehadiran" required>
+                                            placeholder="Masukkan Min Jumlah Kehadiran Hari" required>
                                         @error('min_number_of_presence')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
