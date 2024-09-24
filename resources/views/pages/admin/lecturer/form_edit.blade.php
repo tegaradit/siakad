@@ -232,21 +232,27 @@
                                 @enderror
                             </div>
 
-                            <!-- Prodi ID field with Select2 -->
-                            <div class="form-group">
+                            {{-- prodi --}}
+                            <div class="form-group mt-2">
                                 <label for="prodi_id">Prodi</label>
-                                <select name="prodi_id" id="prodi-selector" class="form-control" required>
-                                    <!-- Opsi yang sudah dipilih sebelumnya dimasukkan di sini -->
-                                    <option value="{{ $lecturer->prodi_id }}" selected>{{ $lecturer->prodi->nama_prodi }}</option>
+                                <select name="prodi_id" id="prodi_id" class="form-control" required>
+                                    <option value="" disabled>Pilih Prodi</option>
+                                    @foreach ($prodiList as $p)
+                                        <option value="{{ $p->id_prodi }}"
+                                            {{ old('prodi_id', $lecturer->prodi_id ?? '') == $p->id_prodi ? 'selected' : '' }}>
+                                            {{ $p->nama_prodi }} <!-- Nama prodi diambil dari tabel all_prodi -->
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('prodi_id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
+
                             <!-- Submit button -->
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary mt-3" >Update</button>
+                                <button type="submit" class="btn btn-primary mt-3">Update</button>
                             </div>
 
                         </form>
@@ -255,36 +261,4 @@
             </div>
         </div>
     </div>
-    <!-- Include jQuery and Select2 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    <script>
-        // Initialize Select2 with AJAX for Prodi selector
-        $("#prodi-selector").select2({
-            ajax: {
-                delay: 250,
-                url: '{{ url('/') }}/admin/course/search_prodi',
-                data(params) {
-                    var query = {
-                        nama_prodi: params.term, // Search term
-                    };
-                    return query;
-                },
-                processResults(data) {
-                    return {
-                        results: data.map(item => ({
-                            id: item.id, // ID of the prodi
-                            text: item.nama_prodi // Name of the prodi
-                        }))
-                    };
-                }
-            },
-            minimumInputLength: 1,
-            templateResult(res) {
-                return res.text;
-            }
-        });
-    </script>
 @endsection

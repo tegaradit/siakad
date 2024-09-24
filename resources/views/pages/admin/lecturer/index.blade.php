@@ -43,7 +43,7 @@
                                                     <th>Gender</th>
                                                     <th>Nama</th>
                                                     <th>Status Aktif</th>
-                                                    <th>Tanggal Lahir</th>
+                                                    {{-- <th>Tanggal Lahir</th>
                                                     <th>Tempat Lahir</th>
                                                     <th>Nama Ibu</th>
                                                     <th>Status Pernikahan</th>
@@ -55,7 +55,7 @@
                                                     <th>Tanggal Surat Tugas</th>
                                                     <th>Tanggal TMT Surat Tugas</th>
                                                     <th>Tanggal Keluar</th>
-                                                    <th>Prodi ID</th>
+                                                    <th>Prodi ID</th> --}}
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
@@ -114,58 +114,58 @@
                         data: 'active_status.name',
                         name: 'active_status.name'
                     },
-                    {
-                        data: 'birth_date',
-                        name: 'birth_date'
-                    },
-                    {
-                        data: 'birth_place',
-                        name: 'birth_place'
-                    },
-                    {
-                        data: 'mothers_name',
-                        name: 'mothers_name'
-                    },
-                    {
-                        data: 'mariage_status',
-                        name: 'mariage_status'
-                    },
-                    {
-                        data: 'employee_level.name',
-                        name: 'employee_level.name'
-                    },
-                    {
-                        data: 'level_education',
-                        name: 'level_education'
-                    },
-                    {
-                        data: 'phone_number',
-                        name: 'phone_number'
-                    },
-                    {
-                        data: 'email',
-                        name: 'email'
-                    },
-                    {
-                        data: 'assign_letter_number',
-                        name: 'assign_letter_number'
-                    },
-                    {
-                        data: 'assign_letter_date',
-                        name: 'assign_letter_date'
-                    },
-                    {
-                        data: 'assign_letter_tmt',
-                        name: 'assign_letter_tmt'
-                    },
-                    {
-                        data: 'exit_date',
-                        name: 'exit_date'
-                    },
-                    {
-                        data: 'prodi.nama_prodi',
-                        name: 'prodi.nama_prodi'
-                    },
+                    // {
+                    //     data: 'birth_date',
+                    //     name: 'birth_date'
+                    // },
+                    // {
+                    //     data: 'birth_place',
+                    //     name: 'birth_place'
+                    // },
+                    // {
+                    //     data: 'mothers_name',
+                    //     name: 'mothers_name'
+                    // },
+                    // {
+                    //     data: 'mariage_status',
+                    //     name: 'mariage_status'
+                    // },
+                    // {
+                    //     data: 'employee_level.name',
+                    //     name: 'employee_level.name'
+                    // },
+                    // {
+                    //     data: 'level_education',
+                    //     name: 'level_education'
+                    // },
+                    // {
+                    //     data: 'phone_number',
+                    //     name: 'phone_number'
+                    // },
+                    // {
+                    //     data: 'email',
+                    //     name: 'email'
+                    // },
+                    // {
+                    //     data: 'assign_letter_number',
+                    //     name: 'assign_letter_number'
+                    // },
+                    // {
+                    //     data: 'assign_letter_date',
+                    //     name: 'assign_letter_date'
+                    // },
+                    // {
+                    //     data: 'assign_letter_tmt',
+                    //     name: 'assign_letter_tmt'
+                    // },
+                    // {
+                    //     data: 'exit_date',
+                    //     name: 'exit_date'
+                    // },
+                    // {
+                    //     data: 'all_prodi.nama_prodi',
+                    //     name: 'all_prodi.nama_prodi'
+                    // },
                     {
                         data: 'action',
                         name: 'action',
