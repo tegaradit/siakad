@@ -39,15 +39,13 @@ class AcademicCalendarController extends Controller
                     return $data->calendar_type ? $data->calendar_type->name : 'N/A';
                 })
                 ->addColumn('action', function ($data) {
-                    return '<a href="' . route('kalender-akademik.edit', $data->id) . '" class="btn btn-outline-warning btn-sm edit"><i class="fas fa-pencil-alt"></i></a>
+                    return '<a href="' . route('kalender-akademik.edit', $data->id) . '" class="btn btn-warning btn-sm edit"><i class="fas fa-pencil-alt"></i> Edit</a>
                         <form id="delete-form-' . $data->id . '" 
                               onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
                               action="' . route('kalender-akademik.destroy', $data->id) . '" 
                               method="POST" style="display:inline;">
                             ' . csrf_field() . method_field('DELETE') . '
-                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
+                            <button type="submit" class="btn icon icon-left btn-danger btn-sm delete"><i class="fas fa-trash-alt"></i> Hapus</button>
                         </form>';
                 })
                 ->make(true);

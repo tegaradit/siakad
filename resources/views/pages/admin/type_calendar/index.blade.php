@@ -33,11 +33,11 @@
                                     </p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ route('calendar-type.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                                    <a href="{{ route('calendar-type.create') }}" class="btn btn-primary btn-sm mb-3"><i data-feather="plus-square"></i>Tambah</a>
                                     <div class="table-responsive">
                                         <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
-                                                <tr>
+                                                <tr style="text-align: center">
                                                     <th style="width: 30px" style="text-align: center">No</th>
                                                     <th>Nama Tipe Kalender</th>
                                                     <th style="width: 50px text-align: center">Action</th>

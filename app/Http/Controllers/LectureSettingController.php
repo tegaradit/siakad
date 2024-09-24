@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\All_prodi;
 use App\Models\Lecture_setting;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class LectureSettingController extends Controller
     // Menampilkan form untuk menambah data baru
     public function create()
     {
-        $prodis = Prodi::all();
+        $prodis = All_prodi::all();
         return view('pages.admin.lecture_setting.form', compact('prodis'));
     }
 
@@ -53,7 +54,6 @@ class LectureSettingController extends Controller
     {
         if ($request->ajax()) {
             $lectureSettings = Lecture_setting::with('prodi')->get();
-            \Log::info('Data: ', $lectureSettings->toArray()); // Untuk debug
 
             return DataTables::of($lectureSettings)
                 ->addIndexColumn()
@@ -61,15 +61,13 @@ class LectureSettingController extends Controller
                     return $data->prodi ? $data->prodi->nama_prodi : 'N/A';
                 })
                 ->addColumn('action', function ($data) {
-                    return '<a href="' . route('lecture-setting.edit', $data->id) . '" class="btn btn-outline-warning btn-sm edit"><i class="fas fa-pencil-alt"></i></a>
+                    return '<a href="' . route('lecture-setting.edit', $data->id) . '" class="btn btn-warning btn-sm edit"><i class="fas fa-pencil-alt"></i> Edit</a>
                     <form id="delete-form-' . $data->id . '" 
                               onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
                               action="' . route('lecture-setting.destroy', $data->id) . '" 
                               method="POST" style="display:inline;">
                         ' . csrf_field() . method_field('DELETE') . '
-                        <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
+                        <button type="submit" class="btn icon icon-left btn-danger btn-sm delete"><i class="fas fa-trash-alt"></i> Hapus</button>
                  </form>';
                 })
                 ->make(true);
@@ -82,7 +80,7 @@ class LectureSettingController extends Controller
     public function edit($id)
     {
         $data = Lecture_setting::findOrFail($id);
-        $prodis = Prodi::all(); // Ambil data prodi untuk dropdown
+        $prodis = All_prodi::all(); // Ambil data prodi untuk dropdown
         return view('pages.admin.lecture_setting.form_edit', compact('data', 'prodis'));
     }
 
