@@ -33,12 +33,12 @@
                                 </p>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('kalender-akademik.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                                <a href="{{ route('kalender-akademik.create') }}" class="btn btn-primary btn-sm mb-3"><i data-feather="plus-square"></i>Tambah</a>
                                 <div class="table-responsive">
                                     <table id="datatable"
                                         class="table table-bordered table-striped dt-responsive nowrap w-100">
                                         <thead>
-                                            <tr>
+                                            <tr style="text-align: center">
                                                 <th style="width: 35px">No</th>
                                                 <th>Tanggal Mulai</th>
                                                 <th>Tanggal Selesai</th>
@@ -109,6 +109,9 @@
                         name: 'start_date',
                         render: function(data) {
                             return moment(data).format('DD-MM-YYYY'); 
+                        },
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
                         }
                     },
                     {
@@ -116,6 +119,9 @@
                         name: 'end_date',
                         render: function(data) {
                             return moment(data).format('DD-MM-YYYY'); 
+                        },
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
                         }
                     },
                     {

@@ -37,10 +37,10 @@
                                             class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
-                                                    <th>ID Prodi</th>
-                                                    <th>Nama PT</th>
+                                                    {{-- <th>ID Prodi</th> --}}
                                                     <th>Kode Prodi</th>
                                                     <th>Nama Prodi</th>
+                                                    <th>Nama Perguruan Tinggi</th>
                                                     <th>Status</th>
                                                     <th>Jenjang Pendidikan</th>
                                                 </tr>
@@ -70,14 +70,11 @@
                 serverSide: true,
                 responsive: true,
                 ajax: "{{ route('all_prodi.data') }}",
-                columns: [{
-                        data: 'id_prodi',
-                        name: 'id_prodi'
-                    },
-                    {
-                        data: 'nama_pt',
-                        name: 'university.nama_pt'
-                    },
+                columns: [
+                    // {
+                    //     data: 'id_prodi',
+                    //     name: 'id_prodi'
+                    // },
                     {
                         data: 'kode_prodi',
                         name: 'kode_prodi'
@@ -87,12 +84,16 @@
                         name: 'nama_prodi'
                     },
                     {
+                        data: 'nm_lemb',
+                        name: 'nm_lemb'
+                    },
+                    {
                         data: 'status',
                         name: 'status'
                     },
                     {
                         data: 'nm_jenj_didik',
-                        name: 'education_level.nm_jenj_didik'
+                        name: 'nm_jenj_didik'
                     },
                 ]
             });

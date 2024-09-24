@@ -31,7 +31,7 @@
                                     <p class="card-title-desc">Berikut adalah daftar ruangan.</p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ route('room.create') }}" class="btn btn-primary mb-3">Tambah </a>
+                                    <a href="{{ route('room.create') }}" class="btn btn-primary mb-3"><i data-feather="plus-square"></i>Tambah</a>
                                     <div class="table-responsive">
                                         <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>

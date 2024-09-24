@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Lecture_setting extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'lecture_settings';
-    protected $fillable =[
+    protected $fillable = [
         'prodi_id',
         'max_number_of_meets',
         'min_number_of_presence',
         'is_prodi'
     ];
 
-    public function all_prodi()
+    public function All_prodi()
     {
-        return $this->belongsTo(All_prodi::class, 'all_prodi_id');
-    }    
+        return $this->belongsTo(All_prodi::class, 'prodi_id', 'id_prodi');
+    }
 }

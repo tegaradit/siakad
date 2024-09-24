@@ -64,7 +64,6 @@ Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])-
 //admin/course(matakuliah)
 Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index');
 Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create');
-Route::get('/admin/course/search_prodi', [CourseController::class, 'searchProdi'])->name('course.search_prodi');
 Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store');
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update');
@@ -80,6 +79,7 @@ Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'
 Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 //admin/curriculum(kurikulum)
 Route::resource('/admin/curriculum', CurriculumController::class);
+//search education level
 Route::get('/curriculum/search_ed_lev', [CurriculumController::class, 'searchEdLevel'])->name('curriculum.search_ed_lev');
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data');
@@ -121,10 +121,11 @@ Route::post('admin/lecturer/store', [LecturerController::class, 'store'])->name(
 Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
-Route::get('/admin/course/search_prodi', [LecturerController::class, 'searchProdi'])->name('lecturer.search_prodi');
+Route::get('/admin/lecturer/{id}', [LecturerController::class, 'show'])->name('lecturer.show');
 
 // Periode PMB
 Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');
+//search semester
 Route::get('/admin/periode_pmb/search_semester', [PeriodePmbController::class, 'searchSemester'])->name('periode_pmb.search_semester');
 
 Route::get('/admin/periode_pmb/create', [PeriodePmbController::class, 'create'])->name('periode_pmb.create');

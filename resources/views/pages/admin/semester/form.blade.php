@@ -118,13 +118,14 @@
                                     <div class="form-group mt-2">
                                         <label for="date_range" class="form-label">Rentang Tanggal</label>
                                         <input type="text" class="form-control mb-3"
-                                            id="datepicker-range-without-d-value" name="date_range"
+                                            id="{{ isset($semester) ? 'datepicker-range-without-d-value' : 'datepicker-range' }}" 
+                                            name="date_range"
                                             value="{{ isset($semester) ? $semester->start_date . ' to ' . $semester->end_date : '' }}"
                                             required>
                                         @error('date_range')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div><br>
+                                    </div><br>                                    
 
                                     <button type="submit" class="btn btn-primary mt-3">{{ isset($semester) ? 'Update' : 'Submit' }}</button>
                                 </form>

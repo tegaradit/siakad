@@ -33,18 +33,18 @@
                                 </p>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('tahun-akademik.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                                <a href="{{ route('tahun-akademik.create') }}" class="btn btn-primary btn-sm mb-3"><i data-feather="plus-square"></i>Tambah</a>
                                 <div class="table-responsive">
                                     <table id="datatable"
                                         class="table table-bordered table-striped dt-responsive nowrap w-100">
                                         <thead>
-                                            <tr>
+                                            <tr style="text-align: center">
                                                 <th style="width: 35px; text-align: center;">No</th>
                                                 <th>ID</th>
                                                 <th>Nama</th>
                                                 <th>Tanggal Mulai</th>
                                                 <th>Tanggal Selesai</th>
-                                                <th style="width: 45px; text-align: center;">Aksi</th>
+                                                <th style="width: 30px; text-align: center;">Aksi</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -106,7 +106,10 @@
                     },
                     {
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'name',
@@ -115,10 +118,16 @@
                     {
                         data: 'start_date',
                         name: 'start_date',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'end_date',
                         name: 'end_date',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'action',
