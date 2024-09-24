@@ -72,6 +72,7 @@ Route::get('/admin/course/{id}', [CourseController::class, 'show'])->name('cours
 // admin/semester
 Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
 Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data');
+Route::post('/semester/change-status/{id}', [SemesterController::class, 'changeStatus'])->name('semester.changeStatus');
 Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
 Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
 Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
