@@ -36,19 +36,16 @@ class LecturerController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
                 return '
-                        <a href="' . route('lecturer.show', $data->id) . '" class="btn btn-outline-info btn-sm" title="Detail">
-                            <i class="fas fa-eye"></i>
+                        <a href="' . route('lecturer.show', $data->id) . '" class="btn btn-info btn-sm show m-0"><i class="fas fa-eye"></i>Detail
                         </a>
-                        <a href="'.route('lecturer.edit', $data->id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
-                            <i class="fas fa-pencil-alt"></i>
+                        <a href="'.route('lecturer.edit', $data->id).'" class="btn btn-warning btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> Edit
                         </a>
                         <form id="delete-form-' . $data->id . '" 
                               onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
                               action="' . route('lecturer.destroy', $data->id) . '" 
                               method="POST" style="display:inline;">
                             ' . csrf_field() . method_field('DELETE') . '
-                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
-                                <i class="fas fa-trash-alt"></i>
+                            <button type="submit" class="btn btn-danger btn-sm delete m-0"><i class="fas fa-trash-alt"></i> Hapus
                             </button>
                       </form>';
             })
