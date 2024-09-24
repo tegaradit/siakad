@@ -45,7 +45,7 @@
                             </p>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('periode_pmb.store') }}" method="POST">
+                            <form action="{{ route('periode_pmb.store') }}" id="form-add-period" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label for="status">Kode Semester</label>
@@ -75,6 +75,19 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label class="form-label">Status</label>
+                                    <Select class="form-control" name="status">
+                                        <option selected value="1">Buka</option>
+                                        <option value="0">Tutup</option>
+                                    </Select>
+                                    @error('status')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <input type="hidden" name="isAnotherOpen" value="{{ $isAnotherOpen }}" />
+
+                                <div class="form-group">
                                     <button type="submit" class="btn btn-primary mt-3">Submit</button>
                                 </div>
                             </form>
@@ -88,6 +101,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $("#semester-selector").select2({
         ajax: {
@@ -111,6 +125,35 @@
         minimumInputLength: 1,
         templateResult(res) {
             return res.text
+        }
+    })
+    
+    window.addEventListener('DOMContentLoaded', () => {
+
+        let confirmSubmit = false
+        document.getElementById('form-add-period').onsubmit = function (form) {
+            
+            const inpStatusValue = form.target.status.value
+            if (!confirmSubmit && inpStatusValue == '1' && "{{ $isAnotherOpen }}" == "1")
+                form.preventDefault()
+
+            if ("{{ $isAnotherOpen }}" == "1" && inpStatusValue == '1') {
+                Swal.fire({
+                    title: 'Ada Periode Lain yang Terbuka',
+                    text: 'JIka anda melanjutkan, maka periode lain tersebut akan otomatis di tutup, anda yakin',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Lanjutkan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        confirmSubmit = true
+                        this.submit()
+                    }
+                });
+            }
         }
     })
 </script>

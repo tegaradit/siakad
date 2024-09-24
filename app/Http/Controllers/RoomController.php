@@ -30,14 +30,17 @@ class RoomController extends Controller
                 ->addIndexColumn() // Menambahkan kolom index secara otomatis
                 ->addColumn('action', function ($data) {
                     // Mengembalikan HTML untuk kolom aksi, misalnya tombol edit
-                    return '<a href="'.route('room.edit', $data->id).'" class="btn btn-warning btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> Edit</a>
+                    return '
+                    <div style="text-align: center;">
+                        <a href="'.route('room.edit', $data->id).'" class="btn btn-warning btn-sm edit m-0" style="display: inline-block; margin: 5px;"><i class="fas fa-pencil-alt"></i> Edit</a>
                         <form id="delete-form-' . $data->id . '" 
-                              onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
-                              action="' . route('room.destroy', $data->id) . '" 
-                              method="POST" style="display:inline;">
+                            onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
+                            action="' . route('room.destroy', $data->id) . '" 
+                            method="POST" style="display:inline-block; margin: 5px;">
                             ' . csrf_field() . method_field('DELETE') . '
-                            <button type="submit" class="btn btn-danger btn-sm delete m-0"><i class="fas fa-trash-alt"></i> Hapus</button>
-                        </form>';
+                            <button type="submit" class="btn btn-danger btn-sm delete m-0" style="display: inline-block;"><i class="fas fa-trash-alt"></i> Hapus</button>
+                        </form>
+                    </div>';
             })
                 ->rawColumns(['action'])
                 ->make(true);
