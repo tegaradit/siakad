@@ -44,8 +44,8 @@
                                             <tr style="text-align: center">
                                                 <th style="text-align: center">No</th>
                                                 <th>Prodi ID</th>
-                                                <th>Maks Jum. Pertemuan</th>
-                                                <th>Min Jum. Pertemuan</th>
+                                                <th>Maks Jum. Pertemuan Hari</th>
+                                                <th>Min Jum. Pertemuan Persen</th>
                                                 <th>is Prodi</th>
                                                 <th style="text-align: center">Aksi</th>
                                             </tr>
