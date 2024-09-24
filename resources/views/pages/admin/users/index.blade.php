@@ -30,7 +30,7 @@
                                 <div class="card-header">
                                     <h4 class="card-title">Users Table</h4>
                                     <p class="card-title-desc">Manage your users here.</p>
-                                    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Add User</a>
+                                    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3"><i data-feather="plus-square"></i>Tambah</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
