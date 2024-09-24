@@ -106,15 +106,24 @@
                     },
                     {
                         data: 'max_number_of_meets',
-                        name: 'max_number_of_meets'
+                        name: 'max_number_of_meets',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'min_number_of_presence',
-                        name: 'min_number_of_presence'
+                        name: 'min_number_of_presence',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'is_prodi',
-                        name: 'is_prodi'
+                        name: 'is_prodi',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'action',
