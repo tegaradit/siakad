@@ -42,7 +42,7 @@
                             <h4 class="card-title">Edit Periode Penerimaan Mahasiswa Baru</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('periode_pmb.update', $prev_period_data->id) }}" method="POST">
+                            <form action="{{ route('periode_pmb.update', $prev_period_data->id) }}" id="form-edit-period" method="POST">
                                 @csrf
                                 @method('put')
                                 <div class="form-group">
@@ -79,6 +79,8 @@
                                     </select>
                                 </div>
 
+                                <input type="hidden" name="isAnotherOpen" value="{{ $isAnotherOpen }}" />
+
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary mt-3">Submit</button>
                                 </div>
@@ -93,6 +95,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $("#semester-selector").select2({
         ajax: {
@@ -116,6 +119,34 @@
         minimumInputLength: 1,
         templateResult (res) {
             return res.text
+        }
+    })
+
+    window.addEventListener('DOMContentLoaded', () => {
+        let confirmSubmit = false
+        document.getElementById('form-edit-period').onsubmit = function (form) {
+            
+            const inpStatusValue = form.target.status.value
+            if (!confirmSubmit && inpStatusValue == '1' && "{{ $isAnotherOpen }}" == "1")
+                form.preventDefault()
+
+            if ("{{ $isAnotherOpen }}" == "1" && inpStatusValue == '1') {
+                Swal.fire({
+                    title: 'Ada Periode Lain yang Terbuka',
+                    text: 'JIka anda melanjutkan, maka periode lain tersebut akan otomatis di tutup, anda yakin',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Lanjutkan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        confirmSubmit = true
+                        this.submit()
+                    }
+                });
+            }
         }
     })
 </script>

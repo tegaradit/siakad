@@ -29,7 +29,10 @@
                      <p class="card-title-desc">Berikut adalah daftar Periode Penerimaan Mahasiswa Baru yang tersedia di sistem.</p>
                   </div>
                   <div class="card-body">
-                     <a href="{{ route('periode_pmb.create') }}" class="btn btn-primary mb-3">Tambah Periode</a>
+                     <a href="{{ route('periode_pmb.create') }}" class="btn btn-primary mb-3">
+                        <i data-feather="plus-square"></i>
+                        Tambah
+                     </a>
                      <div class="table-responsive">
                         <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="periodePmb-table">
                            <thead>
@@ -39,7 +42,7 @@
                                  <th>Tanggal Mulai</th>
                                  <th>Tanggal Selesai</th>
                                  <th>Status</th>
-                                 <th>action</th>
+                                 <th>Aksi</th>
                               </tr>
                            </thead>
                         </table>
@@ -92,7 +95,26 @@
             { data: 'period_number', name: 'Gelombang Pendaftaran' },
             { data: 'start_date', name: 'tanggal mulai' },
             { data: 'end_date', name: 'tanggal selesai' },
-            { data: 'status', name: 'status' },
+            { 
+               data: 'status', 
+               name: 'status',
+               render (data) {
+                  return data == 1 ? 
+                     `
+                     <div>
+                        <i class="fas fa-key text-info"></i>
+                        buka
+                     </div>
+                     ` 
+                     : 
+                     `
+                     <div>
+                        <i class="fas fa-lock text-danger"></i>
+                        tutup
+                     </div>
+                     `
+               }
+            },
             { data: 'action', name: 'action', orderable: false, searchable: false }
          ],
          columnDefs: [
