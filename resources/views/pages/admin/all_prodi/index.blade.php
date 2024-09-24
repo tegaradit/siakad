@@ -36,7 +36,7 @@
                                         <table id="datatable"
                                             class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
-                                                <tr>
+                                                <tr style="text-align: center">
                                                     {{-- <th>ID Prodi</th> --}}
                                                     <th>Kode Prodi</th>
                                                     <th>Nama Prodi</th>
@@ -77,7 +77,13 @@
                     // },
                     {
                         data: 'kode_prodi',
-                        name: 'kode_prodi'
+                        name: 'kode_prodi',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css({
+                                'text-align': 'center',
+                                'vertical-align': 'middle'
+                            });
+                        }
                     },
                     {
                         data: 'nama_prodi',
@@ -89,11 +95,23 @@
                     },
                     {
                         data: 'status',
-                        name: 'status'
+                        name: 'status',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css({
+                                'text-align': 'center',
+                                'vertical-align': 'middle'
+                            });
+                        }
                     },
                     {
                         data: 'nm_jenj_didik',
-                        name: 'nm_jenj_didik'
+                        name: 'nm_jenj_didik',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css({
+                                'text-align': 'center',
+                                'vertical-align': 'middle'
+                            });
+                        }
                     },
                 ]
             });

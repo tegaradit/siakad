@@ -31,31 +31,22 @@
                                     <p class="card-title-desc">Berikut adalah daftar seluruh dosen.</p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ route('lecturer.create') }}" class="btn btn-primary mb-3"><i data-feather="plus-square"></i>Tambah</a>
+                                    <a href="{{ route('lecturer.create') }}" class="btn btn-primary btn-sm mb-3">
+                                    <i class="fa-solid fa-square-plus"></i>
+                                    Tambah
+                                    </a>
                                     <div class="table-responsive">
-                                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
+                                        <table id="datatable"
+                                            class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr style="text-align: center">
-                                                    <th>ID</th>
+                                                    <th style="width:20px">ID</th>
                                                     <th>NUPTK</th>
                                                     <th>NIDN</th>
                                                     <th>NIK</th>
                                                     <th>Gender</th>
                                                     <th>Nama</th>
                                                     <th>Status Aktif</th>
-                                                    {{-- <th>Tanggal Lahir</th>
-                                                    <th>Tempat Lahir</th>
-                                                    <th>Nama Ibu</th>
-                                                    <th>Status Pernikahan</th>
-                                                    <th>Level Pegawai</th>
-                                                    <th>Level Pendidikan</th>
-                                                    <th>No Telepon</th>
-                                                    <th>Email</th>
-                                                    <th>No Surat Tugas</th>
-                                                    <th>Tanggal Surat Tugas</th>
-                                                    <th>Tanggal TMT Surat Tugas</th>
-                                                    <th>Tanggal Keluar</th>
-                                                    <th>Prodi ID</th> --}}
                                                     <th style="width: 50px text-align: center">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -73,7 +64,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
-     <script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
                 processing: true,
@@ -85,6 +78,7 @@
                         name: 'no',
                         orderable: false,
                         searchable: false,
+                        className: 'text-center',
                         render: function(data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart +
                                 1; // nomor urut yang dinamis
@@ -114,67 +108,13 @@
                         data: 'active_status.name',
                         name: 'active_status.name'
                     },
-                    // {
-                    //     data: 'birth_date',
-                    //     name: 'birth_date'
-                    // },
-                    // {
-                    //     data: 'birth_place',
-                    //     name: 'birth_place'
-                    // },
-                    // {
-                    //     data: 'mothers_name',
-                    //     name: 'mothers_name'
-                    // },
-                    // {
-                    //     data: 'mariage_status',
-                    //     name: 'mariage_status'
-                    // },
-                    // {
-                    //     data: 'employee_level.name',
-                    //     name: 'employee_level.name'
-                    // },
-                    // {
-                    //     data: 'level_education',
-                    //     name: 'level_education'
-                    // },
-                    // {
-                    //     data: 'phone_number',
-                    //     name: 'phone_number'
-                    // },
-                    // {
-                    //     data: 'email',
-                    //     name: 'email'
-                    // },
-                    // {
-                    //     data: 'assign_letter_number',
-                    //     name: 'assign_letter_number'
-                    // },
-                    // {
-                    //     data: 'assign_letter_date',
-                    //     name: 'assign_letter_date'
-                    // },
-                    // {
-                    //     data: 'assign_letter_tmt',
-                    //     name: 'assign_letter_tmt'
-                    // },
-                    // {
-                    //     data: 'exit_date',
-                    //     name: 'exit_date'
-                    // },
-                    // {
-                    //     data: 'all_prodi.nama_prodi',
-                    //     name: 'all_prodi.nama_prodi'
-                    // },
                     {
                         data: 'action',
                         name: 'action',
                         orderable: false,
                         searchable: false,
-                        createdCell: function(td, cellData, rowData, row, col) {
-                                $(td).css('text-align', 'center');
-                        }
                     }
+
                 ]
             });
         });
