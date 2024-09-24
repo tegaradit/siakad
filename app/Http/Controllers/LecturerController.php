@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Active_status;
 use App\Models\All_prodi;
 use App\Models\Employee_level;
+use App\Models\IdentitasPt;
 use App\Models\Lecturer;
-use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
@@ -16,14 +16,13 @@ class LecturerController extends Controller
 {
   public function index()
     {
-        // Kirimkan view tanpa data karena DataTables akan meng-handle data secara AJAX
         return view('pages.admin.lecturer.index');
     }
 
     public function data(Request $request)
 {
     if ($request->ajax()) {
-        $lecturer = Lecturer::with(['prodi', 'employee_level', 'ActiveStatus'])->get();
+        $lecturer = Lecturer::with(['all_prodi', 'employee_level', 'ActiveStatus'])->get();
 
         $lecturer = $lecturer->map(function($lecturer) {
             $lecturer->birth_date = Carbon::parse($lecturer->birth_date)->format('d-m-Y');
@@ -36,7 +35,11 @@ class LecturerController extends Controller
         return DataTables::of($lecturer)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
-                return '<a href="'.route('lecturer.edit', $data->id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
+                return '
+                        <a href="' . route('lecturer.show', $data->id) . '" class="btn btn-outline-info btn-sm" title="Detail">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="'.route('lecturer.edit', $data->id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
                         <form id="delete-form-' . $data->id . '" 
@@ -55,20 +58,21 @@ class LecturerController extends Controller
 
     return abort(404);
 }
-
-
-    // Show the form for creating a new lecturer
     public function create()
     {
         $activeStatuses = Active_status::all();
         $employeeLevels = Employee_level::all();
-        $prodiList = All_prodi::all();
-        return view('pages.admin.lecturer.form', compact('activeStatuses', 'employeeLevels', 'prodiList'));
-    }
+        
+        $identitas_pt = IdentitasPt::first(); 
+        $current_id_sp = $identitas_pt->current_id_sp;
 
-        public function searchProdi (Request $request) {
-        $search = $request->query('nama_prodi') != '' ? $request->query('nama_prodi') : 'null';
-        return $request->ajax() ? All_prodi::where('nama_prodi', 'like', "%$search%")->get() : abort(404);
+        $prodiList = All_prodi::where('id_sp', $current_id_sp)
+        ->where('status', 'A')
+        ->select('id_prodi', 'nama_prodi')
+        ->get();
+        
+        // $prodiList = All_prodi::all();
+        return view('pages.admin.lecturer.form', compact('activeStatuses', 'employeeLevels', 'prodiList'));
     }
     
     // Store a newly created lecturer in the database
@@ -100,7 +104,7 @@ class LecturerController extends Controller
         'assign_letter_date' => 'nullable|date',
         'assign_letter_tmt' => 'nullable|date',
         'exit_date' => 'nullable|date',
-        'prodi_id' => 'required|exists:prodi,id',
+        'prodi_id' => 'required|exists:all_prodi,id_prodi',
     ]);
 
     // Simpan data
@@ -109,14 +113,34 @@ class LecturerController extends Controller
     return redirect()->route('lecturer.index')->with('success', 'Lecturer created successfully.');
 }
 
+    //show
+    public function show($id)
+    {
+        // Mengambil data dosen berdasarkan ID
+        $lecturer = Lecturer::with(['ActiveStatus', 'employee_level', 'all_prodi'])->findOrFail($id);
 
+
+        // Menampilkan halaman show dengan data dosen
+        return view('pages.admin.lecturer.show', compact('lecturer'));
+
+    }
     // Show the form for editing the specified lecturer
     public function edit($id)
     {
         $lecturer = Lecturer::findOrFail($id); // Menggunakan id sebagai primary key
         $activeStatuses = Active_status::all();
         $employeeLevels = Employee_level::all();
-        $prodiList = All_prodi::all();
+        
+        $identitas_pt = IdentitasPt::first(); 
+        $current_id_sp = $identitas_pt->current_id_sp;
+
+        $prodiList = All_prodi::where('id_sp', $current_id_sp)
+        ->where('status', 'A')
+        ->select('id_prodi', 'nama_prodi')
+        ->get();
+        
+        
+        // $prodiList = All_prodi::all();
 
         return view('pages.admin.lecturer.form_edit', compact('lecturer', 'activeStatuses', 'employeeLevels', 'prodiList'));
     }
@@ -150,7 +174,7 @@ class LecturerController extends Controller
         'assign_letter_date' => 'nullable|date',
         'assign_letter_tmt' => 'nullable|date',
         'exit_date' => 'nullable|date',
-        'prodi_id' => 'required|exists:prodi,id',
+        'prodi_id' => 'required|exists:all_prodi,id_prodi',
     ]);
 
     // Update data lecturer
@@ -163,7 +187,7 @@ class LecturerController extends Controller
     // Remove the specified lecturer from the database
     public function destroy($id)
     {
-        $lecturer = Lecturer::findOrFail($id); // Menggunakan id untuk pencarian
+        $lecturer = Lecturer::findOrFail($id);
         $lecturer->delete();
 
         return redirect()->route('lecturer.index')->with('success', 'Lecturer deleted successfully.');

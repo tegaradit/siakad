@@ -55,7 +55,8 @@ return new class extends Migration
             $table->string('id_induk_sms', 40)->nullable();
             $table->char('kode', 3)->nullable();
             $table->tinyInteger('max_sks1')->nullable();
-
+            
+            // foreign key
             $table->foreign('id_sp')->references('id_sp')->on('educational_unit')->onDelete('cascade');
             $table->foreign('id_jenj_didik')->references('id_jenj_didik')->on('education_level')->onDelete('cascade');
         });

@@ -201,24 +201,24 @@
                                         <input type="date" name="exit_date" id="exit_date" class="form-control">
                                     </div>
 
-                                    {{-- Prodi
-                                    <div class="form-group">
-                                        <label for="prodi_id">Prodi ID</label>
+                                    {{-- All Prodi --}}
+
+                                    <div class="form-group mt-2">
+                                        <label for="prodi_id">Prodi</label>
                                         <select name="prodi_id" id="prodi_id" class="form-control" required>
-                                            <option value="">Pilih...</option>
-                                            @foreach ($prodiList as $prodi)
-                                                <option value="{{ $prodi->id }}">{{ $prodi->name }}</option>
+                                            <option value="" selected>Pilih Prodi</option>
+                                            @foreach ($prodiList as $p)
+                                                <option value="{{ $p->id_prodi }}" {{-- asumsikan 'id_prodi' adalah field di tabel all_prodi --}}
+                                                    {{ old('prodi_id', $curriculum->prodi_id ?? '') == $p->id_prodi ? 'selected' : '' }}>
+                                                    {{ $p->nama_prodi }} {{-- asumsikan 'nama_prodi' adalah field untuk nama di tabel all_prodi --}}
+                                                </option>
                                             @endforeach
                                         </select>
-                                    </div> --}}
-
-                                    {{-- Prodi --}}
-                                    <div class="form-group">
-                                        <label for="prodi_id">Prodi</label>
-                                        <select name="prodi_id" id="prodi-selector" class="form-control" required>
-                                            <option value="" selected>Pilih...</option>
-                                        </select>
+                                        @error('prodi_id')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
+
 
                                     {{-- Submit Button --}}
                                     <div class="form-group">
@@ -236,11 +236,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
+    {{-- <script>
         $("#prodi-selector").select2({
             ajax: {
                 delay: 250,
-                url: '{{ url('/') }}/admin/course/search_prodi',
+                url: '{{ url('/') }}/admin/all_prodi/search_prodi',
                 data(params) {
                     var query = {
                         nama_prodi: params.term,
@@ -250,8 +250,8 @@
                 processResults(data) {
                     return {
                         results: data.map(item => ({
-                            id: item.id, // The value for the option
-                            text: `${item.nama_prodi}` // The displayed text
+                            id: item.id,
+                            text: `${item.nama_prodi}`
                         }))
                     }
                 }
@@ -261,5 +261,5 @@
                 return res.text
             }
         })
-    </script>
+    </script> --}}
 @endsection

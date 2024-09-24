@@ -38,7 +38,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID Prodi</th>
-                                                    <th>Nama PT</th>
+                                                    <th>Nama Perguruan Tinggi</th>
                                                     <th>Kode Prodi</th>
                                                     <th>Nama Prodi</th>
                                                     <th>Status</th>
@@ -75,8 +75,8 @@
                         name: 'id_prodi'
                     },
                     {
-                        data: 'nama_pt',
-                        name: 'university.nama_pt'
+                        data: 'nm_lemb',
+                        name: 'nm_lemb'
                     },
                     {
                         data: 'kode_prodi',
@@ -92,7 +92,7 @@
                     },
                     {
                         data: 'nm_jenj_didik',
-                        name: 'education_level.nm_jenj_didik'
+                        name: 'nm_jenj_didik'
                     },
                 ]
             });
