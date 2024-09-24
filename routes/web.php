@@ -134,6 +134,7 @@ Route::get('/admin/periode_pmb/anotherIsOpen', [PeriodePmbController::class, 'an
 
 Route::get('/admin/periode_pmb/edit/{id}', [PeriodePmbController::class, 'edit'])->name('periode_pmb.edit');
 Route::put('/admin/periode_pmb/update/{id}', [PeriodePmbController::class, 'update'])->name('periode_pmb.update');
+Route::put('/admin/periode_pmb/toggleStatus', [PeriodePmbController::class, 'toggleStatus'])->name('periode_pmb.toggle_status');
 
 Route::delete('/admin/periode_pmb/delete/{id}', [PeriodePmbController::class, 'destroy'])->name('periode_pmb.destroy');
 

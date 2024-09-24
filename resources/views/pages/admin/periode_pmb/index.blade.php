@@ -98,20 +98,28 @@
             { 
                data: 'status', 
                name: 'status',
-               render (data) {
+               render (data, _, row) {
                   return data == 1 ? 
                      `
-                     <div>
-                        <i class="fas fa-key text-info"></i>
-                        buka
-                     </div>
+                     <form action="{{ route('periode_pmb.toggle_status') }}?id=${row.id}" method="post">
+                        <input value="{{ csrf_token() }}" type="hidden" name="_token" />
+                        {{ method_field('put') }}
+                        <button type="submit" style="outline: none; border: none; background: none">
+                           <i class="fas fa-key text-info"></i>
+                           buka
+                        </button>
+                     </form>
                      ` 
                      : 
                      `
-                     <div>
-                        <i class="fas fa-lock text-danger"></i>
-                        tutup
-                     </div>
+                     <form action="{{ route('periode_pmb.toggle_status') }}?id=${row.id}" method="post">
+                        <input value="{{ csrf_token() }}" type="hidden" name="_token" />
+                        {{ method_field('put') }}
+                        <button type="submit" style="outline: none; border: none; background: none">
+                           <i class="fas fa-lock text-danger"></i>
+                           tutup
+                        </button>
+                     </form>
                      `
                }
             },
@@ -120,8 +128,8 @@
          columnDefs: [
             { targets: [0, 1, 2, 3, 4, 5], className: 'text-center' }, 
          ],
-         "language": {
-            "emptyTable": "Data Penerimaan Mahasiswa Baru Kosong"
+         language: {
+            emptyTable: "Data Penerimaan Mahasiswa Baru Kosong"
          }
       });
    });
