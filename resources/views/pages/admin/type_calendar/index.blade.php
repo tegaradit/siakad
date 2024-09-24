@@ -40,7 +40,7 @@
                                                 <tr style="text-align: center">
                                                     <th style="width: 30px" style="text-align: center">No</th>
                                                     <th>Nama Tipe Kalender</th>
-                                                    <th style="width: 50px text-align: center">Action</th>
+                                                    <th style="width: 50px text-align: center">Aksi</th>
                                                 </tr>
                                             </thead>
                                         </table>
