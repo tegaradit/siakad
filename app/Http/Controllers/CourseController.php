@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\All_prodi;
 use App\Models\Course;
 use App\Models\Course_group;
 use App\Models\Course_type;
 use App\Models\Education_level;
-use App\Models\Prodi;
+use App\Models\IdentitasPt;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
@@ -28,7 +29,7 @@ class CourseController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $courses = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->get();
+            $courses = Course::with(['all_prodi', 'education_level', 'course_group', 'course_type'])->get();
             return DataTables::of($courses)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -37,36 +38,36 @@ class CourseController extends Controller
                     $viewUrl = route('course.show', $row->id); // URL for the view button
 
                     return '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" action="' . $deleteUrl . '" method="POST">
-                                <a href="' . $viewUrl . '" class="btn btn-outline-info btn-sm view" title="View">
-                                    <i class="fas fa-eye"></i>
+                                <a href="' . $viewUrl . '" class="btn btn-info btn-sm view m-0" title="View">
+                                    <i class="fas fa-eye"></i> Lihat
                                 </a>
-                                <a href="' . $editUrl . '" class="btn btn-outline-warning btn-sm edit" title="Edit">
-                                    <i class="fas fa-pencil-alt"></i>
+                                <a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit">
+                                    <i class="fas fa-pencil-alt"></i> Edit
                                 </a>
                                 ' . csrf_field() . '
                                 ' . method_field('DELETE') . '
-                                <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete" title="Delete">
-                                    <i class="fas fa-trash-alt"></i>
+                                <button type="submit" class="btn btn-danger btn-sm delete m-0" title="Delete">
+                                    <i class="fas fa-trash-alt"></i> Hapus
                                 </button>
                             </form>';
                 })
                 ->editColumn('is_sap', function ($row) {
-                    return $row->is_sap ? 'Yes' : 'No';
+                    return $row->is_sap ? 'Ya' : 'Tidak';
                 })
                 ->editColumn('is_silabus', function ($row) {
-                    return $row->is_silabus ? 'Yes' : 'No';
+                    return $row->is_silabus ? 'Ya' : 'Tidak';
                 })
                 ->editColumn('is_teaching_material', function ($row) {
-                    return $row->is_teaching_material ? 'Yes' : 'No';
+                    return $row->is_teaching_material ? 'Ya' : 'Tidak';
                 })
                 ->editColumn('is_praktikum', function ($row) {
-                    return $row->is_praktikum ? 'Yes' : 'No';
+                    return $row->is_praktikum ? 'Ya' : 'Tidak';
                 })
                 ->editColumn('effective_start_date', function ($row) {
-                    return $row->effective_start_date ? \Carbon\Carbon::parse($row->effective_start_date)->format('d/m/Y') : 'N/A';
+                    return $row->effective_start_date ? \Carbon\Carbon::parse($row->effective_start_date)->format('d-m-Y') : 'N/A';
                 })
                 ->editColumn('effective_end_date', function ($row) {
-                    return $row->effective_end_date ? \Carbon\Carbon::parse($row->effective_end_date)->format('d/m/Y') : 'N/A';
+                    return $row->effective_end_date ? \Carbon\Carbon::parse($row->effective_end_date)->format('d-m-Y') : 'N/A';
                 })
                 ->make(true);
         }
@@ -77,7 +78,7 @@ class CourseController extends Controller
     public function show($id)
     {
         // Find the course by ID or fail with 404 if not found
-        $course = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->findOrFail($id);
+        $course = Course::with(['all_prodi', 'education_level', 'course_group', 'course_type'])->findOrFail($id);
 
         // Return the view with course details
         return view('pages.admin.course.show', compact('course'));
@@ -85,31 +86,29 @@ class CourseController extends Controller
 
     public function create()
     {
-        $prodis = Prodi::all();
         $education_levels = Education_level::all();
         $group = Course_group::all();
         $type = Course_type::all();
 
+        // Mendapatkan current_id_sp dari tabel identitas_pt
+        $identitas_pt = IdentitasPt::first(); // Sesuaikan query untuk mendapatkan data identitas_pt
+        $current_id_sp = $identitas_pt->current_id_sp;
+
+        // Query untuk mendapatkan all_prodi yang memiliki id_sp sama dan status Aktif
+        $prodi = All_prodi::where('id_sp', $current_id_sp)
+            ->where('status', 'A') // 'A' adalah untuk status Aktif
+            ->get();
+
         // dd($group, $type); // Check what data is being passed
 
-        return view('pages.admin.course.form', compact('prodis', 'education_levels', 'group', 'type'));
-    }
-
-    public function searchProdi (Request $request) {
-        $search = $request->query('nama_prodi') != '' ? $request->query('nama_prodi') : 'null';
-        return $request->ajax() ? Prodi::where('nama_prodi', 'like', "%$search%")->get() : abort(404);
-    }
-
-    public function searchEdLev (Request $request) {
-        $search = $request->query('nm_jenj_didik') != '' ? $request->query('nm_jenj_didik') : 'null';
-        return $request->ajax() ? Prodi::where('nm_jenj_didik', 'like', "%$search%")->get() : abort(404);
+        return view('pages.admin.course.form', compact('prodi', 'education_levels', 'group', 'type', 'identitas_pt', 'current_id_sp'));
     }
 
     public function store(Request $request)
     {
         // Validasi input
         $validatedData = $request->validate([
-            'prodi_id' => 'required|exists:prodi,id',
+            'prodi_id' => 'required|exists:all_prodi,id_prodi',
             'education_level_id' => 'required|exists:education_level,id_jenj_didik',
             'code' => 'required|max:10|unique:course,code',
             'name' => 'required|max:200',
@@ -125,89 +124,115 @@ class CourseController extends Controller
             'is_silabus' => 'required|boolean',
             'is_teaching_material' => 'required|boolean',
             'is_praktikum' => 'required|boolean',
-            'effective_start_date' => 'required|date',
-            'effective_end_date' => 'required|date',
+            'course_range' => ['required', 'regex:/^\d{4}-\d{2}-\d{2}\s+to\s+\d{4}-\d{2}-\d{2}$/']
         ]);
 
+        // Memisahkan tanggal mulai dan tanggal akhir dari rentang tanggal
+        [$startDate, $endDate] = explode(' to ', $validatedData['course_range']);
+
         // Simpan data ke database
-        Course::create($validatedData);
+        Course::create([
+            'prodi_id' => $validatedData['prodi_id'],
+            'education_level_id' => $validatedData['education_level_id'],
+            'code' => $validatedData['code'],
+            'name' => $validatedData['name'],
+            'group_id' => $validatedData['group_id'],
+            'type_id' => $validatedData['type_id'],
+            'sks_mk' => $validatedData['sks_mk'],
+            'sks_tm' => $validatedData['sks_tm'],
+            'sks_pr' => $validatedData['sks_pr'],
+            'sks_pl' => $validatedData['sks_pl'],
+            'sks_sim' => $validatedData['sks_sim'],
+            'status' => $validatedData['status'],
+            'is_sap' => $validatedData['is_sap'],
+            'is_silabus' => $validatedData['is_silabus'],
+            'is_teaching_material' => $validatedData['is_teaching_material'],
+            'is_praktikum' => $validatedData['is_praktikum'],
+            'effective_start_date' => $startDate,
+            'effective_end_date' => $endDate
+        ]);
 
         // Redirect ke halaman course.index dengan pesan sukses
         return redirect()->route('course.index')->with('success', 'Mata Kuliah berhasil ditambahkan.');
     }
 
+
     public function edit($id)
     {
-        // Ambil data mata kuliah berdasarkan ID
-        $course = Course::findOrFail($id);
-
-        // Ambil data yang diperlukan untuk dropdown
-        $prodis = Prodi::all();
+        $course = Course::findOrFail($id); // Retrieve the course or fail with 404
         $education_levels = Education_level::all();
         $group = Course_group::all();
         $type = Course_type::all();
 
-        // Tampilkan formulir edit dengan data mata kuliah dan data dropdown
-        return view('pages.admin.course.form_edit', compact('course', 'prodis', 'education_levels', 'group', 'type'));
+        $identitas_pt = IdentitasPt::first();
+        $current_id_sp = $identitas_pt->current_id_sp;
+
+        $prodi = All_prodi::where('id_sp', $current_id_sp)
+            ->where('status', 'A')
+            ->get();
+
+        // Prepare course_range as 'start_date to end_date'
+        $course_range = $course->effective_start_date . ' to ' . $course->effective_end_date;
+
+
+        return view('pages.admin.course.form_edit', compact('course', 'prodi', 'education_levels', 'group', 'type', 'course_range'));
     }
+
 
     public function update(Request $request, $id)
     {
-        // Validasi data yang diterima
-        $request->validate([
-            'prodi_id' => 'required|uuid|exists:prodi,id',
-            'education_level_id' => 'required|integer|exists:education_level,id_jenj_didik',
-            'code' => [
-                'required',
-                'string',
-                'max:10',
-                Rule::unique('course', 'code')->ignore($id), // Ignore unique constraint for current record
-            ],
-            'name' => 'required|string|max:200',
-            'group_id' => 'required|integer|exists:course_group,id',
-            'type_id' => 'required|integer|exists:course_type,id',
+        $course = Course::findOrFail($id); // Retrieve the course or fail with 404
+
+        // Validate input
+        $validatedData = $request->validate([
+            'prodi_id' => 'required|exists:all_prodi,id_prodi',
+            'education_level_id' => 'required|exists:education_level,id_jenj_didik',
+            'code' => 'required|max:10|unique:course,code,' . $course->id,
+            'name' => 'required|max:200',
+            'group_id' => 'required|exists:course_group,id',
+            'type_id' => 'required|exists:course_type,id',
             'sks_mk' => 'required|integer',
             'sks_tm' => 'required|integer',
             'sks_pr' => 'required|integer',
             'sks_pl' => 'required|integer',
             'sks_sim' => 'required|integer',
             'status' => 'required|in:Active,Deleted,Non-Active',
-            'is_sap' => 'boolean',
-            'is_silabus' => 'boolean',
-            'is_teaching_material' => 'boolean',
-            'is_praktikum' => 'boolean',
-            'effective_start_date' => 'required|date',
-            'effective_end_date' => 'required|date|after_or_equal:effective_start_date',
+            'is_sap' => 'required|boolean',
+            'is_silabus' => 'required|boolean',
+            'is_teaching_material' => 'required|boolean',
+            'is_praktikum' => 'required|boolean',
+            'course_range' => ['required', 'regex:/^\d{4}-\d{2}-\d{2}\s+to\s+\d{4}-\d{2}-\d{2}$/']
         ]);
 
-        // Cari data mata kuliah berdasarkan ID
-        $course = Course::findOrFail($id);
+        // Split the course range into start and end dates
+        [$startDate, $endDate] = explode(' to ', $validatedData['course_range']);
 
-        // Update data mata kuliah dengan data yang diterima
-        $course->update($request->only([
-            'prodi_id',
-            'education_level_id',
-            'code',
-            'name',
-            'group_id',
-            'type_id',
-            'sks_mk',
-            'sks_tm',
-            'sks_pr',
-            'sks_pl',
-            'sks_sim',
-            'status',
-            'is_sap',
-            'is_silabus',
-            'is_teaching_material',
-            'is_praktikum',
-            'effective_start_date',
-            'effective_end_date'
-        ]));
+        // Update the course data
+        $course->update([
+            'prodi_id' => $validatedData['prodi_id'],
+            'education_level_id' => $validatedData['education_level_id'],
+            'code' => $validatedData['code'],
+            'name' => $validatedData['name'],
+            'group_id' => $validatedData['group_id'],
+            'type_id' => $validatedData['type_id'],
+            'sks_mk' => $validatedData['sks_mk'],
+            'sks_tm' => $validatedData['sks_tm'],
+            'sks_pr' => $validatedData['sks_pr'],
+            'sks_pl' => $validatedData['sks_pl'],
+            'sks_sim' => $validatedData['sks_sim'],
+            'status' => $validatedData['status'],
+            'is_sap' => $validatedData['is_sap'],
+            'is_silabus' => $validatedData['is_silabus'],
+            'is_teaching_material' => $validatedData['is_teaching_material'],
+            'is_praktikum' => $validatedData['is_praktikum'],
+            'effective_start_date' => $startDate,
+            'effective_end_date' => $endDate
+        ]);
 
-        // Redirect ke halaman index dengan pesan sukses
+        // Redirect to the course index with success message
         return redirect()->route('course.index')->with('success', 'Mata Kuliah berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {
@@ -220,5 +245,4 @@ class CourseController extends Controller
         // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('course.index')->with('success', 'Mata Kuliah berhasil dihapus.');
     }
-
 }

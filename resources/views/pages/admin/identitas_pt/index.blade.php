@@ -112,7 +112,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editNpsnForm">
+                <form id="editNpsnForm" action="{{ route('identitas-pt.update') }}" method="post">
+                    @csrf
                     <div class="mb-3">
                         <label for="newNpsn" class="form-label">NPSN</label>
                         <input type="text" class="form-control" id="newNpsn" name="npsn" value="{{ request('npsn', '053025') }}" required>
@@ -127,43 +128,10 @@
 <script>
     // Trigger fetch data on page load if input is empty
     window.addEventListener('DOMContentLoaded', (event) => {
-        const npsnInput = document.getElementById('npsnInput');
-        if (npsnInput) {
-            document.getElementById('editNpsnForm').submit();
-        }
-    });
-
-    document.getElementById('editNpsnForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const newNpsn = document.getElementById('newNpsn').value;
-
-        console.log(document.querySelector('meta[name="csrf-token"]').getAttribute('content'))
-
-
-
-        fetch(`{{ url('identitas-pt/update/') }}/${newNpsn}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    npsn: newNpsn
-                })
-            })
-
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    window.location.reload();
-                } else {
-                    alert('Failed to update NPSN');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred');
-            });
+        const npsnInput = document.getElementById('newNpsn');
+        // if (npsnInput) {
+        //     document.getElementById('editNpsnForm').submit();
+        // }
     });
 </script>
 @endsection

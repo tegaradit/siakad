@@ -21,16 +21,14 @@ class BuildingsController extends Controller
 
             return DataTables::of($buildings)
             ->addColumn('action', function ($row) {
-                return '<a href="'.route('buildings.edit', $row->id).'" class="btn btn-outline-warning btn-sm edit" title="Edit">
-                            <i class="fas fa-pencil-alt"></i>
+                return '<a href="'.route('buildings.edit', $row->id).'" class="btn btn-warning btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> Edit
                         </a>
                         <form id="delete-form-' . $row->id . '" 
                               onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" 
                               action="' . route('buildings.destroy', $row->id) . '" 
                               method="POST" style="display:inline;">
                             ' . csrf_field() . method_field('DELETE') . '
-                            <button type="submit" class="btn icon icon-left btn-outline-danger btn-sm delete">
-                                <i class="fas fa-trash-alt"></i>
+                            <button type="submit" class="btn btn-danger btn-sm delete m-0"><i class="fas fa-trash-alt"></i> Hapus
                             </button>
                         </form>';
             })

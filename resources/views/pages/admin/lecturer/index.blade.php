@@ -31,11 +31,11 @@
                                     <p class="card-title-desc">Berikut adalah daftar seluruh dosen.</p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ route('lecturer.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                                    <a href="{{ route('lecturer.create') }}" class="btn btn-primary mb-3"><i data-feather="plus-square"></i>Tambah</a>
                                     <div class="table-responsive">
                                         <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
-                                                <tr>
+                                                <tr style="text-align: center">
                                                     <th>ID</th>
                                                     <th>NUPTK</th>
                                                     <th>NIDN</th>
@@ -43,7 +43,7 @@
                                                     <th>Gender</th>
                                                     <th>Nama</th>
                                                     <th>Status Aktif</th>
-                                                    <th>Tanggal Lahir</th>
+                                                    {{-- <th>Tanggal Lahir</th>
                                                     <th>Tempat Lahir</th>
                                                     <th>Nama Ibu</th>
                                                     <th>Status Pernikahan</th>
@@ -55,8 +55,8 @@
                                                     <th>Tanggal Surat Tugas</th>
                                                     <th>Tanggal TMT Surat Tugas</th>
                                                     <th>Tanggal Keluar</th>
-                                                    <th>Prodi ID</th>
-                                                    <th>Aksi</th>
+                                                    <th>Prodi ID</th> --}}
+                                                    <th style="width: 50px text-align: center">Aksi</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -114,63 +114,66 @@
                         data: 'active_status.name',
                         name: 'active_status.name'
                     },
-                    {
-                        data: 'birth_date',
-                        name: 'birth_date'
-                    },
-                    {
-                        data: 'birth_place',
-                        name: 'birth_place'
-                    },
-                    {
-                        data: 'mothers_name',
-                        name: 'mothers_name'
-                    },
-                    {
-                        data: 'mariage_status',
-                        name: 'mariage_status'
-                    },
-                    {
-                        data: 'employee_level.name',
-                        name: 'employee_level.name'
-                    },
-                    {
-                        data: 'level_education',
-                        name: 'level_education'
-                    },
-                    {
-                        data: 'phone_number',
-                        name: 'phone_number'
-                    },
-                    {
-                        data: 'email',
-                        name: 'email'
-                    },
-                    {
-                        data: 'assign_letter_number',
-                        name: 'assign_letter_number'
-                    },
-                    {
-                        data: 'assign_letter_date',
-                        name: 'assign_letter_date'
-                    },
-                    {
-                        data: 'assign_letter_tmt',
-                        name: 'assign_letter_tmt'
-                    },
-                    {
-                        data: 'exit_date',
-                        name: 'exit_date'
-                    },
-                    {
-                        data: 'prodi.nama_prodi',
-                        name: 'prodi.nama_prodi'
-                    },
+                    // {
+                    //     data: 'birth_date',
+                    //     name: 'birth_date'
+                    // },
+                    // {
+                    //     data: 'birth_place',
+                    //     name: 'birth_place'
+                    // },
+                    // {
+                    //     data: 'mothers_name',
+                    //     name: 'mothers_name'
+                    // },
+                    // {
+                    //     data: 'mariage_status',
+                    //     name: 'mariage_status'
+                    // },
+                    // {
+                    //     data: 'employee_level.name',
+                    //     name: 'employee_level.name'
+                    // },
+                    // {
+                    //     data: 'level_education',
+                    //     name: 'level_education'
+                    // },
+                    // {
+                    //     data: 'phone_number',
+                    //     name: 'phone_number'
+                    // },
+                    // {
+                    //     data: 'email',
+                    //     name: 'email'
+                    // },
+                    // {
+                    //     data: 'assign_letter_number',
+                    //     name: 'assign_letter_number'
+                    // },
+                    // {
+                    //     data: 'assign_letter_date',
+                    //     name: 'assign_letter_date'
+                    // },
+                    // {
+                    //     data: 'assign_letter_tmt',
+                    //     name: 'assign_letter_tmt'
+                    // },
+                    // {
+                    //     data: 'exit_date',
+                    //     name: 'exit_date'
+                    // },
+                    // {
+                    //     data: 'all_prodi.nama_prodi',
+                    //     name: 'all_prodi.nama_prodi'
+                    // },
                     {
                         data: 'action',
                         name: 'action',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        createdCell: function(td, cellData, rowData, row, col) {
+                                $(td).css('text-align', 'center');
+                        }
                     }
                 ]
             });

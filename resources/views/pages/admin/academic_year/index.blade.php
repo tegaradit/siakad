@@ -33,18 +33,21 @@
                                 </p>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('tahun-akademik.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                                <a href="{{ route('tahun-akademik.create') }}" class="btn btn-primary btn-sm mb-3">
+                                    <i class="fa-solid fa-square-plus"></i>
+                                    Tambah
+                                </a>
                                 <div class="table-responsive">
                                     <table id="datatable"
                                         class="table table-bordered table-striped dt-responsive nowrap w-100">
                                         <thead>
-                                            <tr>
+                                            <tr style="text-align: center">
                                                 <th style="width: 35px; text-align: center;">No</th>
                                                 <th>ID</th>
                                                 <th>Nama</th>
                                                 <th>Tanggal Mulai</th>
                                                 <th>Tanggal Selesai</th>
-                                                <th style="width: 45px; text-align: center;">Aksi</th>
+                                                <th style="width: 30px; text-align: center;">Aksi</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -85,6 +88,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
@@ -106,7 +110,10 @@
                     },
                     {
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'name',
@@ -115,10 +122,16 @@
                     {
                         data: 'start_date',
                         name: 'start_date',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'end_date',
                         name: 'end_date',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'action',

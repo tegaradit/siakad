@@ -134,8 +134,8 @@ class UserController extends Controller
                     return $row->role ? $row->role->name : 'N/A';
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="'.route('users.edit', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
-                    $btn .= ' <a href="javascript:void(0)" data-id="'.$row->id.'" class="delete btn btn-danger btn-sm deleteUser">Delete</a>';
+                    $btn = '<a href="'.route('users.edit', $row->id).'" class="btn btn-warning btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> Edit </a>';
+                    $btn .= ' <a href="javascript:void(0)" data-id="'.$row->id.'" class="btn btn-danger btn-sm delete m-0"><i class="fas fa-trash-alt"></i>Hapus</a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])

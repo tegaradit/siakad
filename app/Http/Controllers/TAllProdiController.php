@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\All_prodi;
-use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -29,7 +28,7 @@ class TAllProdiController extends Controller
     {
         // Mengecek apakah request yang masuk adalah AJAX
         if ($request->ajax()) {
-            $allProdi = All_prodi::with(['university', 'education_level']);
+            $allProdi = All_prodi::with(['educational_unit', 'education_level']);
             // Mengambil data dari tabel all_prodi
             $allProdi = All_prodi::select([
                 'id_prodi',
@@ -72,14 +71,18 @@ class TAllProdiController extends Controller
                 'id_fakultas',
                 'id_induk_sms',
                 'kode',
-                'max_sks1'
+                'max_sks1',
             ]);
 
             // Mengembalikan data dalam format yang kompatibel dengan DataTables
             return DataTables::of($allProdi)
-             ->addColumn('nama_pt', function ($allProdi) {
-                return $allProdi->university->nama_pt ?? '-'; // Pastikan nama_pt ada di tabel university
-                
+            ->addColumn('nm_lemb', function ($allProdi) {
+                return $allProdi->educational_unit->nm_lemb ?? '-'; // Pastikan ada di tabel 
+            })
+            ->filterColumn('nm_lemb', function ($query, $keyword) {
+                $query->whereHas('educational_unit', function ($q) use ($keyword) {
+                $q->where('nm_lemb', 'like', "%{$keyword}%");
+                });
             })
             ->addColumn('nm_jenj_didik', function ($allProdi) {
                 return $allProdi->education_level->nm_jenj_didik ?? '-'; // Pastikan nm_jenj_didik ada
@@ -89,5 +92,10 @@ class TAllProdiController extends Controller
 
         // Jika bukan permintaan AJAX, kembalikan error 403 Unauthorized
         return abort(403, 'Unauthorized action.');
+    }
+
+    public function searchProdi (Request $request) {
+        $search = $request->query('nama_prodi') != '' ? $request->query('nama_prodi') : 'null';
+        return $request->ajax() ? All_prodi::where('nama_prodi', 'like', "%$search%")->get() : abort(404);
     }
 }

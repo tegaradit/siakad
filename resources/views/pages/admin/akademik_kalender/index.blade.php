@@ -33,12 +33,15 @@
                                 </p>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('kalender-akademik.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                                <a href="{{ route('kalender-akademik.create') }}" class="btn btn-sm btn-primary mb-3">
+                                    <i class="fa-solid fa-square-plus"></i>
+                                    Tambah
+                                </a>
                                 <div class="table-responsive">
                                     <table id="datatable"
                                         class="table table-bordered table-striped dt-responsive nowrap w-100">
                                         <thead>
-                                            <tr>
+                                            <tr style="text-align: center">
                                                 <th style="width: 35px">No</th>
                                                 <th>Tanggal Mulai</th>
                                                 <th>Tanggal Selesai</th>
@@ -84,6 +87,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
@@ -108,14 +112,20 @@
                         data: 'start_date',
                         name: 'start_date',
                         render: function(data) {
-                            return moment(data).format('DD-MM-YYYY'); 
+                            return moment(data).format('DD-MM-YYYY');
+                        },
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
                         }
                     },
                     {
                         data: 'end_date',
                         name: 'end_date',
                         render: function(data) {
-                            return moment(data).format('DD-MM-YYYY'); 
+                            return moment(data).format('DD-MM-YYYY');
+                        },
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
                         }
                     },
                     {

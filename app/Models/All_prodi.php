@@ -56,7 +56,7 @@ class All_prodi extends Model
         "max_sks1"
     ];
 
-    public function university(): BelongsTo
+    public function educational_unit(): BelongsTo
     {
         return $this->belongsTo(Educational_unit::class, 'id_sp', 'id_sp');
     }
