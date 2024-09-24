@@ -35,7 +35,7 @@
                                     <div class="table-responsive">
                                         <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
-                                                <tr>
+                                                <tr style="text-align: center">
                                                     <th>ID</th>
                                                     <th>NUPTK</th>
                                                     <th>NIDN</th>
@@ -56,7 +56,7 @@
                                                     <th>Tanggal TMT Surat Tugas</th>
                                                     <th>Tanggal Keluar</th>
                                                     <th>Prodi ID</th> --}}
-                                                    <th>Aksi</th>
+                                                    <th style="width: 50px text-align: center">Aksi</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -170,7 +170,10 @@
                         data: 'action',
                         name: 'action',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        createdCell: function(td, cellData, rowData, row, col) {
+                                $(td).css('text-align', 'center');
+                        }
                     }
                 ]
             });
