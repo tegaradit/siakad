@@ -33,7 +33,10 @@
                                 </p>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('tahun-akademik.create') }}" class="btn btn-primary btn-sm mb-3"><i data-feather="plus-square"></i>Tambah</a>
+                                <a href="{{ route('tahun-akademik.create') }}" class="btn btn-primary btn-sm mb-3">
+                                    <i class="fa-solid fa-square-plus"></i>
+                                    Tambah
+                                </a>
                                 <div class="table-responsive">
                                     <table id="datatable"
                                         class="table table-bordered table-striped dt-responsive nowrap w-100">
@@ -85,6 +88,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
