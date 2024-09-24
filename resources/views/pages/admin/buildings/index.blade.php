@@ -34,7 +34,7 @@
                                 <p class="card-title-desc">Berikut adalah daftar gedung yang tersedia di sistem.</p>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('buildings.create') }}" class="btn btn-primary mb-3">
+                                <a href="{{ route('buildings.create') }}" class="btn btn-primary btn-sm mb-3">
                                     <i class="fa-solid fa-square-plus"></i>
                                     Tambah
                                 </a>
