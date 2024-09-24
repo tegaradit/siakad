@@ -33,11 +33,11 @@
                                 </p>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('lecture-setting.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                                <a href="{{ route('lecture-setting.create') }}"class="btn btn-primary btn-sm mb-3"><i data-feather="plus-square"></i>Tambah</a>
                                 <div class="table-responsive">
                                     <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                         <thead>
-                                            <tr>
+                                            <tr style="text-align: center">
                                                 <th style="text-align: center">No</th>
                                                 <th>Prodi ID</th>
                                                 <th>Maks Jum. Pertemuan</th>
@@ -106,15 +106,24 @@
                     },
                     {
                         data: 'max_number_of_meets',
-                        name: 'max_number_of_meets'
+                        name: 'max_number_of_meets',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'min_number_of_presence',
-                        name: 'min_number_of_presence'
+                        name: 'min_number_of_presence',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'is_prodi',
-                        name: 'is_prodi'
+                        name: 'is_prodi',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
                     },
                     {
                         data: 'action',
