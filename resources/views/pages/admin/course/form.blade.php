@@ -81,21 +81,21 @@
 
                                     {{-- Course Code --}}
                                     <div class="form-group">
-                                        <label for="code">Course Code</label>
+                                        <label for="code">Kode Matakuliah</label>
                                         <input type="text" name="code" id="code" class="form-control"
                                             maxlength="10" required>
                                     </div>
 
                                     {{-- Course Name --}}
                                     <div class="form-group">
-                                        <label for="name">Course Name</label>
+                                        <label for="name">Nama Matakuliah</label>
                                         <input type="text" name="name" id="name" class="form-control"
                                             maxlength="200" required>
                                     </div>
 
                                     {{-- Course Group --}}
                                     <div class="form-group">
-                                        <label for="group_id">Course Group</label>
+                                        <label for="group_id">Kelompok Matakuliah</label>
                                         <select name="group_id" id="group_id" class="form-control" required>
                                             <option value="">Pilih...</option>
                                             @foreach ($group as $gro)
@@ -106,7 +106,7 @@
 
                                     {{-- Course Type --}}
                                     <div class="form-group">
-                                        <label for="type_id">Course Type</label>
+                                        <label for="type_id">Jenis Matakuliah</label>
                                         <select name="type_id" id="type_id" class="form-control" required>
                                             <option value="">Pilih...</option>
                                             @foreach ($type as $ty)
@@ -117,27 +117,27 @@
 
                                     {{-- SKS Fields --}}
                                     <div class="form-group">
-                                        <label for="sks_mk">SKS MK</label>
+                                        <label for="sks_mk">SKS Matakuliah</label>
                                         <input type="number" name="sks_mk" id="sks_mk" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="sks_tm">SKS TM</label>
+                                        <label for="sks_tm">SKS Tatap Muka</label>
                                         <input type="number" name="sks_tm" id="sks_tm" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="sks_pr">SKS PR</label>
+                                        <label for="sks_pr">SKS Praktikum</label>
                                         <input type="number" name="sks_pr" id="sks_pr" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="sks_pl">SKS PL</label>
+                                        <label for="sks_pl">SKS Praktikum Lapangan</label>
                                         <input type="number" name="sks_pl" id="sks_pl" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="sks_sim">SKS SIM</label>
+                                        <label for="sks_sim">SKS Simulasi</label>
                                         <input type="number" name="sks_sim" id="sks_sim" class="form-control" required>
                                     </div>
 

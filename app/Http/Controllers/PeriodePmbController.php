@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Periode_pmb;
 use App\Models\Semester;
+use Database\Seeders\IdentitasPt;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
@@ -41,7 +42,6 @@ class PeriodePmbController extends Controller
                 ->editColumn('end_date', function ($row) {
                     return date('d-m-Y', strtotime($row->end_date));
                 })
-                
                 ->make(true);
         }
 
@@ -73,9 +73,8 @@ class PeriodePmbController extends Controller
 
         [$startDate, $endDate] = explode(' to ', $validatedData['period_range']);
         Periode_pmb::create([
-            'semester_id' => $validatedData['semester_id'], 
             'period_number' => $validatedData['period_number'],
-            'start_date' => $startDate, 
+            'start_date' => $startDate,
             'end_date' => $endDate,
             'status' => $validatedData['status']
         ]);
@@ -100,6 +99,15 @@ class PeriodePmbController extends Controller
         $isAnotherOpen = $this->anotherIsOpen()['result'];
 
         return view('pages.admin.periode_pmb.edit')->with(compact('prev_period_data', 'prev_semester_data', 'isAnotherOpen'));
+    }
+
+    public function toggleStatus(Request $request) {
+        Periode_pmb::where('status', '=', '1')->update(['status' => '0']);
+        $pmb_period = Periode_pmb::findOrFail($request->id);
+        $status = $pmb_period->status == '1' ? '0' : '1';
+        $pmb_period->update(['status' => $status]);
+
+        return redirect()->back();
     }
 
     public function update (Request $request, string $id, Periode_pmb $periode_pmb) {
