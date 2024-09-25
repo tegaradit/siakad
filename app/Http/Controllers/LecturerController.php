@@ -7,10 +7,12 @@ use App\Models\All_prodi;
 use App\Models\Employee_level;
 use App\Models\IdentitasPt;
 use App\Models\Lecturer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Hamcrest\Core\AllOf;
+use Illuminate\Support\Facades\Hash;
 
 class LecturerController extends Controller
 {
@@ -78,44 +80,53 @@ class LecturerController extends Controller
         return view('pages.admin.lecturer.form', compact('activeStatuses', 'employeeLevels', 'prodiList'));
     }
     
-    // Store a newly created lecturer in the database
-    public function store(Request $request)
-{
-    // Ubah '-' menjadi null sebelum validasi
-    $request->merge([
-        'nuptk' => $request->nuptk === '-' ? null : $request->nuptk,
-        'nik' => $request->nik === '-' ? null : $request->nik,
-    ]);
+     public function store(Request $request)
+    {
+        // Ubah '-' menjadi null sebelum validasi
+        $request->merge([
+            'nuptk' => $request->nuptk === '-' ? null : $request->nuptk,
+            'nik' => $request->nik === '-' ? null : $request->nik,
+        ]);
 
-    // Lakukan validasi setelah merubah data
-    $request->validate([
-        'nuptk' => 'nullable|string|max:16|unique:lecturer,nuptk', // Mengubah 'required' menjadi 'nullable'
-        'nidn' => 'nullable|string|max:10|unique:lecturer,nidn',
-        'nik' => 'nullable|string|max:16',
-        'gender' => 'required|in:Laki-laki,Perempuan',
-        'name' => 'required|string|max:200',
-        'active_status_id' => 'required|exists:active_status,id',
-        'birth_date' => 'required|date',
-        'birth_place' => 'required|string|max:100',
-        'mothers_name' => 'required|string|max:200',
-        'mariage_status' => 'required|in:belum kawin,kawin,cerai hidup,cerai mati',
-        'employee_level_id' => 'required|exists:employee_level,id',
-        'level_education' => 'required|in:S1,S2,S3',
-        'phone_number' => 'nullable|string|max:13',
-        'email' => 'nullable|email|max:255',
-        'assign_letter_number' => 'nullable|string|max:30',
-        'assign_letter_date' => 'nullable|date',
-        'assign_letter_tmt' => 'nullable|date',
-        'exit_date' => 'nullable|date',
-        'prodi_id' => 'required|exists:all_prodi,id_prodi',
-    ]);
+        // Validasi data lecturer
+        $request->validate([
+            'nuptk' => 'nullable|string|max:16|unique:lecturer,nuptk',
+            'nidn' => 'nullable|string|max:10|unique:lecturer,nidn',
+            'nik' => 'nullable|string|max:16',
+            'gender' => 'required|in:Laki-laki,Perempuan',
+            'name' => 'required|string|max:200',
+            'active_status_id' => 'required|exists:active_status,id',
+            'birth_date' => 'required|date',
+            'birth_place' => 'required|string|max:100',
+            'mothers_name' => 'required|string|max:200',
+            'mariage_status' => 'required|in:belum kawin,kawin,cerai hidup,cerai mati',
+            'employee_level_id' => 'required|exists:employee_level,id',
+            'level_education' => 'required|in:S1,S2,S3',
+            'phone_number' => 'nullable|string|max:13',
+            'email' => 'nullable|email|max:255',
+            'assign_letter_number' => 'nullable|string|max:30',
+            'assign_letter_date' => 'nullable|date',
+            'assign_letter_tmt' => 'nullable|date',
+            'exit_date' => 'nullable|date',
+            'prodi_id' => 'required|exists:all_prodi,id_prodi',
+        ]);
 
-    // Simpan data
-    Lecturer::create($request->all());
+        // Simpan data lecturer
+        $lecturer = Lecturer::create($request->all());
 
-    return redirect()->route('lecturer.index')->with('success', 'Lecturer created successfully.');
-}
+        // Membuat user baru yang terkait dengan lecturer
+        if ($request->filled('email')) {
+            $user = new User();
+            $user->name = $request->input('name'); // Gunakan nama lecturer untuk user
+            $user->email = $request->input('email');
+            $user->phone_number = $request->input('phone_number'); // Optional
+            $user->password = Hash::make($request->input('password')); // Encrypt password
+            $user->role_id = 7; // Set role_id untuk dosen
+            $user->save();
+        }
 
+        return redirect()->route('lecturer.index')->with('success', 'Lecturer and user created successfully.');
+    }
     //show
     public function show($id)
     {
@@ -176,6 +187,19 @@ class LecturerController extends Controller
     // Update data lecturer
     $lecturer = Lecturer::findOrFail($id);
     $lecturer->update($request->all());
+
+     if ($request->filled('email')) {
+            $user = User::where('email', $lecturer->email)->first();
+            if ($user) {
+                $user->name = $request->input('name');
+                $user->phone_number = $request->input('phone_number');
+                $user->email = $request->input('email');
+                if ($request->filled('password')) {
+                    $user->password = Hash::make($request->input('password'));
+                }
+                $user->save();
+            }
+        }
 
     return redirect()->route('lecturer.index')->with('success', 'Lecturer updated successfully.');
 }

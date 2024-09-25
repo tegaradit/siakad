@@ -24,9 +24,15 @@ class RoomController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax()) {
-            $room = room::query();
+            // $room = room::query();
+            $room = Room::with('building')->select('rooms.*');
 
             return DataTables::of($room)
+                ->addIndexColumn() // Menambahkan kolom index secara otomatis
+                ->addColumn('building_name', function ($data) {
+                    // Tampilkan nama gedung dari relasi building
+                    return $data->building->name;
+                })
                 ->addIndexColumn() // Menambahkan kolom index secara otomatis
                 ->addColumn('action', function ($data) {
                     // Mengembalikan HTML untuk kolom aksi, misalnya tombol edit

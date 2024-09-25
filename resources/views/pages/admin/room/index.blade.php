@@ -94,8 +94,9 @@
                         name: 'floor_position'
                     },
                     {
-                        data: 'building_id',
-                        name: 'building_id'
+                        data: 'building_name',
+                        name: 'building_name',
+                        title: 'Building'
                     },
                     {
                         data: 'capacity',

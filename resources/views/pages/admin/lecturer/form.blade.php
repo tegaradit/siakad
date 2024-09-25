@@ -174,6 +174,14 @@
                                             maxlength="255">
                                     </div>
 
+                                    {{-- password --}}
+                                    <div class="form-group">
+                                        <label for="user_password">Password</label>
+                                        <input type="password" name="user_password" id="user_password"
+                                            class="form-control" required>
+                                    </div>
+
+
                                     {{-- Assign Letter Number --}}
                                     <div class="form-group">
                                         <label for="assign_letter_number">No Surat Tugas</label>
