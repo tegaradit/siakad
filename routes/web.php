@@ -20,6 +20,7 @@ use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Authenticate;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -80,8 +81,14 @@ Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'
 Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 //admin/curriculum(kurikulum)
 Route::resource('/admin/curriculum', CurriculumController::class)->middleware(Authenticate::class);
-//search education level
-Route::get('/curriculum/search_ed_lev', [CurriculumController::class, 'searchEdLevel'])->name('curriculum.search_ed_lev')->middleware(Authenticate::class);
+Route::get('/api/get-education-level/{prodiId}', function ($prodiId) {
+    $educationLevel = DB::table('education_level')
+        ->where('id_jenj_didik', DB::table('all_prodi')->where('id_prodi', $prodiId)->value('id_jenj_didik'))
+        ->select('id_jenj_didik', 'nm_jenj_didik') // Select the id and name
+        ->first();
+
+    return response()->json(['education_level_id' => $educationLevel->id_jenj_didik, 'education_level_name' => $educationLevel->nm_jenj_didik]);
+});
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data')->middleware(Authenticate::class);
 Route::resource('/admin/lecture-setting', LectureSettingController::class)->middleware(Authenticate::class);
