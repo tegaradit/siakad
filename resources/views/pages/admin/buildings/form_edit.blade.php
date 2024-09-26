@@ -58,7 +58,7 @@
                                         @enderror
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary mt-3">Update</button>
+                                    <button type="submit" class="btn btn-primary mt-3">Ubah</button>
                                 </form>
                             </div>
                         </div>

@@ -66,7 +66,7 @@
                                     </div>
 
                                     <!-- Education Level field -->
-                                    <div class="form-group mt-2">
+                                    {{-- <div class="form-group mt-2">
                                         <label for="education_level_id">Tingkat Pendidikan</label>
                                         <select id="level-selector" name="education_level_id" class="form-control" required>
                                             <option value="{{ isset($curriculum) ? $curriculum->education_level_id : '' }}">
@@ -77,7 +77,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <br>
+                                    <br> --}}
 
                                     {{-- Course Code --}}
                                     <div class="form-group">
@@ -247,7 +247,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
+    {{-- <script>
         // Preload for Education Level
         $("#level-selector").select2({
             ajax: {
@@ -273,5 +273,5 @@
                 return res.text
             }
         });
-    </script>
+    </script> --}}
 @endsection
