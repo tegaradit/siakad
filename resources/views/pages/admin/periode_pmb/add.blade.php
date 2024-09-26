@@ -48,13 +48,8 @@
                             <form action="{{ route('periode_pmb.store') }}" id="form-add-period" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="status">Kode Semester</label>
-                                    <select id="semester-selector" name="semester_id" class="form-control" required>
-                                        <option value="" selected>Pilih...</option>
-                                    </select>
-                                    @error('semester_id')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <label for="semester_id">Kode Semester</label>
+                                    <input type="text" id="semester_id" readonly class="form-control" value="{{ $semester_id }}">
                                 </div>
 
                                 <div class="form-group">
@@ -99,37 +94,9 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $("#semester-selector").select2({
-        ajax: {
-            delay: 250,
-            url: '{{ url('/') }}/admin/periode_pmb/search_semester',
-            data(params) {
-                var query = {
-                    semester_id: params.term,
-                }
-                return query;
-            },
-            processResults(data) {
-                return {
-                    results: data.map(item => ({
-                        id: item.semester_id,  // The value for the option
-                        text: `${item.semester_id} - ${item.name}`  // The displayed text
-                    }))
-                }
-            }
-        },
-        minimumInputLength: 1,
-        templateResult(res) {
-            return res.text
-        }
-    })
-    
     window.addEventListener('DOMContentLoaded', () => {
-
         let confirmSubmit = false
         document.getElementById('form-add-period').onsubmit = function (form) {
             

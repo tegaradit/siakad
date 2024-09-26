@@ -50,7 +50,8 @@ class PeriodePmbController extends Controller
 
     public function create() {
         $isAnotherOpen = $this->anotherIsOpen()['result'];
-        return view('pages.admin.periode_pmb.add')->with(compact('isAnotherOpen'));
+        $semester_id = Semester::where('is_active', '=', '1')->get(['semester_id'])[0]->semester_id;
+        return view('pages.admin.periode_pmb.add')->with(compact('isAnotherOpen', 'semester_id'));
     }
 
     public function searchSemester (Request $request) {
@@ -61,7 +62,6 @@ class PeriodePmbController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'semester_id' => ['required', 'numeric', Rule::exists('semester')],
             'period_number' => ['required', 'numeric', 'max_digits:1'],
             'status' => ['required', 'numeric', Rule::in('0', '1')],
             'period_range' => ['required', 'regex:/^\d{4}-\d{2}-\d{2}\s+to\s+\d{4}-\d{2}-\d{2}$/']
@@ -71,8 +71,10 @@ class PeriodePmbController extends Controller
             Periode_pmb::where('status', '=', '1')->update(['status' => '0']);
         }
 
+        $validatedData['semester_id'] = Semester::where('is_active', '=', '1')->get(['semester_id'])[0]->semester_id;
         [$startDate, $endDate] = explode(' to ', $validatedData['period_range']);
         Periode_pmb::create([
+            'semester_id' => $validatedData['semester_id'],
             'period_number' => $validatedData['period_number'],
             'start_date' => $startDate,
             'end_date' => $endDate,
@@ -95,10 +97,10 @@ class PeriodePmbController extends Controller
 
     public function edit (string $id) {
         $prev_period_data = Periode_pmb::findOrFail($id);
-        $prev_semester_data = Semester::findOrFail($prev_period_data->semester_id);
+        $semester_data = Semester::where('is_active', '=', '1')->get();
         $isAnotherOpen = $this->anotherIsOpen()['result'];
 
-        return view('pages.admin.periode_pmb.edit')->with(compact('prev_period_data', 'prev_semester_data', 'isAnotherOpen'));
+        return view('pages.admin.periode_pmb.edit')->with(compact('prev_period_data', 'semester_data', 'isAnotherOpen'));
     }
 
     public function toggleStatus(Request $request) {
