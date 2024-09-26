@@ -18,25 +18,27 @@ class CurriculumController extends Controller
     {
         if ($request->ajax()) {
             $datas = Curriculum::with(['all_prodi', 'education_level', 'semester'])->get();
-    
+
             return DataTables::of($datas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $editUrl = route('curriculum.edit', $row->curriculum_id);
+                    $infoUrl = route('curriculum.show', $row->curriculum_id); // Assuming you have a show route for details
+
                     $deleteForm = '<form id="delete-form-' . $row->curriculum_id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $row->curriculum_id . '\');" action="' . route('curriculum.destroy', $row->curriculum_id) . '" method="POST">'
                         . csrf_field()
                         . method_field('DELETE')
                         . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
-                        . '<button type="submit" class="btn btn-danger btn-sm delete ms-2 m-0"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
+                        . '<a href="' . $infoUrl . '" class="btn btn-info btn-sm info ms-1 m-0" title="Info"><i class="fas fa-search"></i> Info</a>' // Add the Info button
+                        . '<button type="submit" class="btn btn-danger btn-sm delete ms-1 m-0"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
                     return $deleteForm;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-    
+
         return view('pages.admin.curriculum.index');
     }
-    
 
     // Show the form for creating a new resource
     public function create()
