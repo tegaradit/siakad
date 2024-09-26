@@ -108,7 +108,8 @@
                                     @enderror
                                 </div><br>
 
-                                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                {{-- <button type="submit" class="btn btn-primary mt-3">Submit</button> --}}
+                                <button type="submit" class="btn btn-primary mb-3">{{ isset($semester) ? 'Ubah' : 'Simpan' }}</button>
                             </form>
                         </div>
                     </div>
