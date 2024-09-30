@@ -36,7 +36,8 @@
 
                                     <div class="form-group">
                                         <label for="date_range" class="form-label">Rentang Tanggal</label>
-                                        <input type="text" class="form-control mb-3" id="datepicker-range-without-d-value" name="date_range"
+                                        <input type="text" class="form-control mb-3"
+                                            id="datepicker-range-without-d-value" name="date_range"
                                             value="{{ isset($data) ? $data->start_date . ' to ' . $data->end_date : '' }}"
                                             required>
                                     </div>
@@ -49,10 +50,11 @@
                                     <div class="mb-3">
                                         <label for="semester_id" class="form-label">Semester</label>
                                         <select class="form-control" id="semester_id" name="semester_id" required>
-                                            <option value="" disabled selected>Pilih Semester</option>
+                                            <option value="" disabled {{ isset($data) ? '' : 'selected' }}>Pilih
+                                                Semester</option>
                                             @forelse ($semesters as $semester)
                                                 <option value="{{ $semester->semester_id }}"
-                                                    {{ isset($data) && $data->semester_id == $semester->semester_id ? 'selected' : '' }}>
+                                                    {{ (isset($data) && $data->semester_id == $semester->semester_id) || (!isset($data) && isset($active_semester) && $active_semester->semester_id == $semester->semester_id) ? 'selected' : '' }}>
                                                     {{ $semester->name }}
                                                 </option>
                                             @empty
@@ -60,6 +62,8 @@
                                             @endforelse
                                         </select>
                                     </div>
+
+
 
                                     <div class="mb-3">
                                         <label for="calendar_type_id" class="form-label">Tipe Kalender</label>

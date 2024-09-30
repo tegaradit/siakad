@@ -21,9 +21,13 @@ class AcademicCalendarController extends Controller
     public function create()
     {
         $calendar_types = Calendar_type::all();
-        $semesters = Semester::all();
-        return view('pages.admin.akademik_kalender.form', compact('calendar_types', 'semesters'));
+        $semesters = Semester::where('is_active', 1)->get();  // Mengambil hanya semester aktif
+        $active_semester = Semester::where('is_active', 1)->first();  // Mengambil semester aktif pertama (jika ada)
+
+        return view('pages.admin.akademik_kalender.form', compact('calendar_types', 'semesters', 'active_semester'));
     }
+
+
 
     public function data(Request $request)
     {
@@ -57,27 +61,26 @@ class AcademicCalendarController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input
         $request->validate([
             'date_range' => 'required',
             'description' => 'required|string',
-            'semester_id' => 'required|exists:semester,semester_id|max:6',
             'calendar_type_id' => 'required|exists:calendar_types,id',
         ]);
 
-        // Pisahkan start_date dan end_date dari date_range
+        // Ambil semester aktif
+        $active_semester = Semester::where('is_active', 1)->first();
+
+        if (!$active_semester) {
+            return back()->withErrors(['semester_id' => 'Tidak ada semester aktif yang ditemukan.']);
+        }
+
         $dates = explode(' to ', $request->input('date_range'));
 
-        // Ubah request untuk menambahkan start_date dan end_date
-        $request->merge([
+        Academic_calendar::create([
             'start_date' => $dates[0],
             'end_date' => $dates[1],
-        ]);
-        Academic_calendar::create([
-            'start_date' => $request->input('start_date'),
-            'end_date' => $request->input('end_date'),
             'description' => $request->input('description'),
-            'semester_id' => $request->input('semester_id'),
+            'semester_id' => $active_semester->semester_id, // Isi otomatis dengan semester aktif
             'calendar_type_id' => $request->input('calendar_type_id'),
         ]);
 
@@ -85,36 +88,30 @@ class AcademicCalendarController extends Controller
     }
 
 
+
     public function update(Request $request, $id)
     {
         // Ambil rentang tanggal
         $date_range = $request->input('date_range');
 
-        // Pisahkan date_range menjadi start_date dan end_date
         $dates = explode(' to ', $date_range);
 
         if (count($dates) === 2) {
             $start_date = $dates[0];
             $end_date = $dates[1];
         } else {
-            // Jika format salah, bisa memberikan default atau validasi error
             return back()->withErrors(['date_range' => 'Format rentang tanggal tidak valid']);
         }
 
-        // Validasi data yang lain
-        $validatedData = $request->validate([
+        $request->validate([
             'description' => 'required|string',
-            'semester_id' => 'required|exists:semester,semester_id',
             'calendar_type_id' => 'required|exists:calendar_types,id',
-            // Pastikan start_date dan end_date sudah benar
         ]);
 
-        // Update data
         $academicCalendar = Academic_calendar::find($id);
         $academicCalendar->start_date = $start_date;
         $academicCalendar->end_date = $end_date;
         $academicCalendar->description = $request->input('description');
-        $academicCalendar->semester_id = $request->input('semester_id');
         $academicCalendar->calendar_type_id = $request->input('calendar_type_id');
         $academicCalendar->save();
 
@@ -123,18 +120,19 @@ class AcademicCalendarController extends Controller
 
 
 
+
     public function edit($id)
     {
         $data = Academic_calendar::findOrFail($id);
         $calendar_types = Calendar_type::all();
-        $semesters = Semester::all();
+        $semesters = Semester::where('is_active', 1)->get();  // Mengambil hanya semester aktif
+        $active_semester = Semester::where('is_active', 1)->first();  // Mengambil semester aktif pertama (jika ada)
 
-        if ($calendar_types->isEmpty() || $semesters->isEmpty()) {
-            return redirect()->back()->with('warning', 'Data tidak lengkap.');
-        }
-
-        return view('pages.admin.akademik_kalender.form', compact('data', 'calendar_types', 'semesters'));
+        return view('pages.admin.akademik_kalender.form', compact('data', 'calendar_types', 'semesters', 'active_semester'));
     }
+
+
+
 
     public function destroy($id)
     {

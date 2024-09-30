@@ -1,0 +1,74 @@
+<div class="card-body">
+    <div>
+        <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myModal">Standard modal</button>
+
+        <!-- sample modal content -->
+        <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-scroll="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel">Default Modal Heading</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Overflowing text to show scroll behavior</h5>
+                        <p>Cras mattis consectetur purus sit amet fermentum.
+                            Cras justo odio, dapibus ac facilisis in,
+                            egestas eget quam. Morbi leo risus, porta ac
+                            consectetur ac, vestibulum at eros.</p>
+                        <p>Praesent commodo cursus magna, vel scelerisque
+                            nisl consectetur et. Vivamus sagittis lacus vel
+                            augue laoreet rutrum faucibus dolor auctor.</p>
+                        <p>Aenean lacinia bibendum nulla sed consectetur.
+                            Praesent commodo cursus magna, vel scelerisque
+                            nisl consectetur et. Donec sed odio dui. Donec
+                            ullamcorper nulla non metus auctor
+                            fringilla.</p>
+                        <p>Cras mattis consectetur purus sit amet fermentum.
+                            Cras justo odio, dapibus ac facilisis in,
+                            egestas eget quam. Morbi leo risus, porta ac
+                            consectetur ac, vestibulum at eros.</p>
+                        <p>Praesent commodo cursus magna, vel scelerisque
+                            nisl consectetur et. Vivamus sagittis lacus vel
+                            augue laoreet rutrum faucibus dolor auctor.</p>
+                        <p>Aenean lacinia bibendum nulla sed consectetur.
+                            Praesent commodo cursus magna, vel scelerisque
+                            nisl consectetur et. Donec sed odio dui. Donec
+                            ullamcorper nulla non metus auctor
+                            fringilla.</p>
+                        <p>Cras mattis consectetur purus sit amet fermentum.
+                            Cras justo odio, dapibus ac facilisis in,
+                            egestas eget quam. Morbi leo risus, porta ac
+                            consectetur ac, vestibulum at eros.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div> <!-- end preview-->
+
+</div><!-- end card-body -->
+<script src="assets/libs/jquery/jquery.min.js"></script>
+        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="assets/libs/node-waves/waves.min.js"></script>
+        <script src="assets/libs/feather-icons/feather.min.js"></script>
+        <!-- pace js -->
+        <script src="assets/libs/pace-js/pace.min.js"></script>
+
+        <script src="assets/js/pages/modal.init.js"></script>
+
+        <script>
+            var myModal = document.getElementById('myModal')
+            var myInput = document.getElementById('myInput')
+
+            myModal.addEventListener('shown.bs.modal', function () {
+            myInput.focus()
+            })
+        </script>
+
+        <script src="assets/js/app.js"></script>
