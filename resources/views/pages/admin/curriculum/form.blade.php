@@ -32,6 +32,12 @@
                 </div>
                 {{-- End page title --}}
 
+                @if ($errors->any)
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                @endif
+
                 <!-- Form to create or edit a curriculum -->
                 <div class="row">
                     <div class="col-12">
@@ -52,114 +58,100 @@
                                         @method('PUT')
                                     @endif
 
-                                    <!-- Prodi field -->
-                                    <div class="form-group mt-2">
+                                    <!-- Prodi Selection -->
+                                    <div class="form-group">
                                         <label for="prodi_id">Prodi</label>
                                         <select name="prodi_id" id="prodi_id" class="form-control" required>
-                                            <option value="" selected>Pilih Prodi</option>
-                                            @foreach ($prodi as $p)
-                                                <option value="{{ $p->id_prodi }}"
-                                                    {{ old('prodi_id', $curriculum->prodi_id ?? 'null') == $p->id_prodi ? 'selected' : '' }}>
-                                                    {{ $p->nama_prodi }}
+                                            <option value="">Pilih Prodi</option>
+                                            @foreach ($allProdi as $prodi)
+                                                <option value="{{ $prodi->id_prodi }}"
+                                                    {{ isset($curriculum) && $curriculum->prodi_id == $prodi->id_prodi ? 'selected' : '' }}>
+                                                    {{ $prodi->nama_prodi }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('prodi_id')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-
-                                    <!-- Education Level field -->
-                                    <div class="form-group mt-2">
-                                        <label for="education_level_id">Tingkat Pendidikan</label>
-                                        <select id="level-selector" name="education_level_id" class="form-control" required>
-                                            <option value="{{ isset($curriculum) ? $curriculum->education_level_id : '' }}">
-                                                {{ isset($curriculum) ? $curriculum->education_level->nm_jenj_didik : 'Pilih Tingkat Pendidikan' }}
-                                            </option>
-                                        </select>
-                                        @error('education_level_id')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <br>
-
-                                    <!-- Semester field -->
-                                    <div class="form-group mt-2">
-                                        <label for="semester_id">Kode Semester</label>
-                                        <select id="semester-selector" name="semester_id" class="form-control" required>
-                                            <option value="{{ isset($curriculum) ? $curriculum->semester_id : '' }}">
-                                                {{ isset($curriculum) ? $curriculum->semester->name : 'Pilih Semester' }}
-                                            </option>
-                                        </select>
-                                        @error('semester_id')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <br>
-
-
-                                    <!-- Curriculum Name field -->
-                                    <div class="form-group mt-2">
-                                        <label for="name">Nama Kurikulum</label>
-                                        <input type="text" name="name" id="name" class="form-control"
-                                            value="{{ old('name', $curriculum->name ?? '') }}" maxlength="200" required>
-                                        @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div><br>
 
-                                    <!-- Normal Semester Number field -->
-                                    <div class="form-group mt-2">
-                                        <label for="normal_semester_number">Nomor Semester Normal</label>
-                                        <input type="number" name="normal_semester_number" id="normal_semester_number"
+                                    <!-- Education Level (Auto-filled based on Prodi) -->
+                                    <div class="form-group">
+                                        <label for="education_level_id">Jenjang Pendidikan</label>
+                                        <input type="text" id="education_level_id" name="education_level_id"
+                                            class="form-control" readonly
+                                            value="{{ isset($curriculum) ? $curriculum->education_level->nm_jenj_didik : '' }}">
+                                    </div><br>
+
+                                    <!-- Active Semester Name Display -->
+                                    <div class="form-group">
+                                        <label for="semester_name">Semester</label>
+                                        <input type="text" id="semester_name" name="semester_name" class="form-control"
+                                            readonly
+                                            value="{{ isset($curriculum) ? $curriculum->semester->name : $semesters->firstWhere('is_active', 1)->name ?? '' }}">
+                                    </div><br>
+
+                                    <!-- Hidden input for semester_id -->
+                                    <input type="hidden" id="semester_id" name="semester_id"
+                                        value="{{ isset($curriculum) ? $curriculum->semester_id : $semesters->firstWhere('is_active', 1)->semester_id ?? '' }}">
+
+
+                                    <!-- Other Fields -->
+                                    <div class="form-group">
+                                        <label for="name">Nama Curricululm</label>
+                                        <input type="text" id="name" name="name" class="form-control"
+                                            value="{{ isset($curriculum) ? $curriculum->name : '' }}" required>
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label for="normal_semester_number">Jumlah Semester Normal</label>
+                                        <input type="number" id="normal_semester_number" name="normal_semester_number"
                                             class="form-control"
-                                            value="{{ old('normal_semester_number', $curriculum->normal_semester_number ?? '') }}"
+                                            value="{{ isset($curriculum) ? $curriculum->normal_semester_number : '' }}"
                                             required>
-                                        @error('normal_semester_number')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div><br>
 
-                                    <!-- Pass Credit Number field -->
-                                    <div class="form-group mt-2">
-                                        <label for="pass_credit_number">Jumlah SKS Kelulusan</label>
-                                        <input type="number" name="pass_credit_number" id="pass_credit_number"
+                                    <div class="form-group">
+                                        <label for="pass_credit_number">Jumlah SKS Lulus</label>
+                                        <input type="number" id="pass_credit_number" name="pass_credit_number"
                                             class="form-control"
-                                            value="{{ old('pass_credit_number', $curriculum->pass_credit_number ?? '') }}"
+                                            value="{{ isset($curriculum) ? $curriculum->pass_credit_number : '' }}"
                                             required>
-                                        @error('pass_credit_number')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div><br>
 
-                                    <!-- Mandatory Credit Number field -->
-                                    <div class="form-group mt-2">
+                                    <div class="form-group">
                                         <label for="mandatory_credit_number">Jumlah SKS Wajib</label>
-                                        <input type="number" name="mandatory_credit_number" id="mandatory_credit_number"
+                                        <input type="number" id="mandatory_credit_number" name="mandatory_credit_number"
                                             class="form-control"
-                                            value="{{ old('mandatory_credit_number', $curriculum->mandatory_credit_number ?? '') }}"
+                                            value="{{ isset($curriculum) ? $curriculum->mandatory_credit_number : '' }}"
                                             required>
-                                        @error('mandatory_credit_number')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div><br>
 
-                                    <!-- Choice Credit Number field -->
-                                    <div class="form-group mt-2">
+                                    <div class="form-group">
                                         <label for="choice_credit_number">Jumlah SKS Pilihan</label>
-                                        <input type="number" name="choice_credit_number" id="choice_credit_number"
+                                        <input type="number" id="choice_credit_number" name="choice_credit_number"
                                             class="form-control"
-                                            value="{{ old('choice_credit_number', $curriculum->choice_credit_number ?? '') }}"
+                                            value="{{ isset($curriculum) ? $curriculum->choice_credit_number : '' }}"
                                             required>
-                                        @error('choice_credit_number')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div><br>
 
                                     <button type="submit"
-                                        class="btn btn-primary mt-3">{{ isset($curriculum) ? 'Update' : 'Submit' }}</button>
+                                        class="btn btn-primary mb-3">{{ isset($curriculum) ? 'Ubah' : 'Simpan' }}</button>
                                 </form>
+
+                                <script>
+                                    document.getElementById('prodi_id').addEventListener('change', function() {
+                                        const prodiId = this.value;
+                                        if (prodiId) {
+                                            // Fetch education level based on selected Prodi using AJAX
+                                            fetch(`/api/get-education-level/${prodiId}`)
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    document.getElementById('education_level_id').value = data
+                                                        .education_level_name; // Set the name
+                                                });
+                                        } else {
+                                            document.getElementById('education_level_id').value = '';
+                                        }
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -186,74 +178,4 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        // Preload for Education Level
-        $("#level-selector").select2({
-            ajax: {
-                delay: 250,
-                url: '{{ route('curriculum.search_ed_lev') }}',
-                data(params) {
-                    var query = {
-                        nm_jenj_didik: params.term,
-                    }
-                    return query;
-                },
-                processResults(data) {
-                    return {
-                        results: data.map(item => ({
-                            id: item.id_jenj_didik, // The value for the option
-                            text: `${item.nm_jenj_didik}` // The displayed text
-                        }))
-                    }
-                }
-            },
-            minimumInputLength: 1,
-            templateResult(res) {
-                return res.text
-            }
-        });
-
-        // Preselect the value if editing
-        @if (isset($curriculum))
-            var educationLevelId = "{{ $curriculum->education_level_id }}";
-            var educationLevelText = "{{ $curriculum->education_level->nm_jenj_didik }}";
-            var option = new Option(educationLevelText, educationLevelId, true, true);
-            $('#level-selector').append(option).trigger('change');
-        @endif
-
-
-        // Preload for Semester
-        $("#semester-selector").select2({
-            ajax: {
-                delay: 250,
-                url: '{{ url('/') }}/admin/periode_pmb/search_semester',
-                data(params) {
-                    var query = {
-                        semester_id: params.term,
-                    }
-                    return query;
-                },
-                processResults(data) {
-                    return {
-                        results: data.map(item => ({
-                            id: item.semester_id, // The value for the option
-                            text: `${item.semester_id} - ${item.name}` // The displayed text
-                        }))
-                    }
-                }
-            },
-            minimumInputLength: 1,
-            templateResult(res) {
-                return res.text
-            }
-        });
-
-        // Preselect the value if editing
-        @if (isset($curriculum))
-            var semesterId = "{{ $curriculum->semester_id }}";
-            var semesterText = "{{ $curriculum->semester->semester_id }} - {{ $curriculum->semester->name }}";
-            var option = new Option(semesterText, semesterId, true, true);
-            $('#semester-selector').append(option).trigger('change');
-        @endif
-    </script>
 @endsection

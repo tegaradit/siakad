@@ -47,7 +47,7 @@
 
                             <!-- Building ID field -->
                             <div class="form-group">
-                                <label for="building_id">Gedung ID</label>
+                                <label for="building_id">Gedung</label>
                                 <select name="building_id" class="form-control" required>
                                     <option value="">Select Building</option>
                                     @foreach ($buildings as $building)

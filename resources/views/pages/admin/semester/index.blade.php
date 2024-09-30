@@ -48,12 +48,12 @@
                                         <thead>
                                             <tr style="text-align: center">
                                                 <th style="width: 30px">No.</th>
-                                                <th>Semester ID</th>
+                                                <th>Kode</th>
                                                 <th>Nama</th>
-                                                <th>Tipe</th>
-                                                <th>SMT</th>
+                                                <th>Semester</th>
                                                 <th>Tanggal Mulai</th>
                                                 <th>Tanggal Berhenti</th>
+                                                <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -103,8 +103,7 @@
                         orderable: false,
                         searchable: false,
                         render: function(data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart +
-                                1; // nomor urut yang dinamis
+                            return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
                     {
@@ -122,14 +121,7 @@
                             if (data == 1) return 'Ganjil';
                             if (data == 2) return 'Genap';
                             if (data == 3) return 'Pendek';
-                            return ''; // default jika tidak ada data valid
-                        }
-                    },
-                    {
-                        data: 'is_active',
-                        name: 'is_active',
-                        render: function(data, type, row) {
-                            return data == 1 ? 'Active' : 'Non-active';
+                            return '';
                         }
                     },
                     {
@@ -159,6 +151,15 @@
                         }
                     },
                     {
+                        data: 'is_active',
+                        name: 'is_active',
+                        render: function(data, type, row) {
+                            return data == 1 ?
+                                `<i class="bx bx-check-square" style="color: green; font-size: 24px; cursor: pointer;" onclick="changeStatus(${row.semester_id}, ${data})"></i>` :
+                                `<i class="bx bx-square" style="color: red; font-size: 24px; cursor: pointer;" onclick="changeStatus(${row.semester_id}, ${data})"></i>`;
+                        }
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -167,6 +168,42 @@
                 ]
             });
         });
+
+        // Function to change status via AJAX
+        function changeStatus(id, currentStatus) {
+            const action = currentStatus == 1 ? 'nonaktifkan' : 'aktifkan';
+            Swal.fire({
+                title: `Apakah Anda yakin ingin ${action} semester ini?`,
+                text: "Anda tidak dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Ya, ${action}!`,
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/semester/change-status/${id}`,
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $('#datatable').DataTable().ajax.reload();
+                            } else {
+                                Swal.fire('Error', response.message || 'Gagal mengubah status.',
+                                    'error');
+                            }
+                        },
+                        error: function(xhr) {
+                            Swal.fire('Error', 'Terjadi kesalahan pada server.', 'error');
+                        }
+                    });
+                }
+            });
+        };
 
         function confirmDelete(id) {
             Swal.fire({

@@ -20,8 +20,8 @@ class SemesterController extends Controller
             $semester = Semester::query();
 
             return DataTables::of($semester)
-            ->addColumn('action', function ($row) {
-                return '<a href="'.route('semester.edit', $row->semester_id).'" class="btn btn-warning btn-sm edit m-0" title="Edit">
+                ->addColumn('action', function ($row) {
+                    return '<a href="' . route('semester.edit', $row->semester_id) . '" class="btn btn-warning btn-sm edit m-0" title="Edit">
                             <i class="fas fa-pencil-alt"></i> Edit
                         </a>
                         <form id="delete-form-' . $row->semester_id . '" 
@@ -33,19 +33,45 @@ class SemesterController extends Controller
                                 <i class="fas fa-trash-alt"></i> Hapus
                             </button>
                         </form>';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
 
         return abort(404);
     }
 
+    public function changeStatus($id)
+    {
+        // Temukan semester yang ingin diubah statusnya
+        $semester = Semester::find($id);
+        if (!$semester) {
+            return response()->json(['success' => false, 'message' => 'Semester tidak ditemukan.']);
+        }
+
+        // Jika semester yang diaktifkan, nonaktifkan semua semester lainnya
+        if ($semester->is_active == 0) {
+            // Nonaktifkan semua semester lainnya
+            Semester::where('is_active', 1)->update(['is_active' => 0]);
+            // Aktifkan semester ini
+            $semester->is_active = 1;
+        } else {
+            // Jika semester ini aktif, set menjadi nonaktif
+            $semester->is_active = 0;
+        }
+
+        $semester->save();
+
+        return response()->json(['success' => true]);
+    }
+
     // Display the form to create a new semester
     public function create()
     {
-        // Return the form view for creating a new semester
-        return view('pages.admin.semester.form');
+        // Cek apakah ada semester lain yang aktif
+        $isAnotherActive = Semester::where('is_active', 1)->exists() ? 1 : 0;
+
+        return view('pages.admin.semester.form', compact('isAnotherActive'));
     }
 
     // Store the new semester in the database
@@ -69,8 +95,10 @@ class SemesterController extends Controller
             'end_date' => $dates[1],
         ]);
 
-        // Debug hasil input
-        // dd($request->all()); // Menampilkan hasil debug di layar
+        // Jika is_active = 1, set semua semester lain yang aktif menjadi non-aktif
+        if ($request->input('is_active') == 1) {
+            Semester::where('is_active', 1)->update(['is_active' => 0]);
+        }
 
         // Create the semester record
         Semester::create([
@@ -89,11 +117,16 @@ class SemesterController extends Controller
     // Display the form to edit an existing semester
     public function edit($semester_id)
     {
-        // Find the semester by its ID
+        // Cari semester yang akan diedit berdasarkan ID
         $semester = Semester::findOrFail($semester_id);
 
-        // Return the form view for editing the semester, passing the existing data
-        return view('pages.admin.semester.form', compact('semester'));
+        // Cek apakah ada semester lain yang aktif selain semester yang sedang diedit
+        $isAnotherActive = Semester::where('is_active', 1)
+            ->where('semester_id', '!=', $semester_id) // Selain semester yang sedang diedit
+            ->exists() ? 1 : 0;
+
+        // Return view untuk edit, kirim data semester yang ditemukan dan flag isAnotherActive
+        return view('pages.admin.semester.form', compact('semester', 'isAnotherActive'));
     }
 
     // Update the semester in the database
@@ -107,7 +140,7 @@ class SemesterController extends Controller
             'name' => 'required|string|max:20',
             'smt' => 'required|integer|in:1,2,3',
             'is_active' => 'required|boolean',
-            'date_range' => 'required|string', // We'll process this field separately
+            'date_range' => 'required|string',
         ]);
 
         // Pisahkan start_date dan end_date dari date_range
@@ -119,11 +152,12 @@ class SemesterController extends Controller
             'end_date' => $dates[1],
         ]);
 
-        // Validasi tanggal
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-        ]);
+        // Jika is_active = 1, set semua semester lain yang aktif menjadi non-aktif
+        if ($request->input('is_active') == 1) {
+            Semester::where('is_active', 1)
+                ->where('semester_id', '!=', $semester->semester_id) // Hindari semester yang sedang di-update
+                ->update(['is_active' => 0]);
+        }
 
         // Update the semester data
         $semester->update([
@@ -138,6 +172,7 @@ class SemesterController extends Controller
         // Redirect back with success message
         return redirect()->route('semester.index')->with('success', 'Semester updated successfully!');
     }
+
 
     // Remove the specified resource from storage
     public function destroy($semester_id)

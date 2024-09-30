@@ -48,7 +48,7 @@
                                 <form action="{{ route('course.store') }}" method="POST">
                                     @csrf
 
-                                    <!-- Prodi field -->
+                                    {{-- <!-- Prodi field -->
                                     <div class="form-group mt-2">
                                         <label for="prodi_id">Prodi</label>
                                         <select name="prodi_id" id="prodi_id" class="form-control" required>
@@ -63,10 +63,30 @@
                                         @error('prodi_id')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
+                                    </div> --}}
+
+                                    <!-- Prodi field -->
+                                    <div class="form-group mt-2">
+                                        <label for="prodi_id">Prodi</label>
+                                        <select name="prodi_id" id="prodi_id" class="form-control" required>
+                                            <option value="" selected>Pilih Prodi</option>
+                                            @foreach ($prodi as $p)
+                                                <option value="{{ $p->id_prodi }}"
+                                                    {{ old('prodi_id', $course->prodi_id ?? '') == $p->id_prodi ? 'selected' : '' }}>
+                                                    {{ $p->nama_prodi }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <!-- Education Level field (Auto-filled) -->
+                                    <div class="form-group mt-2">
+                                        <label for="education_level_id">Tingkat Pendidikan</label>
+                                        <input type="text" id="education_level_id" class="form-control" name="education_level_id" readonly value="{{ old('education_level_id', $course->education_level_id ?? '') }}" required>
                                     </div>
 
                                     <!-- Education Level field -->
-                                    <div class="form-group mt-2">
+                                    {{-- <div class="form-group mt-2">
                                         <label for="education_level_id">Tingkat Pendidikan</label>
                                         <select id="level-selector" name="education_level_id" class="form-control" required>
                                             <option value="{{ isset($curriculum) ? $curriculum->education_level_id : '' }}">
@@ -77,25 +97,25 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <br>
+                                    <br> --}}
 
                                     {{-- Course Code --}}
                                     <div class="form-group">
-                                        <label for="code">Course Code</label>
+                                        <label for="code">Kode Matakuliah</label>
                                         <input type="text" name="code" id="code" class="form-control"
                                             maxlength="10" required>
                                     </div>
 
                                     {{-- Course Name --}}
                                     <div class="form-group">
-                                        <label for="name">Course Name</label>
+                                        <label for="name">Nama Matakuliah</label>
                                         <input type="text" name="name" id="name" class="form-control"
                                             maxlength="200" required>
                                     </div>
 
                                     {{-- Course Group --}}
                                     <div class="form-group">
-                                        <label for="group_id">Course Group</label>
+                                        <label for="group_id">Kelompok Matakuliah</label>
                                         <select name="group_id" id="group_id" class="form-control" required>
                                             <option value="">Pilih...</option>
                                             @foreach ($group as $gro)
@@ -106,7 +126,7 @@
 
                                     {{-- Course Type --}}
                                     <div class="form-group">
-                                        <label for="type_id">Course Type</label>
+                                        <label for="type_id">Jenis Matakuliah</label>
                                         <select name="type_id" id="type_id" class="form-control" required>
                                             <option value="">Pilih...</option>
                                             @foreach ($type as $ty)
@@ -117,27 +137,27 @@
 
                                     {{-- SKS Fields --}}
                                     <div class="form-group">
-                                        <label for="sks_mk">SKS MK</label>
+                                        <label for="sks_mk">SKS Matakuliah</label>
                                         <input type="number" name="sks_mk" id="sks_mk" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="sks_tm">SKS TM</label>
+                                        <label for="sks_tm">SKS Tatap Muka</label>
                                         <input type="number" name="sks_tm" id="sks_tm" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="sks_pr">SKS PR</label>
+                                        <label for="sks_pr">SKS Praktikum</label>
                                         <input type="number" name="sks_pr" id="sks_pr" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="sks_pl">SKS PL</label>
+                                        <label for="sks_pl">SKS Praktikum Lapangan</label>
                                         <input type="number" name="sks_pl" id="sks_pl" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="sks_sim">SKS SIM</label>
+                                        <label for="sks_sim">SKS Simulasi</label>
                                         <input type="number" name="sks_sim" id="sks_sim" class="form-control" required>
                                     </div>
 
@@ -154,7 +174,7 @@
 
                                     {{-- Boolean Fields --}}
                                     <div class="form-group">
-                                        <label for="is_sap">Is SAP?</label>
+                                        <label for="is_sap">Apakah Ada SAP (Satuan Acara Perkuliahan) / RPS?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_sap" value="1"
                                                 id="is_sap_yes" required>
@@ -167,7 +187,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="is_silabus">Is Silabus?</label>
+                                        <label for="is_silabus"> Apakah ada Silabus?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_silabus"
                                                 value="1" id="is_silabus_yes" required>
@@ -180,7 +200,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="is_teaching_material">Is Teaching Material?</label>
+                                        <label for="is_teaching_material">Apakah ada bahan materi perkuliahan?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_teaching_material"
                                                 value="1" id="is_teaching_material_yes" required>
@@ -193,7 +213,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="is_praktikum">Is Praktikum?</label>
+                                        <label for="is_praktikum">Apakah matakuliah praktikum?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_praktikum"
                                                 value="1" id="is_praktikum_yes" required>
@@ -207,7 +227,7 @@
 
                                     {{-- Effective Dates --}}
                                     <div class="form-group">
-                                        <label class="form-label">Durasi</label>
+                                        <label class="form-label">Rentang Tanggal</label>
                                         <input type="text" class="form-control" id="datepicker-range"
                                             name="course_range" />
                                         @error('course_range')
@@ -217,7 +237,7 @@
 
                                     {{-- Submit Button --}}
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                        <button type="submit" class="btn btn-primary mt-3">Simpan</button>
                                     </div>
                                 </form>
                             </div>
@@ -247,7 +267,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
+    {{-- <script>
         // Preload for Education Level
         $("#level-selector").select2({
             ajax: {
@@ -271,6 +291,24 @@
             minimumInputLength: 1,
             templateResult(res) {
                 return res.text
+            }
+        });
+    </script> --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        // Auto-fill education level when prodi is selected
+        $('#prodi_id').on('change', function () {
+            const prodiId = $(this).val();
+            if (prodiId) {
+                $.ajax({
+                    url: '/get-education-level/' + prodiId,
+                    type: 'GET',
+                    success: function (data) {
+                        $('#education_level_id').val(data.education_level_id);
+                    }
+                });
+            } else {
+                $('#education_level_id').val('');
             }
         });
     </script>

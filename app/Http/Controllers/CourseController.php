@@ -34,22 +34,29 @@ class CourseController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $editUrl = route('course.edit', $row->id);
-                    $deleteUrl = route('course.destroy', $row->id);
+                    // $deleteUrl = route('course.destroy', $row->id);
                     $viewUrl = route('course.show', $row->id); // URL for the view button
 
-                    return '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" action="' . $deleteUrl . '" method="POST">
-                                <a href="' . $viewUrl . '" class="btn btn-info btn-sm view m-0" title="View">
-                                    <i class="fas fa-eye"></i> Lihat
-                                </a>
-                                <a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit">
-                                    <i class="fas fa-pencil-alt"></i> Edit
-                                </a>
-                                ' . csrf_field() . '
-                                ' . method_field('DELETE') . '
-                                <button type="submit" class="btn btn-danger btn-sm delete m-0" title="Delete">
-                                    <i class="fas fa-trash-alt"></i> Hapus
-                                </button>
-                            </form>';
+                    $deleteForm = '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $row->id . '\');" action="' . route('course.destroy', $row->id) . '" method="POST">'
+                        . csrf_field()
+                        . method_field('DELETE')
+                        . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
+                        . '<a href="' . $viewUrl . '" class="btn btn-info btn-sm info ms-1 m-0" title="Info"><i class="fas fa-eye"></i> Detail</a>' // Add the Info button
+                        . '<button type="submit" class="btn btn-danger btn-sm delete ms-1 m-0"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
+                    return $deleteForm;
+                    // return '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" action="' . $deleteUrl . '" method="POST">
+                    //             <a href="' . $viewUrl . '" class="btn btn-info btn-sm show m-0" title="View">
+                    //                 <i class="fas fa-eye"></i> Detail
+                    //             </a>
+                    //             <a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit">
+                    //                 <i class="fas fa-pencil-alt"></i> Edit
+                    //             </a>
+                    //             ' . csrf_field() . '
+                    //             ' . method_field('DELETE') . '
+                    //             <button type="submit" class="btn btn-danger btn-sm delete m-0" title="Delete">
+                    //                 <i class="fas fa-trash-alt"></i> Hapus
+                    //             </button>
+                    //         </form>';
                 })
                 ->editColumn('is_sap', function ($row) {
                     return $row->is_sap ? 'Ya' : 'Tidak';
@@ -86,23 +93,32 @@ class CourseController extends Controller
 
     public function create()
     {
-        $education_levels = Education_level::all();
+        // $education_levels = Education_level::all();
         $group = Course_group::all();
         $type = Course_type::all();
 
-        // Mendapatkan current_id_sp dari tabel identitas_pt
-        $identitas_pt = IdentitasPt::first(); // Sesuaikan query untuk mendapatkan data identitas_pt
-        $current_id_sp = $identitas_pt->current_id_sp;
-
-        // Query untuk mendapatkan all_prodi yang memiliki id_sp sama dan status Aktif
-        $prodi = All_prodi::where('id_sp', $current_id_sp)
-            ->where('status', 'A') // 'A' adalah untuk status Aktif
+        // Fetch all prodi where status is 'A' and id_sp matches the current_id_sp
+        $prodi = All_prodi::where('status', 'A')
+            ->where('id_sp', IdentitasPt::first()->current_id_sp)
             ->get();
 
         // dd($group, $type); // Check what data is being passed
 
-        return view('pages.admin.course.form', compact('prodi', 'education_levels', 'group', 'type', 'identitas_pt', 'current_id_sp'));
+        return view('pages.admin.course.form', compact('prodi', 'group', 'type', 'prodi'));
     }
+
+    public function getEducationLevel($prodi_id)
+    {
+        $prodi = All_prodi::find($prodi_id);
+
+        // Find the associated education level
+        $educationLevel = Education_level::where('id_jenj_didik', $prodi->id_jenj_didik)->first();
+
+        return response()->json([
+            'education_level_id' => $educationLevel->id_jenj_didik
+        ]);
+    }
+
 
     public function store(Request $request)
     {
@@ -160,7 +176,7 @@ class CourseController extends Controller
     public function edit($id)
     {
         $course = Course::findOrFail($id); // Retrieve the course or fail with 404
-        $education_levels = Education_level::all();
+        // $education_levels = Education_level::all();
         $group = Course_group::all();
         $type = Course_type::all();
 
@@ -175,7 +191,7 @@ class CourseController extends Controller
         $course_range = $course->effective_start_date . ' to ' . $course->effective_end_date;
 
 
-        return view('pages.admin.course.form_edit', compact('course', 'prodi', 'education_levels', 'group', 'type', 'course_range'));
+        return view('pages.admin.course.form_edit', compact('course', 'prodi', 'group', 'type', 'course_range'));
     }
 
 

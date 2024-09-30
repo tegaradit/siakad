@@ -33,10 +33,6 @@
                                     <table class="table table-striped">
                                         <tbody>
                                             <tr>
-                                                <th>ID</th>
-                                                <td>{{ $lecturer->id }}</td>
-                                            </tr>
-                                            <tr>
                                                 <th>NUPTK</th>
                                                 <td>{{ $lecturer->nuptk }}</td>
                                             </tr>
@@ -58,7 +54,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Status Aktif</th>
-                                                <td>{{ $lecturer->active_status->name ?? '-' }}</td>
+                                                <td>{{ $lecturer->ActiveStatus->name ?? '-' }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Tanggal Lahir</th>
@@ -110,11 +106,11 @@
                                             </tr>
                                             <tr>
                                                 <th>Prodi</th>
-                                                <td>{{ $lecturer->prodi->nama_prodi ?? '-' }}</td>
+                                                <td>{{ $lecturer->all_prodi->nama_prodi ?? '-' }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <a href="{{ route('lecturer.index') }}" class="btn btn-secondary">Kembali</a>
+                                    <a href="{{ route('lecturer.index') }}" class="btn btn-primary">Kembali</a>
                                 </div>
                             </div>
                         </div>

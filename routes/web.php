@@ -20,6 +20,7 @@ use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Authenticate;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -64,23 +65,31 @@ Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])-
 //admin/course(matakuliah)
 Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index')->middleware(Authenticate::class);
 Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create')->middleware(Authenticate::class);
+Route::get('/get-education-level/{prodi_id}', [CourseController::class, 'getEducationLevel']);
 Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store')->middleware(Authenticate::class);
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit')->middleware(Authenticate::class);
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update')->middleware(Authenticate::class);
 Route::delete('/admin/course/{id}', [CourseController::class, 'destroy'])->name('course.destroy')->middleware(Authenticate::class);
 Route::get('/admin/course/{id}', [CourseController::class, 'show'])->name('course.show')->middleware(Authenticate::class);
 // admin/semester
-Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index')->middleware(Authenticate::class);
-Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data')->middleware(Authenticate::class);
-Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create')->middleware(Authenticate::class);
-Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store')->middleware(Authenticate::class);
-Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit')->middleware(Authenticate::class);
-Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'])->name('semester.update')->middleware(Authenticate::class);
-Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy')->middleware(Authenticate::class);
+Route::get('/admin/semester', [SemesterController::class, 'index'])->name('semester.index');
+Route::get('/semester/data', [SemesterController::class, 'data'])->name('semester.data');
+Route::post('/semester/change-status/{id}', [SemesterController::class, 'changeStatus'])->name('semester.changeStatus');
+Route::get('/admin/semester/create', [SemesterController::class, 'create'])->name('semester.create');
+Route::post('/admin/semester', [SemesterController::class, 'store'])->name('semester.store');
+Route::get('/admin/semester/{semester_id}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
+Route::put('/admin/semester/{semester_id}', [SemesterController::class, 'update'])->name('semester.update');
+Route::delete('/admin/semester/{semester_id}', [SemesterController::class, 'destroy'])->name('semester.destroy');
 //admin/curriculum(kurikulum)
 Route::resource('/admin/curriculum', CurriculumController::class)->middleware(Authenticate::class);
-//search education level
-Route::get('/curriculum/search_ed_lev', [CurriculumController::class, 'searchEdLevel'])->name('curriculum.search_ed_lev')->middleware(Authenticate::class);
+Route::get('/api/get-education-level/{prodiId}', function ($prodiId) {
+    $educationLevel = DB::table('education_level')
+        ->where('id_jenj_didik', DB::table('all_prodi')->where('id_prodi', $prodiId)->value('id_jenj_didik'))
+        ->select('id_jenj_didik', 'nm_jenj_didik') // Select the id and name
+        ->first();
+
+    return response()->json(['education_level_id' => $educationLevel->id_jenj_didik, 'education_level_name' => $educationLevel->nm_jenj_didik]);
+});
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data')->middleware(Authenticate::class);
 Route::resource('/admin/lecture-setting', LectureSettingController::class)->middleware(Authenticate::class);
@@ -134,6 +143,7 @@ Route::get('/admin/periode_pmb/anotherIsOpen', [PeriodePmbController::class, 'an
 
 Route::get('/admin/periode_pmb/edit/{id}', [PeriodePmbController::class, 'edit'])->name('periode_pmb.edit');
 Route::put('/admin/periode_pmb/update/{id}', [PeriodePmbController::class, 'update'])->name('periode_pmb.update');
+Route::put('/admin/periode_pmb/toggleStatus', [PeriodePmbController::class, 'toggleStatus'])->name('periode_pmb.toggle_status');
 
 Route::delete('/admin/periode_pmb/delete/{id}', [PeriodePmbController::class, 'destroy'])->name('periode_pmb.destroy');
 

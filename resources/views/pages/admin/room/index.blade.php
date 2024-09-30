@@ -43,7 +43,7 @@
                                                     <th>Kode</th>
                                                     <th>Nama</th>
                                                     <th>Posisi Lantai</th>
-                                                    <th>Gedung ID</th>
+                                                    <th>Gedung</th>
                                                     <th>Kapasitas</th>
                                                     <th style="width:150px">Aksi</th>
                                                 </tr>
@@ -94,8 +94,9 @@
                         name: 'floor_position'
                     },
                     {
-                        data: 'building_id',
-                        name: 'building_id'
+                        data: 'building_name',
+                        name: 'building_name',
+                        // title: 'Building'
                     },
                     {
                         data: 'capacity',

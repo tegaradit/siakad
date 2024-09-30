@@ -44,7 +44,7 @@
                                     @csrf
                                     @method('PUT')
 
-                                    <!-- Prodi field -->
+                                    {{-- <!-- Prodi field -->
                                     <div class="form-group mt-2">
                                         <label for="prodi_id">Prodi</label>
                                         <select name="prodi_id" id="prodi_id" class="form-control" required>
@@ -59,9 +59,8 @@
                                         @error('prodi_id')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
-
-                                    <!-- Education Level field -->
+                                    </div> --}}
+                                    {{-- <!-- Education Level field -->
                                     <div class="form-group mt-2">
                                         <label for="education_level_id">Tingkat Pendidikan</label>
                                         <select id="level-selector" name="education_level_id" class="form-control" required>
@@ -73,7 +72,27 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <br>
+                                    <br> --}}
+
+                                    <!-- Prodi field -->
+                                    <div class="form-group mt-2">
+                                        <label for="prodi_id">Prodi</label>
+                                        <select name="prodi_id" id="prodi_id" class="form-control" required>
+                                            <option value="" selected>Pilih Prodi</option>
+                                            @foreach ($prodi as $p)
+                                                <option value="{{ $p->id_prodi }}"
+                                                    {{ old('prodi_id', $course->prodi_id ?? '') == $p->id_prodi ? 'selected' : '' }}>
+                                                    {{ $p->nama_prodi }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <!-- Education Level field (Auto-filled) -->
+                                    <div class="form-group mt-2">
+                                        <label for="education_level_id">Tingkat Pendidikan</label>
+                                        <input type="text" id="education_level_id" class="form-control" name="education_level_id" readonly value="{{ old('education_level_id', $course->education_level_id ?? '') }}" required>
+                                    </div>
 
                                     {{-- Course Code --}}
                                     <div class="form-group">
@@ -167,7 +186,7 @@
 
                                     {{-- Boolean Fields --}}
                                     <div class="form-group">
-                                        <label for="is_sap">Is SAP?</label>
+                                        <label for="is_sap">Apakah Ada SAP (Satuan Acara Perkuliahan) / RPS?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_sap" value="1"
                                                 id="is_sap_yes" {{ old('is_sap', $course->is_sap) == 1 ? 'checked' : '' }}
@@ -182,7 +201,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="is_silabus">Is Silabus?</label>
+                                        <label for="is_silabus">Apakah ada Silabus?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_silabus"
                                                 value="1" id="is_silabus_yes"
@@ -199,7 +218,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="is_teaching_material">Is Teaching Material?</label>
+                                        <label for="is_teaching_material">Apakah ada bahan materi perkuliahan?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_teaching_material"
                                                 value="1" id="is_teaching_material_yes"
@@ -216,7 +235,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="is_praktikum">Is Praktikum?</label>
+                                        <label for="is_praktikum">Apakah matakuliah praktikum?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_praktikum"
                                                 value="1" id="is_praktikum_yes"
@@ -234,7 +253,7 @@
 
                                     {{-- Effective Dates --}}
                                     <div class="form-group">
-                                        <label class="form-label">Durasi</label>
+                                        <label class="form-label">Rentang Tanggal</label>
                                         <input type="text" class="form-control" id="datepicker-range-without-d-value"
                                             name="course_range" value="{{ old('course_range', $course_range) }}" />
                                         @error('course_range')
@@ -245,7 +264,7 @@
 
                                     {{-- Submit Button --}}
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary mt-3">Update</button>
+                                        <button type="submit" class="btn btn-primary mt-3">Ubah</button>
                                     </div>
                                 </form>
                             </div>
@@ -275,7 +294,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
+    {{-- <script>
         // Preload for Education Level
         $("#level-selector").select2({
             ajax: {
@@ -299,6 +318,24 @@
             minimumInputLength: 1,
             templateResult(res) {
                 return res.text
+            }
+        });
+    </script> --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        // Auto-fill education level when prodi is selected
+        $('#prodi_id').on('change', function () {
+            const prodiId = $(this).val();
+            if (prodiId) {
+                $.ajax({
+                    url: '/get-education-level/' + prodiId,
+                    type: 'GET',
+                    success: function (data) {
+                        $('#education_level_id').val(data.education_level_id);
+                    }
+                });
+            } else {
+                $('#education_level_id').val('');
             }
         });
     </script>
