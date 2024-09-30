@@ -448,3 +448,16 @@
         <!-- Sidebar -->
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var currentUrl = window.location.href;
+
+        // Cari elemen sidebar lecturer
+        var lecturerSidebar = document.getElementById("lecturer-sidebar");
+
+        // Cek jika URL mengandung '/admin/lecturer'
+        if (currentUrl.includes('/admin/lecturer')) {
+            lecturerSidebar.classList.add("active");
+        }
+    });
+</script>

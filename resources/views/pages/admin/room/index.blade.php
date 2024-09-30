@@ -43,7 +43,7 @@
                                                     <th>Kode</th>
                                                     <th>Nama</th>
                                                     <th>Posisi Lantai</th>
-                                                    <th>Gedung ID</th>
+                                                    <th>Gedung</th>
                                                     <th>Kapasitas</th>
                                                     <th style="width:150px">Aksi</th>
                                                 </tr>
@@ -96,7 +96,7 @@
                     {
                         data: 'building_name',
                         name: 'building_name',
-                        title: 'Building'
+                        // title: 'Building'
                     },
                     {
                         data: 'capacity',

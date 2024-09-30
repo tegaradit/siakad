@@ -70,23 +70,23 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div><br>
 
                                     <!-- Education Level (Auto-filled based on Prodi) -->
                                     <div class="form-group">
-                                        <label for="education_level_id">Education Level</label>
+                                        <label for="education_level_id">Jenjang Pendidikan</label>
                                         <input type="text" id="education_level_id" name="education_level_id"
                                             class="form-control" readonly
                                             value="{{ isset($curriculum) ? $curriculum->education_level->nm_jenj_didik : '' }}">
-                                    </div>
+                                    </div><br>
 
                                     <!-- Active Semester Name Display -->
                                     <div class="form-group">
-                                        <label for="semester_name">Active Semester</label>
+                                        <label for="semester_name">Semester</label>
                                         <input type="text" id="semester_name" name="semester_name" class="form-control"
                                             readonly
                                             value="{{ isset($curriculum) ? $curriculum->semester->name : $semesters->firstWhere('is_active', 1)->name ?? '' }}">
-                                    </div>
+                                    </div><br>
 
                                     <!-- Hidden input for semester_id -->
                                     <input type="hidden" id="semester_id" name="semester_id"
@@ -95,37 +95,37 @@
 
                                     <!-- Other Fields -->
                                     <div class="form-group">
-                                        <label for="name">Curriculum Name</label>
+                                        <label for="name">Nama Curricululm</label>
                                         <input type="text" id="name" name="name" class="form-control"
                                             value="{{ isset($curriculum) ? $curriculum->name : '' }}" required>
-                                    </div>
+                                    </div><br>
 
                                     <div class="form-group">
-                                        <label for="normal_semester_number">Normal Semester Number</label>
+                                        <label for="normal_semester_number">Jumlah Semester Normal</label>
                                         <input type="number" id="normal_semester_number" name="normal_semester_number"
                                             class="form-control"
                                             value="{{ isset($curriculum) ? $curriculum->normal_semester_number : '' }}"
                                             required>
-                                    </div>
+                                    </div><br>
 
                                     <div class="form-group">
-                                        <label for="pass_credit_number">Pass Credit Number</label>
+                                        <label for="pass_credit_number">Jumlah SKS Lulus</label>
                                         <input type="number" id="pass_credit_number" name="pass_credit_number"
                                             class="form-control"
                                             value="{{ isset($curriculum) ? $curriculum->pass_credit_number : '' }}"
                                             required>
-                                    </div>
+                                    </div><br>
 
                                     <div class="form-group">
-                                        <label for="mandatory_credit_number">Mandatory Credit Number</label>
+                                        <label for="mandatory_credit_number">Jumlah SKS Wajib</label>
                                         <input type="number" id="mandatory_credit_number" name="mandatory_credit_number"
                                             class="form-control"
                                             value="{{ isset($curriculum) ? $curriculum->mandatory_credit_number : '' }}"
                                             required>
-                                    </div>
+                                    </div><br>
 
                                     <div class="form-group">
-                                        <label for="choice_credit_number">Choice Credit Number</label>
+                                        <label for="choice_credit_number">Jumlah SKS Pilihan</label>
                                         <input type="number" id="choice_credit_number" name="choice_credit_number"
                                             class="form-control"
                                             value="{{ isset($curriculum) ? $curriculum->choice_credit_number : '' }}"
@@ -133,7 +133,7 @@
                                     </div><br>
 
                                     <button type="submit"
-                                        class="btn btn-primary mb-3">{{ isset($curriculum) ? 'Update' : 'Simpan' }}</button>
+                                        class="btn btn-primary mb-3">{{ isset($curriculum) ? 'Ubah' : 'Simpan' }}</button>
                                 </form>
 
                                 <script>
