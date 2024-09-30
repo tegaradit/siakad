@@ -65,6 +65,7 @@ Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])-
 //admin/course(matakuliah)
 Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index')->middleware(Authenticate::class);
 Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create')->middleware(Authenticate::class);
+Route::get('/get-education-level/{prodi_id}', [CourseController::class, 'getEducationLevel']);
 Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store')->middleware(Authenticate::class);
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit')->middleware(Authenticate::class);
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update')->middleware(Authenticate::class);
