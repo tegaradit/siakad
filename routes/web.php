@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseCurriculumController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\IdentitasPTController;
@@ -90,6 +91,13 @@ Route::get('/api/get-education-level/{prodiId}', function ($prodiId) {
 
     return response()->json(['education_level_id' => $educationLevel->id_jenj_didik, 'education_level_name' => $educationLevel->nm_jenj_didik]);
 });
+// Routes for Curriculum Courses
+Route::get('/admin/curriculum/detail/{curriculum_id}', [CourseCurriculumController::class, 'index'])->name('curriculum_course.index');
+Route::get('/admin/curriculum/detail/{curriculum_id}/create', [CourseCurriculumController::class, 'create'])->name('curriculum_course.create');
+Route::post('/admin/curriculum/detail/{curriculum_id}', [CourseCurriculumController::class, 'store'])->name('curriculum_course.store');
+Route::get('/admin/curriculum/detail/{curriculum_id}/{id}/edit', [CourseCurriculumController::class, 'edit'])->name('curriculum_course.edit');
+Route::put('/admin/curriculum/detail/{curriculum_id}/{id}', [CourseCurriculumController::class, 'update'])->name('curriculum_course.update');
+Route::delete('/admin/curriculum/detail/{curriculum_id}/{id}', [CourseCurriculumController::class, 'destroy'])->name('curriculum_course.destroy');
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data')->middleware(Authenticate::class);
 Route::resource('/admin/lecture-setting', LectureSettingController::class)->middleware(Authenticate::class);

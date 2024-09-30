@@ -40,23 +40,10 @@ class CourseController extends Controller
                     $deleteForm = '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $row->id . '\');" action="' . route('course.destroy', $row->id) . '" method="POST">'
                         . csrf_field()
                         . method_field('DELETE')
-                        . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
                         . '<a href="' . $viewUrl . '" class="btn btn-info btn-sm info ms-1 m-0" title="Info"><i class="fas fa-eye"></i> Detail</a>' // Add the Info button
+                        . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit ms-1 m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
                         . '<button type="submit" class="btn btn-danger btn-sm delete ms-1 m-0"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
                     return $deleteForm;
-                    // return '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" action="' . $deleteUrl . '" method="POST">
-                    //             <a href="' . $viewUrl . '" class="btn btn-info btn-sm show m-0" title="View">
-                    //                 <i class="fas fa-eye"></i> Detail
-                    //             </a>
-                    //             <a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit">
-                    //                 <i class="fas fa-pencil-alt"></i> Edit
-                    //             </a>
-                    //             ' . csrf_field() . '
-                    //             ' . method_field('DELETE') . '
-                    //             <button type="submit" class="btn btn-danger btn-sm delete m-0" title="Delete">
-                    //                 <i class="fas fa-trash-alt"></i> Hapus
-                    //             </button>
-                    //         </form>';
                 })
                 ->editColumn('is_sap', function ($row) {
                     return $row->is_sap ? 'Ya' : 'Tidak';
@@ -111,11 +98,22 @@ class CourseController extends Controller
     {
         $prodi = All_prodi::find($prodi_id);
 
-        // Find the associated education level
+        // Ensure that the Prodi exists
+        if (!$prodi) {
+            return response()->json(['error' => 'Prodi not found'], 404);
+        }
+
+        // Find the associated education level using the id_jenj_didik from Prodi
         $educationLevel = Education_level::where('id_jenj_didik', $prodi->id_jenj_didik)->first();
 
+        // Ensure that the Education Level exists
+        if (!$educationLevel) {
+            return response()->json(['error' => 'Education Level not found'], 404);
+        }
+
         return response()->json([
-            'education_level_id' => $educationLevel->id_jenj_didik
+            'id_jenj_didik' => $educationLevel->id_jenj_didik,
+            'nm_jenj_didik' => $educationLevel->nm_jenj_didik // Return the name as well
         ]);
     }
 
