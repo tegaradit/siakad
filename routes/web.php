@@ -19,6 +19,7 @@ use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KelasKuliahController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -149,3 +150,7 @@ Route::delete('/admin/periode_pmb/delete/{id}', [PeriodePmbController::class, 'd
 
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
+
+
+
+Route::resource('/kelas-kuliah', KelasKuliahController::class);
