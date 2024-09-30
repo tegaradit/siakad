@@ -1,6 +1,7 @@
 @extends('layouts.home-layout')
 
 @section('home-content')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -8,8 +9,22 @@
                 <div class="container my-5">
                     <h3 class="mb-3">Data Identitas Perguruan Tinggi</h3>
 
+                    <!-- Alert Messages -->
                     @if(session('error'))
-                    <div class="alert alert-danger">{{ session('error') }}</div>
+                    <script>
+                        Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!",
+                        });
+                    </script>
+                    @endif
+
+                    @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     @endif
 
                     <!-- Edit NPSN Modal Trigger -->
@@ -125,13 +140,4 @@
     </div>
 </div>
 
-<script>
-    // Trigger fetch data on page load if input is empty
-    window.addEventListener('DOMContentLoaded', (event) => {
-        const npsnInput = document.getElementById('newNpsn');
-        // if (npsnInput) {
-        //     document.getElementById('editNpsnForm').submit();
-        // }
-    });
-</script>
 @endsection
