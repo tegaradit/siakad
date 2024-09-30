@@ -19,6 +19,7 @@ use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentTypeController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +103,10 @@ Route::get('/kalender-akademik/data', [AcademicCalendarController::class, 'data'
 //akademik year
 Route::resource('/admin/tahun-akademik', AcademicYearController::class)->middleware(Authenticate::class);
 Route::get('/tahun-akademik/data', [AcademicYearController::class, 'data'])->name('tahun-akademik.data')->middleware(Authenticate::class);
+//studentType
+Route::get('/student-type/data', [StudentTypeController::class, 'data'])->name('student-type.data')->middleware(Authenticate::class);
+Route::resource('/admin/student-type', StudentTypeController::class)->middleware(Authenticate::class);
+
 
 
 //dosen 
