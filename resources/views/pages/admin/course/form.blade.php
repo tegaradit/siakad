@@ -174,7 +174,7 @@
 
                                     {{-- Boolean Fields --}}
                                     <div class="form-group">
-                                        <label for="is_sap">Is SAP?</label>
+                                        <label for="is_sap">Apakah Ada SAP (Satuan Acara Perkuliahan) / RPS?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_sap" value="1"
                                                 id="is_sap_yes" required>
@@ -187,7 +187,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="is_silabus">Is Silabus?</label>
+                                        <label for="is_silabus"> Apakah ada Silabus?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_silabus"
                                                 value="1" id="is_silabus_yes" required>
@@ -200,7 +200,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="is_teaching_material">Is Teaching Material?</label>
+                                        <label for="is_teaching_material">Apakah ada bahan materi perkuliahan?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_teaching_material"
                                                 value="1" id="is_teaching_material_yes" required>
@@ -213,7 +213,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="is_praktikum">Is Praktikum?</label>
+                                        <label for="is_praktikum">Apakah matakuliah praktikum?</label>
                                         <div class="radio-group">
                                             <input type="radio" class="form-check-input" name="is_praktikum"
                                                 value="1" id="is_praktikum_yes" required>
@@ -227,7 +227,7 @@
 
                                     {{-- Effective Dates --}}
                                     <div class="form-group">
-                                        <label class="form-label">Durasi</label>
+                                        <label class="form-label">Rentang Tanggal</label>
                                         <input type="text" class="form-control" id="datepicker-range"
                                             name="course_range" />
                                         @error('course_range')
