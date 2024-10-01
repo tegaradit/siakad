@@ -37,10 +37,10 @@ class StudentTypeController extends Controller
         return abort(404);
     }
 
-    public function create()
-    {
-        return view('pages.admin.student_type.form'); // Ganti dengan path view yang sesuai
-    }
+    // public function create()
+    // {
+    //     return view('pages.admin.student_type.form'); // Ganti dengan path view yang sesuai
+    // }
 
     public function store(Request $request)
     {
@@ -50,7 +50,7 @@ class StudentTypeController extends Controller
 
         student_type::create($validated);
 
-        return response()->json(['success' => 'Tipe Siswa berhasil ditambahkan.']);
+        return redirect()->route('student-type.index');
     }
 
     public function edit($id)
@@ -68,7 +68,7 @@ class StudentTypeController extends Controller
         $studentType = student_type::findOrFail($id);
         $studentType->update($validated);
 
-        return response()->json(['success' => 'Tipe Siswa berhasil diperbarui.']);
+        return redirect()->route('student-type.index');
     }
 
     public function destroy($id)

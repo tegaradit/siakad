@@ -36,10 +36,10 @@ class RegisterTypeController extends Controller
         return abort(404);
     }
 
-    public function create()
-    {
-        return view('pages.admin.register_type.form'); // Ganti dengan path view yang sesuai
-    }
+    // public function create()
+    // {
+    //     return view('pages.admin.register_type.form'); // Ganti dengan path view yang sesuai
+    // }
 
     public function store(Request $request)
     {
@@ -49,7 +49,7 @@ class RegisterTypeController extends Controller
 
         register_type::create($validated);
 
-        return response()->json(['success' => 'Tipe Siswa berhasil ditambahkan.']);
+        return redirect()->route('register-type.index');
     }
 
     public function edit($id)
@@ -67,7 +67,7 @@ class RegisterTypeController extends Controller
         $registerType = register_type::findOrFail($id);
         $registerType->update($validated);
 
-        return response()->json(['success' => 'Tipe Siswa berhasil diperbarui.']);
+        return redirect()->route('register-type.index');
     }
 
     public function destroy($id)
