@@ -11,10 +11,11 @@
                     </a>
                 </li>
 
+                <li class="menu-title mt-2" data-key="t-components">Sistem Akademik</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="database"></i>
                         <span data-key="t-apps">Data Umum</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -58,7 +59,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="clipboard"></i>
                         <span data-key="t-components">Data Perkuliahan</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -117,7 +118,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="check-circle"></i>
                         <span data-key="t-edom">EDOM</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -142,7 +143,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="calendar"></i>
                         <span data-key="t-edom">Penjadwalan</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -165,7 +166,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="mail"></i>
                         <span data-key="t-transaksi-perkuliahan">Transaksi Perkuliahan</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -219,7 +220,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="server"></i>
                         <span data-key="t-dashboard">Feeder</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -288,7 +289,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="archive"></i>
                         <span data-key="t-dashboard">Report</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
