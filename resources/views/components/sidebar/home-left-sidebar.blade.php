@@ -67,7 +67,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li id="datas">
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="clipboard"></i>
                         <span data-key="t-components">Data Perkuliahan</span>
@@ -98,7 +98,7 @@
                                 <span data-key="t-tipe-kalender">Tipe Kalender</span>
                             </a>
                         </li>
-                        <li>
+                        <li id="kalender-akademik">
                             <a href="{{ route('kalender-akademik.index') }}">
                                 <span data-key="t-kalender-akademik">Kalender Akademik</span>
                             </a>
