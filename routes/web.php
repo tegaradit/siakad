@@ -22,6 +22,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentTypeController;
 use App\Http\Controllers\KelasKuliahController;
+use App\Http\Controllers\RegisterTypeController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -115,6 +116,9 @@ Route::get('/tahun-akademik/data', [AcademicYearController::class, 'data'])->nam
 //studentType
 Route::get('/student-type/data', [StudentTypeController::class, 'data'])->name('student-type.data')->middleware(Authenticate::class);
 Route::resource('/admin/student-type', StudentTypeController::class)->middleware(Authenticate::class);
+//studentType
+Route::get('/register-type/data', [RegisterTypeController::class, 'data'])->name('register-type.data')->middleware(Authenticate::class);
+Route::resource('/admin/register-type', RegisterTypeController::class)->middleware(Authenticate::class);
 
 
 
