@@ -14,54 +14,32 @@ use Yajra\DataTables\DataTables;
 
 class CourseController extends Controller
 {
-    // public function index(){
-    //     // $user = Auth::user();
-    //     $menu = 'course';
-    //     $submenu = 'course';
-
-    //     // Mengambil data mata kuliah dengan relasi yang diperlukan
-    //     $datas = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->latest()->paginate(10);
-
-    //     // Mengirim data ke view
-    //     return view('pages.admin.course.index', compact('datas'));
-    // }
-
     public function index()
     {
         if (request()->ajax()) {
-            $courses = Course::with(['all_prodi', 'education_level', 'course_group', 'course_type'])->get();
+            $currentIdSp = IdentitasPt::first()->current_id_sp;
+
+            // Filter berdasarkan all_prodi yang sesuai dengan current_id_sp dan status 'A'
+            $courses = Course::whereHas('all_prodi', function ($query) use ($currentIdSp) {
+                $query->where('id_sp', $currentIdSp)
+                    ->where('status', 'A');
+            })
+                ->with(['all_prodi', 'course_type']) // Hanya memuat relasi all_prodi dan course_type
+                ->get();
+
             return DataTables::of($courses)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $editUrl = route('course.edit', $row->id);
-                    // $deleteUrl = route('course.destroy', $row->id);
-                    $viewUrl = route('course.show', $row->id); // URL for the view button
+                    $viewUrl = route('course.show', $row->id);
 
                     $deleteForm = '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $row->id . '\');" action="' . route('course.destroy', $row->id) . '" method="POST">'
                         . csrf_field()
                         . method_field('DELETE')
-                        . '<a href="' . $viewUrl . '" class="btn btn-info btn-sm info ms-1 m-0" title="Info"><i class="fas fa-eye"></i> Detail</a>' // Add the Info button
+                        . '<a href="' . $viewUrl . '" class="btn btn-info btn-sm info ms-1 m-0" title="Info"><i class="fas fa-eye"></i> Detail</a>'
                         . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit ms-1 m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
                         . '<button type="submit" class="btn btn-danger btn-sm delete ms-1 m-0"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
                     return $deleteForm;
-                })
-                ->editColumn('is_sap', function ($row) {
-                    return $row->is_sap ? 'Ya' : 'Tidak';
-                })
-                ->editColumn('is_silabus', function ($row) {
-                    return $row->is_silabus ? 'Ya' : 'Tidak';
-                })
-                ->editColumn('is_teaching_material', function ($row) {
-                    return $row->is_teaching_material ? 'Ya' : 'Tidak';
-                })
-                ->editColumn('is_praktikum', function ($row) {
-                    return $row->is_praktikum ? 'Ya' : 'Tidak';
-                })
-                ->editColumn('effective_start_date', function ($row) {
-                    return $row->effective_start_date ? \Carbon\Carbon::parse($row->effective_start_date)->format('d-m-Y') : 'N/A';
-                })
-                ->editColumn('effective_end_date', function ($row) {
-                    return $row->effective_end_date ? \Carbon\Carbon::parse($row->effective_end_date)->format('d-m-Y') : 'N/A';
                 })
                 ->make(true);
         }

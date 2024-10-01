@@ -96,6 +96,7 @@ Route::get('/api/get-education-level/{prodiId}', function ($prodiId) {
 // Routes for Curriculum Courses
 Route::get('/admin/curriculum/detail/{curriculum_id}', [CourseCurriculumController::class, 'index'])->name('curriculum_course.index');
 Route::get('/admin/curriculum/detail/{curriculum_id}/create', [CourseCurriculumController::class, 'create'])->name('curriculum_course.create');
+Route::get('/courses/get', [CourseController::class, 'getCourses'])->name('courses.get');
 Route::post('/admin/curriculum/detail/{curriculum_id}', [CourseCurriculumController::class, 'store'])->name('curriculum_course.store');
 Route::get('/admin/curriculum/detail/{curriculum_id}/{id}/edit', [CourseCurriculumController::class, 'edit'])->name('curriculum_course.edit');
 Route::put('/admin/curriculum/detail/{curriculum_id}/{id}', [CourseCurriculumController::class, 'update'])->name('curriculum_course.update');

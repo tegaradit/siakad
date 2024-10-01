@@ -43,11 +43,8 @@
                                                 <th style="text-align: center; vertical-align: middle;">Kode</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nama</th>
                                                 <th style="text-align: center; vertical-align: middle;">Prodi</th>
-                                                <th style="text-align: center; vertical-align: middle;">
-                                                    Jenjang<br>Pendidikan</th>
-                                                <th style="text-align: center; vertical-align: middle;">Kelompok<br>Matakuliah</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS MK</th>
                                                 <th style="text-align: center; vertical-align: middle;">Jenis<br>Matakuliah</th>
-                                                {{-- <th style="text-align: center; vertical-align: middle;">Status</th> --}}
                                                 <th style="width: 180px; text-align: center; vertical-align: middle;">Aksi</th>
                                             </tr>
                                         </thead>
@@ -95,8 +92,10 @@
             $('#course-table').DataTable({
                 processing: true,
                 serverSide: true,
+                deferRender: true, // Untuk meningkatkan performa
                 ajax: '{{ route('course.index') }}',
-                columns: [{
+                columns: [
+                    {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
@@ -115,21 +114,13 @@
                         name: 'all_prodi.nama_prodi'
                     },
                     {
-                        data: 'education_level.nm_jenj_didik',
-                        name: 'education_level.nm_jenj_didik'
-                    },
-                    {
-                        data: 'course_group.name',
-                        name: 'course_group.name'
+                        data: 'sks_mk',
+                        name: 'sks_mk'
                     },
                     {
                         data: 'course_type.name',
                         name: 'course_type.name'
                     },
-                    // {
-                    //     data: 'status',
-                    //     name: 'status'
-                    // },
                     {
                         data: 'action',
                         name: 'action',
@@ -140,24 +131,16 @@
                         }
                     }
                 ],
-                columnDefs: [{
-                        targets: [0],
-                        className: 'text-center'
-                    }, // Center align No column
+                columnDefs: [
                     {
-                        targets: [7],
-                        className: 'text-center'
-                    } // Center align Action column
+                        targets: [0, 6], // Kolom No dan Aksi
+                        className: 'text-center' // Center align
+                    }
                 ],
-                "language": {
-                    "emptyTable": "Data Mata Kuliah Kosong"
+                language: {
+                    emptyTable: "Data Mata Kuliah Kosong"
                 }
             });
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            feather.replace();
         });
 
         function confirmDelete(id) {

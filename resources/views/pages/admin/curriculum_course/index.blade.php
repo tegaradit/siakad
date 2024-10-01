@@ -46,6 +46,7 @@
                                                 <th style="width: 30px; text-align: center; vertical-align: middle;">No</th>
                                                 <th style="text-align: center; vertical-align: middle;">Kode<br>Matakuliah</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nama<br>Matakuliah</th>
+                                                <th style="text-align: center; vertical-align: middle;">SMT</th>
                                                 <th style="text-align: center; vertical-align: middle;">SKS MK</th>
                                                 <th style="text-align: center; vertical-align: middle;">SKS TM</th>
                                                 <th style="text-align: center; vertical-align: middle;">SKS PR</th>
@@ -101,6 +102,10 @@
                         {
                             data: 'course_name',
                             name: 'course.name'
+                        },
+                        {
+                            data: 'smt',
+                            name: 'smt'
                         },
                         {
                             data: 'sks_mk',

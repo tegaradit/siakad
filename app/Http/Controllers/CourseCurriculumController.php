@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Curriculum;
 use App\Models\CurriculumCourse;
+use App\Models\IdentitasPt;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -48,9 +49,33 @@ class CourseCurriculumController extends Controller
     public function create($curriculum_id)
     {
         $curriculum = Curriculum::findOrFail($curriculum_id);
-        $courses = Course::all(); // Assuming courses can be selected from a list
-        return view('pages.admin.curriculum_course.form', compact('curriculum', 'courses'));
+        return view('pages.admin.curriculum_course.form', compact('curriculum'));
     }
+
+    // Get courses for Select2
+    public function getCourses(Request $request)
+{
+    $currentIdSp = IdentitasPt::first()->current_id_sp;
+
+    $courses = Course::whereHas('all_prodi', function ($query) use ($currentIdSp) {
+        $query->where('id_sp', $currentIdSp)
+              ->where('status', 'A');
+    })
+    ->when($request->search, function($query) use ($request) {
+        return $query->where('name', 'like', '%' . $request->search . '%'); // Ganti 'name' dengan kolom yang sesuai
+    })
+    ->get(['id', 'name']); // Pastikan hanya id dan name yang diambil
+
+    // Formatkan response agar sesuai dengan format Select2
+    $formattedCourses = $courses->map(function ($course) {
+        return [
+            'id' => $course->id,
+            'text' => $course->name, // Select2 expects 'text' key for displaying
+        ];
+    });
+
+    return response()->json($formattedCourses);
+}
 
     // Store a new course in the curriculum
     public function store(Request $request, $curriculum_id)
@@ -68,7 +93,7 @@ class CourseCurriculumController extends Controller
         // Set other fields
         $course->save();
 
-        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Course added successfully.');    
+        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Course added successfully.');
     }
 
     // Show the form to edit an existing course
@@ -95,7 +120,7 @@ class CourseCurriculumController extends Controller
         // Set other fields
         $course->save();
 
-        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Course updated successfully.');    
+        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Course updated successfully.');
     }
 
     // Delete an existing course

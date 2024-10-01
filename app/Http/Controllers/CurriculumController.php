@@ -18,7 +18,13 @@ class CurriculumController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $datas = Curriculum::with(['all_prodi', 'education_level', 'semester'])->get();
+            $currentIdSp = IdentitasPt::first()->current_id_sp;
+
+            $datas = Curriculum::whereHas('all_prodi', function ($query) use ($currentIdSp){
+                $query->where('id_sp' , $currentIdSp)
+                ->where('status', 'A');
+            })->with(['all_prodi','education_level','semester'])->get();
+            // $datas = Curriculum::with(['all_prodi', 'education_level', 'semester'])->get();
 
             return DataTables::of($datas)
                 ->addIndexColumn()
