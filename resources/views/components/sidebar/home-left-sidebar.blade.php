@@ -54,6 +54,16 @@
                                 <span data-key="t-pengguna">Pengguna</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('register-type.index') }}">
+                                <span data-key="t-pengguna">Tipe Register</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('student-type.index') }}">
+                                <span data-key="t-pengguna">Jenis Mahasiswa</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
