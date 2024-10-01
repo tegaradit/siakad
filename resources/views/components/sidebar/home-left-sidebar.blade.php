@@ -11,439 +11,326 @@
                     </a>
                 </li>
 
-                <li class="menu-title" data-key="t-menu">Data Umum</li>
+                <li class="menu-title mt-2" data-key="t-components">Sistem Akademik</li>
 
                 <li>
-                    <a href="/admin/identitas-pt">
-                        <i data-feather="target"></i>
-                        <span data-key="t-dashboard">Identitas PT</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('educational_unit.index') }}">
-                        <i data-feather="server"></i>
-                        <span data-key="t-dashboard">Daftar PT</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('all_prodi.index') }}">
-                        <i data-feather="menu"></i>
-                        <span data-key="t-dashboard">Daftar Program Studi</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('prodi') }}">
-                        <i data-feather="file-text"></i>
-                        <span data-key="t-dashboard">Program Studi PT</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('buildings.index') }}">
-                        <i data-feather="codesandbox"></i>
-                        <span data-key="t-dashboard">Gedung</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{route('room.index')}}">
-                        <i data-feather="codepen"></i>
-                        <span data-key="t-dashboard">Ruangan</span>
-                    </a> 
-                </li>
-
-                <li>
-                    <a href="{{ route('users.index') }}">
-                        <i data-feather="users"></i>
-                        <span data-key="t-dashboard">Pengguna</span>
-                    </a>
-                </li>
-
-                {{-- <li>
-                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
-                        <span data-key="t-apps">Apps</span>
-                     </a>
-                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                           <a href="apps-calendar.html">
-                              <span data-key="t-calendar">Calendar</span>
-                           </a>
-                        </li>
-
-                        <li>
-                           <a href="apps-chat.html">
-                              <span data-key="t-chat">Chat</span>
-                           </a>
-                        </li>
-
-                        <li>
-                           <a href="javascript: void(0);" class="has-arrow">
-                              <span data-key="t-email">Email</span>
-                           </a>
-                           <ul class="sub-menu" aria-expanded="false">
-                              <li>
-                                 <a href="apps-email-inbox.html" data-key="t-inbox">Inbox</a>
-                              </li>
-                              <li>
-                                 <a href="apps-email-read.html" data-key="t-read-email">Read Email</a>
-                              </li>
-                           </ul>
-                        </li>
-                        <li>
-                           <a href="javascript: void(0);" class="has-arrow">
-                              <span data-key="t-invoices">Invoices</span>
-                           </a>
-                           <ul class="sub-menu" aria-expanded="false">
-                              <li>
-                                 <a href="apps-invoices-list.html" data-key="t-invoice-list">Invoice List</a>
-                              </li>
-                              <li>
-                                 <a href="apps-invoices-detail.html" data-key="t-invoice-detail">Invoice Detail</a>
-                              </li>
-                           </ul>
-                        </li>
-                        <li>
-                           <a href="javascript: void(0);" class="has-arrow">
-                              <span data-key="t-contacts">Contacts</span>
-                           </a>
-                           <ul class="sub-menu" aria-expanded="false">
-                              <li>
-                                 <a href="apps-contacts-grid.html" data-key="t-user-grid">User Grid</a>
-                              </li>
-                              <li>
-                                 <a href="apps-contacts-list.html" data-key="t-user-list">User List</a>
-                              </li>
-                              <li>
-                                 <a href="apps-contacts-profile.html" data-key="t-profile">Profile</a>
-                              </li>
-                           </ul>
-                        </li>
-                        <li>
-                           <a href="javascript: void(0);" class="">
-                              <span data-key="t-blog">Blog</span>
-                              <span class="badge rounded-pill badge-soft-danger float-end" key="t-new">New</span>
-                           </a>
-                           <ul class="sub-menu" aria-expanded="false">
-                              <li>
-                                 <a href="apps-blog-grid.html" data-key="t-blog-grid">Blog Grid</a>
-                              </li>
-                              <li>
-                                 <a href="apps-blog-list.html" data-key="t-blog-list">Blog List</a>
-                              </li>
-                              <li>
-                                 <a href="apps-blog-detail.html" data-key="t-blog-details">Blog Details</a>
-                              </li>
-                           </ul>
-                        </li>
-                     </ul>
-                  </li> --}}
-
-                <li class="menu-title mt-2" data-key="t-components">Data Perkuliahan</li>
-
-                <li>
-                    <a href="{{ route('periode_pmb.index') }}">
-                        <i data-feather="airplay"></i>
-                        <span data-key="t-dashboard">PMB</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('tahun-akademik.index') }}">
-                        <i data-feather="calendar"></i>
-                        <span data-key="t-dashboard">Tahun Akademik</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('semester.index') }}">
-                        <i data-feather="book-open"></i>
-                        <span data-key="t-dashboard">Semester</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('lecture-setting.index') }}">
-                        <i data-feather="settings"></i>
-                        <span data-key="t-dashboard">Setting Perkuliahan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('calendar-type.index') }}">
-                        <i data-feather="list"></i>
-                        <span data-key="t-dashboard"> Tipe Kalender</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('kalender-akademik.index') }}">
-                        <i data-feather="bar-chart-2"></i>
-                        <span data-key="t-dashboard">Kalender Akademik</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{route('lecturer.index')}}">
-                        <i data-feather="user-check"></i>
-                        <span data-key="t-dashboard">Dosen</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('course.index') }}">
-                        <i data-feather="book"></i>
-                        <span data-key="t-dashboard">Mata Kuliah</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('curriculum.index') }}">
-                        <i data-feather="bookmark"></i>
-                        <span data-key="t-dashboard">Kurikulum</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="user"></i>
-                        <span data-key="t-dashboard">Mahasiswa</span>
-                    </a>
-                </li>
-
-                <li class="menu-title mt-2" data-key="t-components">EDOM</li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="align-justify"></i>
-                        <span data-key="t-dashboard">Kelompok Komponen</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="pause"></i>
-                        <span data-key="t-dashboard">Komponen Penilaian</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="pen-tool"></i>
-                        <span data-key="t-dashboard">Penilaian</span>
-                    </a>
-                </li>
-
-                <li class="menu-title mt-2" data-key="t-components">Penjadwalan</li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="clock"></i>
-                        <span data-key="t-dashboard">Waktu Perkuliahan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="sliders"></i>
-                        <span data-key="t-dashboard">Jadwal Kuliah</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="bar-chart"></i>
-                        <span data-key="t-dashboard">Jadwal Ujian</span>
-                    </a>
-                </li>
-
-                <li class="menu-title mt-2" data-key="t-components">Transaksi Perkuliahan</li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Kelas Perkuliahan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Perwalian/KRS</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="layout"></i>
-                        <span data-key="t-dashboard">Aktivitas Kuliah Mahasiswa</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="hexagon"></i>
-                        <span data-key="t-dashboard">Aktivitas Mahasiswa</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="framer"></i>
-                        <span data-key="t-dashboard">KHS</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="archive"></i>
-                        <span data-key="t-dashboard">Transkrip</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="database"></i>
-                        <span data-key="t-dashboard">Daftar Mahasiswa Lulus/DO</span>
+                        <span data-key="t-apps">Data Umum</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="/admin/identitas-pt">
+                                <span data-key="t-identitas-pt">Identitas PT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('educational_unit.index') }}">
+                                <span data-key="t-daftar-pt">Daftar PT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('all_prodi.index') }}">
+                                <span data-key="t-daftar-prodi">Daftar Program Studi</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('prodi') }}">
+                                <span data-key="t-prodi-pt">Program Studi PT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('buildings.index') }}">
+                                <span data-key="t-gedung">Gedung</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('room.index') }}">
+                                <span data-key="t-ruangan">Ruangan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('users.index') }}">
+                                <span data-key="t-pengguna">Pengguna</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('register-type.index') }}">
+                                <span data-key="t-pengguna">Tipe Register</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('student-type.index') }}">
+                                <span data-key="t-pengguna">Jenis Mahasiswa</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i data-feather="chevrons-right"></i>
-                        <span data-key="t-dashboard">Pelaksanaan Wisuda</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="clipboard"></i>
+                        <span data-key="t-components">Data Perkuliahan</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('periode_pmb.index') }}">
+                                <span data-key="t-pmb">PMB</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('tahun-akademik.index') }}">
+                                <span data-key="t-tahun-akademik">Tahun Akademik</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('semester.index') }}">
+                                <span data-key="t-semester">Semester</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('lecture-setting.index') }}">
+                                <span data-key="t-setting-perkuliahan">Setting Perkuliahan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('calendar-type.index') }}">
+                                <span data-key="t-tipe-kalender">Tipe Kalender</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('kalender-akademik.index') }}">
+                                <span data-key="t-kalender-akademik">Kalender Akademik</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('lecturer.index') }}">
+                                <span data-key="t-dosen">Dosen</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('course.index') }}">
+                                <span data-key="t-mata-kuliah">Mata Kuliah</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('curriculum.index') }}">
+                                <span data-key="t-kurikulum">Kurikulum</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-mahasiswa">Mahasiswa</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i data-feather="file-plus"></i>
-                        <span data-key="t-dashboard">Pendaftaran Wisuda</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="check-circle"></i>
+                        <span data-key="t-edom">EDOM</span>
                     </a>
-                </li>
-
-                <li class="menu-title mt-2" data-key="t-components">Feeder</li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Kurikulum</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Mahasiswa</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Kelas Kuliah</span>
-                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="index.html">
+                                {{-- <i data-feather="align-justify"></i> --}}
+                                <span data-key="t-kelompok-komponen">Kelompok Komponen</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-komponen-penilaian">Komponen Penilaian</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-penilaian">Penilaian</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Dosen Ajar</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="calendar"></i>
+                        <span data-key="t-edom">Penjadwalan</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-kelompok-komponen">Waktu Perkuliahan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-komponen-penilaian">Jadwal Kuliah</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-penilaian">Jadwal Ujian</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">KRS</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="mail"></i>
+                        <span data-key="t-transaksi-perkuliahan">Transaksi Perkuliahan</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-kelas-perkuliahan">Kelas Perkuliahan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-perwalian-krs">Perwalian/KRS</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-aktivitas-kuliah-mahasiswa">Aktivitas Kuliah Mahasiswa</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-aktivitas-mahasiswa">Aktivitas Mahasiswa</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-khs">KHS</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-transkrip">Transkrip</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-daftar-lulus-do">Daftar Mahasiswa Lulus/DO</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-pelaksanaan-wisuda">Pelaksanaan Wisuda</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-pendaftaran-wisuda">Pendaftaran Wisuda</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Nilai Perkuliahan</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="server"></i>
+                        <span data-key="t-dashboard">Feeder</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Kurikulum</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Mahasiswa</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Kelas Kuliah</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Dosen Ajar</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">KRS</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Nilai Perkuliahan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">AKM</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Nilai Transfer</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Histori Pendidikan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Kelulusan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Tabel</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Setting User</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">AKM</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="archive"></i>
+                        <span data-key="t-dashboard">Report</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Pencapaian Nilai MK</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Rekap UTS</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Rekap UAS</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Rekap Registrasi</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <span data-key="t-dashboard">Rekap Perwalian</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Nilai Transfer</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Histori Pendidikan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Kelulusan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Tabel</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Setting User</span>
-                    </a>
-                </li>
-
-                <li class="menu-title mt-2" data-key="t-components">Report</li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Pencapaian Nilai MK</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Rekap UTS</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Rekap UAS</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Rekap Registrasi</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="index.html">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Rekap Perwalian</span>
-                    </a>
-                </li>
         </div>
         <!-- Sidebar -->
     </div>
