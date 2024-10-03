@@ -29,6 +29,20 @@
                                 </p>
                             </div>
                             <div class="card-body">
+                                <div class="alert alert-primary" role="alert">
+                                    <h4 class="alert-heading">Pemberitahuan</h4>
+                                    <p>
+                                      SKS MK -> SKS Matakuliah <br>
+                                      SKS TM -> SKS Tatap Muka <br>
+                                      SKS PR -> SKS Praktikum <br>
+                                      SKS PL -> SKS Praktikum Lapangan <br>
+                                      SKS SIM -> SKS Simulasi
+                                    </p>
+                                    <hr />
+                                    <p class="mb-0">
+                                      Diatas merupakan sedikit info mengenai tabel di bawah ini.
+                                    </p>
+                                  </div>
                                 @if (isset($curriculum))
                                     <a href="{{ route('curriculum_course.create', $curriculum->curriculum_id) }}"
                                         class="btn btn-primary btn-sm mb-3">
@@ -44,14 +58,14 @@
                                         <thead>
                                             <tr style="text-align: center; vertical-align: middle;">
                                                 <th style="width: 30px; text-align: center; vertical-align: middle;">No</th>
-                                                <th style="text-align: center; vertical-align: middle;">Kode<br>Matakuliah</th>
+                                                <th style="text-align: center; vertical-align: middle;">Kode<br>MK</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nama<br>Matakuliah</th>
                                                 <th style="text-align: center; vertical-align: middle;">SMT</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS MK</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS TM</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS PR</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS PL</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS SIM</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>MK</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>TM</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>PR</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>PL</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>SIM</th>
                                                 <th style="text-align: center; vertical-align: middle;">Wajib</th>
                                                 <th style="text-align: center; vertical-align: middle;">Aksi</th>
                                             </tr>
@@ -105,7 +119,10 @@
                         },
                         {
                             data: 'smt',
-                            name: 'smt'
+                            name: 'smt',
+                            createdCell: function(td, cellData, rowData, row, col) {
+                                $(td).css('text-align', 'center'); // Align center
+                            }
                         },
                         {
                             data: 'sks_mk',

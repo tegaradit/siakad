@@ -53,44 +53,49 @@ class CourseCurriculumController extends Controller
     }
 
     // Get courses for Select2
-    public function getCourses(Request $request)
-{
-    $currentIdSp = IdentitasPt::first()->current_id_sp;
+    public function searchCourse(Request $request, $curriculum_id)
+    {
+        // Ambil query term dari Select2
+        $search = $request->query('term', ''); // 'term' adalah nama parameter default yang dikirim oleh Select2
 
-    $courses = Course::whereHas('all_prodi', function ($query) use ($currentIdSp) {
-        $query->where('id_sp', $currentIdSp)
-              ->where('status', 'A');
-    })
-    ->when($request->search, function($query) use ($request) {
-        return $query->where('name', 'like', '%' . $request->search . '%'); // Ganti 'name' dengan kolom yang sesuai
-    })
-    ->get(['id', 'name']); // Pastikan hanya id dan name yang diambil
+        // Lakukan pencarian berdasarkan 'code'
+        $courses = Course::where('code', 'like', "%$search%")
+            ->select('id', 'code', 'name') // Pilih kolom yang diperlukan saja
+            ->get();
 
-    // Formatkan response agar sesuai dengan format Select2
-    $formattedCourses = $courses->map(function ($course) {
-        return [
-            'id' => $course->id,
-            'text' => $course->name, // Select2 expects 'text' key for displaying
-        ];
-    });
-
-    return response()->json($formattedCourses);
-}
+        // Return response dalam format yang diminta oleh Select2
+        return response()->json($courses->map(function ($course) {
+            return [
+                'id' => $course->id, // Value untuk input
+                'text' => $course->code . ' - ' . $course->name, // Text yang ditampilkan
+            ];
+        }));
+    }
 
     // Store a new course in the curriculum
     public function store(Request $request, $curriculum_id)
     {
         $request->validate([
-            'course_id' => 'required|exists:courses,id',
-            'sks_mk' => 'required|numeric',
-            // Add other validation rules as needed
+            'course_id' => 'required|exists:course,id', // Pastikan course_id ada di tabel course
+            'smt' => 'required|integer|min:1|max:8', // Misalnya, semester harus antara 1 dan 8
+            'sks_mk' => 'required|integer|min:1', // SKS MK harus lebih dari 0
+            'sks_tm' => 'nullable|integer|min:0', // SKS TM bisa kosong atau minimal 0
+            'sks_pr' => 'nullable|integer|min:0', // SKS PR bisa kosong atau minimal 0
+            'sks_pl' => 'nullable|integer|min:0', // SKS PL bisa kosong atau minimal 0
+            'sks_sim' => 'nullable|integer|min:0', // SKS SIM bisa kosong atau minimal 0
+            'is_mandatory' => 'required|boolean', // is_mandatory harus ada dan merupakan boolean
         ]);
 
         $course = new CurriculumCourse();
         $course->curriculum_id = $curriculum_id;
         $course->course_id = $request->course_id;
+        $course->smt = $request->smt;
         $course->sks_mk = $request->sks_mk;
-        // Set other fields
+        $course->sks_tm = $request->sks_tm;
+        $course->sks_pr = $request->sks_pr;
+        $course->sks_pl = $request->sks_pl;
+        $course->sks_sim = $request->sks_sim;
+        $course->is_mandatory = $request->is_mandatory;
         $course->save();
 
         return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Course added successfully.');

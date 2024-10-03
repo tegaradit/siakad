@@ -95,13 +95,18 @@ Route::get('/api/get-education-level/{prodiId}', function ($prodiId) {
     return response()->json(['education_level_id' => $educationLevel->id_jenj_didik, 'education_level_name' => $educationLevel->nm_jenj_didik]);
 });
 // Routes for Curriculum Courses
-Route::get('/admin/curriculum/detail/{curriculum_id}', [CourseCurriculumController::class, 'index'])->name('curriculum_course.index');
-Route::get('/admin/curriculum/detail/{curriculum_id}/create', [CourseCurriculumController::class, 'create'])->name('curriculum_course.create');
-Route::get('/courses/get', [CourseController::class, 'getCourses'])->name('courses.get');
-Route::post('/admin/curriculum/detail/{curriculum_id}', [CourseCurriculumController::class, 'store'])->name('curriculum_course.store');
-Route::get('/admin/curriculum/detail/{curriculum_id}/{id}/edit', [CourseCurriculumController::class, 'edit'])->name('curriculum_course.edit');
-Route::put('/admin/curriculum/detail/{curriculum_id}/{id}', [CourseCurriculumController::class, 'update'])->name('curriculum_course.update');
-Route::delete('/admin/curriculum/detail/{curriculum_id}/{id}', [CourseCurriculumController::class, 'destroy'])->name('curriculum_course.destroy');
+Route::prefix('admin/curriculum/detail/{curriculum_id}')->group(function () {
+    Route::get('/', [CourseCurriculumController::class, 'index'])->name('curriculum_course.index');
+    Route::get('/create', [CourseCurriculumController::class, 'create'])->name('curriculum_course.create');
+    Route::post('/', [CourseCurriculumController::class, 'store'])->name('curriculum_course.store');
+    Route::get('/{id}/edit', [CourseCurriculumController::class, 'edit'])->name('curriculum_course.edit');
+    Route::put('/{id}', [CourseCurriculumController::class, 'update'])->name('curriculum_course.update');
+    Route::delete('/{id}', [CourseCurriculumController::class, 'destroy'])->name('curriculum_course.destroy');
+});
+
+// Route untuk pencarian course tetap di luar
+Route::get('/admin/curriculum/{curriculum_id}/search_course', [CourseCurriculumController::class, 'searchCourse'])->name('curriculum_course.search_course');
+
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data')->middleware(Authenticate::class);
 Route::resource('/admin/lecture-setting', LectureSettingController::class)->middleware(Authenticate::class);
