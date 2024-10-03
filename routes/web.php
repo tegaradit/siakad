@@ -155,6 +155,8 @@ Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->na
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
 Route::get('/admin/lecturer/{id}', [LecturerController::class, 'show'])->name('lecturer.show');
+Route::get('/check-email', [LecturerController::class, 'checkEmail'])->name('check.email');
+
 
 // Periode PMB
 Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');
