@@ -1,4 +1,4 @@
-    @extends('layouts.home-layout')
+@extends('layouts.home-layout')
 
     @section('home-content')
         <div class="main-content">
