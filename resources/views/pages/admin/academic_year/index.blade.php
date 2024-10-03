@@ -124,14 +124,20 @@
                         name: 'start_date',
                         createdCell: function(td, cellData, rowData, row, col) {
                             $(td).css('text-align', 'center');
-                        }
+                        },
+                        render: function(data) {
+                            return moment(data).format('DD-MM-YYYY');
+                        },
                     },
                     {
                         data: 'end_date',
                         name: 'end_date',
                         createdCell: function(td, cellData, rowData, row, col) {
                             $(td).css('text-align', 'center');
-                        }
+                        },
+                        render: function(data) {
+                            return moment(data).format('DD-MM-YYYY');
+                        },
                     },
                     {
                         data: 'action',

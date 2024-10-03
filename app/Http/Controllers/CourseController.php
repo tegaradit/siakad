@@ -14,60 +14,32 @@ use Yajra\DataTables\DataTables;
 
 class CourseController extends Controller
 {
-    // public function index(){
-    //     // $user = Auth::user();
-    //     $menu = 'course';
-    //     $submenu = 'course';
-
-    //     // Mengambil data mata kuliah dengan relasi yang diperlukan
-    //     $datas = Course::with(['prodi', 'education_level', 'course_group', 'course_type'])->latest()->paginate(10);
-
-    //     // Mengirim data ke view
-    //     return view('pages.admin.course.index', compact('datas'));
-    // }
-
     public function index()
     {
         if (request()->ajax()) {
-            $courses = Course::with(['all_prodi', 'education_level', 'course_group', 'course_type'])->get();
+            $currentIdSp = IdentitasPt::first()->current_id_sp;
+
+            // Filter berdasarkan all_prodi yang sesuai dengan current_id_sp dan status 'A'
+            $courses = Course::whereHas('all_prodi', function ($query) use ($currentIdSp) {
+                $query->where('id_sp', $currentIdSp)
+                    ->where('status', 'A');
+            })
+                ->with(['all_prodi', 'course_type']) // Hanya memuat relasi all_prodi dan course_type
+                ->get();
+
             return DataTables::of($courses)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $editUrl = route('course.edit', $row->id);
-                    $deleteUrl = route('course.destroy', $row->id);
-                    $viewUrl = route('course.show', $row->id); // URL for the view button
+                    $viewUrl = route('course.show', $row->id);
 
-                    return '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(' . $row->id . ');" action="' . $deleteUrl . '" method="POST">
-                                <a href="' . $viewUrl . '" class="btn btn-info btn-sm view m-0" title="View">
-                                    <i class="fas fa-eye"></i> Lihat
-                                </a>
-                                <a href="' . $editUrl . '" class="btn btn-warning btn-sm edit m-0" title="Edit">
-                                    <i class="fas fa-pencil-alt"></i> Edit
-                                </a>
-                                ' . csrf_field() . '
-                                ' . method_field('DELETE') . '
-                                <button type="submit" class="btn btn-danger btn-sm delete m-0" title="Delete">
-                                    <i class="fas fa-trash-alt"></i> Hapus
-                                </button>
-                            </form>';
-                })
-                ->editColumn('is_sap', function ($row) {
-                    return $row->is_sap ? 'Ya' : 'Tidak';
-                })
-                ->editColumn('is_silabus', function ($row) {
-                    return $row->is_silabus ? 'Ya' : 'Tidak';
-                })
-                ->editColumn('is_teaching_material', function ($row) {
-                    return $row->is_teaching_material ? 'Ya' : 'Tidak';
-                })
-                ->editColumn('is_praktikum', function ($row) {
-                    return $row->is_praktikum ? 'Ya' : 'Tidak';
-                })
-                ->editColumn('effective_start_date', function ($row) {
-                    return $row->effective_start_date ? \Carbon\Carbon::parse($row->effective_start_date)->format('d-m-Y') : 'N/A';
-                })
-                ->editColumn('effective_end_date', function ($row) {
-                    return $row->effective_end_date ? \Carbon\Carbon::parse($row->effective_end_date)->format('d-m-Y') : 'N/A';
+                    $deleteForm = '<form id="delete-form-' . $row->id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $row->id . '\');" action="' . route('course.destroy', $row->id) . '" method="POST">'
+                        . csrf_field()
+                        . method_field('DELETE')
+                        . '<a href="' . $viewUrl . '" class="btn btn-info btn-sm info ms-1 m-0" title="Info"><i class="fas fa-eye"></i> Detail</a>'
+                        . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit ms-1 m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
+                        . '<button type="submit" class="btn btn-danger btn-sm delete ms-1 m-0"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
+                    return $deleteForm;
                 })
                 ->make(true);
         }
@@ -86,23 +58,43 @@ class CourseController extends Controller
 
     public function create()
     {
-        $education_levels = Education_level::all();
+        // $education_levels = Education_level::all();
         $group = Course_group::all();
         $type = Course_type::all();
 
-        // Mendapatkan current_id_sp dari tabel identitas_pt
-        $identitas_pt = IdentitasPt::first(); // Sesuaikan query untuk mendapatkan data identitas_pt
-        $current_id_sp = $identitas_pt->current_id_sp;
-
-        // Query untuk mendapatkan all_prodi yang memiliki id_sp sama dan status Aktif
-        $prodi = All_prodi::where('id_sp', $current_id_sp)
-            ->where('status', 'A') // 'A' adalah untuk status Aktif
+        // Fetch all prodi where status is 'A' and id_sp matches the current_id_sp
+        $prodi = All_prodi::where('status', 'A')
+            ->where('id_sp', IdentitasPt::first()->current_id_sp)
             ->get();
 
         // dd($group, $type); // Check what data is being passed
 
-        return view('pages.admin.course.form', compact('prodi', 'education_levels', 'group', 'type', 'identitas_pt', 'current_id_sp'));
+        return view('pages.admin.course.form', compact('prodi', 'group', 'type', 'prodi'));
     }
+
+    public function getEducationLevel($prodi_id)
+    {
+        $prodi = All_prodi::find($prodi_id);
+
+        // Ensure that the Prodi exists
+        if (!$prodi) {
+            return response()->json(['error' => 'Prodi not found'], 404);
+        }
+
+        // Find the associated education level using the id_jenj_didik from Prodi
+        $educationLevel = Education_level::where('id_jenj_didik', $prodi->id_jenj_didik)->first();
+
+        // Ensure that the Education Level exists
+        if (!$educationLevel) {
+            return response()->json(['error' => 'Education Level not found'], 404);
+        }
+
+        return response()->json([
+            'id_jenj_didik' => $educationLevel->id_jenj_didik,
+            'nm_jenj_didik' => $educationLevel->nm_jenj_didik // Return the name as well
+        ]);
+    }
+
 
     public function store(Request $request)
     {
@@ -160,7 +152,7 @@ class CourseController extends Controller
     public function edit($id)
     {
         $course = Course::findOrFail($id); // Retrieve the course or fail with 404
-        $education_levels = Education_level::all();
+        // $education_levels = Education_level::all();
         $group = Course_group::all();
         $type = Course_type::all();
 
@@ -175,7 +167,7 @@ class CourseController extends Controller
         $course_range = $course->effective_start_date . ' to ' . $course->effective_end_date;
 
 
-        return view('pages.admin.course.form_edit', compact('course', 'prodi', 'education_levels', 'group', 'type', 'course_range'));
+        return view('pages.admin.course.form_edit', compact('course', 'prodi', 'group', 'type', 'course_range'));
     }
 
 

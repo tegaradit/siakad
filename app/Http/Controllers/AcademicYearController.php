@@ -32,12 +32,6 @@ class AcademicYearController extends Controller
                             <button type="submit" class="btn icon icon-left btn-danger btn-sm delete"><i class="fas fa-trash-alt"></i> Hapus</button>
                         </form>';
                 })
-                ->editColumn('start_date', function ($data) {
-                    return \Carbon\Carbon::parse($data->start_date)->format('d-m-Y');
-                })
-                ->editColumn('end_date', function ($data) {
-                    return \Carbon\Carbon::parse($data->end_date)->format('d-m-Y');
-                })
                 ->make(true);
         }
 

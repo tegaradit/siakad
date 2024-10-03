@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">{{ isset($semester) ? 'Edit Semester' : 'Tambah Semester' }}</h4>
+                        <h4 class="mb-sm-0 font-size-18"></h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
@@ -117,6 +117,22 @@
             </div>
         </div>
     </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script> © Minia.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end d-none d-sm-block">
+                        Design & Develop by <a href="#!" class="text-decoration-underline">Themesbrand</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

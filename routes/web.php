@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseCurriculumController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\IdentitasPTController;
@@ -19,6 +20,9 @@ use App\Http\Controllers\TAllProdiController;
 use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentTypeController;
+use App\Http\Controllers\KelasKuliahController;
+use App\Http\Controllers\RegisterTypeController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +69,7 @@ Route::delete('/admin/buildings/{id}', [BuildingsController::class, 'destroy'])-
 //admin/course(matakuliah)
 Route::get('/admin/course', [CourseController::class, 'index'])->name('course.index')->middleware(Authenticate::class);
 Route::get('/admin/course/create', [CourseController::class, 'create'])->name('course.create')->middleware(Authenticate::class);
+Route::get('/get-education-level/{prodi_id}', [CourseController::class, 'getEducationLevel']);
 Route::post('/admin/course', [CourseController::class, 'store'])->name('course.store')->middleware(Authenticate::class);
 Route::get('/admin/course/{id}/edit', [CourseController::class, 'edit'])->name('course.edit')->middleware(Authenticate::class);
 Route::put('/admin/course/{id}', [CourseController::class, 'update'])->name('course.update')->middleware(Authenticate::class);
@@ -89,6 +94,14 @@ Route::get('/api/get-education-level/{prodiId}', function ($prodiId) {
 
     return response()->json(['education_level_id' => $educationLevel->id_jenj_didik, 'education_level_name' => $educationLevel->nm_jenj_didik]);
 });
+// Routes for Curriculum Courses
+Route::get('/admin/curriculum/detail/{curriculum_id}', [CourseCurriculumController::class, 'index'])->name('curriculum_course.index');
+Route::get('/admin/curriculum/detail/{curriculum_id}/create', [CourseCurriculumController::class, 'create'])->name('curriculum_course.create');
+Route::get('/courses/get', [CourseController::class, 'getCourses'])->name('courses.get');
+Route::post('/admin/curriculum/detail/{curriculum_id}', [CourseCurriculumController::class, 'store'])->name('curriculum_course.store');
+Route::get('/admin/curriculum/detail/{curriculum_id}/{id}/edit', [CourseCurriculumController::class, 'edit'])->name('curriculum_course.edit');
+Route::put('/admin/curriculum/detail/{curriculum_id}/{id}', [CourseCurriculumController::class, 'update'])->name('curriculum_course.update');
+Route::delete('/admin/curriculum/detail/{curriculum_id}/{id}', [CourseCurriculumController::class, 'destroy'])->name('curriculum_course.destroy');
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data')->middleware(Authenticate::class);
 Route::resource('/admin/lecture-setting', LectureSettingController::class)->middleware(Authenticate::class);
@@ -101,6 +114,13 @@ Route::get('/kalender-akademik/data', [AcademicCalendarController::class, 'data'
 //akademik year
 Route::resource('/admin/tahun-akademik', AcademicYearController::class)->middleware(Authenticate::class);
 Route::get('/tahun-akademik/data', [AcademicYearController::class, 'data'])->name('tahun-akademik.data')->middleware(Authenticate::class);
+//studentType
+Route::get('/student-type/data', [StudentTypeController::class, 'data'])->name('student-type.data')->middleware(Authenticate::class);
+Route::resource('/admin/student-type', StudentTypeController::class)->middleware(Authenticate::class);
+//studentType
+Route::get('/register-type/data', [RegisterTypeController::class, 'data'])->name('register-type.data')->middleware(Authenticate::class);
+Route::resource('/admin/register-type', RegisterTypeController::class)->middleware(Authenticate::class);
+
 
 
 //dosen 
@@ -150,3 +170,7 @@ Route::delete('/admin/periode_pmb/delete/{id}', [PeriodePmbController::class, 'd
 
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
+
+
+
+Route::resource('/kelas-kuliah', KelasKuliahController::class);
