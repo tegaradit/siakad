@@ -111,7 +111,7 @@ class SemesterController extends Controller
         ]);
 
         // Redirect back to the semester index page with a success message
-        return redirect()->route('semester.index')->with('success', 'Semester berhasil ditambahkan.');
+        return redirect()->route('semester.index')->with('success', 'Data Semester Berhasil Ditambahkan.');
     }
 
     // Display the form to edit an existing semester
@@ -170,7 +170,7 @@ class SemesterController extends Controller
         ]);
 
         // Redirect back with success message
-        return redirect()->route('semester.index')->with('success', 'Semester updated successfully!');
+        return redirect()->route('semester.index')->with('success', 'Data Semester Berhasil Diperbarui.');
     }
 
 
@@ -180,6 +180,6 @@ class SemesterController extends Controller
         $semester = Semester::findOrFail($semester_id); // Correct variable name
         $semester->delete();
 
-        return redirect()->route('semester.index')->with('success', 'Curriculum deleted successfully.');
+        return redirect()->route('semester.index')->with('success', 'Data Semester Berhasil di Hapus.');
     }
 }

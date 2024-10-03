@@ -78,7 +78,7 @@
 
                                                 <!-- Input SKS MK -->
                                                 <div class="mb-3">
-                                                    <label for="sks_mk" class="form-label">SKS MK</label>
+                                                    <label for="sks_mk" class="form-label">SKS Matakuliah</label>
                                                     <input type="number"
                                                         class="form-control @error('sks_mk') is-invalid @enderror"
                                                         id="sks_mk" name="sks_mk"
@@ -91,7 +91,7 @@
 
                                                 <!-- Input SKS TM -->
                                                 <div class="mb-3">
-                                                    <label for="sks_tm" class="form-label">SKS TM</label>
+                                                    <label for="sks_tm" class="form-label">SKS Tatap Muka</label>
                                                     <input type="number"
                                                         class="form-control @error('sks_tm') is-invalid @enderror"
                                                         id="sks_tm" name="sks_tm"
@@ -105,7 +105,7 @@
                                             <div class="col-md-6">
                                                 <!-- Input SKS PR -->
                                                 <div class="mb-3">
-                                                    <label for="sks_pr" class="form-label">SKS PR</label>
+                                                    <label for="sks_pr" class="form-label">SKS Praktikum</label>
                                                     <input type="number"
                                                         class="form-control @error('sks_pr') is-invalid @enderror"
                                                         id="sks_pr" name="sks_pr"
@@ -117,7 +117,7 @@
 
                                                 <!-- Input SKS PL -->
                                                 <div class="mb-3">
-                                                    <label for="sks_pl" class="form-label">SKS PL</label>
+                                                    <label for="sks_pl" class="form-label">SKS Praktikum Lapangan</label>
                                                     <input type="number"
                                                         class="form-control @error('sks_pl') is-invalid @enderror"
                                                         id="sks_pl" name="sks_pl"
@@ -129,7 +129,7 @@
 
                                                 <!-- Input SKS SIM -->
                                                 <div class="mb-3">
-                                                    <label for="sks_sim" class="form-label">SKS SIM</label>
+                                                    <label for="sks_sim" class="form-label">SKS Simulasi</label>
                                                     <input type="number"
                                                         class="form-control @error('sks_sim') is-invalid @enderror"
                                                         id="sks_sim" name="sks_sim"
@@ -179,6 +179,22 @@
                 </div>
             </div>
         </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script> © Minia.
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end d-none d-sm-block">
+                            Design & Develop by <a href="#!" class="text-decoration-underline">Themesbrand</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

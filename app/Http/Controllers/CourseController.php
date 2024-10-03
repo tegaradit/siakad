@@ -145,7 +145,7 @@ class CourseController extends Controller
         ]);
 
         // Redirect ke halaman course.index dengan pesan sukses
-        return redirect()->route('course.index')->with('success', 'Mata Kuliah berhasil ditambahkan.');
+        return redirect()->route('course.index')->with('success', 'Data Mata Kuliah Berhasil Ditambahkan.');
     }
 
 
@@ -222,7 +222,7 @@ class CourseController extends Controller
         ]);
 
         // Redirect to the course index with success message
-        return redirect()->route('course.index')->with('success', 'Mata Kuliah berhasil diperbarui.');
+        return redirect()->route('course.index')->with('success', 'Data Mata Kuliah Berhasil Diperbarui.');
     }
 
 
@@ -235,6 +235,6 @@ class CourseController extends Controller
         $course->delete();
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('course.index')->with('success', 'Mata Kuliah berhasil dihapus.');
+        return redirect()->route('course.index')->with('success', 'Data Mata Kuliah Berhasil di Hapus.');
     }
 }

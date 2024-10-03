@@ -98,7 +98,7 @@ class CourseCurriculumController extends Controller
         $course->is_mandatory = $request->is_mandatory;
         $course->save();
 
-        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Course added successfully.');
+        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Data Matakuliah Kurikulum Berhasil Ditambahkan.');
     }
 
     // Show the form to edit an existing course
@@ -136,7 +136,7 @@ class CourseCurriculumController extends Controller
         $course->is_mandatory = $request->is_mandatory;
         $course->save();
 
-        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Course updated successfully.');
+        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Data Matakuliah Kurikulum Berhasil Diperbaharui.');
     }
 
     // Delete an existing course
@@ -145,6 +145,6 @@ class CourseCurriculumController extends Controller
         $course = CurriculumCourse::findOrFail($id);
         $course->delete();
 
-        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Course deleted successfully.');
+        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Data Matakuliah Kurikulum Berhasil di Hapus.');
     }
 }

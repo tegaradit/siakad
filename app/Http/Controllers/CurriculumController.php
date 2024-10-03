@@ -96,7 +96,7 @@ class CurriculumController extends Controller
         $curriculum->choice_credit_number = $request->choice_credit_number;
         $curriculum->save();
 
-        return redirect()->route('curriculum.index')->with('success', 'Curriculum created successfully!');
+        return redirect()->route('curriculum.index')->with('success', 'Data Semester Berhasil Ditambahkan.');
     }
 
     // Show the form for editing the specified resource
@@ -153,7 +153,7 @@ class CurriculumController extends Controller
         $curriculum->save();
 
         // Redirect to the curriculum index with a success message
-        return redirect()->route('curriculum.index')->with('success', 'Curriculum updated successfully!');
+        return redirect()->route('curriculum.index')->with('success', 'Data Kurikulum Berhasil Diperbarui.');
     }
 
 
@@ -163,6 +163,6 @@ class CurriculumController extends Controller
         $curriculum = Curriculum::findOrFail($curriculum_id); // Correct variable name
         $curriculum->delete();
 
-        return redirect()->route('curriculum.index')->with('success', 'Curriculum deleted successfully.');
+        return redirect()->route('curriculum.index')->with('success', 'Data Kurikulum Berhasil di Hapus.');
     }
 }
