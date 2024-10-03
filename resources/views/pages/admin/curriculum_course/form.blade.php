@@ -56,7 +56,7 @@
                                         <div class="form-group mb-4">
                                             <label for="status">Matakuliah</label>
                                             <select id="course-selector" name="course_id" class="form-control" required>
-                                                <option value="{{ isset($course) ? $course->course_id : old('course_id') }}" selected>{{ isset($course) ? $course->course_id : old('course_id') }}</option>
+                                                <option value="{{ isset($courses) ? $courses[0]->id : '' }}" selected>{{ isset($courses) ? $courses[0]->code . " - " . $courses[0]->name : '' }}</option>
                                             </select>
                                         </div>
 

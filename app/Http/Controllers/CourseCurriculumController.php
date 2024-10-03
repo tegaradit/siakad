@@ -106,7 +106,7 @@ class CourseCurriculumController extends Controller
     {
         $curriculum = Curriculum::findOrFail($curriculum_id);
         $course = CurriculumCourse::findOrFail($id);
-        $courses = Course::all();
+        $courses = Course::where("id", "=", $course->course_id)->get();
         return view('pages.admin.curriculum_course.form', compact('curriculum', 'course', 'courses'));
     }
 
@@ -114,15 +114,26 @@ class CourseCurriculumController extends Controller
     public function update(Request $request, $curriculum_id, $id)
     {
         $request->validate([
-            'course_id' => 'required|exists:courses,id',
-            'sks_mk' => 'required|numeric',
-            // Add other validation rules as needed
+            'course_id' => 'required|exists:course,id', // Pastikan course_id ada di tabel course
+            'smt' => 'required|integer|min:1|max:8', // Misalnya, semester harus antara 1 dan 8
+            'sks_mk' => 'required|integer|min:1', // SKS MK harus lebih dari 0
+            'sks_tm' => 'nullable|integer|min:0', // SKS TM bisa kosong atau minimal 0
+            'sks_pr' => 'nullable|integer|min:0', // SKS PR bisa kosong atau minimal 0
+            'sks_pl' => 'nullable|integer|min:0', // SKS PL bisa kosong atau minimal 0
+            'sks_sim' => 'nullable|integer|min:0', // SKS SIM bisa kosong atau minimal 0
+            'is_mandatory' => 'required|boolean', // is_mandatory harus ada dan merupakan boolean
         ]);
 
         $course = CurriculumCourse::findOrFail($id);
+        $course->curriculum_id = $curriculum_id;
         $course->course_id = $request->course_id;
+        $course->smt = $request->smt;
         $course->sks_mk = $request->sks_mk;
-        // Set other fields
+        $course->sks_tm = $request->sks_tm;
+        $course->sks_pr = $request->sks_pr;
+        $course->sks_pl = $request->sks_pl;
+        $course->sks_sim = $request->sks_sim;
+        $course->is_mandatory = $request->is_mandatory;
         $course->save();
 
         return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Course updated successfully.');
