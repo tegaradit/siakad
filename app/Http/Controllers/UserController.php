@@ -43,6 +43,8 @@ class UserController extends Controller
                         return redirect()->route('customer-service.home');
                     case 'finance':
                         return redirect()->route('finance.home');
+                    case 'mahasiswa':
+                        return redirect()->route('dashboard.admin');
                     default:
                         return redirect()->route('login')->withErrors(['role' => 'Role tidak valid.']);
                 }
@@ -107,6 +109,8 @@ class UserController extends Controller
                         return redirect()->route('customer-service.home');
                     case 'finance':
                         return redirect()->route('finance.home');
+                    case 'mahasiswa':
+                        return redirect()->route('dashboard.admin');
                     default:
                         return redirect()->route('login.page')->withErrors(['role' => 'Role tidak valid.']);
                 }
@@ -122,11 +126,13 @@ class UserController extends Controller
 
 
     // ...
-    public function users() {
+    public function users()
+    {
         return view('pages.admin.users.index');
     }
-    
-    public function getUsers(Request $request) {
+
+    public function getUsers(Request $request)
+    {
         if ($request->ajax()) {
             $data = User::with('role')->select('users.*');
             return DataTables::of($data)
@@ -134,17 +140,18 @@ class UserController extends Controller
                     return $row->role ? $row->role->name : 'N/A';
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="'.route('users.edit', $row->id).'" class="btn btn-warning btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> Edit </a>';
-                    $btn .= ' <a href="javascript:void(0)" data-id="'.$row->id.'" class="btn btn-danger btn-sm delete m-0"><i class="fas fa-trash-alt"></i>Hapus</a>';
+                    $btn = '<a href="' . route('users.edit', $row->id) . '" class="btn btn-warning btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> Edit </a>';
+                    $btn .= ' <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-danger btn-sm delete m-0"><i class="fas fa-trash-alt"></i>Hapus</a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
     }
-    
+
     //make method createF
-    public function create(){
+    public function create()
+    {
         $roles = Role::all();
         return view('pages.admin.users.create', compact('roles'));
     }
@@ -159,7 +166,7 @@ class UserController extends Controller
             'role_id' => 'required|exists:roles,id',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:100000', // Validasi foto opsional
         ]);
-    
+
         // Cek apakah ada file foto yang diunggah
         if ($request->hasFile('photo')) {
             // Simpan foto ke dalam folder storage/app/public/photos
@@ -167,7 +174,7 @@ class UserController extends Controller
         } else {
             $photoPath = null; // Jika tidak ada foto yang diunggah
         }
-    
+
         // Simpan data user ke database
         User::create([
             'name' => $request->name,
@@ -177,10 +184,10 @@ class UserController extends Controller
             'role_id' => $request->role_id,
             'photo' => $photoPath, // Ini bisa null jika tidak ada foto
         ]);
-    
+
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
-    
+
     public function edit($id)
     {
         $user = User::find($id);
@@ -239,13 +246,12 @@ class UserController extends Controller
         return response()->json(['success' => 'User deleted successfully']);
     }
     public function logout(Request $request)
-{
-Auth::logout();
+    {
+        Auth::logout();
 
-$request->session()->invalidate();
-$request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-return view('pages.welcome')->with('success', 'You have been logged out successfully.');
-}
-
+        return view('pages.welcome')->with('success', 'You have been logged out successfully.');
+    }
 }
