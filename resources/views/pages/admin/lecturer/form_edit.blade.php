@@ -96,7 +96,7 @@
                                             <!-- Gender field -->
                                             <div class="form-group form-row">
                                                 <label for="gender">Gender</label>
-                                                <select name="gender" class="form-control">
+                                                <select name="gender" class="form-control form-select">
                                                     <option value="Laki-laki"
                                                         {{ old('gender', $lecturer->gender) == 'Laki-laki' ? 'selected' : '' }}>
                                                         Laki-laki
@@ -124,7 +124,7 @@
                                             <!-- Active Status field -->
                                             <div class="form-group form-row">
                                                 <label for="active_status_id">Status Aktif</label>
-                                                <select name="active_status_id" class="form-control">
+                                                <select name="active_status_id" class="form-control form-select">
                                                     @foreach ($activeStatuses as $status)
                                                         <option value="{{ $status->id }}"
                                                             {{ old('active_status_id', $lecturer->active_status_id) == $status->id ? 'selected' : '' }}>
@@ -193,7 +193,7 @@
                                             <!-- Employee Level field -->
                                             <div class="form-group form-row">
                                                 <label for="employee_level_id">Level Pegawai</label>
-                                                <select name="employee_level_id" class="form-control">
+                                                <select name="employee_level_id" class="form-control form-select">
                                                     @foreach ($employeeLevels as $level)
                                                         <option value="{{ $level->id }}"
                                                             {{ old('employee_level_id', $lecturer->employee_level_id) == $level->id ? 'selected' : '' }}>
@@ -208,7 +208,7 @@
                                             <!-- Level Education field -->
                                             <div class="form-group form-row">
                                                 <label for="level_education">Level Pendidikan</label>
-                                                <select name="level_education" class="form-control">
+                                                <select name="level_education" class="form-control form-select">
                                                     <option value="S1"
                                                         {{ old('level_education', $lecturer->level_education) == 'S1' ? 'selected' : '' }}>
                                                         S1</option>
@@ -289,8 +289,8 @@
                                             {{-- prodi --}}
                                             <div class="form-group form-row mt-2">
                                                 <label for="prodi_id">Prodi</label>
-                                                <select name="prodi_id" id="prodi_id" class="form-control" required>
-                                                    <option value="" disabled>Pilih Prodi</option>
+                                                <select name="prodi_id" id="prodi_id" class="form-control form-select" required>
+                                                    <option value="" disabled>Pilih...</option>
                                                     @foreach ($prodiList as $p)
                                                         <option value="{{ $p->id_prodi }}"
                                                             {{ old('prodi_id', $lecturer->prodi_id ?? '') == $p->id_prodi ? 'selected' : '' }}>
