@@ -41,5 +41,3 @@ class IdentitasPTController extends Controller
         return redirect()->back()->with('success', 'Data updated successfully');
     }
 }
-    
-

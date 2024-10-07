@@ -40,6 +40,9 @@ class LecturerController extends Controller
                 ->addColumn('action', function ($data) {
                     return '
                     <div style="text-align: center;">
+                        <a href="#" class="btn btn-success btn-sm advisor m-0">
+                            <i class="fas fa-user-tie"></i> Dosen Wali
+                        </a>
                         <a href="' . route('lecturer.show', $data->id) . '" class="btn btn-info btn-sm show m-0">
                             <i class="fas fa-eye"></i> Detail
                         </a>
