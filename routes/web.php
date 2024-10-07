@@ -158,4 +158,9 @@ Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecture
 
 
 
-Route::resource('/kelas-kuliah', KelasKuliahController::class);
+Route::get('kelas_kuliah', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
+Route::get('/kelas_kuliah/create', [KelasKuliahController::class, 'create'])->name('kelas_kuliah.create');
+Route::post('kelas_kuliah/store', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
+
+
+

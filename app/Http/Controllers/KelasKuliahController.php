@@ -2,64 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KelasKuliah;
+use App\Models\Course_curriculum;
+
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class KelasKuliahController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kelas_kuliahs = KelasKuliah::all();
-        return view('kelas_kuliah.index', compact('kelas_kuliahs'));
-    }
+        if ($request->ajax()) {
+            $data = Course_curriculum::with(['course', 'curriculum'])->get();
+            return DataTables::of($data)
+                ->addColumn('course', function ($row) {
+                    return $row->course->code ?? 'N/A';
+                })
+                ->addColumn('curriculum', function($row)
+                {
+                    return $row->curriculum->name ?? 'N/A';
+                })
+                ->addColumn('action', function ($row) {
+                    
+                    $btn = '<a href="' . route('users.edit', $row->id) . '" class="btn btn-primary btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> buat kelas </a>';
+                    $btn .= '<a href="' . route('users.edit', $row->id) . '" class="btn btn-warning btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> Edit </a>';
+                    $btn .= ' <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-danger btn-sm delete m-0"><i class="fas fa-trash-alt"></i>Hapus</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
+        return view('pages.admin.kelas_kuliah.index');
+    }
     public function create()
     {
-        return view('kelas_kuliah.create');
+        // Kembalikan view untuk form pembuatan kelas kuliah
+        return view('pages.admin.kelas_kuliah.create');
     }
-
     public function store(Request $request)
     {
-        $request->validate([
-            'prodi_id' => 'required',
-            'semester_id' => 'required',
-            'nama_kelas' => 'required|max:50',
-            'sks_mk' => 'required|integer',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'course_id' => 'required',
-            // Add validations for other fields
-        ]);
-
-        KelasKuliah::create($request->all());
-        return redirect()->route('kelas-kuliah.index')->with('success', 'Kelas created successfully.');
-    }
-
-    public function edit(KelasKuliah $kelas_kuliah)
-    {
-        return view('kelas_kuliah.edit', compact('kelas_kuliah'));
-    }
-
-    public function update(Request $request, KelasKuliah $kelas_kuliah)
-    {
-        $request->validate([
-            'prodi_id' => 'required',
-            'semester_id' => 'required',
-            'nama_kelas' => 'required|max:50',
-            'sks_mk' => 'required|integer',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'course_id' => 'required',
-            // Add validations for other fields
-        ]);
-
-        $kelas_kuliah->update($request->all());
-        return redirect()->route('kelas-kuliah.index')->with('success', 'Kelas updated successfully.');
-    }
-
-    public function destroy(KelasKuliah $kelas_kuliah)
-    {
-        $kelas_kuliah->delete();
-        return redirect()->route('kelas-kuliah.index')->with('success', 'Kelas deleted successfully.');
+        // Validasi dan simpan data kelas kuliah
     }
 }
