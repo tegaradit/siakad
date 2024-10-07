@@ -101,7 +101,7 @@ class LecturerController extends Controller
             'employee_level_id' => 'required|exists:employee_level,id',
             'level_education' => 'required|in:S1,S2,S3',
             'phone_number' => 'nullable|string|max:13',
-            'email' => 'nullable|email|max:255|unique:users,email', // Validasi email unik untuk user
+            'email' => 'nullable|email|max:255|unique:users,email',
             'assign_letter_number' => 'nullable|string|max:30',
             'assign_letter_date' => 'nullable|date',
             'assign_letter_tmt' => 'nullable|date',
@@ -111,7 +111,6 @@ class LecturerController extends Controller
 
         // Simpan data lecturer
         $lecturer = Lecturer::create(array_merge($validatedData,['role_id' => 7]));
-        // Jika email diisi, buat user yang terkait
      
         if ($request->filled('email')) {
         $user = User::updateOrCreate(
@@ -182,20 +181,19 @@ class LecturerController extends Controller
 
         // Update data lecturer
         $lecturer = Lecturer::findOrFail($id);
-        $lecturer->update(array_merge($validatedData,['role_id' => 7]));
-
-        // Update user data jika email diisi
+        $lecturer->update(array_merge($validatedData,['role_id' => 8]));
+        
          // Update atau buat user yang terkait
-    if ($request->filled('email')) {
-        $user = User::updateOrCreate(
-            ['email' => $lecturer->email],
-            [
-                'name' => $request->input('name'),
-                'phone_number' => $request->input('phone_number'),
-                'role_id' => 2,
-                'password' => Hash::make($request->filled('password') ? $request->input('password') : $request->input('phone_number')),
-            ]
-        );
+        if ($request->filled('email')) {
+            $user = User::updateOrCreate(
+                ['email' => $lecturer->email],
+                [
+                    'name' => $request->input('name'),
+                    'phone_number' => $request->input('phone_number'),
+                    'role_id' => 8,
+                    'password' => Hash::make($request->filled('password') ? $request->input('password') : $request->input('phone_number')),
+                ]
+            );
         }
 
         return redirect()->route('lecturer.index')->with('success', 'Data lecturer berhasil diperbarui.');
