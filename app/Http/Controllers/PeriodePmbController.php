@@ -42,7 +42,7 @@ class PeriodePmbController extends Controller
                 ->editColumn('end_date', function ($row) {
                     return date('d-m-Y', strtotime($row->end_date));
                 })
-                ->make(true);
+                ->make();
         }
 
         return view('pages.admin.periode_pmb.index');

@@ -207,7 +207,7 @@
                 </li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="{{ route('mahasiswa.index') }}">
                         <i data-feather="user"></i>
                         <span data-key="t-dashboard">Mahasiswa</span>
                     </a>
