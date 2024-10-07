@@ -12,7 +12,7 @@
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="javascript: void(0);">Curriculum</a></li>
-                                    <li class="breadcrumb-item active">Detail</li>
+                                    <li class="breadcrumb-item active">Matakuliah Curriculum</li>
                                 </ol>
                             </div>
                         </div>
@@ -29,6 +29,20 @@
                                 </p>
                             </div>
                             <div class="card-body">
+                                <div class="alert alert-primary" role="alert">
+                                    <h4 class="alert-heading">Pemberitahuan</h4>
+                                    <p>
+                                      SKS MK -> SKS Matakuliah <br>
+                                      SKS TM -> SKS Tatap Muka <br>
+                                      SKS PR -> SKS Praktikum <br>
+                                      SKS PL -> SKS Praktikum Lapangan <br>
+                                      SKS SIM -> SKS Simulasi
+                                    </p>
+                                    <hr />
+                                    <p class="mb-0">
+                                      Diatas merupakan sedikit info mengenai tabel di bawah ini.
+                                    </p>
+                                  </div>
                                 @if (isset($curriculum))
                                     <a href="{{ route('curriculum_course.create', $curriculum->curriculum_id) }}"
                                         class="btn btn-primary btn-sm mb-3">
@@ -38,20 +52,26 @@
                                 @else
                                     <p>Kurikulum tidak ditemukan.</p>
                                 @endif
+                                @if (session('success'))
+                                    <div class="alert alert-success alert-dismissible alert-label-icon label-arrow fade show" role="alert">
+                                        <i class="mdi mdi-check-all label-icon"></i><strong>Success</strong>-{{ session('success') }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                @endif
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered dt-responsive nowrap w-100"
                                         id="datatable">
                                         <thead>
                                             <tr style="text-align: center; vertical-align: middle;">
                                                 <th style="width: 30px; text-align: center; vertical-align: middle;">No</th>
-                                                <th style="text-align: center; vertical-align: middle;">Kode<br>Matakuliah</th>
+                                                <th style="text-align: center; vertical-align: middle;">Kode<br>MK</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nama<br>Matakuliah</th>
                                                 <th style="text-align: center; vertical-align: middle;">SMT</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS MK</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS TM</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS PR</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS PL</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS SIM</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>MK</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>TM</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>PR</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>PL</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>SIM</th>
                                                 <th style="text-align: center; vertical-align: middle;">Wajib</th>
                                                 <th style="text-align: center; vertical-align: middle;">Aksi</th>
                                             </tr>
@@ -105,7 +125,10 @@
                         },
                         {
                             data: 'smt',
-                            name: 'smt'
+                            name: 'smt',
+                            createdCell: function(td, cellData, rowData, row, col) {
+                                $(td).css('text-align', 'center'); // Align center
+                            }
                         },
                         {
                             data: 'sks_mk',
