@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Curriculum;
 use App\Models\CurriculumCourse;
 use App\Models\IdentitasPt;
+use App\Models\Semester;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -49,17 +50,44 @@ class CourseCurriculumController extends Controller
     public function create($curriculum_id)
     {
         $curriculum = Curriculum::findOrFail($curriculum_id);
-        return view('pages.admin.curriculum_course.form', compact('curriculum'));
+        $semester = Semester::findOrFail($curriculum->semester_id);
+        return view('pages.admin.curriculum_course.form', compact('curriculum', 'semester'));
     }
 
     // Get courses for Select2
+    // public function searchCourse(Request $request, $curriculum_id)
+    // {
+    //     // Ambil query term dari Select2
+    //     $search = $request->query('term', ''); // 'term' adalah nama parameter default yang dikirim oleh Select2
+
+    //     // Lakukan pencarian berdasarkan 'code'
+    //     $courses = Course::where('code', 'like', "%$search%")
+    //         ->select('id', 'code', 'name') // Pilih kolom yang diperlukan saja
+    //         ->get();
+
+    //     // Return response dalam format yang diminta oleh Select2
+    //     return response()->json($courses->map(function ($course) {
+    //         return [
+    //             'id' => $course->id, // Value untuk input
+    //             'text' => $course->code . ' - ' . $course->name, // Text yang ditampilkan
+    //         ];
+    //     }));
+    // }
+
     public function searchCourse(Request $request, $curriculum_id)
     {
         // Ambil query term dari Select2
         $search = $request->query('term', ''); // 'term' adalah nama parameter default yang dikirim oleh Select2
 
-        // Lakukan pencarian berdasarkan 'code'
-        $courses = Course::where('code', 'like', "%$search%")
+        // Ambil current_id_sp dari IdentitasPt (sesuaikan ini sesuai dengan struktur database Anda)
+        $current_id_sp = IdentitasPt::first()->current_id_sp;
+
+        // Lakukan pencarian berdasarkan 'code' dan filter by all_prodi.id_sp dan all_prodi.status
+        $courses = Course::whereHas('all_prodi', function ($query) use ($current_id_sp) {
+            $query->where('id_sp', $current_id_sp)
+                ->where('status', 'A');
+        })
+            ->where('code', 'like', "%$search%") // Filter by 'code' from search term
             ->select('id', 'code', 'name') // Pilih kolom yang diperlukan saja
             ->get();
 
@@ -106,8 +134,9 @@ class CourseCurriculumController extends Controller
     {
         $curriculum = Curriculum::findOrFail($curriculum_id);
         $course = CurriculumCourse::findOrFail($id);
+        $semester = Semester::findOrFail($curriculum->semester_id);
         $courses = Course::where("id", "=", $course->course_id)->get();
-        return view('pages.admin.curriculum_course.form', compact('curriculum', 'course', 'courses'));
+        return view('pages.admin.curriculum_course.form', compact('curriculum', 'course', 'semester', 'courses'));
     }
 
     // Update an existing course

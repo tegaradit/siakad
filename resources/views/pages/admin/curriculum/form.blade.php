@@ -61,7 +61,7 @@
                                     <!-- Prodi Selection -->
                                     <div class="form-group">
                                         <label for="prodi_id">Prodi</label>
-                                        <select name="prodi_id" id="prodi_id" class="form-control" required>
+                                        <select name="prodi_id" id="prodi_id" class="form-select" required>
                                             <option value="">Pilih Prodi</option>
                                             @foreach ($allProdi as $prodi)
                                                 <option value="{{ $prodi->id_prodi }}"
@@ -103,7 +103,7 @@
                                     <div class="form-group">
                                         <label for="normal_semester_number">Jumlah Semester Normal</label>
                                         <input type="number" id="normal_semester_number" name="normal_semester_number"
-                                            class="form-control"
+                                            class="form-control" placeholder="0" 
                                             value="{{ isset($curriculum) ? $curriculum->normal_semester_number : '' }}"
                                             required>
                                     </div><br>
@@ -111,7 +111,7 @@
                                     <div class="form-group">
                                         <label for="pass_credit_number">Jumlah SKS Lulus</label>
                                         <input type="number" id="pass_credit_number" name="pass_credit_number"
-                                            class="form-control"
+                                            class="form-control" placeholder="0" 
                                             value="{{ isset($curriculum) ? $curriculum->pass_credit_number : '' }}"
                                             required>
                                     </div><br>
@@ -119,7 +119,7 @@
                                     <div class="form-group">
                                         <label for="mandatory_credit_number">Jumlah SKS Wajib</label>
                                         <input type="number" id="mandatory_credit_number" name="mandatory_credit_number"
-                                            class="form-control"
+                                            class="form-control" placeholder="0" 
                                             value="{{ isset($curriculum) ? $curriculum->mandatory_credit_number : '' }}"
                                             required>
                                     </div><br>
@@ -127,7 +127,7 @@
                                     <div class="form-group">
                                         <label for="choice_credit_number">Jumlah SKS Pilihan</label>
                                         <input type="number" id="choice_credit_number" name="choice_credit_number"
-                                            class="form-control"
+                                            class="form-control" placeholder="0" 
                                             value="{{ isset($curriculum) ? $curriculum->choice_credit_number : '' }}"
                                             required>
                                     </div><br>

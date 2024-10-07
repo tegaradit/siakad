@@ -70,7 +70,7 @@
 
                                 <div class="form-group mt-2">
                                     <label for="smt">SMT</label>
-                                    <select name="smt" id="smt" class="form-control" required>
+                                    <select name="smt" id="smt" class="form-select" required>
                                         <option value="">Pilih...</option>
                                         <option value="1" {{ old('smt', $semester->smt ?? '') == 1 ? 'selected' : '' }}>Ganjil</option>
                                         <option value="2" {{ old('smt', $semester->smt ?? '') == 2 ? 'selected' : '' }}>Genap</option>
