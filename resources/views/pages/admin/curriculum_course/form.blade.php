@@ -56,7 +56,9 @@
                                         <div class="form-group mb-4">
                                             <label for="status">Matakuliah</label>
                                             <select id="course-selector" name="course_id" class="form-control" required>
-                                                <option value="{{ isset($courses) ? $courses[0]->id : '' }}" selected>{{ isset($courses) ? $courses[0]->code . " - " . $courses[0]->name : '' }}</option>
+                                                <option value="{{ isset($courses) ? $courses[0]->id : '' }}" selected>
+                                                    {{ isset($courses) ? $courses[0]->code . ' - ' . $courses[0]->name : '' }}
+                                                </option>
                                             </select>
                                         </div>
 
@@ -65,8 +67,8 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <!-- Input SMT -->
-                                                <div class="mb-3">
-                                                    <label for="smt" class="form-label">SMT</label>
+                                                {{-- <div class="mb-3">
+                                                    <label for="smt" class="form-label">Semester</label>
                                                     <input type="number"
                                                         class="form-control @error('smt') is-invalid @enderror"
                                                         id="smt" name="smt"
@@ -74,30 +76,90 @@
                                                     @error('smt')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                </div>
+                                                </div> --}}
+
+                                                <div class="mb-3">
+                                                    <label for="smt" class="form-label">Semester</label>
+                                                    <select name="smt" id="smt" class="form-select" required>
+                                                        <option value="">Pilih...</option>
+                                                
+                                                        @if ($semester->smt == 1)
+                                                            {{-- Jika semester Ganjil --}}
+                                                            @for ($i = 1; $i <= 8; $i += 2)
+                                                                <option value="{{ $i }}" {{ old('smt', $course->smt ?? '') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                            @endfor
+                                                        @elseif ($semester->smt == 2)
+                                                            {{-- Jika semester Genap --}}
+                                                            @for ($i = 2; $i <= 8; $i += 2)
+                                                                <option value="{{ $i }}" {{ old('smt', $course->smt ?? '') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                            @endfor
+                                                        @elseif ($semester->smt == 3)
+                                                            {{-- Jika semester Pendek (menampilkan semua semester 1-8) --}}
+                                                            @for ($i = 1; $i <= 8; $i++)
+                                                                <option value="{{ $i }}" {{ old('smt', $course->smt ?? '') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                            @endfor
+                                                        @endif
+                                                    </select>
+                                                    @error('smt')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>                                                
 
                                                 <!-- Input SKS MK -->
                                                 <div class="mb-3">
                                                     <label for="sks_mk" class="form-label">SKS Matakuliah</label>
-                                                    <input type="number"
-                                                        class="form-control @error('sks_mk') is-invalid @enderror"
-                                                        id="sks_mk" name="sks_mk"
-                                                        value="{{ isset($course) ? $course->sks_mk : old('sks_mk') }}"
-                                                        required>
+                                                    <select name="sks_mk" id="sks_mk" class="form-select" required>
+                                                        <option value="">Pilih...</option>
+                                                        <option value="1"
+                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 1 ? 'selected' : '' }}>
+                                                            1</option>
+                                                        <option value="2"
+                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 2 ? 'selected' : '' }}>
+                                                            2</option>
+                                                        <option value="3"
+                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 3 ? 'selected' : '' }}>
+                                                            3</option>
+                                                        <option value="4"
+                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 4 ? 'selected' : '' }}>
+                                                            4</option>
+                                                        <option value="5"
+                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 5 ? 'selected' : '' }}>
+                                                            5</option>
+                                                        <option value="6"
+                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 6 ? 'selected' : '' }}>
+                                                            6</option>
+                                                    </select>
                                                     @error('sks_mk')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                        <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
 
                                                 <!-- Input SKS TM -->
                                                 <div class="mb-3">
                                                     <label for="sks_tm" class="form-label">SKS Tatap Muka</label>
-                                                    <input type="number"
-                                                        class="form-control @error('sks_tm') is-invalid @enderror"
-                                                        id="sks_tm" name="sks_tm"
-                                                        value="{{ isset($course) ? $course->sks_tm : old('sks_tm') }}">
+                                                    <select name="sks_tm" id="sks_tm" class="form-select" required>
+                                                        <option value="">Pilih...</option>
+                                                        <option value="1"
+                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 1 ? 'selected' : '' }}>
+                                                            1</option>
+                                                        <option value="2"
+                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 2 ? 'selected' : '' }}>
+                                                            2</option>
+                                                        <option value="3"
+                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 3 ? 'selected' : '' }}>
+                                                            3</option>
+                                                        <option value="4"
+                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 4 ? 'selected' : '' }}>
+                                                            4</option>
+                                                        <option value="5"
+                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 5 ? 'selected' : '' }}>
+                                                            5</option>
+                                                        <option value="6"
+                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 6 ? 'selected' : '' }}>
+                                                            6</option>
+                                                    </select>
                                                     @error('sks_tm')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                        <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -106,7 +168,11 @@
                                                 <!-- Input SKS PR -->
                                                 <div class="mb-3">
                                                     <label for="sks_pr" class="form-label">SKS Praktikum</label>
-                                                    <input type="number"
+                                                    {{-- <input type="number"
+                                                        class="form-control @error('sks_pr') is-invalid @enderror"
+                                                        id="sks_pr" name="sks_pr"
+                                                        value="{{ isset($course) ? $course->sks_pr : old('sks_pr') }}"> --}}
+                                                    <input type="number" min="0" max="6"
                                                         class="form-control @error('sks_pr') is-invalid @enderror"
                                                         id="sks_pr" name="sks_pr"
                                                         value="{{ isset($course) ? $course->sks_pr : old('sks_pr') }}">

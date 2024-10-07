@@ -11,8 +11,8 @@ class KelasKuliah extends Migration
             $table->uuid('id')->primary();
             $table->char('prodi_id', 36);
             $table->char('semester_id', 6);
-            $table->foreign('prodi_id', 'prodiiiiiiii')->references('id_prodi')->on('all_prodi')->onDelete('cascade');
-            $table->foreign('semester_id','semesterrr')->references('semester_id')->on('semester')->onDelete('cascade');
+            $table->foreign('prodi_id', 'prodii')->references('id_prodi')->on('all_prodi')->onDelete('cascade');
+            $table->foreign('semester_id','semesterr')->references('semester_id')->on('semester')->onDelete('cascade');
             $table->string('nama_kelas', 50);
             $table->tinyInteger('sks_mk');
             $table->tinyInteger('sks_tm');
@@ -22,7 +22,7 @@ class KelasKuliah extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->uuid('course_id');
-            $table->foreign('course_id','courseeeee')->references('id')->on('course')->onDelete('cascade');
+            $table->foreign('course_id','coursee')->references('id')->on('course')->onDelete('cascade');
             $table->integer('quota');
             $table->decimal('pn_presensi', 7, 2);
             $table->decimal('pn_tugas', 7, 2)->nullable();

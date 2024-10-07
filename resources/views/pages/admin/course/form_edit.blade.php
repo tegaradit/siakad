@@ -52,7 +52,7 @@
                                             <!-- Prodi field -->
                                             <div class="form-group mt-2">
                                                 <label for="prodi_id">Prodi</label>
-                                                <select name="prodi_id" id="prodi_id" class="form-control" required>
+                                                <select name="prodi_id" id="prodi_id" class="form-select" required>
                                                     <option value="" selected>Pilih Prodi</option>
                                                     @foreach ($prodi as $p)
                                                         <option value="{{ $p->id_prodi }}"
@@ -92,7 +92,7 @@
                                             {{-- Course Group --}}
                                             <div class="form-group mt-2">
                                                 <label for="group_id">Kelompok Matakuliah</label>
-                                                <select name="group_id" id="group_id" class="form-control" required>
+                                                <select name="group_id" id="group_id" class="form-select" required>
                                                     <option value="">Pilih...</option>
                                                     @foreach ($group as $gro)
                                                         <option value="{{ $gro->id }}"
@@ -105,7 +105,7 @@
                                             {{-- Course Type --}}
                                             <div class="form-group mt-2">
                                                 <label for="type_id">Jenis Matakuliah</label>
-                                                <select name="type_id" id="type_id" class="form-control" required>
+                                                <select name="type_id" id="type_id" class="form-select" required>
                                                     <option value="">Pilih...</option>
                                                     @foreach ($type as $ty)
                                                         <option value="{{ $ty->id }}"
@@ -151,7 +151,7 @@
                                         {{-- Status --}}
                                         <div class="form-group mt-2">
                                             <label for="status">Status</label>
-                                            <select name="status" class="form-control" required>
+                                            <select name="status" class="form-select" required>
                                                 <option value="">Pilih...</option>
                                                 <option value="Active" {{ old('status', $course->status) == 'Active' ? 'selected' : '' }}>Active</option>
                                                 <option value="Deleted" {{ old('status', $course->status) == 'Deleted' ? 'selected' : '' }}>Deleted</option>

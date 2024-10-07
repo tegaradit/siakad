@@ -103,6 +103,7 @@ Route::prefix('admin/curriculum/detail/{curriculum_id}')->group(function () {
     Route::get('/{id}/edit', [CourseCurriculumController::class, 'edit'])->name('curriculum_course.edit');
     Route::put('/{id}', [CourseCurriculumController::class, 'update'])->name('curriculum_course.update');
     Route::delete('/{id}', [CourseCurriculumController::class, 'destroy'])->name('curriculum_course.destroy');
+    
 });
 
 // Route untuk pencarian course tetap di luar
@@ -158,7 +159,6 @@ Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->n
 Route::get('/admin/lecturer/{id}', [LecturerController::class, 'show'])->name('lecturer.show');
 Route::get('/check-email', [LecturerController::class, 'checkEmail'])->name('check.email');
 
-
 // Periode PMB
 Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');
 //search semester
@@ -188,4 +188,10 @@ Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecture
 
 
 
-Route::resource('/kelas-kuliah', KelasKuliahController::class);
+Route::get('admin/curriculum/kelas_kuliah/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
+Route::get('admin/curriculum/kelas_kuliah/create/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'create'])->name('kelas_kuliah.create');
+Route::post('admin/curriculum/kelas_kuliah/store/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
+
+
+
+
