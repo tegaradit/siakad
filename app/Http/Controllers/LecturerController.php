@@ -118,7 +118,7 @@ class LecturerController extends Controller
             [
                 'name' => $request->input('name'),
                 'phone_number' => $request->input('phone_number'),
-                'role_id' => 2,
+                'role_id' => 8,
                 'password' => Hash::make($request->filled('password') ? $request->input('password') : $request->input('phone_number')),
             ]
         );
