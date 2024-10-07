@@ -331,6 +331,22 @@
                 </div>
             </div>
         </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script> © Minia.
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end d-none d-sm-block">
+                            Design & Develop by <a href="#!" class="text-decoration-underline">Themesbrand</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
 
@@ -339,13 +355,12 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Menampilkan alert jika email kosong dan menyembunyikan tombol "Buat Pengguna"
         function checkEmailOnLoad() {
             const email = document.getElementById('email').value.trim();
             const createUserBtn = document.getElementById('createUserBtn');
 
             if (!email) {
-                createUserBtn.style.display = 'none'; // Sembunyikan tombol
+                createUserBtn.style.display = 'none';
                 Swal.fire({
                     title: 'Dosen belum punya pengguna',
                     text: 'Email masih kosong. Untuk membuat pengguna, email diisi dulu.',
@@ -353,11 +368,10 @@
                     confirmButtonText: 'OK'
                 });
             } else {
-                createUserBtn.style.display = 'inline-block'; // Tampilkan tombol
+                createUserBtn.style.display = 'inline-block'; 
             }
         }
 
-        // Panggil fungsi saat halaman dimuat
         document.addEventListener('DOMContentLoaded', checkEmailOnLoad);
 
         // Menampilkan tombol "Buat Pengguna" jika email tidak kosong saat pengguna mengetik
@@ -366,7 +380,6 @@
             document.getElementById('createUserBtn').style.display = email ? 'inline-block' : 'none';
         });
 
-        // Event listener untuk tombol "Buat Pengguna"
         document.getElementById('createUserBtn').addEventListener('click', async function() {
             const email = document.getElementById('email').value.trim();
 
@@ -393,25 +406,12 @@
                 Swal.close(); // Tutup loading
 
                 if (data.exists) {
-                    // Tampilkan alert bahwa email sudah terdaftar
                     return Swal.fire('Email sudah terdaftar. Data berhasil disimpan.');
                 } else {
-                    // Jika email belum terdaftar, tampilkan konfirmasi bahwa email belum ada
                     Swal.fire({
                         title: 'Email belum terdaftar. Silakan isi email yang valid.',
                         icon: 'warning',
                         confirmButtonText: 'OK'
-                    }).then(() => {
-                        // Setelah klik OK, tampilkan toast notification
-                        Swal.fire({
-                            toast: true,
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Verifikasi berhasil',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true
-                        });
                     });
                 }
             } catch (error) {
