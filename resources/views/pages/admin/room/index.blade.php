@@ -48,7 +48,7 @@
                                         <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr style="text-align: center">
-                                                    <th style="width: 30px">ID</th>
+                                                    <th style="width: 30px">No</th>
                                                     <th>Kode</th>
                                                     <th>Nama</th>
                                                     <th>Posisi Lantai</th>
