@@ -18,13 +18,20 @@ class CurriculumController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $datas = Curriculum::with(['all_prodi', 'education_level', 'semester'])->get();
+            $currentIdSp = IdentitasPt::first()->current_id_sp;
+
+            $datas = Curriculum::whereHas('all_prodi', function ($query) use ($currentIdSp){
+                $query->where('id_sp' , $currentIdSp)
+                ->where('status', 'A');
+            })->with(['all_prodi','education_level','semester'])->get();
+            // $datas = Curriculum::with(['all_prodi', 'education_level', 'semester'])->get();
 
             return DataTables::of($datas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $editUrl = route('curriculum.edit', $row->curriculum_id);
-                    $infoUrl = route('curriculum.show', $row->curriculum_id); // Assuming you have a show route for details
+                    // Ganti URL info agar mengarah ke data CurriculumCourse
+                    $infoUrl = route('curriculum_course.index', ['curriculum_id' => $row->curriculum_id]);
 
                     $deleteForm = '<form id="delete-form-' . $row->curriculum_id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $row->curriculum_id . '\');" action="' . route('curriculum.destroy', $row->curriculum_id) . '" method="POST">'
                         . csrf_field()
@@ -89,7 +96,7 @@ class CurriculumController extends Controller
         $curriculum->choice_credit_number = $request->choice_credit_number;
         $curriculum->save();
 
-        return redirect()->route('curriculum.index')->with('success', 'Curriculum created successfully!');
+        return redirect()->route('curriculum.index')->with('success', 'Data Semester Berhasil Ditambahkan.');
     }
 
     // Show the form for editing the specified resource
@@ -146,7 +153,7 @@ class CurriculumController extends Controller
         $curriculum->save();
 
         // Redirect to the curriculum index with a success message
-        return redirect()->route('curriculum.index')->with('success', 'Curriculum updated successfully!');
+        return redirect()->route('curriculum.index')->with('success', 'Data Kurikulum Berhasil Diperbarui.');
     }
 
 
@@ -156,6 +163,6 @@ class CurriculumController extends Controller
         $curriculum = Curriculum::findOrFail($curriculum_id); // Correct variable name
         $curriculum->delete();
 
-        return redirect()->route('curriculum.index')->with('success', 'Curriculum deleted successfully.');
+        return redirect()->route('curriculum.index')->with('success', 'Data Kurikulum Berhasil di Hapus.');
     }
 }

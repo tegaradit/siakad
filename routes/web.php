@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseCurriculumController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\IdentitasPTController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\TSatuanPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentTypeController;
+use App\Http\Controllers\KelasKuliahController;
+use App\Http\Controllers\RegisterTypeController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -92,6 +95,19 @@ Route::get('/api/get-education-level/{prodiId}', function ($prodiId) {
 
     return response()->json(['education_level_id' => $educationLevel->id_jenj_didik, 'education_level_name' => $educationLevel->nm_jenj_didik]);
 });
+// Routes for Curriculum Courses
+Route::prefix('admin/curriculum/detail/{curriculum_id}')->group(function () {
+    Route::get('/', [CourseCurriculumController::class, 'index'])->name('curriculum_course.index');
+    Route::get('/create', [CourseCurriculumController::class, 'create'])->name('curriculum_course.create');
+    Route::post('/', [CourseCurriculumController::class, 'store'])->name('curriculum_course.store');
+    Route::get('/{id}/edit', [CourseCurriculumController::class, 'edit'])->name('curriculum_course.edit');
+    Route::put('/{id}', [CourseCurriculumController::class, 'update'])->name('curriculum_course.update');
+    Route::delete('/{id}', [CourseCurriculumController::class, 'destroy'])->name('curriculum_course.destroy');
+});
+
+// Route untuk pencarian course tetap di luar
+Route::get('/admin/curriculum/{curriculum_id}/search_course', [CourseCurriculumController::class, 'searchCourse'])->name('curriculum_course.search_course');
+
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data')->middleware(Authenticate::class);
 Route::resource('/admin/lecture-setting', LectureSettingController::class)->middleware(Authenticate::class);
@@ -107,6 +123,9 @@ Route::get('/tahun-akademik/data', [AcademicYearController::class, 'data'])->nam
 //studentType
 Route::get('/student-type/data', [StudentTypeController::class, 'data'])->name('student-type.data')->middleware(Authenticate::class);
 Route::resource('/admin/student-type', StudentTypeController::class)->middleware(Authenticate::class);
+//studentType
+Route::get('/register-type/data', [RegisterTypeController::class, 'data'])->name('register-type.data')->middleware(Authenticate::class);
+Route::resource('/admin/register-type', RegisterTypeController::class)->middleware(Authenticate::class);
 
 
 
@@ -137,6 +156,8 @@ Route::get('/admin/lecturer/{id}/edit', [LecturerController::class, 'edit'])->na
 Route::put('/admin/lecturer/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
 Route::delete('/admin/lecturer/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
 Route::get('/admin/lecturer/{id}', [LecturerController::class, 'show'])->name('lecturer.show');
+Route::get('/check-email', [LecturerController::class, 'checkEmail'])->name('check.email');
+
 
 // Periode PMB
 Route::get('/admin/periode_pmb', [PeriodePmbController::class, 'index'])->name('periode_pmb.index');
@@ -164,3 +185,7 @@ Route::put('/admin/mahasiswa/edit/{id}', [MahasiswaController::class, 'update'])
 Route::delete('/admin/mahasiswa/delete/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
+
+
+
+Route::resource('/kelas-kuliah', KelasKuliahController::class);

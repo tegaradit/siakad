@@ -55,7 +55,11 @@ class LectureSettingController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax()) {
-            $lectureSettings = Lecture_setting::with('all_prodi')->get();
+            $current_id_sp = IdentitasPt::first()->current_id_sp;
+
+            $lectureSettings = Lecture_setting::whereHas('all_prodi', function($query)use($current_id_sp){
+                $query->where('id_sp', $current_id_sp)->where('status', 'A');
+            })->with(['all_prodi'])->get();
 
             return DataTables::of($lectureSettings)
                 ->addIndexColumn()

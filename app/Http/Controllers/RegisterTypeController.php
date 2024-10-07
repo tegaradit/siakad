@@ -2,30 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\student_type;
-use App\Models\StudentType;
+use App\Models\register_type;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class StudentTypeController extends Controller
+class RegisterTypeController extends Controller
 {
     public function index()
     {
-        return view('pages.admin.student_type.index'); // Ganti dengan path view yang sesuai
+        return view('pages.admin.register_type.index'); 
     }
 
     public function data(Request $request)
     {
         if ($request->ajax()) {
-            $studentTypes = student_type::query();
+            $registerTypes = register_type::query();
 
-            return DataTables::of($studentTypes)
+            return DataTables::of($registerTypes)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    return '<a href="#" class="btn btn-warning btn-sm edit" data-id="' . $data->id . '" data-name="' . $data->name . '" data-bs-toggle="modal" data-bs-target="#editStudentTypeModal"><i class="fas fa-pencil-alt"></i> Edit</a>
+                    return '<a href="#" class="btn btn-warning btn-sm edit" data-id="' . $data->id . '" data-name="' . $data->name . '" data-bs-toggle="modal" data-bs-target="#editRegisterTypeModal"><i class="fas fa-pencil-alt"></i> Edit</a>
                             <form id="delete-form-' . $data->id . '" 
                                   onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
-                                  action="' . route('student-type.destroy', $data->id) . '" 
+                                  action="' . route('register-type.destroy', $data->id) . '" 
                                   method="POST" style="display:inline-block; margin: 0;">
                                 ' . csrf_field() . method_field('DELETE') . '
                                 <button type="submit" class="btn btn-danger btn-sm delete"><i class="fas fa-trash-alt"></i> Hapus</button>
@@ -39,7 +38,7 @@ class StudentTypeController extends Controller
 
     // public function create()
     // {
-    //     return view('pages.admin.student_type.form'); // Ganti dengan path view yang sesuai
+    //     return view('pages.admin.register_type.form'); // Ganti dengan path view yang sesuai
     // }
 
     public function store(Request $request)
@@ -48,15 +47,15 @@ class StudentTypeController extends Controller
             'name' => 'required|string|min:3|max:255',
         ]);
 
-        student_type::create($validated);
+        register_type::create($validated);
 
-        return redirect()->route('student-type.index');
+        return redirect()->route('register-type.index');
     }
 
     public function edit($id)
     {
-        $studentType = student_type::findOrFail($id);
-        return response()->json($studentType);
+        $registerType = register_type::findOrFail($id);
+        return response()->json($registerType);
     }
 
     public function update(Request $request, $id)
@@ -65,17 +64,17 @@ class StudentTypeController extends Controller
             'name' => 'required|string|min:3|max:255',
         ]);
 
-        $studentType = student_type::findOrFail($id);
-        $studentType->update($validated);
+        $registerType = register_type::findOrFail($id);
+        $registerType->update($validated);
 
-        return redirect()->route('student-type.index');
+        return redirect()->route('register-type.index');
     }
 
     public function destroy($id)
     {
-        $studentType = student_type::findOrFail($id);
-        $studentType->delete();
+        $registerType = register_type::findOrFail($id);
+        $registerType->delete();
 
-        return redirect()->route('student-type.index');
+        return redirect()->route('register-type.index');
     }
 }

@@ -12,14 +12,18 @@ class AcademicCalendarController extends Controller
 {
     public function index()
     {
+        $menu='datas';
+        $submenu='kalender-akademik';
         $datas = Academic_calendar::with(['semester', 'calendar_type'])->orderBy('id', 'asc')->paginate(5);
-        return view('pages.admin.akademik_kalender.index', compact('datas'));
+        return view('pages.admin.akademik_kalender.index', compact('datas', 'menu', 'submenu'));
     }
 
 
 
     public function create()
     {
+        $menu='datas';
+        $submenu='kalender-akademik';
         $calendar_types = Calendar_type::all();
         $semesters = Semester::where('is_active', 1)->get();  // Mengambil hanya semester aktif
         $active_semester = Semester::where('is_active', 1)->first();  // Mengambil semester aktif pertama (jika ada)
@@ -123,6 +127,9 @@ class AcademicCalendarController extends Controller
 
     public function edit($id)
     {
+        $menu='datas';
+        $submenu='kalender-akademik';
+
         $data = Academic_calendar::findOrFail($id);
         $calendar_types = Calendar_type::all();
         $semesters = Semester::where('is_active', 1)->get();  // Mengambil hanya semester aktif

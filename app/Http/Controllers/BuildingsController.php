@@ -58,7 +58,7 @@ class BuildingsController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        return redirect()->route('buildings.index')->with('success', 'Building added successfully.');
+        return redirect()->route('buildings.index')->with('success', 'Data Gedung Berhasil Ditambahkan.');
     }
 
     public function edit($id)
@@ -78,7 +78,7 @@ class BuildingsController extends Controller
         $building = Building::findOrFail($id);
         
         $building->update($request->all());
-        return redirect()->route('buildings.index')->with('success', 'Building updated successfully');
+        return redirect()->route('buildings.index')->with('success', 'Data Gedung Berhasil Diperbarui.');
     }
 
     public function destroy($id)
@@ -86,6 +86,6 @@ class BuildingsController extends Controller
         $building = Building::findOrFail($id);
         $building->delete();
 
-        return redirect()->route('buildings.index')->with('success', 'Building deleted successfully');
+        return redirect()->route('buildings.index')->with('success', 'Data Gedung Berhasil di Hapus');
     }
 }
