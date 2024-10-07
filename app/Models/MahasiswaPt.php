@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 class MahasiswaPt extends Model
 {
     protected $table = 'mahasiswa_pt';
-    protected $primaryKey = 'id_mpt';
+    
+    public $incrementing = false; // Untuk UUID
+    protected $primaryKey = 'id_reg_pd'; // Primary key custom
+    protected $keyType = 'string'; // UUID sebagai string
 
     protected $fillable = [
         'id_reg_pd',

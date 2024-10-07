@@ -35,11 +35,20 @@
                                         <i class="fa-solid fa-square-plus"></i>
                                         Tambah
                                     </a>
+                                    @if (session('success'))
+                                        <div class="alert alert-success alert-dismissible alert-label-icon label-arrow fade show"
+                                            role="alert">
+                                            <i
+                                                class="mdi mdi-check-all label-icon"></i><strong>Success</strong>-{{ session('success') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                    @endif
                                     <div class="table-responsive">
                                         <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr style="text-align: center">
-                                                    <th style="width: 30px">ID</th>
+                                                    <th style="width: 30px">No</th>
                                                     <th>Kode</th>
                                                     <th>Nama</th>
                                                     <th>Posisi Lantai</th>
@@ -57,6 +66,22 @@
                 </div>
             </div>
         </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script> © Minia.
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end d-none d-sm-block">
+                            Design & Develop by <a href="#!" class="text-decoration-underline">Themesbrand</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

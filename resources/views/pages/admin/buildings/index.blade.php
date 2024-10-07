@@ -38,6 +38,13 @@
                                     <i class="fa-solid fa-square-plus"></i>
                                     Tambah
                                 </a>
+                                @if (session('success'))
+                                    <div class="alert alert-success alert-dismissible alert-label-icon label-arrow fade show" role="alert">
+                                        <i class="mdi mdi-check-all label-icon"></i><strong>Success</strong>-{{ session('success') }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                @endif
+
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered dt-responsive nowrap w-100"
                                         id="datatable">
@@ -97,7 +104,7 @@
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart +
-                            1; // nomor urut yang dinamis
+                                1; // nomor urut yang dinamis
                         },
                         createdCell: function(td, cellData, rowData, row, col) {
                             $(td).css('text-align', 'center'); // Align center

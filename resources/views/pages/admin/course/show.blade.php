@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0 font-size-18">Detail Mata Kuliah</h4>
+                            <h4 class="mb-sm-0 font-size-18"></h4>
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb mb-0">
@@ -32,124 +32,138 @@
                                 <p class="card-title-desc">Informasi lengkap tentang mata kuliah yang dipilih.</p>
                             </div>
                             <div class="card-body">
-                                {{-- Prodi --}}
-                                <div class="form-group">
-                                    <label for="prodi">Prodi</label>
-                                    <input type="text" id="prodi" class="form-control"
-                                        value="{{ $course->all_prodi->nama_prodi }}" readonly>
-                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{-- Prodi --}}
+                                        <div class="form-group">
+                                            <label for="prodi">Prodi</label>
+                                            <input type="text" id="prodi" class="form-control"
+                                                value="{{ $course->all_prodi->nama_prodi }}" readonly>
+                                        </div><br>
 
-                                {{-- Education Level --}}
-                                <div class="form-group">
-                                    <label for="education_level">Education Level</label>
-                                    <input type="text" id="education_level" class="form-control"
-                                        value="{{ $course->education_level->nm_jenj_didik }}" readonly>
-                                </div>
+                                        {{-- Education Level --}}
+                                        <div class="form-group">
+                                            <label for="education_level">Jenjang Pendidikan</label>
+                                            <input type="text" id="education_level" class="form-control"
+                                                value="{{ $course->education_level->nm_jenj_didik }}" readonly>
+                                        </div><br>
 
-                                {{-- Course Code --}}
-                                <div class="form-group">
-                                    <label for="code">Course Code</label>
-                                    <input type="text" id="code" class="form-control" value="{{ $course->code }}"
-                                        readonly>
-                                </div>
+                                        {{-- Course Code --}}
+                                        <div class="form-group">
+                                            <label for="code">Kode Matakuliah</label>
+                                            <input type="text" id="code" class="form-control"
+                                                value="{{ $course->code }}" readonly>
+                                        </div><br>
 
-                                {{-- Course Name --}}
-                                <div class="form-group">
-                                    <label for="name">Course Name</label>
-                                    <input type="text" id="name" class="form-control" value="{{ $course->name }}"
-                                        readonly>
-                                </div>
+                                        {{-- Course Name --}}
+                                        <div class="form-group">
+                                            <label for="name">Nama Matakuliah</label>
+                                            <input type="text" id="name" class="form-control"
+                                                value="{{ $course->name }}" readonly>
+                                        </div><br>
 
-                                {{-- Course Group --}}
-                                <div class="form-group">
-                                    <label for="group">Course Group</label>
-                                    <input type="text" id="group" class="form-control"
-                                        value="{{ $course->course_group->name }}" readonly>
-                                </div>
+                                        {{-- Course Group --}}
+                                        <div class="form-group">
+                                            <label for="group">Kelompok Matakuliah</label>
+                                            <input type="text" id="group" class="form-control"
+                                                value="{{ $course->course_group->name }}" readonly>
+                                        </div><br>
 
-                                {{-- Course Type --}}
-                                <div class="form-group">
-                                    <label for="type">Course Type</label>
-                                    <input type="text" id="type" class="form-control"
-                                        value="{{ $course->course_type->name }}" readonly>
-                                </div>
+                                        {{-- Course Type --}}
+                                        <div class="form-group">
+                                            <label for="type">Jenis Matakuliah</label>
+                                            <input type="text" id="type" class="form-control"
+                                                value="{{ $course->course_type->name }}" readonly>
+                                        </div><br>
 
-                                {{-- SKS Fields --}}
-                                <div class="form-group">
-                                    <label for="sks_mk">SKS MK</label>
-                                    <input type="text" id="sks_mk" class="form-control" value="{{ $course->sks_mk }}"
-                                        readonly>
-                                </div>
+                                        {{-- SKS Fields --}}
+                                        <div class="form-group">
+                                            <label for="sks_mk">SKS Matakuliah</label>
+                                            <input type="text" id="sks_mk" class="form-control"
+                                                value="{{ $course->sks_mk }}" readonly>
+                                        </div><br>
 
-                                <div class="form-group">
-                                    <label for="sks_tm">SKS TM</label>
-                                    <input type="text" id="sks_tm" class="form-control" value="{{ $course->sks_tm }}"
-                                        readonly>
-                                </div>
+                                        {{-- SKS Praktikum --}}
+                                        <div class="form-group">
+                                            <label for="sks_pr">SKS Praktikum</label>
+                                            <input type="text" id="sks_pr" class="form-control"
+                                                value="{{ $course->sks_pr }}" readonly>
+                                        </div><br>
 
-                                <div class="form-group">
-                                    <label for="sks_pr">SKS PR</label>
-                                    <input type="text" id="sks_pr" class="form-control" value="{{ $course->sks_pr }}"
-                                        readonly>
-                                </div>
+                                        {{-- Status --}}
+                                        <div class="form-group">
+                                            <label for="status">Status</label>
+                                            <input type="text" id="status-" class="form-control"
+                                                value="{{ $course->status ?? 'Tidak Ada Status' }}" readonly>
+                                        </div>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="sks_pl">SKS PL</label>
-                                    <input type="text" id="sks_pl" class="form-control" value="{{ $course->sks_pl }}"
-                                        readonly>
-                                </div>
+                                    <div class="col-md-6">
+                                        {{-- SKS Tatap Muka --}}
+                                        <div class="form-group">
+                                            <label for="sks_tm">SKS Tatap Muka</label>
+                                            <input type="text" id="sks_tm" class="form-control"
+                                                value="{{ $course->sks_tm }}" readonly>
+                                        </div><br>
 
-                                <div class="form-group">
-                                    <label for="sks_sim">SKS SIM</label>
-                                    <input type="text" id="sks_sim" class="form-control"
-                                        value="{{ $course->sks_sim }}" readonly>
-                                </div>
+                                        {{-- SKS Praktik Lapangan --}}
+                                        <div class="form-group">
+                                            <label for="sks_pl">SKS Praktik Lapangan</label>
+                                            <input type="text" id="sks_pl" class="form-control"
+                                                value="{{ $course->sks_pl }}" readonly>
+                                        </div><br>
 
-                                {{-- Status --}}
-                                <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <input type="text" id="status" class="form-control" value="{{ $course->status }}"
-                                        readonly>
-                                </div>
+                                        {{-- SKS Simulasi --}}
+                                        <div class="form-group">
+                                            <label for="sks_sim">SKS Simulasi</label>
+                                            <input type="text" id="sks_sim" class="form-control"
+                                                value="{{ $course->sks_sim }}" readonly>
+                                        </div><br>
 
-                                {{-- Boolean Fields --}}
-                                <div class="form-group">
-                                    <label for="is_sap">Is SAP?</label>
-                                    <input type="text" id="is_sap" class="form-control"
-                                        value="{{ $course->is_sap ? 'Yes' : 'No' }}" readonly>
-                                </div>
+                                        {{-- Apakah Ada SAP --}}
+                                        <div class="form-group">
+                                            <label for="is_sap">Apakah Ada SAP (Satuan Acara Perkuliahan) / RPS?</label>
+                                            <input type="text" id="is_sap" class="form-control"
+                                                value="{{ $course->is_sap ? 'Ya' : 'Tidak' }}" readonly>
+                                        </div><br>
 
-                                <div class="form-group">
-                                    <label for="is_silabus">Is Silabus?</label>
-                                    <input type="text" id="is_silabus" class="form-control"
-                                        value="{{ $course->is_silabus ? 'Yes' : 'No' }}" readonly>
-                                </div>
+                                        {{-- Apakah Ada Silabus --}}
+                                        <div class="form-group">
+                                            <label for="is_silabus">Apakah ada Silabus?</label>
+                                            <input type="text" id="is_silabus" class="form-control"
+                                                value="{{ $course->is_silabus ? 'Ya' : 'Tidak' }}" readonly>
+                                        </div><br>
 
-                                <div class="form-group">
-                                    <label for="is_teaching_material">Is Teaching Material?</label>
-                                    <input type="text" id="is_teaching_material" class="form-control"
-                                        value="{{ $course->is_teaching_material ? 'Yes' : 'No' }}" readonly>
-                                </div>
+                                        {{-- Apakah Ada Bahan Materi --}}
+                                        <div class="form-group">
+                                            <label for="is_teaching_material">Apakah ada bahan materi perkuliahan?</label>
+                                            <input type="text" id="is_teaching_material" class="form-control"
+                                                value="{{ $course->is_teaching_material ? 'Ya' : 'Tidak' }}" readonly>
+                                        </div><br>
 
-                                <div class="form-group">
-                                    <label for="is_praktikum">Is Praktikum?</label>
-                                    <input type="text" id="is_praktikum" class="form-control"
-                                        value="{{ $course->is_praktikum ? 'Yes' : 'No' }}" readonly>
-                                </div>
+                                        {{-- Apakah Matakuliah Praktikum --}}
+                                        <div class="form-group">
+                                            <label for="is_praktikum">Apakah matakuliah praktikum?</label>
+                                            <input type="text" id="is_praktikum" class="form-control"
+                                                value="{{ $course->is_praktikum ? 'Ya' : 'Tidak' }}" readonly>
+                                        </div><br>
 
-                                {{-- Effective Dates --}}
-                                <div class="form-group">
-                                    <label for="effective_start_date">Effective Start Date</label>
-                                    <input type="text" id="effective_start_date" class="form-control"
-                                        value="{{ \Carbon\Carbon::parse($course->effective_start_date)->format('d-m-Y') }}"
-                                        readonly>
-                                </div>
+                                        {{-- Effective Start Date --}}
+                                        <div class="form-group">
+                                            <label for="effective_start_date">Awal Tanggal</label>
+                                            <input type="text" id="effective_start_date" class="form-control"
+                                                value="{{ \Carbon\Carbon::parse($course->effective_start_date)->format('d-m-Y') }}"
+                                                readonly>
+                                        </div><br>
 
-                                <div class="form-group">
-                                    <label for="effective_end_date">Effective End Date</label>
-                                    <input type="text" id="effective_end_date" class="form-control"
-                                        value="{{ \Carbon\Carbon::parse($course->effective_end_date)->format('d-m-Y') }}"
-                                        readonly>
+                                        {{-- Effective End Date --}}
+                                        <div class="form-group">
+                                            <label for="effective_end_date">Akhir Tanggal</label>
+                                            <input type="text" id="effective_end_date" class="form-control"
+                                                value="{{ \Carbon\Carbon::parse($course->effective_end_date)->format('d-m-Y') }}"
+                                                readonly>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {{-- Back Button --}}
@@ -173,7 +187,7 @@
                         </script> © Minia.
                     </div>
                     <div class="col-sm-6">
-                        <div class="text-sm-end d-none d-sm-block">
+                        <div class="text-sm-end d-Tidakne d-sm-block">
                             Design & Develop by <a href="#!" class="text-decoration-underline">Themesbrand</a>
                         </div>
                     </div>
