@@ -53,7 +53,7 @@
                                             <!-- Prodi field -->
                                             <div class="form-group mt-2">
                                                 <label for="prodi_id">Prodi</label>
-                                                <select name="prodi_id" id="prodi_id" class="form-control" required>
+                                                <select name="prodi_id" id="prodi_id" class="form-select" required>
                                                     <option value="" selected>Pilih Prodi</option>
                                                     @foreach ($prodi as $p)
                                                         <option value="{{ $p->id_prodi }}"
@@ -92,7 +92,7 @@
                                             {{-- Course Group --}}
                                             <div class="form-group mt-2">
                                                 <label for="group_id">Kelompok Matakuliah</label>
-                                                <select name="group_id" id="group_id" class="form-control" required>
+                                                <select name="group_id" id="group_id" class="form-select" required>
                                                     <option value="">Pilih...</option>
                                                     @foreach ($group as $gro)
                                                         <option value="{{ $gro->id }}">{{ $gro->name }}</option>
@@ -103,7 +103,7 @@
                                             {{-- Course Type --}}
                                             <div class="form-group mt-2">
                                                 <label for="type_id">Jenis Matakuliah</label>
-                                                <select name="type_id" id="type_id" class="form-control" required>
+                                                <select name="type_id" id="type_id" class="form-select" required>
                                                     <option value="">Pilih...</option>
                                                     @foreach ($type as $ty)
                                                         <option value="{{ $ty->id }}">{{ $ty->name }}</option>
@@ -114,13 +114,13 @@
                                             {{-- SKS Fields --}}
                                             <div class="form-group mt-2">
                                                 <label for="sks_mk">SKS Matakuliah</label>
-                                                <input type="number" name="sks_mk" id="sks_mk" class="form-control"
+                                                <input type="number" name="sks_mk" id="sks_mk" class="form-control" placeholder="0"
                                                     required>
                                             </div>
 
                                             <div class="form-group mt-2">
                                                 <label for="sks_tm">SKS Tatap Muka</label>
-                                                <input type="number" name="sks_tm" id="sks_tm" class="form-control"
+                                                <input type="number" name="sks_tm" id="sks_tm" class="form-control" placeholder="0"
                                                     required>
                                             </div>
                                     </div>
@@ -128,7 +128,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group mt-2">
                                             <label for="sks_pr">SKS Praktikum</label>
-                                            <input type="number" name="sks_pr" id="sks_pr" class="form-control"
+                                            <input type="number" name="sks_pr" id="sks_pr" class="form-control" placeholder="0"
                                                 required>
                                         </div>
 
@@ -136,19 +136,19 @@
                                         <div class="form-group mt-2">
                                             <label for="sks_pl">SKS Praktikum Lapangan</label>
                                             <input type="number" name="sks_pl" id="sks_pl" class="form-control"
-                                                required>
+                                                placeholder="0" required>
                                         </div>
 
                                         <div class="form-group mt-2">
                                             <label for="sks_sim">SKS Simulasi</label>
-                                            <input type="number" name="sks_sim" id="sks_sim" class="form-control"
+                                            <input type="number" name="sks_sim" id="sks_sim" class="form-control" placeholder="0"
                                                 required>
                                         </div>
 
                                         {{-- Status --}}
                                         <div class="form-group mt-2">
                                             <label for="status">Status</label>
-                                            <select name="status" class="form-control" required>
+                                            <select name="status" class="form-select" required>
                                                 <option value="">Pilih...</option>
                                                 <option value="Active">Active</option>
                                                 <option value="Deleted">Deleted</option>
