@@ -12,6 +12,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\IdentitasPTController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\LectureSettingController;
+use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PeriodePmbController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\RoomController;
@@ -174,8 +175,22 @@ Route::put('/admin/periode_pmb/toggleStatus', [PeriodePmbController::class, 'tog
 Route::delete('/admin/periode_pmb/delete/{id}', [PeriodePmbController::class, 'destroy'])->name('periode_pmb.destroy');
 
 
+// Mahasiswa
+Route::get('/admin/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
+Route::get('/admin/mahasiswa/tambah', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
+Route::post('/admin/mahasiswa/search', [MahasiswaController::class, 'searchMahasiswa'])->name('mahasiswa.search');
+Route::post('/admin/mahasiswa/store', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
+Route::get('/admin/mahasiswa/edit/{id}', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
+Route::put('/admin/mahasiswa/edit/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
+Route::delete('/admin/mahasiswa/delete/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
 
 
 
-Route::resource('/kelas-kuliah', KelasKuliahController::class);
+Route::get('kelas_kuliah', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
+Route::get('/kelas_kuliah/create', [KelasKuliahController::class, 'create'])->name('kelas_kuliah.create');
+Route::post('kelas_kuliah/store', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
+
+
+

@@ -11,16 +11,11 @@ class Mahasiswa extends Model
 
     protected $table = 'mahasiswa';
 
-    // Primary key column (default is 'id', but in this case it's 'id_mhs')
-    protected $primaryKey = 'id_mhs';
-
-    // Disable auto-incrementing since 'id_mhs' is manually managed
+    
     public $incrementing = false;
+    protected $primaryKey = 'id_pd';
+    protected $keyType = 'string';
 
-    // If the primary key is not an integer, set this to false
-    protected $keyType = 'int';
-
-    // Define the columns that are mass assignable
     protected $fillable = [
         'id_pd', 'nm_pd', 'jk', 'jln', 'rt', 'rw', 'nm_dsn', 'ds_kel', 'kode_pos', 'nisn', 'nik',
         'tmpt_lahir', 'tgl_lahir', 'nm_ayah', 'tgl_lahir_ayah', 'nik_ayah', 'id_jenjang_pendidikan_ayah', 'id_pekerjaan_ayah',
@@ -37,5 +32,5 @@ class Mahasiswa extends Model
     ];
 
     // Disable timestamps (created_at, updated_at) if not needed
-    public $timestamps = false;
+    public $timestamps = true;
 }

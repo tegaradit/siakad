@@ -158,7 +158,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="index.html">
+                            <a href="{{ route('mahasiswa.index') }}">
                                 <span data-key="t-kelompok-komponen">Waktu Perkuliahan</span>
                             </a>
                         </li>

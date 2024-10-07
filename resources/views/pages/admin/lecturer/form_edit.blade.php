@@ -227,8 +227,6 @@
                                             <!-- Phone Number field -->
                                             <div class="form-group form-row">
                                                 <label for="phone_number">No Telepon</label>
-                                                {{-- <input type="text" name="phone_number" class="form-control"
-                                            value="{{ old('phone_number', $lecturer->phone_number) }}"> --}}
                                                 <input type="text" id="phone_number" name="phone_number"
                                                     class="form-control"
                                                     value="{{ old('phone_number', $lecturer->phone_number ?? '') }}">
@@ -241,8 +239,6 @@
                                             <!-- Email field -->
                                             <div class="form-group form-row">
                                                 <label for="email">Email</label>
-                                                {{-- <input type="email" name="email" class="form-control"
-                                            value="{{ old('email', $lecturer->email) }}"> --}}
                                                 <input type="email" id="email" name="email" class="form-control"
                                                     value="{{ old('email', $lecturer->email ?? '') }}" required>
                                                 @error('email')

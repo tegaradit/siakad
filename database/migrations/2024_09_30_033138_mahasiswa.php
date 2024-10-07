@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Mahasiswa extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class Mahasiswa extends Migration
     public function up()
     {
         Schema::create('mahasiswa', function (Blueprint $table) {
-            $table->increments('id_mhs');
-            $table->string('id_pd', 40);
+            $table->uuid('id_pd')->primary();
             $table->string('nm_pd', 100)->nullable();
             $table->char('jk', 1)->nullable();
             $table->string('jln', 80)->nullable();
@@ -26,7 +25,7 @@ class Mahasiswa extends Migration
             $table->char('kode_pos', 5)->nullable();
             $table->char('nisn', 10)->nullable();
             $table->char('nik', 16)->nullable();
-            $table->string('tmpt_lahir', 32)->nullable();
+            $table->string('tmpt_lahir', 255)->nullable(); //--> this has been change, length from 32 to 255
             $table->date('tgl_lahir')->nullable();
             $table->string('nm_ayah', 100)->nullable();
             $table->date('tgl_lahir_ayah')->nullable();
@@ -59,17 +58,18 @@ class Mahasiswa extends Migration
             $table->smallInteger('id_agama')->default(98);
             $table->decimal('id_alat_transport', 2, 0)->default(0);
             $table->char('kewarganegaraan', 2)->nullable();
-            $table->integer('no_daftar_lama');
-            $table->string('foto', 100);
-            $table->char('id_kabupaten', 6);
-            $table->char('id_kecamatan', 6);
+            $table->integer('no_daftar_lama')->nullable();
+            $table->text('foto'); //--> this has been change, Dtype from string to text
+            $table->char('id_kabupaten', 6)->nullable();
+            $table->string('id_kecamatan', 100);
             $table->tinyInteger('id_goldarah');
             $table->string('asal_sma', 50);
-            $table->string('jenjangsekolah', 3);
+            $table->string('jenjangsekolah', 30); //--> this has been change, length from 3 to 30
             $table->string('jurusan_sekolah_asal', 30);
             $table->string('nomor_sttb', 50);
             $table->decimal('rata_nilai_sttb', 5, 2);
             $table->tinyInteger('status_data')->default(1);
+            $table->timestamps();
         });
     }
 
@@ -82,4 +82,4 @@ class Mahasiswa extends Migration
     {
         Schema::dropIfExists('mahasiswa');
     }
-}
+};

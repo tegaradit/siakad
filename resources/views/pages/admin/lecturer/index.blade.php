@@ -49,7 +49,7 @@
                                             class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr style="text-align: center">
-                                                    <th style="width:20px">ID</th>
+                                                    <th style="width:20px">No</th>
                                                     <th>NUPTK</th>
                                                     <th>NIDN</th>
                                                     <th>NIK</th>
