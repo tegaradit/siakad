@@ -4,130 +4,124 @@
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
-            <div class="wrapper">
-                
-                <div class="row">
-                    <div class="col-12">
-                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0 font-size-18">Kelas Kuliah</h4>
-
-                            <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item">
-                                        <a href="javascript: void(0);">Data Perkuliahan</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">Kelas Kuliah</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DataTables -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Daftar Kelas Kuliah</h4>
-                                <p class="card-title-desc">Berikut adalah daftar kelas kuliah yang tersedia di sistem.</p>
-                                <a href="{{ route('kelas_kuliah.create') }}" class="btn btn-primary mb-3">
-                                    <i data-feather="plus-square"></i> Tambah
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="datatable" class="table table-striped dt-responsive nowrap w-100">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Kode MK</th>
-                                                <th>Nama Mata Kuliah</th>
-                                                <th>Semester</th>
-                                                <th>SKS MK</th>
-                                                <th>SKS TM</th>
-                                                <th>SKS Prak</th>
-                                                <th>SKS Prak Lap.</th>
-                                                <th>SKS SIM</th>
-                                                <th>Wajib</th>
-                                                <th>n Kelas</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Data Kelas Perkuliahan</h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="filter_prodi" class="form-label">Program Studi</label>
+                                    <select id="filter_prodi" class="form-select">
+                                        <option value="">:: Pilih Program Studi ::</option>
+                                        @foreach($programs as $program)
+                                        <option value="{{ $program->prodi_id }}">{{ $program->prodi_id }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="filter_semester" class="form-label">Tahun Ajaran</label>
+                                    <select id="filter_semester" class="form-select">
+                                        <option value="">:: Pilih Tahun Ajaran ::</option>
+                                        @foreach($semesters as $semester)
+                                        <option value="{{ $semester->semester_id }}">{{ $semester->semester_id }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                            <table class="table table-bordered table-striped" id="kelasKuliahTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Kode MK</th>
+                                        <th>Nama MK</th>
+                                        <th>Kelas</th>
+                                        <th>Jenis</th>
+                                        <th>Bobot</th>
+                                        <th>NIDN</th>
+                                        <th>Dosen Pengajar</th>
+                                        <th>Asisten Dosen</th>
+                                        <th>Kuota</th>
+                                        <th>Peserta Kelas</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
 
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('kelas_kuliah.index') }}",
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'kode_mk',
-                    name: 'kode_mk'
-                },
-                {
-                    data: 'nama_mata_kuliah',
-                    name: 'nama_mata_kuliah'
-                },
-                {
-                    data: 'semester',
-                    name: 'semester'
-                },
-                {
-                    data: 'sks_mk',
-                    name: 'sks_mk'
-                },
-                {
-                    data: 'sks_tm',
-                    name: 'sks_tm'
-                },
-                {
-                    data: 'sks_prak',
-                    name: 'sks_prak'
-                },
-                {
-                    data: 'sks_prak_lap',
-                    name: 'sks_prak_lap'
-                },
-                {
-                    data: 'sks_sim',
-                    name: 'sks_sim'
-                },
-                {
-                    data: 'wajib',
-                    name: 'wajib'
-                },
-                {
-                    data: 'n_kelas',
-                    name: 'n_kelas'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
-            ]
-        });
-    });
-</script>
-@endsection
+        
+        <script>
+            $(document).ready(function() {
+                var table = $('#kelasKuliahTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: "{{ route('kelas_kuliah.index') }}",
+                        data: function(d) {
+                            d.prodi_id = $('#filter_prodi').val();
+                            d.semester_id = $('#filter_semester').val();
+                        }
+                    },
+                    columns: [{
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'course_id',
+                            name: 'course_id'
+                        },
+                        {
+                            data: 'nama_kelas',
+                            name: 'nama_kelas'
+                        },
+                        {
+                            data: 'jenis_kelas',
+                            name: 'jenis_kelas'
+                        },
+                        {
+                            data: 'bobot',
+                            name: 'bobot'
+                        },
+                        {
+                            data: 'nidn',
+                            name: 'nidn'
+                        },
+                        {
+                            data: 'dosen_pengajar',
+                            name: 'dosen_pengajar',
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: 'asisten_dosen',
+                            name: 'asisten_dosen'
+                        },
+                        {
+                            data: 'quota',
+                            name: 'quota'
+                        },
+                        {
+                            data: 'peserta_kelas',
+                            name: 'peserta_kelas',
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: 'actions',
+                            name: 'actions',
+                            orderable: false,
+                            searchable: false
+                        }
+                    ]
+                });
+
+                $('#filter_prodi, #filter_semester').change(function() {
+                    table.draw();
+                });
+            });
+        </script>
+        @endsection

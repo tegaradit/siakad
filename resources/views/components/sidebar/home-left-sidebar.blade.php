@@ -181,7 +181,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="index.html">
+                            <a href="{{ route('kelas_kuliah.index') }}">
                                 <span data-key="t-kelas-perkuliahan">Kelas Perkuliahan</span>
                             </a>
                         </li>
