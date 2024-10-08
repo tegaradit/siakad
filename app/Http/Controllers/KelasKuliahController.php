@@ -2,55 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course_curriculum;
-
+use App\Models\KelasKuliah;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class KelasKuliahController extends Controller
 {
-    public function index(Request $request, $curriculum_id, $course_id)
+    public function index(Request $request)
     {
+        // Get filter values from the request
+        $prodiId = $request->input('prodi_id');
+        $semesterId = $request->input('semester_id');
+
+        // Build query based on filters
+        $query = KelasKuliah::query();
+
+        // Apply filtering based on program and academic year (semester)
+        if ($prodiId) {
+            $query->where('prodi_id', $prodiId);
+        }
+        
+        if ($semesterId) {
+            $query->where('semester_id', $semesterId);
+        }
+
+        // Use Yajra DataTables for handling and displaying the data
         if ($request->ajax()) {
-            // Query dengan filter berdasarkan curriculum_id dan course_id
-            $query = Course_curriculum::with(['course', 'curriculum'])
-                ->where('curriculum_id', $curriculum_id)
-                ->where('course_id', $course_id);
-            
-            $data = $query->get();
-    
-            return DataTables::of($data)
-                ->addColumn('course', function ($row) {
-                    return $row->course->code ?? 'N/A';
+            return DataTables::of($query)
+                ->addColumn('dosen_pengajar', function($row) {
+                    // Add logic for dosen pengajar (lecturer) column if necessary
+                    return '<button class="btn btn-primary"><i class="fa fa-plus"></i></button>';
                 })
-                ->addColumn('curriculum', function($row) {
-                    return $row->curriculum->name ?? 'N/A';
+                ->addColumn('peserta_kelas', function($row) {
+                    // Logic for displaying the number of students in the class
+                    return '<span class="badge badge-success">' . $row->quota . '</span>';
                 })
-                ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('users.edit', $row->id) . '" class="btn btn-primary btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> buat kelas </a>';
-                    $btn .= '<a href="' . route('users.edit', $row->id) . '" class="btn btn-warning btn-sm edit m-0"><i class="fas fa-pencil-alt"></i> Edit </a>';
-                    $btn .= ' <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-danger btn-sm delete m-0"><i class="fas fa-trash-alt"></i>Hapus</a>';
-                    return $btn;
+                ->addColumn('actions', function($row) {
+                    // Generate action buttons for each row
+                    return '<button class="btn btn-info"><i class="fa fa-eye"></i></button>
+                            <button class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger"><i class="fa fa-trash"></i></button>';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['dosen_pengajar', 'peserta_kelas', 'actions'])
                 ->make(true);
         }
-    
-        return view('pages.admin.kelas_kuliah.index', compact('curriculum_id', 'course_id'));
-    }
-    
-    
-    public function create(Request $request)
-    {
-        // Bisa kirim curriculum_id dan course_id jika diperlukan di form
-        return view('pages.admin.kelas_kuliah.create', [
-            'curriculum_id' => $request->curriculum_id,
-            'course_id' => $request->course_id
-        ]);
-    }
-    
-    public function store(Request $request)
-    {
-        // Validasi dan simpan data kelas kuliah
+
+        // Fetch unique programs and academic years for filtering dropdowns
+        $programs = KelasKuliah::select('prodi_id')->distinct()->get();
+        $semesters = KelasKuliah::select('semester_id')->distinct()->get();
+
+        return view('pages.admin.kelas_kuliah.index', compact('programs', 'semesters'));
     }
 }

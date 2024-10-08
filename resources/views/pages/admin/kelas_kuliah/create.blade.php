@@ -51,9 +51,6 @@
                                 <label for="end_date" class="form-label">End Date</label>
                                 <input type="date" class="form-control" id="end_date" name="end_date" value="{{ old('end_date') }}" required>
                             </div>
-
-                            <!-- Tambahkan input lain sesuai atribut yang tersisa -->
-
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary me-2">Simpan</button>
                                 <a href="{{ route('kelas_kuliah.index') }}" class="btn btn-secondary">Batal</a>

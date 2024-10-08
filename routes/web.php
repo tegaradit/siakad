@@ -190,9 +190,9 @@ Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecture
 
 
 
-Route::get('admin/curriculum/kelas_kuliah/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
-Route::get('admin/curriculum/kelas_kuliah/create/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'create'])->name('kelas_kuliah.create');
-Route::post('admin/curriculum/kelas_kuliah/store/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
+Route::get('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
+// Route::get('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'create'])->name('kelas_kuliah.create');
+// Route::post('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
 
 
 
