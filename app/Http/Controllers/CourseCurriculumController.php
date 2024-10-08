@@ -62,25 +62,6 @@ class CourseCurriculumController extends Controller
     }
 
     // Get courses for Select2
-    // public function searchCourse(Request $request, $curriculum_id)
-    // {
-    //     // Ambil query term dari Select2
-    //     $search = $request->query('term', ''); // 'term' adalah nama parameter default yang dikirim oleh Select2
-
-    //     // Lakukan pencarian berdasarkan 'code'
-    //     $courses = Course::where('code', 'like', "%$search%")
-    //         ->select('id', 'code', 'name') // Pilih kolom yang diperlukan saja
-    //         ->get();
-
-    //     // Return response dalam format yang diminta oleh Select2
-    //     return response()->json($courses->map(function ($course) {
-    //         return [
-    //             'id' => $course->id, // Value untuk input
-    //             'text' => $course->code . ' - ' . $course->name, // Text yang ditampilkan
-    //         ];
-    //     }));
-    // }
-
     public function searchCourse(Request $request, $curriculum_id)
     {
         // Ambil query term dari Select2

@@ -168,14 +168,14 @@
                                                 <!-- Input SKS PR -->
                                                 <div class="mb-3">
                                                     <label for="sks_pr" class="form-label">SKS Praktikum</label>
-                                                    {{-- <input type="number"
-                                                        class="form-control @error('sks_pr') is-invalid @enderror"
-                                                        id="sks_pr" name="sks_pr"
-                                                        value="{{ isset($course) ? $course->sks_pr : old('sks_pr') }}"> --}}
-                                                    <input type="number" min="0" max="6"
+                                                    <input type="number"
                                                         class="form-control @error('sks_pr') is-invalid @enderror"
                                                         id="sks_pr" name="sks_pr"
                                                         value="{{ isset($course) ? $course->sks_pr : old('sks_pr') }}">
+                                                    {{-- <input type="number" min="0" max="6"
+                                                        class="form-control @error('sks_pr') is-invalid @enderror"
+                                                        id="sks_pr" name="sks_pr"
+                                                        value="{{ isset($course) ? $course->sks_pr : old('sks_pr') }}"> --}}
                                                     @error('sks_pr')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror

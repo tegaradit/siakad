@@ -49,11 +49,11 @@ return new class extends Migration
             $table->integer('id_kk')->nullable();
             $table->string('no_tel_rmh', 20)->nullable();
             $table->string('no_hp', 20)->nullable();
-            $table->string('email', 60)->nullable();
+            $table->string('email', 60)->nullable()->unique();
             $table->decimal('a_terima_kps', 1, 0)->default(0);
             $table->string('no_kps', 80)->default('');
             $table->char('npwp', 15)->default('');
-            $table->char('id_wil', 8)->default('999999');
+            $table->char('id_wil', 8)->default('999999'); //--> aliases for provice
             $table->decimal('id_jns_tinggal', 2, 0)->default(0);
             $table->smallInteger('id_agama')->default(98);
             $table->decimal('id_alat_transport', 2, 0)->default(0);
@@ -61,7 +61,7 @@ return new class extends Migration
             $table->integer('no_daftar_lama')->nullable();
             $table->text('foto'); //--> this has been change, Dtype from string to text
             $table->char('id_kabupaten', 6)->nullable();
-            $table->string('id_kecamatan', 100);
+            $table->string('id_kecamatan', 6)->nullable();
             $table->tinyInteger('id_goldarah');
             $table->string('asal_sma', 50);
             $table->string('jenjangsekolah', 30); //--> this has been change, length from 3 to 30

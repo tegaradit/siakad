@@ -119,7 +119,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="index.html">
+                            <a href="{{ route('mahasiswa.index') }}">
                                 <span data-key="t-mahasiswa">Mahasiswa</span>
                             </a>
                         </li>

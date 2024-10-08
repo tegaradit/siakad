@@ -104,7 +104,7 @@
                                             {{-- Gender --}}
                                             <div class="form-group form-row">
                                                 <label for="gender">Gender</label>
-                                                <select name="gender" id="gender" class="form-control" required>
+                                                <select name="gender" id="gender" class="form-control form-select" required>
                                                     <option value="">Pilih...</option>
                                                     <option value="Laki-laki">Laki-laki</option>
                                                     <option value="Perempuan">Perempuan</option>
@@ -121,7 +121,7 @@
                                             {{-- Active Status --}}
                                             <div class="form-group form-row">
                                                 <label for="active_status_id">Status Aktif</label>
-                                                <select name="active_status_id" id="active_status_id" class="form-control"
+                                                <select name="active_status_id" id="active_status_id" class="form-select"
                                                     required>
                                                     <option value="">Pilih...</option>
                                                     @foreach ($activeStatuses as $status)
@@ -154,7 +154,7 @@
                                             {{-- Marital Status --}}
                                             <div class="form-group form-row">
                                                 <label for="mariage_status">Status Pernikahan</label>
-                                                <select name="mariage_status" id="mariage_status" class="form-control"
+                                                <select name="mariage_status" id="mariage_status" class="form-control form-select"
                                                     required>
                                                     <option value="">Pilih...</option>
                                                     <option value="belum kawin">Belum Kawin</option>
@@ -170,7 +170,7 @@
                                             <div class="form-group form-row">
                                                 <label for="employee_level_id">Level Pegawai</label>
                                                 <select name="employee_level_id" id="employee_level_id"
-                                                    class="form-control" required>
+                                                    class="form-control form-select" required>
                                                     <option value="">Pilih...</option>
                                                     @foreach ($employeeLevels as $level)
                                                         <option value="{{ $level->id }}">{{ $level->name }}</option>
@@ -181,7 +181,7 @@
                                             {{-- Level of Education --}}
                                             <div class="form-group form-row">
                                                 <label for="level_education">Level Pendidikan</label>
-                                                <select name="level_education" id="level_education" class="form-control"
+                                                <select name="level_education" id="level_education" class="form-control form-select"
                                                     required>
                                                     <option value="">Pilih...</option>
                                                     <option value="S1">S1</option>
@@ -238,8 +238,8 @@
 
                                             <div class="form-group form-row mt-2">
                                                 <label for="prodi_id">Prodi</label>
-                                                <select name="prodi_id" id="prodi_id" class="form-control" required>
-                                                    <option value="" selected>Pilih Prodi</option>
+                                                <select name="prodi_id" id="prodi_id" class="form-control form-select" required>
+                                                    <option value="" selected>Pilih...</option>
                                                     @foreach ($prodiList as $p)
                                                         <option value="{{ $p->id_prodi }}" {{-- asumsikan 'id_prodi' adalah field di tabel all_prodi --}}
                                                             {{ old('prodi_id', $curriculum->prodi_id ?? '') == $p->id_prodi ? 'selected' : '' }}>
