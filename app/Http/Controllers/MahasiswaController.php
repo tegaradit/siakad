@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\All_prodi;
 use App\Models\Mahasiswa;
 use App\Models\MahasiswaPt;
+use App\Models\student_type;
+use App\Models\User;
+use App\Models\Wilayah;
 use DB;
+use Hash;
 use Illuminate\Http\Request;
 use Str;
 use Yajra\DataTables\DataTables;
@@ -75,6 +79,7 @@ class MahasiswaController extends Controller
 
     public function create()
     {
+        $dataJenisMahasiswa = student_type::all();
         $dataProdi = All_prodi::rightjoin('identitas_pt', 'all_prodi.id_sp', '=', 'identitas_pt.current_id_sp')
             ->leftjoin('education_level', 'all_prodi.id_jenj_didik', '=', 'education_level.id_jenj_didik')
             ->get([
@@ -83,7 +88,7 @@ class MahasiswaController extends Controller
                 'nm_jenj_didik AS jenjang_pendidikan'
             ]);
 
-        return view('pages.admin.mahasiswa.add')->with(compact('dataProdi'));
+        return view('pages.admin.mahasiswa.add')->with(compact('dataProdi', 'dataJenisMahasiswa'));
     }
 
     public function searchMahasiswa(Request $request)
@@ -94,7 +99,7 @@ class MahasiswaController extends Controller
         //--> SEARCH WITH WHERE LIKE's VERSION
         // return DB::table('mahasiswa')->where('nm_pd', 'like', "%$searchName%")->get();
     }
-
+    
     public function store(Request $request)
     {
         $existing_id_mahasiswa = $request->existing_id_mahasiswa;
@@ -103,36 +108,36 @@ class MahasiswaController extends Controller
         if (!$existing_id_mahasiswa) {
             // Validation rules for mahasiswa fields
             $request->validate([
-                'nm_pd' => 'required|string|max:100', // nama mahasiswa
-                'jk' => 'nullable|in:L,P', // jenis kelamin
-                'jln' => 'nullable|string|max:80', // jalan/alamat
-                'rt' => 'nullable|numeric|max:99',
-                'rw' => 'nullable|numeric|max:99',
-                'kode_pos' => 'nullable|string|max:5',
-                'nik' => 'nullable|string|max:16',
-                'tmpt_lahir' => 'nullable|string|max:255',
-                'tgl_lahir' => 'nullable|date',
-                'nm_ayah' => 'nullable|string|max:100',
-                'nm_dsn' => 'nullable|string|max:60',
-                'ds_kel' => 'nullable|string|max:60',
+                'nm_pd' => 'required|string|max:100', // nama mahasiswa //--> is also field for users table [name]
+                'jk' => 'required|in:L,P', // jenis kelamin
+                'jln' => 'required|string|max:80', // jalan/alamat
+                'rt' => 'required|numeric|max:99',
+                'rw' => 'required|numeric|max:99',
+                'kode_pos' => 'required|string|max:5',
+                'nik' => 'required|string|max:16',
+                'tmpt_lahir' => 'required|string|max:255',
+                'tgl_lahir' => 'required|date',
+                'nm_ayah' => 'required|string|max:100',
+                'nm_dsn' => 'required|string|max:60',
+                'ds_kel' => 'required|string|max:60',
                 'id_goldarah' => 'required|numeric',
                 'id_agama' => 'required|numeric',
                 'a_terima_kps' => 'nullable',
-                'id_kecamatan' => 'required|string|max:100',
-                'nm_ibu_kandung' => 'nullable|string|max:100',
-                'nisn' => 'nullable|string|max:10',
-                'nik_ayah' => 'nullable|string|max:10',
-                'nik_ibu' => 'nullable|string|max:10',
-                'id_pekerjaan_ayah' => 'nullable|numeric',
-                'id_pekerjaan_ibu' => 'nullable|numeric',
-                'no_hp' => 'nullable|string|max:20',
-                'email' => 'nullable|email|max:60',
-                'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate file size (max 2MB)
+                'id_wil' => 'required|string|max:100', //-->
+                'nm_ibu_kandung' => 'required|string|max:100',
+                'nisn' => 'required|string|max:10',
+                'nik_ayah' => 'required|string|max:10',
+                'nik_ibu' => 'required|string|max:10',
+                'id_pekerjaan_ayah' => 'required|numeric',
+                'id_pekerjaan_ibu' => 'required|numeric',
+                'no_hp' => 'required|string|max:20', //--> is also field for users table [phone_number]
+                'email' => 'required|email|max:60|unique:mahasiswa,email', //--> is also field for users table [email]
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate file size (max 2MB) //--> is also field for users table [photo]
                 'jenjangsekolah' => 'required|string|max:30', // jenjang sekolah
-                'asal_sma' => 'nullable|string|max:50',
+                'asal_sma' => 'required|string|max:50',
                 'jurusan_sekolah_asal' => 'required|string|max:30',
-                'nomor_sttb' => 'nullable|string|max:50',
-                'rata_nilai_sttb' => 'nullable|numeric|max:100'
+                'nomor_sttb' => 'required|string|max:50',
+                'rata_nilai_sttb' => 'required|numeric|max:100'
             ]);
 
             // data mahasiswa
@@ -153,7 +158,6 @@ class MahasiswaController extends Controller
             $mahasiswa->id_goldarah = $request->id_goldarah;
             $mahasiswa->id_agama = $request->id_agama;
             $mahasiswa->a_terima_kps = $request->a_terima_kps ?? 0;
-            $mahasiswa->id_kecamatan = $request->id_kecamatan;
             $mahasiswa->nm_ibu_kandung = $request->nm_ibu_kandung;
             $mahasiswa->nisn = $request->nisn;
             $mahasiswa->nik_ayah = $request->nik_ayah;
@@ -167,27 +171,50 @@ class MahasiswaController extends Controller
             $mahasiswa->jurusan_sekolah_asal = $request->jurusan_sekolah_asal;
             $mahasiswa->nomor_sttb = $request->nomor_sttb;
             $mahasiswa->rata_nilai_sttb = $request->rata_nilai_sttb;
+            
+            // data wilayah
+            [$id_kecamatan, $id_kabupaten, $id_provinsi] = explode('-', $request->id_wil);
+            $mahasiswa->id_kecamatan = $id_kecamatan;
+            $mahasiswa->id_kabupaten = $id_kabupaten;
+            $mahasiswa->id_wil = $id_provinsi;
+            
+            // data user
+            $userData = [
+                'name' => $request->nm_pd,
+                'phone_number' => $request->no_hp,
+                'role_id' => 9, //--> id role's for "mahasiswa"
+                'password' => Hash::make($request->no_hp),
+            ];
 
             // upload foto
             if ($request->hasFile('foto')) {
                 $filePath = $request->file('foto')->store('foto_mahasiswa', 'public');
                 $mahasiswa->foto = $filePath;
+                $userData['photo'] = $filePath;
+            }
+
+            //? update data user if email is exist or add new when email is not exist
+            if ($request->filled('email')) {
+                User::updateOrCreate(
+                    ['email' => $request->input('email')],
+                    $userData
+                );
             }
             $mahasiswa->save();
         }
 
         // Validation rules for mahasiswa_pt fields
         $request->validate([
-            'nipd' => 'nullable|string|max:24', // NPM
-            'id_jns_daftar' => 'nullable|numeric',
-            'id_jenis_mhs' => 'required|numeric',
+            'nipd' => 'required|string|max:24', // NPM
+            'id_jns_daftar' => 'required|numeric',
+            'id_jenis_mhs' => 'required|exists:student_types,id',
             'id_pt_asal' => 'nullable|string:max:40',
             'id_prodi_asal' => 'nullable|string:max:40',
             'sks_diakui' => 'nullable|numeric',
             'no_seri_ijazah' => 'nullable|string|max:80',
-            'mulai_smt' => 'nullable|string|max:5',
+            'mulai_smt' => 'required|string|max:5',
             'mulai_pada_smt' => 'required|numeric',
-            'no_peserta_ujian' => 'nullable|string|max:20',
+            'no_peserta_ujian' => 'required|string|max:20',
             'id_prodi' => 'required|uuid' // ID Prodi
         ]);
 
@@ -208,11 +235,12 @@ class MahasiswaController extends Controller
         $mahasiswa_pt->id_prodi = $request->id_prodi;
         $mahasiswa_pt->save();
 
-        return redirect()->back()->with('success', 'Data mahasiswa berhasil disimpan.');
+        return redirect()->route('mahasiswa.index')->with('success', "Data mahasiswa berhasil disimpan, dan user sudah di buat \n dengan username = $request->nm_pd dan password $request->no_hp");
     }
 
     public function edit(string $id)
     {
+        $dataJenisMahasiswa = student_type::all();
         $dataProdi = All_prodi::rightjoin('identitas_pt', 'all_prodi.id_sp', '=', 'identitas_pt.current_id_sp')
             ->leftjoin('education_level', 'all_prodi.id_jenj_didik', '=', 'education_level.id_jenj_didik')
             ->get([
@@ -222,7 +250,23 @@ class MahasiswaController extends Controller
             ]);
         $mahasiswa_pt = MahasiswaPt::findOrFail($id);
         $mahasiswa = Mahasiswa::where('id_pd', $mahasiswa_pt->id_pd)->firstOrFail();
-        return view('pages.admin.mahasiswa.edit', compact('mahasiswa', 'mahasiswa_pt', 'dataProdi'));
+        $wilayah = Wilayah::where(function ($query) use ($mahasiswa) {
+            $query->orWhere('id_wil', '=', $mahasiswa->id_kecamatan)
+            ->orWhere('id_wil', '=', $mahasiswa->id_kabupaten)
+            ->orWhere('id_wil', '=', $mahasiswa->id_wil);
+        })->orderBy('id_wil')->get(['id_wil', 'nm_wil'])->toArray();
+        
+        $currentSelectedWilayah = ['id' => '', 'name' => ''];
+        if (count($wilayah) == 3) {
+            $currentSelectedWilayah = [
+                //--> [kecamatan] [kabupaten] [provinsi]
+                'id' => "$mahasiswa->id_kecamatan-$mahasiswa->id_kabupaten-$mahasiswa->id_wil",
+                'name' => (trim($wilayah[2]['nm_wil']) ?? '') . ' - ' . (trim($wilayah[1]['nm_wil']) ?? '') . ' - ' . (trim($wilayah[0]['nm_wil']) ?? '')
+            ];
+        }
+        $isRegistered = User::where('email', '=', $mahasiswa->email)->count() > 0;
+
+        return view('pages.admin.mahasiswa.edit', compact('mahasiswa', 'mahasiswa_pt', 'dataProdi', 'isRegistered', 'dataJenisMahasiswa', 'currentSelectedWilayah'));
     }
 
     public function update (Request $request, string $id) {
@@ -232,35 +276,35 @@ class MahasiswaController extends Controller
         // Validation rules for mahasiswa fields
         $request->validate([
             'nm_pd' => 'required|string|max:100',
-            'jk' => 'nullable|in:L,P',
-            'jln' => 'nullable|string|max:80',
-            'rt' => 'nullable|numeric|max:99',
-            'rw' => 'nullable|numeric|max:99',
-            'kode_pos' => 'nullable|string|max:5',
-            'nik' => 'nullable|string|max:16',
-            'tmpt_lahir' => 'nullable|string|max:255',
-            'tgl_lahir' => 'nullable|date',
-            'nm_ayah' => 'nullable|string|max:100',
-            'nm_dsn' => 'nullable|string|max:60',
-            'ds_kel' => 'nullable|string|max:60',
+            'jk' => 'required|in:L,P',
+            'jln' => 'required|string|max:80',
+            'rt' => 'required|numeric|max:99',
+            'rw' => 'required|numeric|max:99',
+            'kode_pos' => 'required|string|max:5',
+            'nik' => 'required|string|max:16',
+            'tmpt_lahir' => 'required|string|max:255',
+            'tgl_lahir' => 'required|date',
+            'nm_ayah' => 'required|string|max:100',
+            'nm_dsn' => 'required|string|max:60',
+            'ds_kel' => 'required|string|max:60',
             'id_goldarah' => 'required|numeric',
             'id_agama' => 'required|numeric',
             'a_terima_kps' => 'nullable',
-            'id_kecamatan' => 'required|string|max:100',
-            'nm_ibu_kandung' => 'nullable|string|max:100',
-            'nisn' => 'nullable|string|max:10',
-            'nik_ayah' => 'nullable|string|max:10',
-            'nik_ibu' => 'nullable|string|max:10',
-            'id_pekerjaan_ayah' => 'nullable|numeric',
-            'id_pekerjaan_ibu' => 'nullable|numeric',
-            'no_hp' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:60',
+            'id_wil' => 'required|string|max:100', //-->
+            'nm_ibu_kandung' => 'required|string|max:100',
+            'nisn' => 'required|string|max:10',
+            'nik_ayah' => 'required|string|max:10',
+            'nik_ibu' => 'required|string|max:10',
+            'id_pekerjaan_ayah' => 'required|numeric',
+            'id_pekerjaan_ibu' => 'required|numeric',
+            'no_hp' => 'required|string|max:20',
+            'email' => "required|email|max:60|unique:mahasiswa,email,$mahasiswa->id_pd,id_pd",
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'jenjangsekolah' => 'required|string|max:30',
-            'asal_sma' => 'nullable|string|max:50',
+            'asal_sma' => 'required|string|max:50',
             'jurusan_sekolah_asal' => 'required|string|max:30',
-            'nomor_sttb' => 'nullable|string|max:50',
-            'rata_nilai_sttb' => 'nullable|numeric|max:100'
+            'nomor_sttb' => 'required|string|max:50',
+            'rata_nilai_sttb' => 'required|numeric|max:100'
         ]);
 
         // Update mahasiswa data
@@ -279,7 +323,6 @@ class MahasiswaController extends Controller
         $mahasiswa->id_goldarah = $request->id_goldarah;
         $mahasiswa->id_agama = $request->id_agama;
         $mahasiswa->a_terima_kps = $request->a_terima_kps ?? 0;
-        $mahasiswa->id_kecamatan = $request->id_kecamatan;
         $mahasiswa->nm_ibu_kandung = $request->nm_ibu_kandung;
         $mahasiswa->nisn = $request->nisn;
         $mahasiswa->nik_ayah = $request->nik_ayah;
@@ -294,6 +337,21 @@ class MahasiswaController extends Controller
         $mahasiswa->nomor_sttb = $request->nomor_sttb;
         $mahasiswa->rata_nilai_sttb = $request->rata_nilai_sttb;
 
+        // data wilayah
+        [$id_kecamatan, $id_kabupaten, $id_provinsi] = explode('-', $request->id_wil);
+        $mahasiswa->id_kecamatan = $id_kecamatan;
+        $mahasiswa->id_kabupaten = $id_kabupaten;
+        $mahasiswa->id_wil = $id_provinsi;
+
+        // user field
+        $userData = [
+            'name' => $request->nm_pd,
+            'phone_number' => $request->no_hp,
+            'role_id' => 9, //--> id role's for "mahasiswa"
+            'password' => Hash::make($request->no_hp),
+        ];
+
+
         // Update foto if uploaded
         if ($request->hasFile('foto')) {
             // Delete the old photo if it exists
@@ -303,22 +361,31 @@ class MahasiswaController extends Controller
             // Store the new photo
             $filePath = $request->file('foto')->store('foto_mahasiswa', 'public');
             $mahasiswa->foto = $filePath;
+            $userData['photo'] = $filePath;
         }
         $mahasiswa->save();
+    
+        //? update data user if email is exist or add new when email is not exist
+        if ($request->filled('email')) {
+            User::updateOrCreate(
+                ['email' => $request->input('email')],
+                $userData
+            );
+        }
 
         // Validation rules for mahasiswa_pt fields
         $request->validate([
-            'nipd' => 'nullable|string|max:24',
-            'id_jns_daftar' => 'nullable|numeric',
-            'id_jenis_mhs' => 'required|numeric',
+            'nipd' => 'required|string|max:24', // NPM
+            'id_jns_daftar' => 'required|numeric',
+            'id_jenis_mhs' => 'required|exists:student_types,id',
             'id_pt_asal' => 'nullable|string:max:40',
             'id_prodi_asal' => 'nullable|string:max:40',
             'sks_diakui' => 'nullable|numeric',
             'no_seri_ijazah' => 'nullable|string|max:80',
-            'mulai_smt' => 'nullable|string|max:5',
+            'mulai_smt' => 'required|string|max:5',
             'mulai_pada_smt' => 'required|numeric',
-            'no_peserta_ujian' => 'nullable|string|max:20',
-            'id_prodi' => 'required|uuid'
+            'no_peserta_ujian' => 'required|string|max:20',
+            'id_prodi' => 'required|uuid' // ID Prodi
         ]);
 
         // Update mahasiswa_pt data
@@ -335,7 +402,7 @@ class MahasiswaController extends Controller
         $mahasiswa_pt->id_prodi = $request->id_prodi;
         $mahasiswa_pt->save();
 
-        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Data mahasiswa berhasil diperbarui.');
     }
 
     public function destroy(string $id)
@@ -356,5 +423,48 @@ class MahasiswaController extends Controller
         }
 
         return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil dihapus.');
+    }
+
+    public function searchWilayah (Request $request) {
+        /** //? LEVEL
+         * --> provinsi [1]
+         * --> kebupaten [2]
+         * --> kecamatan [3]
+         * 
+         * display with composition [3, 2, 1]
+         */
+        $name = $request->nama_wilayah;
+
+        $results = Wilayah::select(
+            'kec.id_wil AS id_kecamatan',
+            'kab.id_wil AS id_kabupaten',
+            'prop.id_wil AS id_provinsi',
+            DB::raw("CONCAT(TRIM(kec.nm_wil), ' - ', TRIM(kab.nm_wil), ' - ', TRIM(prop.nm_wil)) AS data")
+        )
+        ->from('wilayah AS kec')
+        ->leftJoin('wilayah AS kab', 'kec.id_induk_wilayah', '=', 'kab.id_wil')
+        ->leftJoin('wilayah AS prop', 'kab.id_induk_wilayah', '=', 'prop.id_wil')
+        ->where('kec.id_level_wil', 3)
+        ->where(function ($query) use ($name) {
+            $query->where('kec.nm_wil', 'LIKE', "%$name%")
+                ->orWhere('kab.nm_wil', 'LIKE', "%$name%")
+                ->orWhere('prop.nm_wil', 'LIKE', "%$name%");
+        })
+        ->get();
+
+        return response()->json($results);
+    }
+
+    public function resetPassword (string $id_mahasiswa) {
+        // return 'hitted';
+        $mahasiswa = Mahasiswa::findOrFail($id_mahasiswa);
+        // return $mahasiswa;
+        
+        $user = User::where('email', '=', $mahasiswa->email)->firstOrFail();
+        // return $user;
+        $user->password = Hash::make($mahasiswa->no_hp);
+        $user->save();
+
+        return redirect()->back()->with('success', "Password Di Set Ke Nomor Telepon, password = $mahasiswa->no_hp");
     }
 }

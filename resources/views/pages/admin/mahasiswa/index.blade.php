@@ -4,6 +4,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <div class="main-content">
    <div class="page-content">
+      @if (session('success'))
+         <div class="alert alert-success mb-5" role="alert">
+            {{ session('success') }}
+         </div>
+      @endif
+
       <div class="container-fluid">
          <!-- start page title -->
          <div class="row">
@@ -138,7 +144,7 @@
             { data: 'action', name: 'action', orderable: false, searchable: false }
          ],
          columnDefs: [
-            { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: 'text-center' }, 
+            { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], className: 'text-center' }, 
          ],
          language: {
             emptyTable: "Data Mahasiswa Masih Kosong"
