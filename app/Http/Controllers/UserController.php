@@ -43,7 +43,7 @@ class UserController extends Controller
                         return redirect()->route('customer-service.home');
                     case 'finance':
                         return redirect()->route('finance.home');
-                    case 'mahasiswa':
+                    case 'Mahasiswa':
                         return redirect()->route('dashboard.admin');
                     default:
                         return redirect()->route('login')->withErrors(['role' => 'Role tidak valid.']);
@@ -109,7 +109,7 @@ class UserController extends Controller
                         return redirect()->route('customer-service.home');
                     case 'finance':
                         return redirect()->route('finance.home');
-                    case 'mahasiswa':
+                    case 'Mahasiswa':
                         return redirect()->route('dashboard.admin');
                     default:
                         return redirect()->route('login.page')->withErrors(['role' => 'Role tidak valid.']);
