@@ -37,7 +37,6 @@ return new class extends Migration
             $table->char('id_jns_keluar', 1)->nullable();
             $table->decimal('id_jalur_masuk', 4, 0)->nullable();
             $table->decimal('id_pembiayaan', 4, 0)->nullable();
-            $table->tinyInteger('id_jenis_mhs');
             $table->integer('biaya_masuk')->default(0);
             $table->tinyInteger('status_data')->default(1);
             $table->integer('no_daftar')->nullable();
@@ -49,13 +48,15 @@ return new class extends Migration
             $table->tinyInteger('id_model_bayar')->default(0);
             $table->timestamps();
             
+            $table->unsignedBigInteger('id_jenis_mhs');
             $table->uuid('id_pd');
             $table->char('id_prodi', 36)->nullable();
+            $table->foreign('id_jenis_mhs')->references('id')->on('student_types')->onDelete('cascade');
             $table->foreign('id_prodi')->references('id_prodi')->on('all_prodi')->onDelete('cascade');
             $table->foreign('id_pd')->references('id_pd')->on('mahasiswa')->onDelete('cascade');
         });
     }
-    
+
     public function down()
     {
         Schema::dropIfExists('mahasiswa_pt');

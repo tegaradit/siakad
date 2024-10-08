@@ -1,15 +1,31 @@
 @extends('layouts.home-layout')
 
 @section('home-content')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <div class="main-content">
    <div class="page-content">
+      @if (!$isRegistered)
+         <div class="alert alert-warning mb-5" role="alert">
+            Mahasiswa Ini Belum Memiliki Akun, silahkan isi email, no telepon, nama dan foto untuk membuat akun
+         </div>
+      @endif
+         
+      @if (session('success'))
+         <div class="alert alert-success mb-5" role="alert">
+            {{ session('success') }}
+         </div>
+      @endif
+
+      <form id="request-reset-password" class="col-md-3" action="{{ route('mahasiswa.resetPassword', $mahasiswa->id_pd) }}" method="post">
+         @csrf
+         @method('put')
+      </form>
+
       <form class="container-fluid" action="{{ route('mahasiswa.update', $mahasiswa_pt->id_reg_pd) }}" method="post"
          enctype="multipart/form-data">
          @csrf
          @method('put')
          <input type="hidden" name="existing_id_mahasiswa" id="existig_id_mahasiswa">
-
-
          <!-- Data Personal -->
          <div class="card mb-4">
             <div class="card-header bg-light-subtle">
@@ -137,8 +153,8 @@
                </div>
 
                <div class="row mb-3">
-                  <div class="col-md-3">
-                     <button type="button" class="btn btn-danger mt-4">Reset Password</button>
+                  <div class="col-md-3"> 
+                     <button onclick="(function () {document.getElementById('request-reset-password').submit()})()" type="button" class="btn btn-danger">Reset Password</button>
                   </div>
                </div>
             </div>
@@ -174,9 +190,10 @@
                   </div>
                   <div class="col-md-6">
                      <label for="kecamatan" class="form-label">Kecamatan</label>
-                     <input type="text" class="form-control" id="kecamatan" name="id_kecamatan"
-                        value="{{ old('id_kecamatan', $mahasiswa->id_kecamatan) }}">
-                     @error('id_kecamatan') <span class="text-danger">{{ $message }}</span> @enderror
+                     <select class="form-control" id="inp-kecamatan" name="id_wil">
+                        <option value="{{ old('id_wil', $currentSelectedWilayah['id']) }}" selected>{{ $currentSelectedWilayah['name'] }}</option>
+                     </select>
+                     @error('id_wil') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                </div>
                <div class="row mb-3">
@@ -461,8 +478,35 @@
    </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+   //--> selec2 for autocomplete kecamatan
+   $("#inp-kecamatan").select2({
+      ajax: {
+         delay: 250,
+         url: '{{ url('/') }}/admin/mahasiswa/search_wilayah',
+         data(params) {
+            return {
+               nama_wilayah: params.term,
+            }
+         },
+         processResults(data) {
+            return {
+               results: data.map(item => ({
+                  id: `${item.id_kecamatan}-${item.id_kabupaten}-${item.id_provinsi}`,  // The value for the option
+                  text: item.data  // The displayed text
+               }))
+            }
+         }
+      },
+      minimumInputLength: 3,
+      templateResult(res) {
+         return res.text
+      }
+   })
+
    //--> syntax for image preview
    const imgPreview = document.getElementById('img-preview')
    const imgUploadBtn = document.getElementById('img-upload-btn')
@@ -471,123 +515,6 @@
    imgUploadBtn.addEventListener('click', () => imgInput.click())
    imgInput.addEventListener('change', ev => {
       imgPreview.src = URL.createObjectURL(ev.target.files[0])
-   })
-
-   //--> syntax for inject the current data "mahasiswa" from user comfimation into the correct input
-   let foundedData
-   const elementInputTargets = {}
-   const idtInputTargets = [
-      'no-hp', 'email', 'img-input',
-      'jalan', 'dusun', 'desa',
-      'kecamatan', 'rt', 'rw',
-      'kodePos', 'tempatLahir', 'tanggalLahir',
-      'nik', 'jenisKelamin', 'golDarah',
-      'agama', 'penerimaKPS', 'asalSekolah',
-      'nomorSTTB', 'jenjangSekolah', 'NISN',
-      'rataNilaiSTTB', 'nikAyah', 'namaAyah',
-      'pekerjaanAyah', 'nikIbu', 'namaIbu',
-      'pekerjaanIbu', 'jurusanSekolah'
-   ].forEach(id => { elementInputTargets[id] = document.getElementById(id) })
-
-   function fillData(resIndex) {
-      if (foundedData) {
-         const dataMahasiswa = foundedData[resIndex]
-         console.log(dataMahasiswa);
-         document.getElementById('existig_id_mahasiswa').value = dataMahasiswa.id_pd
-
-         elementInputTargets['no-hp'].value = dataMahasiswa.no_hp
-         elementInputTargets['email'].value = dataMahasiswa.email
-         elementInputTargets['jalan'].value = dataMahasiswa.jln
-         elementInputTargets['dusun'].value = dataMahasiswa.nm_dsn
-         elementInputTargets['desa'].value = dataMahasiswa.ds_kel
-         elementInputTargets['kecamatan'].value = dataMahasiswa.id_kecamatan
-         elementInputTargets['rt'].value = dataMahasiswa.rt
-         elementInputTargets['rw'].value = dataMahasiswa.rw
-         elementInputTargets['kodePos'].value = dataMahasiswa.kode_pos
-         elementInputTargets['tempatLahir'].value = dataMahasiswa.tmpt_lahir
-         elementInputTargets['tanggalLahir'].value = new Date(dataMahasiswa.tgl_lahir)
-         elementInputTargets['nik'].value = dataMahasiswa.nik
-         elementInputTargets['jenisKelamin'].value = dataMahasiswa.jk
-         elementInputTargets['golDarah'].value = dataMahasiswa.id_goldarah
-         elementInputTargets['agama'].value = dataMahasiswa.id_agama
-         elementInputTargets['penerimaKPS'].checked = dataMahasiswa.a_terima_kps == "1"
-         elementInputTargets['asalSekolah'].value = dataMahasiswa.asal_sma
-         elementInputTargets['jurusanSekolah'].value = dataMahasiswa.jurusan_sekolah_asal
-         elementInputTargets['nomorSTTB'].value = dataMahasiswa.nomor_sttb
-         elementInputTargets['jenjangSekolah'].value = dataMahasiswa.jenjangsekolah
-         elementInputTargets['NISN'].value = dataMahasiswa.nisn
-         elementInputTargets['rataNilaiSTTB'].value = dataMahasiswa.rata_nilai_sttb
-         elementInputTargets['nikAyah'].value = dataMahasiswa.nik_ayah
-         elementInputTargets['namaAyah'].value = dataMahasiswa.nm_ayah
-         elementInputTargets['pekerjaanAyah'].value = dataMahasiswa.id_pekerjaan_ayah
-         elementInputTargets['nikIbu'].value = dataMahasiswa.nik_ibu
-         elementInputTargets['namaIbu'].value = dataMahasiswa.nm_ibu_kandung
-         elementInputTargets['pekerjaanIbu'].value = dataMahasiswa.id_pekerjaan_ibu
-         swal.close()
-      }
-   }
-
-   //--> syntax for display details "nama mahasiswa" we'll found
-   function displayDetailFound(res) {
-      let template = ""
-      res.forEach((item, index) => {
-         template += `
-         <div class="d-flex justify-content-between pb-1 border-bottom border-primary align-items-center">
-            <p class="card-title">${item.nm_pd}</p>
-            <button onclick="fillData(${index})" class="btn btn-sm btn-outline-primary">Konfirmasi</button>
-         </div>
-      `
-      })
-
-      Swal.fire({
-         title: 'Daftar Nama',
-         showCancelButton: true,
-         showConfirmButton: false,
-         cancelButtonColor: '#d33',
-         html: template
-      })
-   }
-
-   //--> syntax for search "nama mahasiswa"
-   const inpNamaMahasiswa = document.getElementById('inp-nama-mahasiswa')
-   let loading = false
-   inpNamaMahasiswa.addEventListener('blur', ev => {
-      if (!loading && ev.target.value.length >= 3) {
-         loading = true
-         fetch(`{{ route('mahasiswa.search') }}`, {
-            method: 'post',
-            headers: {
-               'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ name: ev.target.value.toUpperCase() })
-         })
-            .then(res => res.json())
-            .then(res => {
-               console.log(res)
-               if (Array.isArray(res)) {
-                  if (res.length > 0) {
-                     foundedData = res
-                     Swal.fire({
-                        title: "Anda Merasa Sudah Terdaftar?",
-                        text: `Nama Mahasiswa yang mirip dengan "${ev.target.value}" di temukan di sistem, klik Ya untuk melihat detail nya`,
-                        icon: 'info',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Ya',
-                        cancelButtonText: 'Tidak'
-                     }).then((result) => {
-                        if (result.isConfirmed) {
-                           displayDetailFound(res)
-                        }
-                     });
-                  }
-               }
-            })
-            .finally(() => {
-               loading = false
-            })
-      }
    })
 </script>
 @endsection

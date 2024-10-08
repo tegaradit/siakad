@@ -27,7 +27,7 @@ class CourseCurriculumController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($course) {
                     // Membuat URL untuk detail berdasarkan course_id
-                    $detailUrl = route('kuliah_kelas.index', [$course->curriculum_id, $course->course_id]);
+                    $detailUrl = route('kelas_kuliah.index', [$course->curriculum_id, $course->course_id]);
                     
                     // Membuat URL untuk edit dan delete
                     $editUrl = route('curriculum_course.edit', [$course->curriculum_id, $course->id]);

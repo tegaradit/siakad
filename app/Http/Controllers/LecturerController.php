@@ -111,7 +111,7 @@ class LecturerController extends Controller
 
         // Simpan data lecturer
         $lecturer = Lecturer::create(array_merge($validatedData,['role_id' => 7]));
-     
+
         if ($request->filled('email')) {
         $user = User::updateOrCreate(
             ['email' => $request->input('email')],
