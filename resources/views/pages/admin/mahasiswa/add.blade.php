@@ -6,7 +6,7 @@
    <div class="page-content">
       <form class="container-fluid" action="{{ route('mahasiswa.store') }}" method="post" enctype="multipart/form-data">
          @csrf
-         <input required type="hidden" name="existing_id_mahasiswa" id="existig_id_mahasiswa">
+         <input type="hidden" name="existing_id_mahasiswa" id="existig_id_mahasiswa">
 
          <!-- Data Personal -->
          <div class="card mb-4">
@@ -32,12 +32,14 @@
                      <div class="row mb-3">
                         <div class="col-md-6">
                            <label for="phone" class="form-label">No. Hp</label>
-                           <input required type="text" class="form-control" name="no_hp" id="no-hp" value="{{ old('no_hp') }}">
+                           <input required type="text" class="form-control" name="no_hp" id="no-hp"
+                              value="{{ old('no_hp') }}">
                            @error('no_hp') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-md-6">
                            <label for="email" class="form-label">Email</label>
-                           <input required type="email" class="form-control" name="email" id="email" value="{{ old('email') }}">
+                           <input required type="email" class="form-control" name="email" id="email"
+                              value="{{ old('email') }}">
                            @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                      </div>
@@ -47,10 +49,10 @@
                            <select required id="studyProgram" class="form-select" name="id_prodi">
                               <option selected value="">:: Pilih Program Studi ::</option>
                               @foreach ($dataProdi as $prodi)
-                                 <option value="{{ $prodi->id_prodi }}" {{ old('id_prodi') == $prodi->id_prodi ? 'selected' : '' }}>
-                                    {{ "$prodi->jenjang_pendidikan $prodi->nama_prodi" }}
-                                 </option>
-                              @endforeach
+                          <option value="{{ $prodi->id_prodi }}" {{ old('id_prodi') == $prodi->id_prodi ? 'selected' : '' }}>
+                            {{ "$prodi->jenjang_pendidikan $prodi->nama_prodi" }}
+                          </option>
+                       @endforeach
                            </select>
                            @error('id_prodi') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
@@ -143,7 +145,8 @@
                   </div>
                   <div class="col-md-6">
                      <label for="dusun" class="form-label">Dusun</label>
-                     <input required type="text" class="form-control" id="dusun" name="nm_dsn" value="{{ old('nm_dsn') }}">
+                     <input required type="text" class="form-control" id="dusun" name="nm_dsn"
+                        value="{{ old('nm_dsn') }}">
                      @error('nm_dsn') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                </div>
@@ -151,7 +154,8 @@
                <div class="row mb-3">
                   <div class="col-md-6">
                      <label for="desa" class="form-label">Desa/Kelurahan</label>
-                     <input required type="text" class="form-control" id="desa" name="ds_kel" value="{{ old('ds_kel') }}">
+                     <input required type="text" class="form-control" id="desa" name="ds_kel"
+                        value="{{ old('ds_kel') }}">
                      @error('ds_kel') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                   <div class="col-md-6">
@@ -175,7 +179,8 @@
                   </div>
                   <div class="col-md-4">
                      <label for="kodePos" class="form-label">Kode Pos</label>
-                     <input required type="text" class="form-control" id="kodePos" name="kode_pos" value="{{ old('kode_pos') }}">
+                     <input required type="text" class="form-control" id="kodePos" name="kode_pos"
+                        value="{{ old('kode_pos') }}">
                      @error('kode_pos') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                   <div class="col-md-3">
@@ -318,19 +323,22 @@
                <div class="row mb-3">
                   <div class="col-md-6">
                      <label for="nikAyah" class="form-label">NIK Ayah</label>
-                     <input required type="text" class="form-control" id="nikAyah" name="nik_ayah" value="{{ old('nik_ayah') }}">
+                     <input required type="text" class="form-control" id="nikAyah" name="nik_ayah"
+                        value="{{ old('nik_ayah') }}">
                      @error('nik_ayah') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                   <div class="col-md-6">
                      <label for="nikIbu" class="form-label">NIK Ibu</label>
-                     <input required type="text" class="form-control" id="nikIbu" name="nik_ibu" value="{{ old('nik_ibu') }}">
+                     <input required type="text" class="form-control" id="nikIbu" name="nik_ibu"
+                        value="{{ old('nik_ibu') }}">
                      @error('nik_ibu') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                </div>
                <div class="row mb-3">
                   <div class="col-md-6">
                      <label for="namaAyah" class="form-label">Nama Ayah</label>
-                     <input required type="text" class="form-control" id="namaAyah" name="nm_ayah" value="{{ old('nm_ayah') }}">
+                     <input required type="text" class="form-control" id="namaAyah" name="nm_ayah"
+                        value="{{ old('nm_ayah') }}">
                      @error('nm_ayah') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                   <div class="col-md-6">
@@ -344,7 +352,7 @@
                   <div class="col-md-6">
                      <label for="pekerjaanAyah" class="form-label">Pekerjaan Ayah</label>
                      <select required class="form-select" id="pekerjaanAyah" name="id_pekerjaan_ayah">
-                        <option value='0' selected>:: Pilih Pekerjaan ::</option>
+                        <option value='' selected>:: Pilih Pekerjaan ::</option>
                         <option value='Tidak bekerja' {{ old('id_pekerjaan_ayah') == 'Tidak bekerja' ? 'selected' : '' }}>
                            Tidak bekerja</option>
                         <option value='Nelayan' {{ old('id_pekerjaan_ayah') == 'Nelayan' ? 'selected' : '' }}>Nelayan
@@ -376,7 +384,7 @@
                   <div class="col-md-6">
                      <label for="pekerjaanIbu" class="form-label">Pekerjaan Ibu</label>
                      <select required class="form-select" id="pekerjaanIbu" name="id_pekerjaan_ibu">
-                        <option value='0' selected>:: Pilih Pekerjaan ::</option>
+                        <option value='' selected>:: Pilih Pekerjaan ::</option>
                         <option value='Tidak bekerja' {{ old('id_pekerjaan_ibu') == 'Tidak bekerja' ? 'selected' : '' }}>
                            Tidak bekerja</option>
                         <option value='Nelayan' {{ old('id_pekerjaan_ibu') == 'Nelayan' ? 'selected' : '' }}>Nelayan
@@ -407,49 +415,47 @@
             </div>
          </div>
 
-         <div class="card">
+         <div class="card" id="advanced-form" style="display: none">
             <div class="card-header bg-light-subtle">
                KHUSUS BAGI CALON MAHASISWA PINDAHAN/MELANJUTKAN
             </div>
             <div class="card-body">
-               <form>
-                  <div class="row mb-3">
-                     <div class="col-md-3">
-                        <label for="namaPTAsal" class="form-label">Nama Perguruan Tinggi Asal </label>
-                        <input required type="text" class="form-control" id="namaPTAsal" name="id_pt_asal"
-                           value="{{ old('id_pt_asal') }}">
-                        @error('id_pt_asal') <span class="text-danger">{{ $message }}</span> @enderror
-                     </div>
-                     <div class="col-md-3">
-                        <label for="programStudiAsal" class="form-label">Program Studi Asal </label>
-                        <select required class="form-select" id="programStudiAsal" name="id_prodi_asal">
-                           <option value="" selected>:: Pilih Program Studi ::</option>
-                           <option value="prodi1" {{ old('id_prodi_asal') == 'prodi1' ? 'selected' : '' }}>Program Studi 1
-                           </option>
-                           <option value="prodi2" {{ old('id_prodi_asal') == 'prodi2' ? 'selected' : '' }}>Program Studi 2
-                           </option>
-                        </select>
-                        @error('id_prodi_asal') <span class="text-danger">{{ $message }}</span> @enderror
-                     </div>
-                     <div class="col-md-3">
-                        <label for="sksDiakui" class="form-label">SKS diakui </label>
-                        <input required type="number" class="form-control" id="sksDiakui" name="sks_diakui"
-                           value="{{ old('sks_diakui') }}">
-                        @error('sks_diakui') <span class="text-danger">{{ $message }}</span> @enderror
-                     </div>
-                     <div class="col-md-3">
-                        <label for="nomorIjazahAsal" class="form-label">Nomor Ijazah Asal</label>
-                        <input required type="text" class="form-control" id="nomorIjazahAsal" name="no_seri_ijazah"
-                           value="{{ old('no_seri_ijazah') }}">
-                        @error('no_seri_ijazah') <span class="text-danger">{{ $message }}</span> @enderror
-                     </div>
+               <div class="row mb-3">
+                  <div class="col-md-3">
+                     <label for="namaPTAsal" class="form-label">Nama Perguruan Tinggi Asal </label>
+                     <input type="text" class="form-control" id="namaPTAsal" name="id_pt_asal"
+                        value="{{ old('id_pt_asal') }}">
+                     @error('id_pt_asal') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
-                  <div class="row mb-3">
-                     <div class="d-grid gap-2" style="place-content: center;">
-                        <button type="submit" class="btn btn-warning">Simpan</button>
-                     </div>
+                  <div class="col-md-3">
+                     <label for="programStudiAsal" class="form-label">Program Studi Asal </label>
+                     <select class="form-select" id="programStudiAsal" name="id_prodi_asal">
+                        <option value="" selected>:: Pilih Program Studi ::</option>
+                        <option value="prodi1" {{ old('id_prodi_asal') == 'prodi1' ? 'selected' : '' }}>Program Studi 1
+                        </option>
+                        <option value="prodi2" {{ old('id_prodi_asal') == 'prodi2' ? 'selected' : '' }}>Program Studi 2
+                        </option>
+                     </select>
+                     @error('id_prodi_asal') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
-               </form>
+                  <div class="col-md-3">
+                     <label for="sksDiakui" class="form-label">SKS diakui </label>
+                     <input type="number" class="form-control" id="sksDiakui" name="sks_diakui"
+                        value="{{ old('sks_diakui') }}">
+                     @error('sks_diakui') <span class="text-danger">{{ $message }}</span> @enderror
+                  </div>
+                  <div class="col-md-3">
+                     <label for="nomorIjazahAsal" class="form-label">Nomor Ijazah Asal</label>
+                     <input type="text" class="form-control" id="nomorIjazahAsal" name="no_seri_ijazah"
+                        value="{{ old('no_seri_ijazah') }}">
+                     @error('no_seri_ijazah') <span class="text-danger">{{ $message }}</span> @enderror
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row mb-3">
+            <div class="d-grid gap-2" style="place-content: center;">
+               <button type="submit" class="btn btn-warning">Simpan</button>
             </div>
          </div>
       </form>
@@ -485,6 +491,14 @@
          return res.text
       }
    })
+
+   //--> syntax for detect registration type
+   const advancedForm = document.getElementById('advanced-form')
+   const showWhenValue = ['6', '2']
+   document.getElementById('registrationType').addEventListener('change', ({ target }) => {
+      advancedForm.style.display = showWhenValue.includes(target.value) ? 'block' : 'none'
+   })
+
 
    //--> syntax for image preview
    const imgPreview = document.getElementById('img-preview')

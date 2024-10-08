@@ -122,7 +122,7 @@ class MahasiswaController extends Controller
                 'ds_kel' => 'required|string|max:60',
                 'id_goldarah' => 'required|numeric',
                 'id_agama' => 'required|numeric',
-                'a_terima_kps' => 'required',
+                'a_terima_kps' => 'nullable',
                 'id_wil' => 'required|string|max:100', //-->
                 'nm_ibu_kandung' => 'required|string|max:100',
                 'nisn' => 'required|string|max:10',
@@ -132,7 +132,7 @@ class MahasiswaController extends Controller
                 'id_pekerjaan_ibu' => 'required|numeric',
                 'no_hp' => 'required|string|max:20', //--> is also field for users table [phone_number]
                 'email' => 'required|email|max:60|unique:mahasiswa,email', //--> is also field for users table [email]
-                'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate file size (max 2MB) //--> is also field for users table [photo]
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate file size (max 2MB) //--> is also field for users table [photo]
                 'jenjangsekolah' => 'required|string|max:30', // jenjang sekolah
                 'asal_sma' => 'required|string|max:50',
                 'jurusan_sekolah_asal' => 'required|string|max:30',
@@ -208,10 +208,10 @@ class MahasiswaController extends Controller
             'nipd' => 'required|string|max:24', // NPM
             'id_jns_daftar' => 'required|numeric',
             'id_jenis_mhs' => 'required|exists:student_types,id',
-            'id_pt_asal' => 'required|string:max:40',
-            'id_prodi_asal' => 'required|string:max:40',
-            'sks_diakui' => 'required|numeric',
-            'no_seri_ijazah' => 'required|string|max:80',
+            'id_pt_asal' => 'nullable|string:max:40',
+            'id_prodi_asal' => 'nullable|string:max:40',
+            'sks_diakui' => 'nullable|numeric',
+            'no_seri_ijazah' => 'nullable|string|max:80',
             'mulai_smt' => 'required|string|max:5',
             'mulai_pada_smt' => 'required|numeric',
             'no_peserta_ujian' => 'required|string|max:20',
@@ -256,11 +256,14 @@ class MahasiswaController extends Controller
             ->orWhere('id_wil', '=', $mahasiswa->id_wil);
         })->orderBy('id_wil')->get(['id_wil', 'nm_wil'])->toArray();
         
-        $currentSelectedWilayah = [
-            //--> [kecamatan] [kabupaten] [provinsi]
-            'id' => "$mahasiswa->id_kecamatan-$mahasiswa->id_kabupaten-$mahasiswa->id_wil",
-            'name' => (trim($wilayah[2]['nm_wil']) ?? '') . ' - ' . (trim($wilayah[1]['nm_wil']) ?? '') . ' - ' . (trim($wilayah[0]['nm_wil']) ?? '')
-        ];
+        $currentSelectedWilayah = ['id' => '', 'name' => ''];
+        if (count($wilayah) == 3) {
+            $currentSelectedWilayah = [
+                //--> [kecamatan] [kabupaten] [provinsi]
+                'id' => "$mahasiswa->id_kecamatan-$mahasiswa->id_kabupaten-$mahasiswa->id_wil",
+                'name' => (trim($wilayah[2]['nm_wil']) ?? '') . ' - ' . (trim($wilayah[1]['nm_wil']) ?? '') . ' - ' . (trim($wilayah[0]['nm_wil']) ?? '')
+            ];
+        }
         $isRegistered = User::where('email', '=', $mahasiswa->email)->count() > 0;
 
         return view('pages.admin.mahasiswa.edit', compact('mahasiswa', 'mahasiswa_pt', 'dataProdi', 'isRegistered', 'dataJenisMahasiswa', 'currentSelectedWilayah'));
@@ -286,7 +289,7 @@ class MahasiswaController extends Controller
             'ds_kel' => 'required|string|max:60',
             'id_goldarah' => 'required|numeric',
             'id_agama' => 'required|numeric',
-            'a_terima_kps' => 'required',
+            'a_terima_kps' => 'nullable',
             'id_wil' => 'required|string|max:100', //-->
             'nm_ibu_kandung' => 'required|string|max:100',
             'nisn' => 'required|string|max:10',
@@ -296,7 +299,7 @@ class MahasiswaController extends Controller
             'id_pekerjaan_ibu' => 'required|numeric',
             'no_hp' => 'required|string|max:20',
             'email' => "required|email|max:60|unique:mahasiswa,email,$mahasiswa->id_pd,id_pd",
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'jenjangsekolah' => 'required|string|max:30',
             'asal_sma' => 'required|string|max:50',
             'jurusan_sekolah_asal' => 'required|string|max:30',
@@ -372,17 +375,17 @@ class MahasiswaController extends Controller
 
         // Validation rules for mahasiswa_pt fields
         $request->validate([
-            'nipd' => 'required|string|max:24',
+            'nipd' => 'required|string|max:24', // NPM
             'id_jns_daftar' => 'required|numeric',
             'id_jenis_mhs' => 'required|exists:student_types,id',
-            'id_pt_asal' => 'required|string:max:40',
-            'id_prodi_asal' => 'required|string:max:40',
-            'sks_diakui' => 'required|numeric',
-            'no_seri_ijazah' => 'required|string|max:80',
+            'id_pt_asal' => 'nullable|string:max:40',
+            'id_prodi_asal' => 'nullable|string:max:40',
+            'sks_diakui' => 'nullable|numeric',
+            'no_seri_ijazah' => 'nullable|string|max:80',
             'mulai_smt' => 'required|string|max:5',
             'mulai_pada_smt' => 'required|numeric',
             'no_peserta_ujian' => 'required|string|max:20',
-            'id_prodi' => 'required|uuid'
+            'id_prodi' => 'required|uuid' // ID Prodi
         ]);
 
         // Update mahasiswa_pt data
