@@ -191,8 +191,8 @@ Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecture
 
 
 Route::get('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
-// Route::get('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'create'])->name('kelas_kuliah.create');
-// Route::post('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
+Route::get('/kelas-kuliah/get-lecturers', [KelasKuliahController::class, 'getLecturers'])->name('kelas_kuliah.getLecturers');
+Route::post('admin/lecture/store', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
 
 
 

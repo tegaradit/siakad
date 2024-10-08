@@ -53,7 +53,32 @@
             </div> 
         </div> 
 
-        
+        <!-- Modal for adding lecturer -->
+        <div class="modal fade" id="addLecturerModal" tabindex="-1" aria-labelledby="addLecturerModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addLecturerModalLabel">Tambah Dosen Pengajar</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addLecturerForm">
+                            <div class="mb-3">
+                                <label for="lecturer_name" class="form-label">Nama Dosen</label>
+                                <input type="text" class="form-control" id="lecturer_name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="lecturer_email" class="form-label">Email Dosen</label>
+                                <input type="email" class="form-control" id="lecturer_email" required>
+                            </div>
+                            <input type="hidden" id="class_id" value="">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             $(document).ready(function() {
                 var table = $('#kelasKuliahTable').DataTable({
@@ -66,62 +91,62 @@
                             d.semester_id = $('#filter_semester').val();
                         }
                     },
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
-                            data: 'course_id',
-                            name: 'course_id'
-                        },
-                        {
-                            data: 'nama_kelas',
-                            name: 'nama_kelas'
-                        },
-                        {
-                            data: 'jenis_kelas',
-                            name: 'jenis_kelas'
-                        },
-                        {
-                            data: 'bobot',
-                            name: 'bobot'
-                        },
-                        {
-                            data: 'nidn',
-                            name: 'nidn'
-                        },
-                        {
-                            data: 'dosen_pengajar',
-                            name: 'dosen_pengajar',
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: 'asisten_dosen',
-                            name: 'asisten_dosen'
-                        },
-                        {
-                            data: 'quota',
-                            name: 'quota'
-                        },
-                        {
-                            data: 'peserta_kelas',
-                            name: 'peserta_kelas',
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: 'actions',
-                            name: 'actions',
-                            orderable: false,
-                            searchable: false
-                        }
+                    columns: [
+                        { data: 'id', name: 'id' },
+                        { data: 'course_id', name: 'course_id' },
+                        { data: 'nama_kelas', name: 'nama_kelas' },
+                        { data: 'jenis_kelas', name: 'jenis_kelas' },
+                        { data: 'bobot', name: 'bobot' },
+                        { data: 'nidn', name: 'nidn' },
+                        { data: 'dosen_pengajar', name: 'dosen_pengajar', orderable: false, searchable: false },
+                        { data: 'asisten_dosen', name: 'asisten_dosen' },
+                        { data: 'quota', name: 'quota' },
+                        { data: 'peserta_kelas', name: 'peserta_kelas', orderable: false, searchable: false },
+                        { data: 'actions', name: 'actions', orderable: false, searchable: false }
                     ]
                 });
 
+                // Event to apply filters and refresh the table
                 $('#filter_prodi, #filter_semester').change(function() {
                     table.draw();
                 });
+
+                // Show modal on "+" button click
+                $(document).on('click', '.btn-primary', function() {
+                    var classId = $(this).closest('tr').find('td').eq(0).text(); // Assuming ID is in the first column
+                    $('#class_id').val(classId);
+                    $('#addLecturerModal').modal('show');
+                });
+
+                // Handle form submission
+                $('#addLecturerForm').on('submit', function(e) {
+                    e.preventDefault();
+                    var lecturerName = $('#lecturer_name').val();
+                    var lecturerEmail = $('#lecturer_email').val();
+                    var classId = $('#class_id').val();
+                    
+                    // Example AJAX call to save the lecturer
+                    $.ajax({
+                        url: "{{ route('lecturer.store') }}", // Replace with your route
+                        method: 'POST',
+                        data: {
+                            name: lecturerName,
+                            email: lecturerEmail,
+                            class_id: classId,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            $('#addLecturerModal').modal('hide');
+                            table.draw(); // Refresh the table
+                            alert(response.message); // Optional: Show success message
+                        },
+                        error: function(xhr) {
+                            alert('Error: ' + xhr.responseJSON.message); // Handle errors
+                        }
+                    });
+                });
             });
         </script>
-        @endsection
+    </div>
+</div>
+@endsection
