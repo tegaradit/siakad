@@ -12,7 +12,7 @@ class LectureSettingController extends Controller
 {
     public function index()
     {
-        $menu = 'lecture_setting';
+        $menu = 'datas';
         $submenu = 'lecture_setting';
 
         $datas = Lecture_setting::with('all_prodi')->orderBy('id', 'asc')->paginate(5);
@@ -22,6 +22,8 @@ class LectureSettingController extends Controller
 
     public function create()
     {
+        $menu = 'datas';
+        $submenu = 'lecture_setting';
         // Mendapatkan current_id_sp dari IdentitasPt
         $current_id_sp = IdentitasPt::first()->current_id_sp;
 
@@ -30,7 +32,7 @@ class LectureSettingController extends Controller
             ->where('status', 'A')
             ->get();
 
-        return view('pages.admin.lecture_setting.form', compact('prodis'));
+        return view('pages.admin.lecture_setting.form', compact('prodis', 'menu', 'submenu'));
     }
 
     public function store(Request $request)
@@ -84,6 +86,9 @@ class LectureSettingController extends Controller
 
     public function edit($id)
     {
+        $menu = 'datas';
+        $submenu = 'lecture_setting';
+
         // Ambil data setting perkuliahan berdasarkan ID
         $data = Lecture_setting::findOrFail($id);
 
@@ -95,7 +100,7 @@ class LectureSettingController extends Controller
             ->where('status', 'A')
             ->get();
 
-        return view('pages.admin.lecture_setting.form_edit', compact('data', 'prodis'));
+        return view('pages.admin.lecture_setting.form_edit', compact('data', 'prodis', 'menu','submenu'));
     }
 
     public function update(Request $request, $id)

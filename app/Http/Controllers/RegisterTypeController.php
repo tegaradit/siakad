@@ -10,7 +10,9 @@ class RegisterTypeController extends Controller
 {
     public function index()
     {
-        return view('pages.admin.register_type.index'); 
+        $menu = 'data';
+        $submenu = 'register-type';
+        return view('pages.admin.register_type.index', compact('menu', 'submenu')); 
     }
 
     public function data(Request $request)
@@ -35,11 +37,6 @@ class RegisterTypeController extends Controller
 
         return abort(404);
     }
-
-    // public function create()
-    // {
-    //     return view('pages.admin.register_type.form'); // Ganti dengan path view yang sesuai
-    // }
 
     public function store(Request $request)
     {

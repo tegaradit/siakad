@@ -10,8 +10,9 @@ class SemesterController extends Controller
 {
     public function index()
     {
-        // $datas = Semester::all();
-        return view('pages.admin.semester.index');
+        $menu = 'data';
+        $submenu = 'semester';
+        return view('pages.admin.semester.index', compact('menu', 'submenu'));
     }
 
     public function data(Request $request)
@@ -68,10 +69,12 @@ class SemesterController extends Controller
     // Display the form to create a new semester
     public function create()
     {
+        $menu = 'data';
+        $submenu = 'semester';
         // Cek apakah ada semester lain yang aktif
         $isAnotherActive = Semester::where('is_active', 1)->exists() ? 1 : 0;
 
-        return view('pages.admin.semester.form', compact('isAnotherActive'));
+        return view('pages.admin.semester.form', compact('isAnotherActive', 'menu', 'submenu'));
     }
 
     // Store the new semester in the database
@@ -117,6 +120,8 @@ class SemesterController extends Controller
     // Display the form to edit an existing semester
     public function edit($semester_id)
     {
+        $menu = 'data';
+        $submenu = 'semester';
         // Cari semester yang akan diedit berdasarkan ID
         $semester = Semester::findOrFail($semester_id);
 
@@ -126,7 +131,7 @@ class SemesterController extends Controller
             ->exists() ? 1 : 0;
 
         // Return view untuk edit, kirim data semester yang ditemukan dan flag isAnotherActive
-        return view('pages.admin.semester.form', compact('semester', 'isAnotherActive'));
+        return view('pages.admin.semester.form', compact('semester', 'isAnotherActive', 'menu', 'submenu'));
     }
 
     // Update the semester in the database

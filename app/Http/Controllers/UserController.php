@@ -13,6 +13,8 @@ class UserController extends Controller
 {
     public function index()
     {
+        $menu = 'data';
+        $submenu = 'user';
         if (Auth::check()) {
             $user = Auth::user();
             $role = $user->role;
@@ -54,7 +56,7 @@ class UserController extends Controller
         }
 
         // Jika belum login, tampilkan halaman welcome atau login
-        return view('welcome');
+        return view('welcome', compact('menu', 'submenu'));
     }
 
 
@@ -152,8 +154,10 @@ class UserController extends Controller
     //make method createF
     public function create()
     {
+        $menu = 'data';
+        $submenu = 'user';
         $roles = Role::all();
-        return view('pages.admin.users.create', compact('roles'));
+        return view('pages.admin.users.create', compact('roles', 'menu', 'submenu'));
     }
     public function store(Request $request)
     {
@@ -190,9 +194,11 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $menu = 'data';
+        $submenu = 'user';
         $user = User::find($id);
         $roles = Role::all(); // Ambil semua role untuk dropdown
-        return view('pages.admin.users.edit', compact('user', 'roles'));
+        return view('pages.admin.users.edit', compact('user', 'roles', 'menu', 'submenu'));
     }
 
     public function update(Request $request, $id)

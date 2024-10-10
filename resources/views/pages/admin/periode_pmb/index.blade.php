@@ -29,8 +29,8 @@
                      <p class="card-title-desc">Berikut adalah daftar Periode Penerimaan Mahasiswa Baru yang tersedia di sistem.</p>
                   </div>
                   <div class="card-body">
-                     <a href="{{ route('periode_pmb.create') }}" class="btn btn-primary mb-3">
-                        <i data-feather="plus-square"></i>
+                     <a href="{{ route('periode_pmb.create') }}" class="btn btn-primary btn-sm mb-3">
+                        <i class="fa-solid fa-square-plus"></i>
                         Tambah
                      </a>
                      <div class="table-responsive">
@@ -77,6 +77,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
 <script>
    $(document).ready(function () {

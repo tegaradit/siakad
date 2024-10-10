@@ -13,6 +13,8 @@ class PeriodePmbController extends Controller
 {
     public function index(Request $request)
     {
+        $menu = 'data';
+        $submenu = 'periode-pmb';
         if ($request->ajax()) {
             return DataTables::of(Periode_pmb::get())
                 ->addColumn('action', function ($row) {
@@ -45,13 +47,15 @@ class PeriodePmbController extends Controller
                 ->make();
         }
 
-        return view('pages.admin.periode_pmb.index');
+        return view('pages.admin.periode_pmb.index', compact('menu', 'submenu'));
     }
 
     public function create() {
+        $menu = 'data';
+        $submenu = 'periode-pmb';
         $isAnotherOpen = $this->anotherIsOpen()['result'];
         $semester_id = Semester::where('is_active', '=', '1')->get(['semester_id'])[0]->semester_id;
-        return view('pages.admin.periode_pmb.add')->with(compact('isAnotherOpen', 'semester_id'));
+        return view('pages.admin.periode_pmb.add')->with(compact('isAnotherOpen', 'semester_id', 'menu', 'submenu'));
     }
 
     public function searchSemester (Request $request) {
@@ -96,11 +100,13 @@ class PeriodePmbController extends Controller
     }
 
     public function edit (string $id) {
+        $menu = 'data';
+        $submenu = 'periode-pmb';
         $prev_period_data = Periode_pmb::findOrFail($id);
         $semester_data = Semester::where('is_active', '=', '1')->get();
         $isAnotherOpen = $this->anotherIsOpen()['result'];
 
-        return view('pages.admin.periode_pmb.edit')->with(compact('prev_period_data', 'semester_data', 'isAnotherOpen'));
+        return view('pages.admin.periode_pmb.edit')->with(compact('prev_period_data', 'semester_data', 'isAnotherOpen', 'menu', 'submenu'));
     }
 
     public function toggleStatus(Request $request) {

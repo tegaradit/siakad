@@ -10,7 +10,9 @@ class AcademicYearController extends Controller
 {
     public function index()
     {
-        return view('pages.admin.academic_year.index');
+        $menu = 'data';
+        $submenu = 'academic-year';
+        return view('pages.admin.academic_year.index', compact('menu', 'submenu'));
     }
 
     public function data(Request $request)
@@ -40,7 +42,9 @@ class AcademicYearController extends Controller
 
     public function create()
     {
-        return view('pages.admin.academic_year.form');
+        $menu = 'data';
+        $submenu = 'academic-year';
+        return view('pages.admin.academic_year.form', compact('menu', 'submenu'));
     }
 
     public function store(Request $request)
@@ -76,8 +80,10 @@ class AcademicYearController extends Controller
 
     public function edit($id)
     {
+        $menu = 'data';
+        $submenu = 'academic-year';
         $academicYear = Academic_year::findOrFail($id);
-        return view('pages.admin.academic_year.form_edit', compact('academicYear'));
+        return view('pages.admin.academic_year.form_edit', compact('academicYear', 'menu', 'submenu'));
     }
 
     public function update(Request $request, $id)

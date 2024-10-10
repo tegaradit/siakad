@@ -18,6 +18,8 @@ class MahasiswaController extends Controller
 {
     public function index(Request $request)
     {
+        $menu = 'data';
+        $submenu = 'mahasiswa';
         if ($request->ajax()) {
             $dataMahasiswa = DB::table('mahasiswa')
                 ->leftJoin('mahasiswa_pt', 'mahasiswa.id_pd', '=', 'mahasiswa_pt.id_pd')
@@ -74,11 +76,13 @@ class MahasiswaController extends Controller
                 ->make();
         }
 
-        return view('pages.admin.mahasiswa.index');
+        return view('pages.admin.mahasiswa.index', compact('menu', 'submenu'));
     }
 
     public function create()
     {
+        $menu = 'data';
+        $submenu = 'mahasiswa';
         $dataJenisMahasiswa = student_type::all();
         $dataProdi = All_prodi::rightjoin('identitas_pt', 'all_prodi.id_sp', '=', 'identitas_pt.current_id_sp')
             ->leftjoin('education_level', 'all_prodi.id_jenj_didik', '=', 'education_level.id_jenj_didik')
@@ -88,7 +92,7 @@ class MahasiswaController extends Controller
                 'nm_jenj_didik AS jenjang_pendidikan'
             ]);
 
-        return view('pages.admin.mahasiswa.add')->with(compact('dataProdi', 'dataJenisMahasiswa'));
+        return view('pages.admin.mahasiswa.add')->with(compact('dataProdi', 'dataJenisMahasiswa', 'menu', 'submenu'));
     }
 
     public function searchMahasiswa(Request $request)
@@ -240,6 +244,8 @@ class MahasiswaController extends Controller
 
     public function edit(string $id)
     {
+        $menu = 'data';
+        $submenu = 'mahasiswa';
         $dataJenisMahasiswa = student_type::all();
         $dataProdi = All_prodi::rightjoin('identitas_pt', 'all_prodi.id_sp', '=', 'identitas_pt.current_id_sp')
             ->leftjoin('education_level', 'all_prodi.id_jenj_didik', '=', 'education_level.id_jenj_didik')
@@ -266,7 +272,7 @@ class MahasiswaController extends Controller
         }
         $isRegistered = User::where('email', '=', $mahasiswa->email)->count() > 0;
 
-        return view('pages.admin.mahasiswa.edit', compact('mahasiswa', 'mahasiswa_pt', 'dataProdi', 'isRegistered', 'dataJenisMahasiswa', 'currentSelectedWilayah'));
+        return view('pages.admin.mahasiswa.edit', compact('mahasiswa', 'mahasiswa_pt', 'dataProdi', 'isRegistered', 'dataJenisMahasiswa', 'currentSelectedWilayah', 'menu', 'submenu'));
     }
 
     public function update (Request $request, string $id) {
