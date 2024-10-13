@@ -1,7 +1,7 @@
 <div class="vertical-menu">
     <div data-simplebar class="h-100">
         <!--- Sidemenu -->
-        <div id="sidebar-menu" style="width: 30rem">
+        <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
@@ -39,18 +39,18 @@
                                 <span data-key="t-prodi-pt">Program Studi PT</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('buildings.index') }}">
+                        <li id="list-gedung">
+                            <a href="{{ route('buildings.index') }}" id="gedung">
                                 <span data-key="t-gedung">Gedung</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('room.index') }}">
+                        <li id="list-ruangan">
+                            <a href="{{ route('room.index') }}" id="ruangan">
                                 <span data-key="t-ruangan">Ruangan</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('users.index') }}">
+                        <li id="list-pengguna">
+                            <a href="{{ route('users.index') }}" id="pengguna">
                                 <span data-key="t-pengguna">Pengguna</span>
                             </a>
                         </li>
@@ -73,53 +73,53 @@
                         <span data-key="t-components">Data Perkuliahan</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('periode_pmb.index') }}">
+                        <li id="list-periode-pmb">
+                            <a href="{{ route('periode_pmb.index') }}" id="periode-pmb">
                                 <span data-key="t-pmb">PMB</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('tahun-akademik.index') }}">
+                        <li id="list-t-akademik">
+                            <a href="{{ route('tahun-akademik.index') }}" id="t-akademik">
                                 <span data-key="t-tahun-akademik">Tahun Akademik</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('semester.index') }}">
+                        <li id="list-sem">
+                            <a href="{{ route('semester.index') }}" id="sem">
                                 <span data-key="t-semester">Semester</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('lecture-setting.index') }}">
+                        <li id="list-s-perkuliahan">
+                            <a href="{{ route('lecture-setting.index') }}" id="s-perkuliahan">
                                 <span data-key="t-setting-perkuliahan">Setting Perkuliahan</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('calendar-type.index') }}">
+                        <li id="list-t-kalender">
+                            <a href="{{ route('calendar-type.index') }}" id="t-kalender">
                                 <span data-key="t-tipe-kalender">Tipe Kalender</span>
                             </a>
                         </li>
-                        <li id="kalender-akademik">
-                            <a href="{{ route('kalender-akademik.index') }}">
+                        <li id="list-k-akademik">
+                            <a href="{{ route('kalender-akademik.index') }}" id="k-akademik">
                                 <span data-key="t-kalender-akademik">Kalender Akademik</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('lecturer.index') }}">
+                        <li id="list-perkuliahan">
+                            <a href="{{ route('lecturer.index') }}" id="perkuliahan">
                                 <span data-key="t-dosen">Dosen</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('course.index') }}">
+                        <li id="list-matakuliah">
+                            <a href="{{ route('course.index') }}" id="matakuliah">
                                 <span data-key="t-mata-kuliah">Mata Kuliah</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('curriculum.index') }}">
+                        <li id="list-kurikulum">
+                            <a href="{{ route('curriculum.index') }}" id="kurrikulum">
                                 <span data-key="t-kurikulum">Kurikulum</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('mahasiswa.index') }}">
+                        <li id="list-ma-hasiswa">
+                            <a href="{{ route('mahasiswa.index') }}" id="ma-hasiswa">
                                 <span data-key="t-mahasiswa">Mahasiswa</span>
                             </a>
                         </li>
@@ -158,7 +158,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="{{ route('mahasiswa.index') }}">
+                            <a href="#">
                                 <span data-key="t-kelompok-komponen">Waktu Perkuliahan</span>
                             </a>
                         </li>

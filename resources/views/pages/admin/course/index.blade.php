@@ -48,8 +48,8 @@
                                                 </th>
                                                 <th style="text-align: center; vertical-align: middle;">Kode</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nama</th>
+                                                <th style="text-align: center; vertical-align: middle;">SKS<br>MK</th>
                                                 <th style="text-align: center; vertical-align: middle;">Prodi</th>
-                                                <th style="text-align: center; vertical-align: middle;">SKS MK</th>
                                                 <th style="text-align: center; vertical-align: middle;">Jenis<br>Matakuliah</th>
                                                 <th style="width: 180px; text-align: center; vertical-align: middle;">Aksi</th>
                                             </tr>
@@ -116,12 +116,15 @@
                         name: 'name'
                     },
                     {
-                        data: 'all_prodi.nama_prodi',
-                        name: 'all_prodi.nama_prodi'
+                        data: 'sks_mk',
+                        name: 'sks_mk',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center'); // Align center
+                        }
                     },
                     {
-                        data: 'sks_mk',
-                        name: 'sks_mk'
+                        data: 'all_prodi.nama_prodi',
+                        name: 'all_prodi.nama_prodi'
                     },
                     {
                         data: 'course_type.name',

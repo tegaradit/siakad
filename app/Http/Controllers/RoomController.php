@@ -17,8 +17,10 @@ class RoomController extends Controller
     // }
     public function index()
     {
+        $menu = 'data';
+        $submenu = 'room';
         // Kirimkan view tanpa data karena DataTables akan meng-handle data secara AJAX
-        return view('pages.admin.room.index');
+        return view('pages.admin.room.index', compact('menu', 'submenu'));
     }
 
     public function data(Request $request)
@@ -88,9 +90,11 @@ class RoomController extends Controller
 
     public function edit(string $id)
     {
+        $menu = 'data';
+        $submenu = 'room';
         $room = Room::findOrFail($id);
         $buildings = Building::all();
-        return view('pages.admin.room.form_edit', compact('room', 'buildings'));
+        return view('pages.admin.room.form_edit', compact('room', 'buildings', 'menu', 'submenu'));
     }    
     
     public function update(Request $request, string $id)

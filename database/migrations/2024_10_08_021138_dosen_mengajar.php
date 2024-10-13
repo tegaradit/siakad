@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('dosen_mengajar', function (Blueprint $table) {
             $table->id();
-            
+
             // Foreign key to lecturer table
-            $table->char('lecture_id', 6); // Fix typo 'lucture_id' to 'lecture_id'
+            // Assuming 'id' in 'lecturer' is BIGINT
+            $table->unsignedBigInteger('lecture_id'); // Change to unsignedBigInteger
+
             $table->foreign('lecture_id')->references('id')->on('lecturer')->onDelete('cascade');
-            
+
             // Foreign key to kelas_kuliah table
             $table->char('class_id', 36);
             $table->foreign('class_id')->references('id')->on('kelas_kuliah')->onDelete('cascade');
@@ -25,7 +27,7 @@ return new class extends Migration
             // Number of TM planned and real
             $table->integer('number_of_tm_plan')->default(0); // Remove length argument
             $table->integer('number_of_tm_real')->default(0);  // Remove length argument
-            
+
             // RPS document (path to uploaded PDF)
             $table->string('rps_doc')->nullable(); // Allow null if no file uploaded
 

@@ -16,18 +16,19 @@ class CourseCurriculumController extends Controller
     public function index($curriculum_id)
     {
         $curriculum = Curriculum::findOrFail($curriculum_id); // Fetch the curriculum
-    
+
         if (request()->ajax()) {
             // Fetch curriculum courses
             $courses = CurriculumCourse::where('curriculum_id', $curriculum_id)
                 ->with(['curriculum', 'course']) // Eager load relations
                 ->get();
-    
+
             return DataTables::of($courses)
                 ->addIndexColumn()
                 ->addColumn('action', function ($course) {
-                    $detailUrl = route('kuliah_kelas.index', [$course->curriculum_id, $course->course_id]);
-                    
+                    // Membuat URL untuk detail berdasarkan course_id
+                    $detailUrl = route('kelas_kuliah.index', [$course->curriculum_id, $course->course_id]);
+
                     // Membuat URL untuk edit dan delete
                     $editUrl = route('curriculum_course.edit', [$course->curriculum_id, $course->id]);
                     $deleteForm = '<form id="delete-form-' . $course->id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $course->id . '\');" action="' . route('curriculum_course.destroy', [$course->curriculum_id, $course->id]) . '" method="POST">'
@@ -35,10 +36,10 @@ class CourseCurriculumController extends Controller
                         . method_field('DELETE')
                         . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit ms-1 m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
                         . '<button type="submit" class="btn btn-danger btn-sm delete ms-1"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
-                    
+
                     // Menambahkan tombol untuk detail yang mengarah ke course_id yang diklik
                     $detailButton = '<a href="' . $detailUrl . '" class="btn btn-info btn-sm m-0" title="Detail"><i class="fas fa-info-circle"></i> Detail</a>';
-                    
+
                     return $detailButton . $deleteForm;
                 })
                 ->addColumn('course_name', function ($course) {
@@ -47,11 +48,11 @@ class CourseCurriculumController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-    
+
         // Pass the curriculum to the view
         return view('pages.admin.curriculum_course.index', compact('curriculum'));
     }
-    
+
 
     // Show the form to create a new course
     public function create($curriculum_id)
@@ -86,6 +87,26 @@ class CourseCurriculumController extends Controller
                 'text' => $course->code . ' - ' . $course->name, // Text yang ditampilkan
             ];
         }));
+    }
+
+    // CurriculumCourseController.php
+    public function getCourseSks(Request $request)
+    {
+        // Ambil course berdasarkan ID yang dipilih
+        $course = Course::find($request->course_id);
+
+        // Pastikan course ditemukan
+        if ($course) {
+            return response()->json([
+                'sks_mk' => $course->sks_mk,
+                'sks_tm' => $course->sks_tm,
+                'sks_pr' => $course->sks_pr,
+                'sks_pl' => $course->sks_pl,
+                'sks_sim' => $course->sks_sim,
+            ]);
+        } else {
+            return response()->json(['error' => 'Course not found'], 404);
+        }
     }
 
     // Store a new course in the curriculum

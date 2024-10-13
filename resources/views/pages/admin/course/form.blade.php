@@ -114,35 +114,35 @@
                                             {{-- SKS Fields --}}
                                             <div class="form-group mt-2">
                                                 <label for="sks_mk">SKS Matakuliah</label>
-                                                <input type="number" name="sks_mk" id="sks_mk" class="form-control" placeholder="0"
-                                                    required>
+                                                <input type="number" name="sks_mk" id="sks_mk" class="form-control"
+                                                    placeholder="0" value="0" required>
                                             </div>
 
                                             <div class="form-group mt-2">
                                                 <label for="sks_tm">SKS Tatap Muka</label>
-                                                <input type="number" name="sks_tm" id="sks_tm" class="form-control" placeholder="0"
-                                                    required>
+                                                <input type="number" name="sks_tm" id="sks_tm" class="form-control"
+                                                    placeholder="0" value="0" required>
                                             </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group mt-2">
                                             <label for="sks_pr">SKS Praktikum</label>
-                                            <input type="number" name="sks_pr" id="sks_pr" class="form-control" placeholder="0"
-                                                required>
+                                            <input type="number" name="sks_pr" id="sks_pr" class="form-control"
+                                                placeholder="0" value="0" required>
                                         </div>
 
 
                                         <div class="form-group mt-2">
                                             <label for="sks_pl">SKS Praktikum Lapangan</label>
                                             <input type="number" name="sks_pl" id="sks_pl" class="form-control"
-                                                placeholder="0" required>
+                                                placeholder="0" value="0" required>
                                         </div>
 
                                         <div class="form-group mt-2">
                                             <label for="sks_sim">SKS Simulasi</label>
-                                            <input type="number" name="sks_sim" id="sks_sim" class="form-control" placeholder="0"
-                                                required>
+                                            <input type="number" name="sks_sim" id="sks_sim" class="form-control"
+                                                placeholder="0" value="0" required>
                                         </div>
 
                                         {{-- Status --}}
@@ -156,29 +156,29 @@
                                             </select>
                                         </div>
 
-                                        {{-- Boolean Fields --}}
+                                        <!-- Default No for is_sap, is_silabus, is_teaching_material, is_praktikum -->
                                         <div class="form-group mt-2">
                                             <label for="is_sap">Apakah Ada SAP (Satuan Acara Perkuliahan) / RPS?</label>
                                             <div class="radio-group">
                                                 <input type="radio" class="form-check-input" name="is_sap"
-                                                    value="1" id="is_sap_yes" required>
+                                                    value="1" id="is_sap_yes">
                                                 <label class="form-check-label" for="is_sap_yes">Yes</label>
 
                                                 <input type="radio" class="form-check-input" name="is_sap"
-                                                    value="0" id="is_sap_no" required>
+                                                    value="0" id="is_sap_no" checked>
                                                 <label class="form-check-label" for="is_sap_no">No</label>
                                             </div>
                                         </div>
 
                                         <div class="form-group mt-2">
-                                            <label for="is_silabus"> Apakah ada Silabus?</label>
+                                            <label for="is_silabus">Apakah ada Silabus?</label>
                                             <div class="radio-group">
                                                 <input type="radio" class="form-check-input" name="is_silabus"
-                                                    value="1" id="is_silabus_yes" required>
+                                                    value="1" id="is_silabus_yes">
                                                 <label class="form-check-label" for="is_silabus_yes">Yes</label>
 
                                                 <input type="radio" class="form-check-input" name="is_silabus"
-                                                    value="0" id="is_silabus_no" required>
+                                                    value="0" id="is_silabus_no" checked>
                                                 <label class="form-check-label" for="is_silabus_no">No</label>
                                             </div>
                                         </div>
@@ -188,12 +188,12 @@
                                             <div class="radio-group">
                                                 <input type="radio" class="form-check-input"
                                                     name="is_teaching_material" value="1"
-                                                    id="is_teaching_material_yes" required>
+                                                    id="is_teaching_material_yes">
                                                 <label class="form-check-label" for="is_teaching_material_yes">Yes</label>
 
                                                 <input type="radio" class="form-check-input"
                                                     name="is_teaching_material" value="0"
-                                                    id="is_teaching_material_no" required>
+                                                    id="is_teaching_material_no" checked>
                                                 <label class="form-check-label" for="is_teaching_material_no">No</label>
                                             </div>
                                         </div>
@@ -202,14 +202,15 @@
                                             <label for="is_praktikum">Apakah matakuliah praktikum?</label>
                                             <div class="radio-group">
                                                 <input type="radio" class="form-check-input" name="is_praktikum"
-                                                    value="1" id="is_praktikum_yes" required>
+                                                    value="1" id="is_praktikum_yes">
                                                 <label class="form-check-label" for="is_praktikum_yes">Yes</label>
 
                                                 <input type="radio" class="form-check-input" name="is_praktikum"
-                                                    value="0" id="is_praktikum_no" required>
+                                                    value="0" id="is_praktikum_no" checked>
                                                 <label class="form-check-label" for="is_praktikum_no">No</label>
                                             </div>
                                         </div>
+
 
                                         {{-- Effective Dates --}}
                                         <div class="form-group mt-2">

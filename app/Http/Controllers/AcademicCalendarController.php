@@ -28,7 +28,7 @@ class AcademicCalendarController extends Controller
         $semesters = Semester::where('is_active', 1)->get();  // Mengambil hanya semester aktif
         $active_semester = Semester::where('is_active', 1)->first();  // Mengambil semester aktif pertama (jika ada)
 
-        return view('pages.admin.akademik_kalender.form', compact('calendar_types', 'semesters', 'active_semester'));
+        return view('pages.admin.akademik_kalender.form', compact('calendar_types', 'semesters', 'active_semester', 'menu', 'submenu'));
     }
 
 
@@ -135,7 +135,7 @@ class AcademicCalendarController extends Controller
         $semesters = Semester::where('is_active', 1)->get();  // Mengambil hanya semester aktif
         $active_semester = Semester::where('is_active', 1)->first();  // Mengambil semester aktif pertama (jika ada)
 
-        return view('pages.admin.akademik_kalender.form', compact('data', 'calendar_types', 'semesters', 'active_semester'));
+        return view('pages.admin.akademik_kalender.form', compact('data', 'calendar_types', 'semesters', 'active_semester', 'menu', 'submenu'));
     }
 
 

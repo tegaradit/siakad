@@ -50,7 +50,7 @@
                                 @endif
 
                                 <div class="form-group mt-2">
-                                    <label for="semester_id">Semester ID</label>
+                                    <label for="semester_id">Semester ID / Kode</label>
                                     <input type="text" name="semester_id" id="semester_id" class="form-control"
                                         value="{{ old('semester_id', $semester->semester_id ?? '') }}" maxlength="6"
                                         {{ isset($semester) ? 'readonly' : '' }} required>
@@ -69,7 +69,7 @@
                                 </div><br>
 
                                 <div class="form-group mt-2">
-                                    <label for="smt">SMT</label>
+                                    <label for="smt">Semester</label>
                                     <select name="smt" id="smt" class="form-select" required>
                                         <option value="">Pilih...</option>
                                         <option value="1" {{ old('smt', $semester->smt ?? '') == 1 ? 'selected' : '' }}>Ganjil</option>

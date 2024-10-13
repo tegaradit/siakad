@@ -105,9 +105,8 @@ Route::prefix('admin/curriculum/detail/{curriculum_id}')->group(function () {
     Route::delete('/{id}', [CourseCurriculumController::class, 'destroy'])->name('curriculum_course.destroy');
     
 });
-
-// Route untuk pencarian course tetap di luar
 Route::get('/admin/curriculum/{curriculum_id}/search_course', [CourseCurriculumController::class, 'searchCourse'])->name('curriculum_course.search_course');
+Route::get('curriculum_course/get_course_sks', [CourseCurriculumController::class, 'getCourseSks'])->name('curriculum_course.get_course_sks');
 
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data')->middleware(Authenticate::class);

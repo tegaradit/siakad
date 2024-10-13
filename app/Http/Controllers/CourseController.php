@@ -16,6 +16,8 @@ class CourseController extends Controller
 {
     public function index()
     {
+        $menu = 'data';
+        $submenu = 'course';
         if (request()->ajax()) {
             $currentIdSp = IdentitasPt::first()->current_id_sp;
 
@@ -44,20 +46,24 @@ class CourseController extends Controller
                 ->make(true);
         }
 
-        return view('pages.admin.course.index');
+        return view('pages.admin.course.index', compact('menu', 'submenu'));
     }
 
     public function show($id)
     {
+        $menu = 'data';
+        $submenu = 'course';
         // Find the course by ID or fail with 404 if not found
         $course = Course::with(['all_prodi', 'education_level', 'course_group', 'course_type'])->findOrFail($id);
 
         // Return the view with course details
-        return view('pages.admin.course.show', compact('course'));
+        return view('pages.admin.course.show', compact('course', 'menu', 'submenu'));
     }
 
     public function create()
     {
+        $menu = 'data';
+        $submenu = 'course';
         // $education_levels = Education_level::all();
         $group = Course_group::all();
         $type = Course_type::all();
@@ -69,7 +75,7 @@ class CourseController extends Controller
 
         // dd($group, $type); // Check what data is being passed
 
-        return view('pages.admin.course.form', compact('prodi', 'group', 'type', 'prodi'));
+        return view('pages.admin.course.form', compact('prodi', 'group', 'type', 'prodi', 'menu', 'submenu'));
     }
 
     public function getEducationLevel($prodi_id)
@@ -151,6 +157,8 @@ class CourseController extends Controller
 
     public function edit($id)
     {
+        $menu = 'data';
+        $submenu = 'course';
         $course = Course::findOrFail($id); // Retrieve the course or fail with 404
         // $education_levels = Education_level::all();
         $group = Course_group::all();
@@ -167,7 +175,7 @@ class CourseController extends Controller
         $course_range = $course->effective_start_date . ' to ' . $course->effective_end_date;
 
 
-        return view('pages.admin.course.form_edit', compact('course', 'prodi', 'group', 'type', 'course_range'));
+        return view('pages.admin.course.form_edit', compact('course', 'prodi', 'group', 'type', 'course_range', 'menu', 'submenu'));
     }
 
 
