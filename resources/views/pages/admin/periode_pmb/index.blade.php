@@ -1,6 +1,7 @@
 @extends('layouts.home-layout')
 
 @section('home-content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <div class="main-content">
    <div class="page-content">
       <div class="container-fluid">
