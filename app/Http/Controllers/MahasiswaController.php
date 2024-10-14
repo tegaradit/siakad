@@ -13,8 +13,7 @@ use App\Models\Wilayah;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
-use App\Models\KelasKuliah;
-use Str;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class MahasiswaController extends Controller
