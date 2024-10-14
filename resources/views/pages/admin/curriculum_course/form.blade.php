@@ -11,6 +11,11 @@
             margin-right: 15px;
             /* Atur jarak antar kelompok radio */
         }
+
+        #course-selector {
+            width: 100%;
+        }
+    </style>
     </style>
     <div class="main-content">
         <div class="page-content">
@@ -53,31 +58,35 @@
                                         @endif
 
                                         <!-- Select Course -->
-                                        <div class="form-group mb-4">
+                                        {{-- <div class="form-group mb-4">
                                             <label for="status">Matakuliah</label>
                                             <select id="course-selector" name="course_id" class="form-control" required>
                                                 <option value="{{ isset($courses) ? $courses[0]->id : '' }}" selected>
                                                     {{ isset($courses) ? $courses[0]->code . ' - ' . $courses[0]->name : '' }}
                                                 </option>
                                             </select>
-                                        </div>
-
+                                        </div> --}}
+                                        <div class="form-group mb-4">
+                                            <label for="status">Matakuliah</label>
+                                            <select id="course-selector" name="course_id"
+                                                class="form-control @error('course_id') is-invalid @enderror" style="width: 100%;" required>
+                                                <option value="{{ isset($courses) ? $courses[0]->id : '' }}" selected>
+                                                    {{ isset($courses) ? $courses[0]->code . ' - ' . $courses[0]->name : '' }}
+                                                </option>
+                                            </select>
+                                        
+                                            <!-- Display error message -->
+                                            @error('course_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>                                        
 
                                         <!-- Start Two Columns Layout -->
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <!-- Input SMT -->
-                                                {{-- <div class="mb-3">
-                                                    <label for="smt" class="form-label">Semester</label>
-                                                    <input type="number"
-                                                        class="form-control @error('smt') is-invalid @enderror"
-                                                        id="smt" name="smt"
-                                                        value="{{ isset($course) ? $course->smt : old('smt') }}" required>
-                                                    @error('smt')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div> --}}
-
                                                 <div class="mb-3">
                                                     <label for="smt" class="form-label">Semester</label>
                                                     <select name="smt" id="smt" class="form-select" required>
@@ -202,7 +211,7 @@
                                         <br>
                                         <!-- Submit Button -->
                                         <button type="submit" class="btn btn-primary">
-                                            {{ isset($course) ? 'Update' : 'Simpan' }}
+                                            {{ isset($course) ? 'Ubah' : 'Simpan' }}
                                         </button>
                                     </form>
                                     <!-- End Form -->
