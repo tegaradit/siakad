@@ -185,6 +185,7 @@ Route::delete('/admin/mahasiswa/delete/{id}', [MahasiswaController::class, 'dest
 Route::get('/admin/mahasiswa/search_wilayah', [MahasiswaController::class, 'searchWilayah'])->name('mahasiswa.search_wilayah');
 Route::put('/admin/mahasiswa/reset_password/{id_mahasiswa}', [MahasiswaController::class, 'resetPassword'])->name('mahasiswa.resetPassword');
 Route::get('/admin/mahasiswa/searchProdiByUnivName', [MahasiswaController::class, 'searchProdiByUnivName'])->name('mahasiswa.searchProdiByUnivName');
+Route::get('/admin/mahasiswa/searchUniversity', [MahasiswaController::class, 'searchUniversity'])->name('mahasiswa.searchUniversity');
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
 
@@ -193,7 +194,3 @@ Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecture
 Route::get('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
 Route::get('/kelas-kuliah/get-lecturers', [KelasKuliahController::class, 'getLecturers'])->name('kelas_kuliah.getLecturers');
 Route::post('admin/lecture/store', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
-
-
-
-

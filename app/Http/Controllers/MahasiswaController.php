@@ -6,6 +6,7 @@ use App\Models\All_prodi;
 use App\Models\Educational_unit;
 use App\Models\Mahasiswa;
 use App\Models\MahasiswaPt;
+use App\Models\Semester;
 use App\Models\student_type;
 use App\Models\User;
 use App\Models\Wilayah;
@@ -35,8 +36,7 @@ class MahasiswaController extends Controller
                     'tgl_lahir AS TanggalLahir',
                     'nama_prodi AS ProgramStudi',
                     'id_jenis_mhs AS Jenis',
-                    'mahasiswa_pt.status_data AS StatusData',
-                    // 'SINK'
+                    'mahasiswa_pt.status_data AS StatusData'
                 ]);
 
             return DataTables::of($dataMahasiswa)
@@ -84,6 +84,7 @@ class MahasiswaController extends Controller
     {
         $menu = 'data';
         $submenu = 'mahasiswa';
+        $currentSemester = Semester::where('is_active', '=', '1')->firstOr(['semester_id', 'smt']);
         $dataJenisMahasiswa = student_type::all();
         $dataProdi = All_prodi::rightjoin('identitas_pt', 'all_prodi.id_sp', '=', 'identitas_pt.current_id_sp')
             ->leftjoin('education_level', 'all_prodi.id_jenj_didik', '=', 'education_level.id_jenj_didik')
@@ -95,7 +96,7 @@ class MahasiswaController extends Controller
                 'nm_jenj_didik AS jenjang_pendidikan'
             ]);
 
-        return view('pages.admin.mahasiswa.add')->with(compact('dataProdi', 'dataJenisMahasiswa', 'menu', 'submenu'));
+        return view('pages.admin.mahasiswa.add')->with(compact('currentSemester', 'dataProdi', 'dataJenisMahasiswa', 'menu', 'submenu'));
     }
 
     public function searchMahasiswa (Request $request)
@@ -130,7 +131,6 @@ class MahasiswaController extends Controller
             'id_goldarah' => 'required|numeric',
             'id_agama'    => 'required|numeric',
             'a_terima_kps'         => 'nullable',
-            'foto'                 => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate file size (max 2MB) //--> is also field for users table [photo]
             'id_wil'               => 'required|string|max:100', //-->
             'nm_ibu_kandung'       => 'required|string|max:100',
             'nisn'                 => 'required|string|max:10',
@@ -145,6 +145,7 @@ class MahasiswaController extends Controller
             'nomor_sttb'           => 'required|string|max:50',
             'rata_nilai_sttb'      => 'required|numeric|max:100'
         ];
+        $validateRules['foto'] = $existing_id_mahasiswa ? 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048';
         $validateRules['email'] = $existing_id_mahasiswa ? "required|email|max:60|unique:mahasiswa,email,$mahasiswa->id_pd,id_pd" : 'required|email|max:60|unique:mahasiswa,email';
         $request->validate($validateRules);
 
@@ -276,9 +277,10 @@ class MahasiswaController extends Controller
         }
         $isRegistered = User::where('email', '=', $mahasiswa->email)->count() > 0;
 
-        $prodi_asal = $this->searchProdiByUnivName(new Request(['universityName' => $mahasiswa_pt->id_pt_asal]));
+        $previousUniversity = Educational_unit::find($mahasiswa_pt->id_pt_asal);
+        $prodi_asal = $this->searchProdiByUnivName(new Request(['id_sp' => $mahasiswa_pt->id_pt_asal]));
 
-        return view('pages.admin.mahasiswa.edit', compact('prodi_asal', 'mahasiswa', 'mahasiswa_pt', 'dataProdi', 'isRegistered', 'dataJenisMahasiswa', 'currentSelectedWilayah'));
+        return view('pages.admin.mahasiswa.edit', compact('previousUniversity', 'prodi_asal', 'mahasiswa', 'mahasiswa_pt', 'dataProdi', 'isRegistered', 'dataJenisMahasiswa', 'currentSelectedWilayah'));
     }
 
     public function update (Request $request, string $id) {
@@ -480,14 +482,11 @@ class MahasiswaController extends Controller
     }
 
     public function searchUniversity (Request $request) {
-        return Educational_unit::where('nm_lemb', 'LIKE', "%$$request->universityName%")
+        return Educational_unit::where('nm_lemb', 'LIKE', "%$request->universityName%")
             ->get(['id_sp', 'nm_lemb']);
     }
 
     public function searchProdiByUnivName (Request $request) {
-        $university = Educational_unit::where(DB::raw('UPPER(nm_lemb)'), '=', strtoupper($request->universityName))->first(['id_sp']);
-        if ($university == null) 
-            return ['empty' => true];
-        return All_prodi::where('id_sp', '=', $university->id_sp)->get(['id_prodi', 'nama_prodi']);
+        return All_prodi::where('id_sp', '=', $request->id_sp)->get(['id_prodi', 'nama_prodi']);
     }
 }
