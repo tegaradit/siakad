@@ -14,6 +14,8 @@ class DosenWaliController extends Controller
 {
     public function index(Request $request, string $lecture_id_input)
     {
+        $menu = 'data';
+        $submenu = 'lecturer';
         $lecturer = Lecturer::findOrFail($lecture_id_input);
         
         if ($request->ajax()) {
@@ -41,11 +43,13 @@ class DosenWaliController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages.admin.dosen_wali.index', compact('lecturer', 'lecture_id_input')); // Mengirimkan $lecturer ke view
+        return view('pages.admin.dosen_wali.index', compact('lecturer','menu', 'submenu', 'lecture_id_input')); // Mengirimkan $lecturer ke view
     }
 
     public function selectMahasiswa(Request $request, string $lecture_id_input)
     {
+        $menu = 'data';
+        $submenu = 'lecturer';
         if (request()->ajax()) {
             $mahasiswa = MahasiswaPt::select('mahasiswa_pt.nipd', 'mahasiswa.id_pd', 'mahasiswa.nm_pd')
                 ->join('mahasiswa', 'mahasiswa_pt.id_pd', '=', 'mahasiswa.id_pd')
@@ -59,7 +63,7 @@ class DosenWaliController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages.admin.dosen_wali.select_mahasiswa', compact('lecture_id_input'));
+        return view('pages.admin.dosen_wali.select_mahasiswa', compact('lecture_id_input', 'menu', 'submenu'));
     }
 
 
