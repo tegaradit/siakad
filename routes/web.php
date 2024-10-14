@@ -9,6 +9,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseCurriculumController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\DosenWaliController;
 use App\Http\Controllers\IdentitasPTController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\LectureSettingController;
@@ -146,6 +147,15 @@ Route::put('/admin/room/{id}', [RoomController::class, 'update'])->name('room.up
 Route::delete('/admin/room/{id}', [RoomController::class, 'destroy'])->name('room.destroy');
 Route::get('/room/data', [RoomController::class, 'data'])->name('room.data');
 
+// Route untuk menampilkan detail dosen wali
+Route::get('/admin/dosen_wali/detail/{lecture_id_input}', [DosenWaliController::class, 'index'])->name('dosen_wali.index'); 
+Route::get('/dosen_wali/select_mahasiswa/{lecture_id_input}', [DosenWaliController::class, 'selectMahasiswa'])->name('dosen_wali.select_mahasiswa');
+Route::post('/dosen_wali/set_mahasiswa', [DosenWaliController::class, 'setMahasiswa'])->name('dosen_wali.set_mahasiswa');
+Route::get('/dosen_wali/{id}/edit', [DosenWaliController::class, 'edit'])->name('dosen_wali.edit');
+Route::delete('/dosen_wali', [DosenWaliController::class, 'destroy'])->name('dosen_wali.destroy');
+
+
+
 // Prodi
 Route::get('/admin/prodi', [ProdiController::class, 'index'])->name('prodi');
 //lecturer
@@ -191,6 +201,9 @@ Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecture
 
 
 
+Route::get('admin/curriculum/kelas_kuliah/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
+Route::get('admin/curriculum/kelas_kuliah/create/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'create'])->name('kelas_kuliah.create');
+Route::post('admin/curriculum/kelas_kuliah/store/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
 Route::get('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
 Route::get('/kelas-kuliah/get-lecturers', [KelasKuliahController::class, 'getLecturers'])->name('kelas_kuliah.getLecturers');
 Route::post('admin/lecture/store', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');

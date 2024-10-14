@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('nik', 16)->nullable();
             $table->enum('gender', ['Laki-laki', 'Perempuan']);
             $table->string('name', 200);
-            $table->char('active_status_id', 1);
+            $table->char('active_status_id', 255);
             $table->date('birth_date');
             $table->string('birth_place', 100);
             $table->string('mothers_name', 200);
             $table->enum('mariage_status', ['belum kawin', 'kawin', 'cerai hidup', 'cerai mati']);
-            $table->char('employee_level_id', 1);
+            $table->char('employee_level_id', 255);
             $table->enum('level_education', ['S1', 'S2', 'S3']);
             $table->string('phone_number', 13)->nullable();
             $table->string('email', 255)->nullable();
