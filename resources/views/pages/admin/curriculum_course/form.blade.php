@@ -202,7 +202,7 @@
                                         <br>
                                         <!-- Submit Button -->
                                         <button type="submit" class="btn btn-primary">
-                                            {{ isset($course) ? 'Update' : 'Simpan' }}
+                                            {{ isset($course) ? 'Ubah' : 'Simpan' }}
                                         </button>
                                     </form>
                                     <!-- End Form -->

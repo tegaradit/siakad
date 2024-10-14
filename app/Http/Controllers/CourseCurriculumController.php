@@ -7,6 +7,7 @@ use App\Models\Curriculum;
 use App\Models\CurriculumCourse;
 use App\Models\IdentitasPt;
 use App\Models\Semester;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -18,35 +19,35 @@ class CourseCurriculumController extends Controller
         $curriculum = Curriculum::findOrFail($curriculum_id); // Fetch the curriculum
 
         if (request()->ajax()) {
-            // Fetch curriculum courses
+            // Fetch curriculum courses with class count
             $courses = CurriculumCourse::where('curriculum_id', $curriculum_id)
                 ->with(['curriculum', 'course']) // Eager load relations
+                ->withCount('kelasKuliah') // Menghitung jumlah kelas kuliah terkait
                 ->get();
 
-            return DataTables::of($courses)
+
+                return DataTables::of($courses)
                 ->addIndexColumn()
                 ->addColumn('action', function ($course) {
-                    // Membuat URL untuk detail berdasarkan course_id
                     $detailUrl = route('kelas_kuliah.index', [$course->curriculum_id, $course->course_id]);
-
-                    // Membuat URL untuk edit dan delete
                     $editUrl = route('curriculum_course.edit', [$course->curriculum_id, $course->id]);
                     $deleteForm = '<form id="delete-form-' . $course->id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $course->id . '\');" action="' . route('curriculum_course.destroy', [$course->curriculum_id, $course->id]) . '" method="POST">'
                         . csrf_field()
                         . method_field('DELETE')
+                        . '<a href="' . $detailUrl . '" class="btn btn-info btn-sm m-0" title="Detail"><i class="fa-solid fa-chalkboard-user"></i> Buat Kelas</a>'
                         . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit ms-1 m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
                         . '<button type="submit" class="btn btn-danger btn-sm delete ms-1"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
-
-                    // Menambahkan tombol untuk detail yang mengarah ke course_id yang diklik
-                    $detailButton = '<a href="' . $detailUrl . '" class="btn btn-info btn-sm m-0" title="Detail"><i class="fas fa-info-circle"></i> Detail</a>';
-
-                    return $detailButton . $deleteForm;
+            
+                    return $deleteForm;
                 })
                 ->addColumn('course_name', function ($course) {
                     return $course->course ? $course->course->name : '-';
                 })
+                ->addColumn('class_count', function ($course) {
+                    return $course->kelas_kuliah_count; // Ini berasal dari withCount('kelasKuliah')
+                })
                 ->rawColumns(['action'])
-                ->make(true);
+                ->make(true);            
         }
 
         // Pass the curriculum to the view
