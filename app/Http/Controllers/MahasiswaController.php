@@ -13,6 +13,7 @@ use App\Models\Wilayah;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
+use App\Models\KelasKuliah;
 use Str;
 use Yajra\DataTables\DataTables;
 
