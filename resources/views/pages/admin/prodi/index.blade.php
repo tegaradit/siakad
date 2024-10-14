@@ -36,11 +36,11 @@
                                         <table class="table table-striped table-bordered dt-responsive nowrap w-100" id="prodi-table">
                                             <thead>
                                                 <tr>
-                                                    <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Nama Prodi</th>
-                                                    <th>Jenjang Pendidikan</th>
-                                                    <th>Status</th>
+                                                    <th style="text-align: center; width: 30px;">No</th>
+                                                    <th style="text-align: center;">Kode</th>
+                                                    <th style="text-align: center;">Nama Prodi</th>
+                                                    <th style="text-align: center;">Jenjang Pendidikan</th>
+                                                    <th style="text-align: center;">Status</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -80,7 +80,10 @@
                         },
                         {
                             data: 'kode',
-                            name: 'kode'
+                            name: 'kode',
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                    $(td).css('text-align', 'center');
+                            }
                         },
                         {
                             data: 'nama',
@@ -88,7 +91,10 @@
                         },
                         {
                             data: 'nm_jenj_didik',
-                            name: 'nm_jenj_didik'
+                            name: 'nm_jenj_didik',
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                    $(td).css('text-align', 'center');
+                            }
                         },
                         {
                             data: 'status',
