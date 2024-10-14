@@ -11,6 +11,11 @@
             margin-right: 15px;
             /* Atur jarak antar kelompok radio */
         }
+
+        #course-selector {
+            width: 100%;
+        }
+    </style>
     </style>
     <div class="main-content">
         <div class="page-content">
@@ -53,113 +58,89 @@
                                         @endif
 
                                         <!-- Select Course -->
-                                        <div class="form-group mb-4">
+                                        {{-- <div class="form-group mb-4">
                                             <label for="status">Matakuliah</label>
                                             <select id="course-selector" name="course_id" class="form-control" required>
                                                 <option value="{{ isset($courses) ? $courses[0]->id : '' }}" selected>
                                                     {{ isset($courses) ? $courses[0]->code . ' - ' . $courses[0]->name : '' }}
                                                 </option>
                                             </select>
-                                        </div>
-
+                                        </div> --}}
+                                        <div class="form-group mb-4">
+                                            <label for="status">Matakuliah</label>
+                                            <select id="course-selector" name="course_id"
+                                                class="form-control @error('course_id') is-invalid @enderror" style="width: 100%;" required>
+                                                <option value="{{ isset($courses) ? $courses[0]->id : '' }}" selected>
+                                                    {{ isset($courses) ? $courses[0]->code . ' - ' . $courses[0]->name : '' }}
+                                                </option>
+                                            </select>
+                                        
+                                            <!-- Display error message -->
+                                            @error('course_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>                                        
 
                                         <!-- Start Two Columns Layout -->
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <!-- Input SMT -->
-                                                {{-- <div class="mb-3">
-                                                    <label for="smt" class="form-label">Semester</label>
-                                                    <input type="number"
-                                                        class="form-control @error('smt') is-invalid @enderror"
-                                                        id="smt" name="smt"
-                                                        value="{{ isset($course) ? $course->smt : old('smt') }}" required>
-                                                    @error('smt')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div> --}}
-
                                                 <div class="mb-3">
                                                     <label for="smt" class="form-label">Semester</label>
                                                     <select name="smt" id="smt" class="form-select" required>
                                                         <option value="">Pilih...</option>
-                                                
+
                                                         @if ($semester->smt == 1)
                                                             {{-- Jika semester Ganjil --}}
                                                             @for ($i = 1; $i <= 8; $i += 2)
-                                                                <option value="{{ $i }}" {{ old('smt', $course->smt ?? '') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                                <option value="{{ $i }}"
+                                                                    {{ old('smt', $course->smt ?? '') == $i ? 'selected' : '' }}>
+                                                                    {{ $i }}</option>
                                                             @endfor
                                                         @elseif ($semester->smt == 2)
                                                             {{-- Jika semester Genap --}}
                                                             @for ($i = 2; $i <= 8; $i += 2)
-                                                                <option value="{{ $i }}" {{ old('smt', $course->smt ?? '') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                                <option value="{{ $i }}"
+                                                                    {{ old('smt', $course->smt ?? '') == $i ? 'selected' : '' }}>
+                                                                    {{ $i }}</option>
                                                             @endfor
                                                         @elseif ($semester->smt == 3)
                                                             {{-- Jika semester Pendek (menampilkan semua semester 1-8) --}}
                                                             @for ($i = 1; $i <= 8; $i++)
-                                                                <option value="{{ $i }}" {{ old('smt', $course->smt ?? '') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                                <option value="{{ $i }}"
+                                                                    {{ old('smt', $course->smt ?? '') == $i ? 'selected' : '' }}>
+                                                                    {{ $i }}</option>
                                                             @endfor
                                                         @endif
                                                     </select>
                                                     @error('smt')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                </div>                                                
+                                                </div>
 
                                                 <!-- Input SKS MK -->
                                                 <div class="mb-3">
                                                     <label for="sks_mk" class="form-label">SKS Matakuliah</label>
-                                                    <select name="sks_mk" id="sks_mk" class="form-select" required>
-                                                        <option value="">Pilih...</option>
-                                                        <option value="1"
-                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 1 ? 'selected' : '' }}>
-                                                            1</option>
-                                                        <option value="2"
-                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 2 ? 'selected' : '' }}>
-                                                            2</option>
-                                                        <option value="3"
-                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 3 ? 'selected' : '' }}>
-                                                            3</option>
-                                                        <option value="4"
-                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 4 ? 'selected' : '' }}>
-                                                            4</option>
-                                                        <option value="5"
-                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 5 ? 'selected' : '' }}>
-                                                            5</option>
-                                                        <option value="6"
-                                                            {{ old('sks_mk', $course->sks_mk ?? '') == 6 ? 'selected' : '' }}>
-                                                            6</option>
-                                                    </select>
+                                                    <input type="number"
+                                                        class="form-control @error('sks_mk') is-invalid @enderror"
+                                                        id="sks_mk" name="sks_mk"
+                                                        value="{{ isset($course) ? $course->sks_mk : old('sks_mk') }}">
                                                     @error('sks_mk')
-                                                        <div class="text-danger">{{ $message }}</div>
+                                                        <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
 
                                                 <!-- Input SKS TM -->
                                                 <div class="mb-3">
-                                                    <label for="sks_tm" class="form-label">SKS Tatap Muka</label>
-                                                    <select name="sks_tm" id="sks_tm" class="form-select" required>
-                                                        <option value="">Pilih...</option>
-                                                        <option value="1"
-                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 1 ? 'selected' : '' }}>
-                                                            1</option>
-                                                        <option value="2"
-                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 2 ? 'selected' : '' }}>
-                                                            2</option>
-                                                        <option value="3"
-                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 3 ? 'selected' : '' }}>
-                                                            3</option>
-                                                        <option value="4"
-                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 4 ? 'selected' : '' }}>
-                                                            4</option>
-                                                        <option value="5"
-                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 5 ? 'selected' : '' }}>
-                                                            5</option>
-                                                        <option value="6"
-                                                            {{ old('sks_tm', $course->sks_tm ?? '') == 6 ? 'selected' : '' }}>
-                                                            6</option>
-                                                    </select>
+                                                    <label for="sks_tm" class="form-label">SKS Tatap muka</label>
+                                                    <input type="number"
+                                                        class="form-control @error('sks_tm') is-invalid @enderror"
+                                                        id="sks_tm" name="sks_tm"
+                                                        value="{{ isset($course) ? $course->sks_tm : old('sks_tm') }}">
                                                     @error('sks_tm')
-                                                        <div class="text-danger">{{ $message }}</div>
+                                                        <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -172,10 +153,6 @@
                                                         class="form-control @error('sks_pr') is-invalid @enderror"
                                                         id="sks_pr" name="sks_pr"
                                                         value="{{ isset($course) ? $course->sks_pr : old('sks_pr') }}">
-                                                    {{-- <input type="number" min="0" max="6"
-                                                        class="form-control @error('sks_pr') is-invalid @enderror"
-                                                        id="sks_pr" name="sks_pr"
-                                                        value="{{ isset($course) ? $course->sks_pr : old('sks_pr') }}"> --}}
                                                     @error('sks_pr')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
@@ -234,7 +211,7 @@
                                         <br>
                                         <!-- Submit Button -->
                                         <button type="submit" class="btn btn-primary">
-                                            {{ isset($course) ? 'Update' : 'Simpan' }}
+                                            {{ isset($course) ? 'Ubah' : 'Simpan' }}
                                         </button>
                                     </form>
                                     <!-- End Form -->
@@ -266,6 +243,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        // Inisialisasi Select2 untuk memilih course
         $("#course-selector").select2({
             ajax: {
                 delay: 250,
@@ -287,11 +265,35 @@
                 }
             },
             minimumInputLength: 1, // Mulai pencarian setelah 1 karakter
-            templateResult: function(res) {
-                return res.text; // Format hasil yang ditampilkan di dropdown
-            },
             placeholder: "Pilih Matakuliah...",
             allowClear: true
+        });
+
+        // Event listener untuk menangkap perubahan course_id
+        $("#course-selector").on('change', function() {
+            var courseId = $(this).val();
+
+            if (courseId) {
+                // Lakukan AJAX request ke server untuk mengambil SKS berdasarkan course_id
+                $.ajax({
+                    url: '{{ route('curriculum_course.get_course_sks') }}', // Route untuk mengambil data SKS
+                    type: 'GET',
+                    data: {
+                        course_id: courseId
+                    },
+                    success: function(data) {
+                        // Isi input SKS berdasarkan response
+                        $('#sks_mk').val(data.sks_mk);
+                        $('#sks_tm').val(data.sks_tm);
+                        $('#sks_pr').val(data.sks_pr);
+                        $('#sks_pl').val(data.sks_pl);
+                        $('#sks_sim').val(data.sks_sim);
+                    },
+                    error: function() {
+                        alert('Gagal mengambil data SKS. Silakan coba lagi.');
+                    }
+                });
+            }
         });
     </script>
 @endsection

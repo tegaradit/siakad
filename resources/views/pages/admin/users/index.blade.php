@@ -40,11 +40,11 @@
                                         <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
-                                                    <th>Nama</th>
-                                                    <th>No Telp</th>
-                                                    <th>Email</th>
-                                                    <th>Role</th>
-                                                    <th>Aksi</th>
+                                                    <th style="text-align: center;">Nama</th>
+                                                    <th style="text-align: center;">No Telp</th>
+                                                    <th style="text-align: center;">Email</th>
+                                                    <th style="text-align: center;">Role</th>
+                                                    <th style="width: 30px; text-align: center;">Aksi</th>
                                                 </tr>
                                             </thead>
                                         </table>

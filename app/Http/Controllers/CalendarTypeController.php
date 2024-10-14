@@ -11,10 +11,12 @@ class CalendarTypeController extends Controller
 {
     public function index()
     {
+        $menu = 'datas';
+        $submenu = 'calendar-type';
         $datas = Calendar_type::orderBy('name', 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate();
-        return view('pages.admin.type_calendar.index', compact('datas'));
+        return view('pages.admin.type_calendar.index', compact('datas', 'menu', 'submenu'));
     }
 
     public function data(Request $request)
@@ -43,7 +45,9 @@ class CalendarTypeController extends Controller
 
     public function create()
     {
-        return view('pages.admin.type_calendar.form');
+        $menu = 'datas';
+        $submenu = 'calendar-type';
+        return view('pages.admin.type_calendar.form', compact('menu', 'submenu'));
     }
 
     public function store(Request $request)
@@ -77,8 +81,10 @@ class CalendarTypeController extends Controller
 
     public function edit($id)
     {
+        $menu = 'datas';
+        $submenu = 'calendar-type';
         $calendarType = Calendar_type::findOrFail($id);
-        return view('pages.admin.type_calendar.form_edit', compact('calendarType'));
+        return view('pages.admin.type_calendar.form_edit', compact('calendarType', 'menu', 'submenu'));
     }
 
     public function destroy($id)

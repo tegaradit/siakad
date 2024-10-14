@@ -23,11 +23,14 @@ return new class extends Migration
             $table->foreign('course_id')->references('id')->on('course')->onDelete('cascade');
 
             $table->integer('smt');
-            $table->integer('sks_mk');
-            $table->integer('sks_tm');
-            $table->integer('sks_pr');
-            $table->integer('sks_pl');
-            $table->integer('sks_sim');
+            
+            // Membuat kolom SKS menjadi nullable
+            $table->integer('sks_mk')->nullable();
+            $table->integer('sks_tm')->nullable();
+            $table->integer('sks_pr')->nullable();
+            $table->integer('sks_pl')->nullable();
+            $table->integer('sks_sim')->nullable();
+            
             $table->boolean('is_mandatory');
 
             $table->timestamps();

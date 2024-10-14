@@ -17,6 +17,8 @@ class CurriculumController extends Controller
     // Display a listing of the resource
     public function index(Request $request)
     {
+        $menu = 'data';
+        $submenu = 'curriculum';
         if ($request->ajax()) {
             $currentIdSp = IdentitasPt::first()->current_id_sp;
 
@@ -45,11 +47,13 @@ class CurriculumController extends Controller
                 ->make(true);
         }
 
-        return view('pages.admin.curriculum.index');
+        return view('pages.admin.curriculum.index', compact('menu', 'submenu'));
     }
 
     public function create()
     {
+        $menu = 'data';
+        $submenu = 'curriculum';
         $allProdi = DB::table('all_prodi')
             ->where('status', 'A')
             ->where('id_sp', DB::table('identitas_pt')->value('current_id_sp'))
@@ -58,7 +62,7 @@ class CurriculumController extends Controller
         $semesters = DB::table('semester')->where('is_active', 1)->get();
         $activeSemester = $semesters->first(); // Get the first active semester
 
-        return view('pages.admin.curriculum.form', [
+        return view('pages.admin.curriculum.form', compact('menu', 'submenu'), [
             'allProdi' => $allProdi,
             'semesters' => $semesters,
             'activeSemester' => $activeSemester,
@@ -102,6 +106,8 @@ class CurriculumController extends Controller
     // Show the form for editing the specified resource
     public function edit($id)
     {
+        $menu = 'data';
+        $submenu = 'curriculum';
         $curriculum = Curriculum::findOrFail($id);
 
         $allProdi = DB::table('all_prodi')
@@ -112,7 +118,7 @@ class CurriculumController extends Controller
         $semesters = DB::table('semester')->where('is_active', 1)->get();
         $activeSemester = $semesters->first(); // Get the first active semester
 
-        return view('pages.admin.curriculum.form', [
+        return view('pages.admin.curriculum.form', compact('menu', 'submenu'), [
             'curriculum' => $curriculum,
             'allProdi' => $allProdi,
             'semesters' => $semesters,

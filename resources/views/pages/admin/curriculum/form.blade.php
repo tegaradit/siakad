@@ -95,8 +95,8 @@
 
                                     <!-- Other Fields -->
                                     <div class="form-group">
-                                        <label for="name">Nama Curricululm</label>
-                                        <input type="text" id="name" name="name" class="form-control"
+                                        <label for="name">Nama Kurikulum</label>
+                                        <input type="text" id="name" name="name" class="form-control" placeholder="Masukan nama kurikulum" 
                                             value="{{ isset($curriculum) ? $curriculum->name : '' }}" required>
                                     </div><br>
 
@@ -104,33 +104,33 @@
                                         <label for="normal_semester_number">Jumlah Semester Normal</label>
                                         <input type="number" id="normal_semester_number" name="normal_semester_number"
                                             class="form-control" placeholder="0" 
-                                            value="{{ isset($curriculum) ? $curriculum->normal_semester_number : '' }}"
+                                            value="{{ isset($curriculum) ? $curriculum->normal_semester_number : 0 }}" 
                                             required>
                                     </div><br>
-
+                                    
                                     <div class="form-group">
                                         <label for="pass_credit_number">Jumlah SKS Lulus</label>
                                         <input type="number" id="pass_credit_number" name="pass_credit_number"
                                             class="form-control" placeholder="0" 
-                                            value="{{ isset($curriculum) ? $curriculum->pass_credit_number : '' }}"
+                                            value="{{ isset($curriculum) ? $curriculum->pass_credit_number : 0 }}" 
                                             required>
                                     </div><br>
-
+                                    
                                     <div class="form-group">
                                         <label for="mandatory_credit_number">Jumlah SKS Wajib</label>
                                         <input type="number" id="mandatory_credit_number" name="mandatory_credit_number"
                                             class="form-control" placeholder="0" 
-                                            value="{{ isset($curriculum) ? $curriculum->mandatory_credit_number : '' }}"
+                                            value="{{ isset($curriculum) ? $curriculum->mandatory_credit_number : 0 }}" 
                                             required>
                                     </div><br>
-
+                                    
                                     <div class="form-group">
                                         <label for="choice_credit_number">Jumlah SKS Pilihan</label>
                                         <input type="number" id="choice_credit_number" name="choice_credit_number"
                                             class="form-control" placeholder="0" 
-                                            value="{{ isset($curriculum) ? $curriculum->choice_credit_number : '' }}"
+                                            value="{{ isset($curriculum) ? $curriculum->choice_credit_number : 0 }}" 
                                             required>
-                                    </div><br>
+                                    </div><br>                                    
 
                                     <button type="submit"
                                         class="btn btn-primary mb-3">{{ isset($curriculum) ? 'Ubah' : 'Simpan' }}</button>

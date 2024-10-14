@@ -19,7 +19,9 @@ class LecturerController extends Controller
 {
     public function index()
     {
-        return view('pages.admin.lecturer.index');
+        $menu = 'data';
+        $submenu = 'lecturer';
+        return view('pages.admin.lecturer.index', compact('menu', 'submenu'));
     }
 
     public function data(Request $request)
@@ -69,6 +71,8 @@ class LecturerController extends Controller
 
     public function create()
     {
+        $menu = 'data';
+        $submenu = 'lecturer';
         $activeStatuses = Active_status::all();
         $employeeLevels = Employee_level::all();
         $identitas_pt = IdentitasPt::first(); 
@@ -78,7 +82,7 @@ class LecturerController extends Controller
             ->select('id_prodi', 'nama_prodi')
             ->get();
         
-        return view('pages.admin.lecturer.form', compact('activeStatuses', 'employeeLevels', 'prodiList'));
+        return view('pages.admin.lecturer.form', compact('activeStatuses', 'employeeLevels', 'prodiList', 'menu', 'submenu'));
     }
     
     public function store(Request $request)
@@ -114,7 +118,7 @@ class LecturerController extends Controller
 
         // Simpan data lecturer
         $lecturer = Lecturer::create(array_merge($validatedData,['role_id' => 7]));
-     
+
         if ($request->filled('email')) {
         $user = User::updateOrCreate(
             ['email' => $request->input('email')],
@@ -132,12 +136,16 @@ class LecturerController extends Controller
 
     public function show($id)
     {
+        $menu = 'data';
+        $submenu = 'lecturer';
         $lecturer = Lecturer::with(['ActiveStatus', 'employee_level', 'all_prodi'])->findOrFail($id);
-        return view('pages.admin.lecturer.show', compact('lecturer'));
+        return view('pages.admin.lecturer.show', compact('lecturer', 'menu', 'submenu'));
     }
 
     public function edit($id)
     {
+        $menu = 'data';
+        $submenu = 'lecturer';
         $lecturer = Lecturer::findOrFail($id);
         $activeStatuses = Active_status::all();
         $employeeLevels = Employee_level::all();
@@ -148,7 +156,7 @@ class LecturerController extends Controller
             ->select('id_prodi', 'nama_prodi')
             ->get();
 
-        return view('pages.admin.lecturer.form_edit', compact('lecturer', 'activeStatuses', 'employeeLevels', 'prodiList'));
+        return view('pages.admin.lecturer.form_edit', compact('lecturer', 'activeStatuses', 'employeeLevels', 'prodiList', 'menu', 'submenu'));
     }
 
     public function update(Request $request, $id)

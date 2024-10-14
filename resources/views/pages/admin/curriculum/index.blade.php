@@ -49,7 +49,6 @@
                                                 <th style="width: 30px; text-align: center; vertical-align: middle;">No.</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nama</th>
                                                 <th style="text-align: center; vertical-align: middle;">Prodi</th>
-                                                <th style="text-align: center; vertical-align: middle;">Jenjang<br>Pendidikan</th>
                                                 <th style="text-align: center; vertical-align: middle;">Semester</th>
                                                 <th style="text-align: center; vertical-align: middle;">Normal<br>Semester</th>
                                                 <th style="text-align: center; vertical-align: middle;">SKS<br>Lulus</th>
@@ -124,13 +123,6 @@
                     {
                         data: 'all_prodi.nama_prodi',
                         name: 'all_prodi.nama_prodi'
-                    },
-                    {
-                        data: 'education_level.nm_jenj_didik',
-                        name: 'education_level.nm_jenj_didik',
-                        createdCell: function(td, cellData, rowData, row, col) {
-                            $(td).css('text-align', 'center'); // Align center
-                        }
                     },
                     {
                         data: 'semester.semester_id',

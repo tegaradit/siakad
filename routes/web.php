@@ -106,9 +106,8 @@ Route::prefix('admin/curriculum/detail/{curriculum_id}')->group(function () {
     Route::delete('/{id}', [CourseCurriculumController::class, 'destroy'])->name('curriculum_course.destroy');
     
 });
-
-// Route untuk pencarian course tetap di luar
 Route::get('/admin/curriculum/{curriculum_id}/search_course', [CourseCurriculumController::class, 'searchCourse'])->name('curriculum_course.search_course');
+Route::get('curriculum_course/get_course_sks', [CourseCurriculumController::class, 'getCourseSks'])->name('curriculum_course.get_course_sks');
 
 //lecturesetting
 Route::get('/lecture-setting/data', [LectureSettingController::class, 'data'])->name('lecture-setting.data')->middleware(Authenticate::class);
@@ -193,6 +192,10 @@ Route::post('/admin/mahasiswa/store', [MahasiswaController::class, 'store'])->na
 Route::get('/admin/mahasiswa/edit/{id}', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
 Route::put('/admin/mahasiswa/edit/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
 Route::delete('/admin/mahasiswa/delete/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+Route::get('/admin/mahasiswa/search_wilayah', [MahasiswaController::class, 'searchWilayah'])->name('mahasiswa.search_wilayah');
+Route::put('/admin/mahasiswa/reset_password/{id_mahasiswa}', [MahasiswaController::class, 'resetPassword'])->name('mahasiswa.resetPassword');
+Route::get('/admin/mahasiswa/searchProdiByUnivName', [MahasiswaController::class, 'searchProdiByUnivName'])->name('mahasiswa.searchProdiByUnivName');
+Route::get('/admin/mahasiswa/searchUniversity', [MahasiswaController::class, 'searchUniversity'])->name('mahasiswa.searchUniversity');
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
 
@@ -201,3 +204,6 @@ Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecture
 Route::get('admin/curriculum/kelas_kuliah/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
 Route::get('admin/curriculum/kelas_kuliah/create/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'create'])->name('kelas_kuliah.create');
 Route::post('admin/curriculum/kelas_kuliah/store/{curriculum_id}/{course_id}', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
+Route::get('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
+Route::get('/kelas-kuliah/get-lecturers', [KelasKuliahController::class, 'getLecturers'])->name('kelas_kuliah.getLecturers');
+Route::post('admin/lecture/store', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
