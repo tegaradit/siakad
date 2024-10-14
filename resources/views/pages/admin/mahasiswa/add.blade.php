@@ -1,6 +1,11 @@
 @extends('layouts.home-layout')
 
 @section('home-content')
+<style>
+   #select-pt .select2.select2-container.select2-container--default {
+      width: 100% !important;
+   }
+</style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <div class="main-content">
    <div class="page-content">
@@ -50,10 +55,10 @@
                            <select required id="studyProgram" class="form-select" name="id_prodi">
                               <option selected value="">:: Pilih Program Studi ::</option>
                               @foreach ($dataProdi as $prodi)
-                          <option value="{{ $prodi->id_prodi }}" {{ old('id_prodi') == $prodi->id_prodi ? 'selected' : '' }}>
-                            {{ "$prodi->jenjang_pendidikan $prodi->nama_prodi" }}
-                          </option>
-                       @endforeach
+                                 <option value="{{ $prodi->id_prodi }}" {{ old('id_prodi') == $prodi->id_prodi ? 'selected' : '' }}>
+                                    {{ "$prodi->jenjang_pendidikan $prodi->nama_prodi" }}
+                                 </option>
+                              @endforeach
                            </select>
                            @error('id_prodi') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
@@ -119,13 +124,13 @@
                   <div class="col-md-3">
                      <label for="startSemester" class="form-label">Mulai SMT</label>
                      <input required type="number" class="form-control" id="startSemester" name="mulai_smt"
-                        value="{{ old('mulai_smt') }}">
+                        value="{{ old('mulai_smt', $currentSemester != null ? $currentSemester->semester_id : '') }}">
                      @error('mulai_smt') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                   <div class="col-md-3">
                      <label for="semesterStart" class="form-label">Mulai pada Semester</label>
                      <input required type="number" class="form-control" id="mulai-pada-semester" name="mulai_pada_smt"
-                        value="{{ old('mulai_pada_smt') }}">
+                        value="{{ old('mulai_pada_smt',$currentSemester != null ? $currentSemester->smt : '') }}">
                      @error('mulai_pada_smt') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                </div>
@@ -402,10 +407,11 @@
             </div>
             <div class="card-body">
                <div class="row mb-3">
-                  <div class="col-md-3">
-                     <label for="namaPTAsal" class="form-label">Nama Perguruan Tinggi Asal </label>
-                     <input type="text" class="form-control" id="namaPTAsal" name="id_pt_asal"
-                        value="{{ old('id_pt_asal') }}">
+                  <div class="col-md-3" id="select-pt">
+                     <label for="inp-id-pt=asal" class="form-label d-block">Nama Perguruan Tinggi Asal</label>
+                     <select required class="form-control w-100" id="inp-id-pt-asal" name="id_pt_asal">
+                        <option value="{{ old('id_pt_asal') }}" selected></option>
+                     </select>
                      @error('id_pt_asal') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>
                   <div class="col-md-3">
@@ -441,9 +447,35 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+   //--> syntax for search "pt asal"
+   $("#inp-id-pt-asal").select2({
+      ajax: {
+         delay: 250,
+         url: '{{ route('mahasiswa.searchUniversity') }}',
+         data(params) {
+            var query = {
+               universityName: params.term,
+            }
+            return query;
+         },
+         processResults(data) {
+            return {
+               results: data.map(item => ({
+                  id: `${item.id_sp}`,  // The value for the option
+                  text: item.nm_lemb  // The displayed text
+               }))
+            }
+         }
+      },
+      minimumInputLength: 3,
+      templateResult(res) {
+         return res.text
+      }
+   })
+
    //--> selec2 for autocomplete kecamatan
    $("#inp-kecamatan").select2({
       ajax: {
@@ -471,9 +503,10 @@
    })
 
    //--> syntax for search "prodi" by university name
-   const programStudiAsal = document.getElementById('programStudiAsal');
-   document.getElementById('namaPTAsal').addEventListener('blur', ev => {
-      fetch(`{{ url('/') }}/admin/mahasiswa/searchProdiByUnivName?universityName=${ev.target.value}`)
+   const programStudiAsal = document.getElementById('programStudiAsal')
+   $('#inp-id-pt-asal').on("select2:close", ev => { 
+      const selectedValue = $("#inp-id-pt-asal option:selected").val()
+      fetch(`{{ url('/') }}/admin/mahasiswa/searchProdiByUnivName?id_sp=${selectedValue}`)
       .then(res => {
          if (res.status < 400)
             return res.json()
@@ -494,7 +527,7 @@
       .catch(err => {
          console.log(err)
       })
-   })
+   });
 
    //--> syntax for automatic fill the "Mulai pada Semester" input
    const semesterStart = document.getElementById("mulai-pada-semester");
