@@ -218,6 +218,32 @@
             }
         </script>
 
+        <script>
+            $(document).on('click', '.create-class', function() {
+                let url = $(this).data('url');
+
+                if (confirm('Apakah Anda yakin ingin membuat kelas untuk mata kuliah ini?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            // Tambahkan data tambahan jika diperlukan
+                        },
+                        success: function(response) {
+                            alert('Kelas berhasil dibuat.');
+                            // Refresh DataTable atau lakukan aksi lain sesuai kebutuhan
+                            $('#your-data-table-id').DataTable().ajax
+                        .reload(); // Ganti ID tabel sesuai kebutuhan
+                        },
+                        error: function(xhr) {
+                            alert('Gagal membuat kelas: ' + xhr.responseJSON.message);
+                        }
+                    });
+                }
+            });
+        </script>
+
         <footer class="footer">
             <div class="container-fluid">
                 <div class="row">

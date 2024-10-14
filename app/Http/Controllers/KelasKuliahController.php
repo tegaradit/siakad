@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\KelasKuliah;
 use Illuminate\Http\Request;
 use App\Models\dosenMengajar;
 use App\Models\Lecturer;
+use App\Models\Semester;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class KelasKuliahController extends Controller
@@ -76,5 +80,61 @@ class KelasKuliahController extends Controller
     {
         $lecturers = Lecturer::all(); // Assuming you have a Lecturer model
         return response()->json($lecturers);
+    }
+
+    public function storeClass(Request $request, string $course_id)
+    {
+        // return $request->all();
+        // Ambil course berdasarkan course_id
+        $course = Course::findOrFail($course_id);
+
+        // Ambil semester yang aktif
+        $activeSemester = Semester::where('is_active', '=', '1')->first();
+
+        // Periksa jika semester aktif ada
+        if (!$activeSemester) {
+            return response()->json(['message' => 'Tidak ada semester yang aktif.'], 400);
+        }
+
+        // Pastikan semester_id terisi
+        $semesterId = $activeSemester->semester_id;
+
+        // Buat data untuk kelas kuliah
+        $kelasKuliahData = [
+            'id' => (string) Str::uuid(),
+            'course_id' => $course->id,
+            'prodi_id' => $course->prodi_id,
+            'semester_id' => $semesterId, // Pastikan semester_id tidak null
+            'nama_kelas' => substr($course->code, 0, 5), // Nama kelas 5 karakter dari kode mata kuliah
+            'sks_mk' => $course->sks_mk,
+            'sks_tm' => $course->sks_tm,
+            'sks_pr' => $course->sks_pr,
+            'sks_lap' => $course->sks_pl,
+            'sks_sim' => $course->sks_sim,
+            // input 0000-00-00 bukan valid input untuk date
+            'start_date' => $course->effective_start_date == '0000-00-00' ? '2000-01-01' : $course->effective_start_date,
+            // input 0000-00-00 bukan valid input untuk date
+            'end_date' => $course->effective_end_date == '0000-00-00' ? '2000-01-01' : $course->effective_end_date,
+            'quota' => 1, // field kie r ulih null
+            'pn_presensi' => 1, // field kie r ulih null
+            'pn_tugas' => null,
+            'pn_uas' => null,
+            'max_pertemuan' => 10, // field kie r ulih null
+            'min_kehadiran' => 5, // field kie r ulih null
+            'enrollment_key' => null,
+            'grade_status' => 0,
+            'uts_question' => null,
+            'uas_question' => null,
+            'class_type' => 1, // field kie r ulih null
+            'group_class_id' => null,
+        ];
+
+        // Simpan kelas kuliah
+        try {
+            $kelasKuliah = KelasKuliah::create($kelasKuliahData);
+            return response()->json(['message' => 'Kelas berhasil dibuat.', 'kelas_kuliah' => $kelasKuliah], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal membuat kelas', 'request' => $request->all(), 'error' => $e->getMessage(), 'active semester' => $activeSemester], 500);
+        }
     }
 }

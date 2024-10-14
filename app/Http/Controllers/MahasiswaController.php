@@ -12,7 +12,7 @@ use App\Models\Wilayah;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class MahasiswaController extends Controller

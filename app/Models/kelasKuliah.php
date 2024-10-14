@@ -11,6 +11,7 @@ class KelasKuliah extends Model
     public $incrementing = false;
     protected $keyType = 'uuid';
     protected $fillable = [
+        'id',
         'prodi_id',
         'semester_id',
         'nama_kelas',
