@@ -56,6 +56,8 @@ class CourseCurriculumController extends Controller
     // }
     public function index($curriculum_id)
     {
+        $menu = 'data';
+        $submenu = 'curriculum';
         // Ambil data kurikulum
         $curriculum = Curriculum::findOrFail($curriculum_id);
 
@@ -96,16 +98,18 @@ class CourseCurriculumController extends Controller
         }
 
         // Kirim data kurikulum ke view
-        return view('pages.admin.curriculum_course.index', compact('curriculum'));
+        return view('pages.admin.curriculum_course.index', compact('curriculum', 'menu', 'submenu'));
     }
 
 
     // Show the form to create a new course
     public function create($curriculum_id)
     {
+        $menu = 'data';
+        $submenu = 'curriculum';
         $curriculum = Curriculum::findOrFail($curriculum_id);
         $semester = Semester::findOrFail($curriculum->semester_id);
-        return view('pages.admin.curriculum_course.form', compact('curriculum', 'semester'));
+        return view('pages.admin.curriculum_course.form', compact('curriculum', 'semester', 'menu', 'submenu'));
     }
 
     // Get courses for Select2
@@ -197,11 +201,13 @@ class CourseCurriculumController extends Controller
     // Show the form to edit an existing course
     public function edit($curriculum_id, $id)
     {
+        $menu = 'data';
+        $submenu = 'curriculum';
         $curriculum = Curriculum::findOrFail($curriculum_id);
         $course = CurriculumCourse::findOrFail($id);
         $semester = Semester::findOrFail($curriculum->semester_id);
         $courses = Course::where("id", "=", $course->course_id)->get();
-        return view('pages.admin.curriculum_course.form', compact('curriculum', 'course', 'semester', 'courses'));
+        return view('pages.admin.curriculum_course.form', compact('curriculum', 'menu', 'submenu', 'course', 'semester', 'courses'));
     }
 
     // Update an existing course
