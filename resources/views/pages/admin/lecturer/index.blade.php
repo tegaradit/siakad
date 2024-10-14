@@ -56,7 +56,7 @@
                                                     <th>Gender</th>
                                                     <th>Nama</th>
                                                     <th>Status Aktif</th>
-                                                    <th style="width: 50px text-align: center">Aksi</th>
+                                                    <th style="width: 50px; text-align: center">Aksi</th>
                                                 </tr>
                                             </thead>
                                         </table>
