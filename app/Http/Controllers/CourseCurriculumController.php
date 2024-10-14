@@ -9,6 +9,7 @@ use App\Models\IdentitasPt;
 use App\Models\Semester;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
 
 class CourseCurriculumController extends Controller
@@ -26,7 +27,7 @@ class CourseCurriculumController extends Controller
                 ->get();
 
 
-                return DataTables::of($courses)
+            return DataTables::of($courses)
                 ->addIndexColumn()
                 ->addColumn('action', function ($course) {
                     $detailUrl = route('kelas_kuliah.index', [$course->curriculum_id, $course->course_id]);
@@ -37,7 +38,7 @@ class CourseCurriculumController extends Controller
                         . '<a href="' . $detailUrl . '" class="btn btn-info btn-sm m-0" title="Detail"><i class="fa-solid fa-chalkboard-user"></i> Buat Kelas</a>'
                         . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit ms-1 m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
                         . '<button type="submit" class="btn btn-danger btn-sm delete ms-1"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
-            
+
                     return $deleteForm;
                 })
                 ->addColumn('course_name', function ($course) {
@@ -47,7 +48,7 @@ class CourseCurriculumController extends Controller
                     return $course->kelas_kuliah_count; // Ini berasal dari withCount('kelasKuliah')
                 })
                 ->rawColumns(['action'])
-                ->make(true);            
+                ->make(true);
         }
 
         // Pass the curriculum to the view
@@ -114,29 +115,39 @@ class CourseCurriculumController extends Controller
     public function store(Request $request, $curriculum_id)
     {
         $request->validate([
-            'course_id' => 'required|exists:course,id', // Pastikan course_id ada di tabel course
-            'smt' => 'required|integer|min:1|max:8', // Misalnya, semester harus antara 1 dan 8
-            'sks_mk' => 'required|integer|min:1', // SKS MK harus lebih dari 0
-            'sks_tm' => 'nullable|integer|min:0', // SKS TM bisa kosong atau minimal 0
-            'sks_pr' => 'nullable|integer|min:0', // SKS PR bisa kosong atau minimal 0
-            'sks_pl' => 'nullable|integer|min:0', // SKS PL bisa kosong atau minimal 0
-            'sks_sim' => 'nullable|integer|min:0', // SKS SIM bisa kosong atau minimal 0
-            'is_mandatory' => 'required|boolean', // is_mandatory harus ada dan merupakan boolean
+            'course_id' => [
+                'required',
+                'exists:course,id', // Sesuaikan kolom jika nama berbeda
+                Rule::unique('curriculum_courses')->where(function ($query) use ($curriculum_id) {
+                    return $query->where('curriculum_id', $curriculum_id);
+                })
+            ],
+            'smt' => 'required|integer',
+            'sks_mk' => 'required|integer',
+            'sks_tm' => 'nullable|integer',
+            'sks_pr' => 'nullable|integer',
+            'sks_pl' => 'nullable|integer',
+            'sks_sim' => 'nullable|integer',
+            'is_mandatory' => 'required|boolean',
+        ], [
+            'course_id.unique' => 'Mata kuliah ini sudah ada di kurikulum.', // Pesan error jika duplikat
+            'course_id.exists' => 'Mata kuliah yang dipilih tidak valid.',
         ]);
 
-        $course = new CurriculumCourse();
-        $course->curriculum_id = $curriculum_id;
-        $course->course_id = $request->course_id;
-        $course->smt = $request->smt;
-        $course->sks_mk = $request->sks_mk;
-        $course->sks_tm = $request->sks_tm;
-        $course->sks_pr = $request->sks_pr;
-        $course->sks_pl = $request->sks_pl;
-        $course->sks_sim = $request->sks_sim;
-        $course->is_mandatory = $request->is_mandatory;
-        $course->save();
+        // Simpan data ke tabel curriculum_courses jika tidak ada error
+        CurriculumCourse::create([
+            'curriculum_id' => $curriculum_id,
+            'course_id' => $request->input('course_id'),
+            'smt' => $request->input('smt'),
+            'sks_mk' => $request->input('sks_mk'),
+            'sks_tm' => $request->input('sks_tm'),
+            'sks_pr' => $request->input('sks_pr'),
+            'sks_pl' => $request->input('sks_pl'),
+            'sks_sim' => $request->input('sks_sim'),
+            'is_mandatory' => $request->input('is_mandatory'),
+        ]);
 
-        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Data Matakuliah Kurikulum Berhasil Ditambahkan.');
+        return redirect()->route('curriculum_course.index', $curriculum_id)->with('success', 'Mata kuliah berhasil ditambahkan ke kurikulum.');
     }
 
     // Show the form to edit an existing course
