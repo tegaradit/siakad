@@ -17,7 +17,7 @@
                                     <select id="filter_prodi" class="form-select">
                                         <option value="">:: Pilih Program Studi ::</option>
                                         @foreach($programs as $program)
-                                            <option value="{{ $program->prodi_id }}">{{ $program->prodi_id }}</option>
+                                        <option value="{{ $program->id_prodi }}">{{ $program->nama_prodi }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -26,7 +26,7 @@
                                     <select id="filter_semester" class="form-select">
                                         <option value="">:: Pilih Tahun Ajaran ::</option>
                                         @foreach($semesters as $semester)
-                                            <option value="{{ $semester->semester_id }}">{{ $semester->semester_id }}</option>
+                                        <option value="{{ $semester->semester_id }}">{{ $semester->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -70,7 +70,7 @@
                                 <select class="form-select" id="lecturer_id" required>
                                     <option value="">:: Pilih Dosen ::</option>
                                     @foreach($lecturers as $lecturer)
-                                        <option value="{{ $lecturer->id }}">{{ $lecturer->name }}</option>
+                                    <option value="{{ $lecturer->id }}">{{ $lecturer->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -94,14 +94,32 @@
                         data: function(d) {
                             d.prodi_id = $('#filter_prodi').val();
                             d.semester_id = $('#filter_semester').val();
+                            console.log(d);
                         }
                     },
-                    columns: [
-                        { data: 'id', name: 'id' },
-                        { data: 'course_id', name: 'course_id' },
-                        { data: 'nama_kelas', name: 'nama_kelas' },
-                        { data: 'sks_mk', name: 'sks_mk' },
-                        { data: 'nidn', name: 'nidn' },
+                    columns: [{
+                            data: null,
+                            name: 'id',
+                            render: function(data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
+                        },
+                        {
+                            data: 'code',
+                            name: 'code'
+                        },
+                        {
+                            data: 'name',
+                            name: 'name'
+                        },
+                        {
+                            data: 'sks_mk',
+                            name: 'sks_mk'
+                        },
+                        {
+                            data: 'nidn',
+                            name: 'nidn'
+                        },
                         {
                             data: 'dosen_pengajar',
                             name: 'dosen_pengajar',
@@ -111,9 +129,20 @@
                                 return '<button class="btn btn-primary add-lecturer-btn"><i class="fa fa-plus"></i></button>';
                             }
                         },
-                        { data: 'asisten_dosen', name: 'asisten_dosen' },
-                        { data: 'quota', name: 'quota' },
-                        { data: 'peserta_kelas', name: 'peserta_kelas', orderable: false, searchable: false },
+                        {
+                            data: 'asisten_dosen',
+                            name: 'asisten_dosen'
+                        },
+                        {
+                            data: 'quota',
+                            name: 'quota'
+                        },
+                        {
+                            data: 'peserta_kelas',
+                            name: 'peserta_kelas',
+                            orderable: false,
+                            searchable: false
+                        },
                         {
                             data: 'actions',
                             name: 'actions',

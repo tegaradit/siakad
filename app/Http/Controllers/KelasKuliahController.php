@@ -18,15 +18,20 @@ class KelasKuliahController extends Controller
     {
         $prodiId = $request->input('prodi_id');
         $semesterId = $request->input('semester_id');
-        $query = KelasKuliah::join('dosen_mengajar','kelas_kuliah.id' ,'=','dosen_mengajar->class_id');
-    
+        $query = KelasKuliah::leftjoin('dosen_mengajar','kelas_kuliah.id', '=','dosen_mengajar.class_id')
+            ->leftjoin('lecturer', 'dosen_mengajar.lecture_id', '=', 'lecturer.id')->leftjoin('course','kelas_kuliah.course_id', '=', 'course.id');
+        // $query = KelasKuliah::all();
+        // dd($query);
+        // return $query;
+        
         if ($prodiId) {
             $query->where('prodi_id', $prodiId);
         }
         if ($semesterId) {
             $query->where('semester_id', $semesterId);
         }
-    
+        $query = $query->get();
+        // return $query;
         if ($request->ajax()) {
             return DataTables::of($query)
                 ->addColumn('dosen_pengajar', function ($row) {
@@ -43,8 +48,8 @@ class KelasKuliahController extends Controller
                 ->rawColumns(['dosen_pengajar', 'peserta_kelas', 'actions']) // Pastikan kolom ini dianggap sebagai HTML, bukan teks biasa
                 ->make(true);
         }
-        $programs = KelasKuliah::select('prodi_id')->distinct()->get();
-        $semesters = KelasKuliah::select('semester_id')->distinct()->get();
+        $programs = KelasKuliah::join('all_prodi','kelas_kuliah.prodi_id','=','all_prodi.id_prodi')->get(['all_prodi.id_prodi', 'all_prodi.nama_prodi']);
+        $semesters = KelasKuliah::join('semester', 'kelas_kuliah.semester_id', '=', 'semester.semester_id')->get(['semester.semester_id', 'semester.name']);
         $lecturers = Lecturer::all(); 
         return view('pages.admin.kelas_kuliah.index', compact('programs', 'semesters', 'lecturers'));
     }
