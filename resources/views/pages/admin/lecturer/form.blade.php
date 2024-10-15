@@ -286,30 +286,4 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    {{-- <script>
-        $("#prodi-selector").select2({
-            ajax: {
-                delay: 250,
-                url: '{{ url('/') }}/admin/all_prodi/search_prodi',
-                data(params) {
-                    var query = {
-                        nama_prodi: params.term,
-                    }
-                    return query;
-                },
-                processResults(data) {
-                    return {
-                        results: data.map(item => ({
-                            id: item.id,
-                            text: `${item.nama_prodi}`
-                        }))
-                    }
-                }
-            },
-            minimumInputLength: 1,
-            templateResult(res) {
-                return res.text
-            }
-        })
-    </script> --}}
 @endsection

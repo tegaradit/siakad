@@ -309,7 +309,7 @@
                                     <div class="row">
                                         <!-- Tombol Batal di sebelah kiri -->
                                         <div class="col-md-6 text-left">
-                                            <button type="button" class="btn btn-secondary mt-3">Batal</button>
+                                            <button type="button" class="btn btn-secondary mt-3"  onclick="window.location.href='{{ route('lecturer.index') }}'">Batal</button>
                                         </div>
 
                                         <!-- Tombol Update dan Tambah Pengguna di sebelah kanan -->

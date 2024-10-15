@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\dosen_wali;
-use App\Models\DosenWali; // Model DosenWali dengan PascalCase
+use App\Models\DosenWali; 
 use App\Models\Lecturer;
 use App\Models\MahasiswaPt;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
 
 class DosenWaliController extends Controller
@@ -17,7 +19,7 @@ class DosenWaliController extends Controller
         $menu = 'data';
         $submenu = 'lecturer';
         $lecturer = Lecturer::findOrFail($lecture_id_input);
-        
+
         if ($request->ajax()) {
             $dosenWalis = dosen_wali::with(['lecturer', 'mahasiswaPt', 'mahasiswa'])
                 ->where('lecture_id', $lecture_id_input)
@@ -26,11 +28,9 @@ class DosenWaliController extends Controller
             return DataTables::of($dosenWalis)
                 ->addIndexColumn()
                 ->addColumn('action', function ($dosenWali) {
-                    $editUrl = route('dosen_wali.edit', $dosenWali->id);
                     $deleteForm = '<form id="delete-form-' . $dosenWali->id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $dosenWali->id . '\');" action="' . route('dosen_wali.destroy', $dosenWali->id) . '" method="POST">'
                         . csrf_field()
                         . method_field('DELETE')
-                        . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit ms-1 m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
                         . '<button type="submit" class="btn btn-danger btn-sm delete ms-1"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
                     return $deleteForm;
                 })
@@ -39,11 +39,11 @@ class DosenWaliController extends Controller
                 })
                 ->addColumn('nama', function ($dosenWali) {
                     return $dosenWali->mahasiswa ? $dosenWali->mahasiswa->nm_pd : '-';
-                }) 
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages.admin.dosen_wali.index', compact('lecturer','menu', 'submenu', 'lecture_id_input')); // Mengirimkan $lecturer ke view
+        return view('pages.admin.dosen_wali.index', compact('lecturer', 'menu', 'submenu', 'lecture_id_input')); // Mengirimkan $lecturer ke view
     }
 
     public function selectMahasiswa(Request $request, string $lecture_id_input)
@@ -70,15 +70,14 @@ class DosenWaliController extends Controller
     public function setMahasiswa(Request $request)
     {
         try {
-            // Validasi input mahasiswa_id dan lecture_id
             $request->validate([
                 'mahasiswa_id' => 'required|exists:mahasiswa_pt,id_pd',
                 'lecture_id' => 'required|exists:lecturer,id',
             ]);
 
             // Simpan data dosen wali
-            $dosenWali = new dosen_wali(); 
-            $dosenWali->id_pd = $request->input('mahasiswa_id'); // ID mahasiswa
+            $dosenWali = new dosen_wali();
+            $dosenWali->id_pd = $request->input('mahasiswa_id');
             $dosenWali->lecture_id = $request->input('lecture_id');
             $dosenWali->save();
 
@@ -86,5 +85,42 @@ class DosenWaliController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()], 500);
         }
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nim' => 'required|string',
+            'nama' => 'required|string',
+            'lecture_id' => 'required|exists:lecturer,id',
+        ]);
+
+        $id_pd = MahasiswaPt::where('nipd', $request->nim)->value('id_pd');
+
+        if (!$id_pd) {
+            return redirect()->back()->with('error', 'NIPD tidak ditemukan.');
+        }
+
+        dosen_wali::create([
+            'lecture_id' => $request->lecture_id,
+            'id_pd' => $id_pd
+        ]);
+
+        Log::info('Dosen Wali berhasil ditambahkan.', ['id_pd' => $id_pd]);
+        return redirect()->route('dosen_wali.index', $request->lecture_id)->with('success', 'Dosen Wali berhasil ditambahkan.');
+    }
+
+    public function getNama($nim)
+    {
+        $mahasiswa = DB::table('mahasiswa_pt')
+            ->join('mahasiswa', 'mahasiswa_pt.id_pd', '=', 'mahasiswa.id_pd')
+            ->where('mahasiswa_pt.nipd', $nim)
+            ->select('mahasiswa.nm_pd')
+            ->first();
+
+        if (!$mahasiswa) {
+            return response()->json(['error' => 'Mahasiswa tidak ditemukan'], 404);
+        }
+
+        return response()->json(['nama' => $mahasiswa->nm_pd]);
     }
 }
