@@ -16,70 +16,95 @@ class KelasKuliahController extends Controller
 {
     public function index(Request $request)
     {
-        // Get filter values from the request
         $prodiId = $request->input('prodi_id');
         $semesterId = $request->input('semester_id');
-
-        // Build query based on filters
-        $query = KelasKuliah::query();
-
-        // Apply filtering based on program and academic year (semester)
+        $query = KelasKuliah::join('dosen_mengajar','kelas_kuliah.id' ,'=','dosen_mengajar->class_id');
+    
         if ($prodiId) {
             $query->where('prodi_id', $prodiId);
         }
-
         if ($semesterId) {
             $query->where('semester_id', $semesterId);
         }
-
-        // Use Yajra DataTables for handling and displaying the data
+    
         if ($request->ajax()) {
             return DataTables::of($query)
                 ->addColumn('dosen_pengajar', function ($row) {
-                    // Add logic for dosen pengajar (lecturer) column if necessary
-                    return '<button class="btn btn-primary"><i class="fa fa-plus"></i></button>';
+                    return '<button class="btn btn-primary add-dosen" data-id="' . $row->id . '"><i class="fa fa-plus"></i> Tambah Dosen</button>';
                 })
                 ->addColumn('peserta_kelas', function ($row) {
-                    // Logic for displaying the number of students in the class
-                    return '<span class="badge badge-success">' . $row->quota . '</span>';
+                    return '<span class="badge badge-success">' . $row->quota . ' Peserta</span>'; // Menampilkan jumlah kuota sebagai peserta
                 })
                 ->addColumn('actions', function ($row) {
-                    // Generate action buttons for each row
-                    return '<button class="btn btn-info"><i class="fa fa-eye"></i></button>
-                            <button class="btn btn-warning"><i class="fa fa-edit"></i></button>
-                            <button class="btn btn-danger"><i class="fa fa-trash"></i></button>';
+                    return '<button class="btn btn-info view-btn" data-id="' . $row->id . '"><i class="fa fa-eye"></i> Lihat</button>
+                            <button class="btn btn-warning edit-btn" data-id="' . $row->id . '"><i class="fa fa-edit"></i> Edit</button>
+                            <button class="btn btn-danger delete-btn" data-id="' . $row->id . '"><i class="fa fa-trash"></i> Hapus</button>';
                 })
-                ->rawColumns(['dosen_pengajar', 'peserta_kelas', 'actions'])
+                ->rawColumns(['dosen_pengajar', 'peserta_kelas', 'actions']) // Pastikan kolom ini dianggap sebagai HTML, bukan teks biasa
                 ->make(true);
         }
-
-        // Fetch unique programs and academic years for filtering dropdowns
         $programs = KelasKuliah::select('prodi_id')->distinct()->get();
         $semesters = KelasKuliah::select('semester_id')->distinct()->get();
-
-        return view('pages.admin.kelas_kuliah.index', compact('programs', 'semesters'));
+        $lecturers = Lecturer::all(); 
+        return view('pages.admin.kelas_kuliah.index', compact('programs', 'semesters', 'lecturers'));
     }
     public function storeLecturer(Request $request)
     {
         $request->validate([
-            'lecture_id' => 'required|integer|exists:lecturers,id', // Assuming there's a lecturers table
-            'class_id' => 'required|integer|exists:kelas_kuliah,id', // Ensure class ID exists
+            'lecture_id' => 'required|integer|exists:lecturers,id',
+            'class_id' => 'required|integer|exists:kelas_kuliah,id',
         ]);
-
-        // Logic to save the lecturer
         dosenMengajar::create([
-            'lecture_id' => $request->lecture_id, // Get lecture_id from the request
+            'lecture_id' => $request->lecture_id,
             'class_id' => $request->class_id,
-            // Add other necessary fields here if needed
         ]);
-
         return response()->json(['message' => 'Dosen pengajar berhasil ditambahkan.']);
     }
-    // Add this method in your KelasKuliahController
-    public function getLecturers()
+    public function edit($id)
     {
-        $lecturers = Lecturer::all(); // Assuming you have a Lecturer model
-        return response()->json($lecturers);
+        $kelasKuliah = KelasKuliah::find($id);
+        if (!$kelasKuliah) {
+            return response()->json(['message' => 'Kelas tidak ditemukan.'], 404);
+        }
+
+        return response()->json($kelasKuliah);
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'prodi_id' => 'required',
+            'semester_id' => 'required',
+            'course_id' => 'required',
+            'nama_kelas' => 'required',
+            'jenis_kelas' => 'required',
+            'bobot' => 'required|numeric',
+            'quota' => 'required|numeric',
+        ]);
+
+        $kelasKuliah = KelasKuliah::findOrFail($id);
+
+        $kelasKuliah->update([
+            'prodi_id' => $request->input('prodi_id'),
+            'semester_id' => $request->input('semester_id'),
+            'course_id' => $request->input('course_id'),
+            'nama_kelas' => $request->input('nama_kelas'),
+            'jenis_kelas' => $request->input('jenis_kelas'),
+            'bobot' => $request->input('bobot'),
+            'quota' => $request->input('quota'),
+        ]);
+
+        return redirect()->route('kelas_kuliah.index')->with('success', 'Kelas Kuliah updated successfully.');
+    }
+    public function getGuru(Request $request)
+    {
+        $query = Lecturer::query();
+    
+        if ($request->ajax()) {
+            return DataTables::of($query)
+                ->make(true);
+        }
+    
+        return response()->json(['message' => 'Request must be AJAX.'], 400);
     }
 
     public function storeClass(Request $request, string $course_id)

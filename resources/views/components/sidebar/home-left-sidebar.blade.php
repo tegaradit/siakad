@@ -20,11 +20,8 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="/admin/identitas-pt">
-                                <span data-key="t-identitas-pt">
-                                    {{-- <i data-feather="circle"></i> --}}
-                                    Identitas PT
-                                </span>
+                            <a href="{{ route('identitas-pt.index') }}">
+                                <span data-key="t-identitas-pt">Identitas PT</span>
                             </a>
                         </li>
                         <li>
