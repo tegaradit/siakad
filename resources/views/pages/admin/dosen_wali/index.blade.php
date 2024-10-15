@@ -4,7 +4,7 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                {{-- start page title --}}
+                {{-- art page title --}}
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -28,9 +28,14 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <a href="#" class="btn btn-primary btn-sm mb-3">
+                                        {{-- <a href="{{route('dosen_wali.create_manual', $lecture_id_input) }}" class="btn btn-primary btn-sm mb-3">
                                             Tambah (dengan input manual)
-                                        </a>
+                                        </a> --}}
+
+                                        <button class="btn btn-primary btn-sm mb-3" data-bs-toggle="modal"
+                                            data-bs-target="#createModal">
+                                            Tambah (dengan input manual)
+                                        </button>
                                         <a href="{{ route('dosen_wali.select_mahasiswa', $lecture_id_input) }}"
                                             class="btn text-white bg-dark btn-sm mb-3">
                                             <i class="text-white bg-dark"></i> Tambah (dengan memilih mahasiswa)
@@ -47,11 +52,11 @@
                                             <table class="table table-striped table-bordered dt-responsive nowrap w-100"
                                                 id="datatable">
                                                 <thead>
-                                                    <tr>
-                                                        <th>No</th>
+                                                    <tr style="text-align: center">
+                                                        <th style="width:20px">No</th>
                                                         <th>NIM</th>
                                                         <th>Nama</th>
-                                                        <th>Aksi</th>
+                                                        <th style="width: 60px; text-align:center">Aksi</th>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -65,7 +70,36 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="createForm" action="{{ route('dosen_wali.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createModalLabel">Tambah Dosen Wali</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="mb-3">
+                        <div class="modal-body">
+                            <input type="hidden" name="lecture_id" value="{{ $lecturer->id }}" />
+                            <div class="mb-3">
+                                <label for="nim" class="form-label">NIM</label>
+                                <input type="text" class="form-control" id="nim" name="nim" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" readonly>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
@@ -77,35 +111,65 @@
             $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('dosen_wali.index', $lecture_id_input) }}', 
+                ajax: '{{ route('dosen_wali.index', $lecture_id_input) }}',
                 columns: [{
                         data: null,
                         name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false,
+                        className: 'text-center',
                         render: function(data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
                     {
-                        data: 'nim', 
+                        data: 'nim',
                         name: 'nim',
+                        className: 'text-center'
                     },
                     {
-                        data: 'nama', 
+                        data: 'nama',
                         name: 'nama',
                     },
                     {
-                        data: 'action', 
+                        data: 'action',
                         name: 'action',
                         orderable: false,
                         searchable: false,
                     }
                 ]
             });
+
             function reloadTable() {
-            table.ajax.reload(null, false); // Reload tabel tanpa reset pagination
-        }
+                table.ajax.reload(null, false); 
+            }
+        });
+    </script>
+    <script>
+        $('#nim').on('input', function() {
+            var nim = $(this).val();
+
+            if (nim) {
+                var url = '{{ route('get.nama', ':nim') }}';
+                url = url.replace(':nim', nim);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(data) {
+                        if (data.nama) {
+                            $('#nama').val(data.nama);
+                        } else {
+                            $('#nama').val('');
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        alert('Gagal mengambil data Nama. Silakan coba lagi.');
+                    }
+                });
+            } else {
+                $('#nama').val('');
+            }
         });
     </script>
 @endsection
