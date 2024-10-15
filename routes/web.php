@@ -185,17 +185,17 @@ Route::delete('/admin/periode_pmb/delete/{id}', [PeriodePmbController::class, 'd
 
 
 // Mahasiswa
-Route::get('/admin/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
-Route::get('/admin/mahasiswa/tambah', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
-Route::post('/admin/mahasiswa/search', [MahasiswaController::class, 'searchMahasiswa'])->name('mahasiswa.search');
-Route::post('/admin/mahasiswa/store', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
-Route::get('/admin/mahasiswa/edit/{id}', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
-Route::put('/admin/mahasiswa/edit/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
-Route::delete('/admin/mahasiswa/delete/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
-Route::get('/admin/mahasiswa/search_wilayah', [MahasiswaController::class, 'searchWilayah'])->name('mahasiswa.search_wilayah');
-Route::put('/admin/mahasiswa/reset_password/{id_mahasiswa}', [MahasiswaController::class, 'resetPassword'])->name('mahasiswa.resetPassword');
-Route::get('/admin/mahasiswa/searchProdiByUnivName', [MahasiswaController::class, 'searchProdiByUnivName'])->name('mahasiswa.searchProdiByUnivName');
-Route::get('/admin/mahasiswa/searchUniversity', [MahasiswaController::class, 'searchUniversity'])->name('mahasiswa.searchUniversity');
+Route::get('/admin/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index')->middleware(Authenticate::class);
+Route::get('/admin/mahasiswa/tambah', [MahasiswaController::class, 'create'])->name('mahasiswa.create')->middleware(Authenticate::class);
+Route::post('/admin/mahasiswa/search', [MahasiswaController::class, 'searchMahasiswa'])->name('mahasiswa.search')->middleware(Authenticate::class);
+Route::post('/admin/mahasiswa/store', [MahasiswaController::class, 'store'])->name('mahasiswa.store')->middleware(Authenticate::class);
+Route::get('/admin/mahasiswa/edit/{id}', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit')->middleware(Authenticate::class);
+Route::put('/admin/mahasiswa/edit/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update')->middleware(Authenticate::class);
+Route::delete('/admin/mahasiswa/delete/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy')->middleware(Authenticate::class);
+Route::get('/admin/mahasiswa/search_wilayah', [MahasiswaController::class, 'searchWilayah'])->name('mahasiswa.search_wilayah')->middleware(Authenticate::class);
+Route::put('/admin/mahasiswa/reset_password/{id_mahasiswa}', [MahasiswaController::class, 'resetPassword'])->name('mahasiswa.resetPassword')->middleware(Authenticate::class);
+Route::get('/admin/mahasiswa/searchProdiByUnivName', [MahasiswaController::class, 'searchProdiByUnivName'])->name('mahasiswa.searchProdiByUnivName')->middleware(Authenticate::class);
+Route::get('/admin/mahasiswa/searchUniversity', [MahasiswaController::class, 'searchUniversity'])->name('mahasiswa.searchUniversity')->middleware(Authenticate::class);
 
 Route::get('/lecturer/data', [LecturerController::class, 'data'])->name('lecturer.data');
 
