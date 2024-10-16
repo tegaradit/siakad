@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcademicCalendarController;
 use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
@@ -127,6 +128,9 @@ Route::resource('/admin/student-type', StudentTypeController::class)->middleware
 //studentType
 Route::get('/register-type/data', [RegisterTypeController::class, 'data'])->name('register-type.data')->middleware(Authenticate::class);
 Route::resource('/admin/register-type', RegisterTypeController::class)->middleware(Authenticate::class);
+//activitytType
+Route::get('/activity-type/data', [ActivityTypeController::class, 'data'])->name('activity-type.data')->middleware(Authenticate::class);
+Route::resource('/admin/activity-type', ActivityTypeController::class)->middleware(Authenticate::class);
 
 
 
