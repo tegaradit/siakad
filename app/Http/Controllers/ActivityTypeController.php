@@ -2,39 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-class ActivityTypeController extends Controller
-{
-    <?php
-
-namespace App\Http\Controllers;
-
-use App\Models\register_type;
+use App\Models\activity_type;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class RegisterTypeController extends Controller
+class ActivityTypeController extends Controller
 {
     public function index()
     {
         $menu = 'data';
-        $submenu = 'register-type';
-        return view('pages.admin.register_type.index', compact('menu', 'submenu')); 
+        $submenu = 'activity-type';
+        return view('pages.admin.activity_type.index', compact('menu', 'submenu')); 
     }
 
     public function data(Request $request)
     {
         if ($request->ajax()) {
-            $registerTypes = register_type::query();
+            $activityTypes = activity_type::query();
 
-            return DataTables::of($registerTypes)
+            return DataTables::of($activityTypes)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    return '<a href="#" class="btn btn-warning btn-sm edit" data-id="' . $data->id . '" data-name="' . $data->name . '" data-bs-toggle="modal" data-bs-target="#editRegisterTypeModal"><i class="fas fa-pencil-alt"></i> Edit</a>
+                    return '<a href="#" class="btn btn-warning btn-sm edit" data-id="' . $data->id . '" data-name="' . $data->name . '" data-bs-toggle="modal" data-bs-target="#editActivityTypeModal"><i class="fas fa-pencil-alt"></i> Edit</a>
                             <form id="delete-form-' . $data->id . '" 
                                   onsubmit="event.preventDefault(); confirmDelete(' . $data->id . ');" 
-                                  action="' . route('register-type.destroy', $data->id) . '" 
+                                  action="' . route('activity-type.destroy', $data->id) . '" 
                                   method="POST" style="display:inline-block; margin: 0;">
                                 ' . csrf_field() . method_field('DELETE') . '
                                 <button type="submit" class="btn btn-danger btn-sm delete"><i class="fas fa-trash-alt"></i> Hapus</button>
@@ -52,15 +44,15 @@ class RegisterTypeController extends Controller
             'name' => 'required|string|min:3|max:255',
         ]);
 
-        register_type::create($validated);
+        activity_type::create($validated);
 
-        return redirect()->route('register-type.index');
+        return redirect()->route('activity-type.index');
     }
 
     public function edit($id)
     {
-        $registerType = register_type::findOrFail($id);
-        return response()->json($registerType);
+        $activityType = activity_type::findOrFail($id);
+        return response()->json($activityType);
     }
 
     public function update(Request $request, $id)
@@ -69,19 +61,17 @@ class RegisterTypeController extends Controller
             'name' => 'required|string|min:3|max:255',
         ]);
 
-        $registerType = register_type::findOrFail($id);
-        $registerType->update($validated);
+        $activityType = activity_type::findOrFail($id);
+        $activityType->update($validated);
 
-        return redirect()->route('register-type.index');
+        return redirect()->route('activity-type.index');
     }
 
     public function destroy($id)
     {
-        $registerType = register_type::findOrFail($id);
-        $registerType->delete();
+        $activityType = activity_type::findOrFail($id);
+        $activityType->delete();
 
-        return redirect()->route('register-type.index');
+        return redirect()->route('activity-type.index');
     }
-}
-
 }

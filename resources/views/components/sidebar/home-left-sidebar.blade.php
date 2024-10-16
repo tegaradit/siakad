@@ -64,6 +64,11 @@
                                 <span data-key="t-pengguna">Jenis Mahasiswa</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('activity-type.index') }}">
+                                <span data-key="t-pengguna">Tipe Aktivitas</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

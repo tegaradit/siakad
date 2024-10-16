@@ -28,7 +28,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tabel Tipe Register</h4>
+                                <h4 class="card-title">Tabel Tipe Aktivitas</h4>
                                 <p class="card-title-desc">
                                     Tabel ini menyimpan data Tipe Aktivitas yang ada di
                                     sistem.
@@ -52,11 +52,11 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form id="RegisterTypeForm" action="{{ route('register-type.store') }}"
+                                                <form id="ActivityTypeForm" action="{{ route('activity-type.store') }}"
                                                     method="POST">
                                                     @csrf
                                                     <div class="mb-3">
-                                                        <label for="name" class="form-label">Nama Tipe Register</label>
+                                                        <label for="name" class="form-label">Nama Tipe Aktivitas</label>
                                                         <input type="text" class="form-control" id="name"
                                                             name="name" required>
                                                     </div>
@@ -72,23 +72,23 @@
                                     </div>
                                 </div>
 
-                                <!-- Modal untuk Edit Tipe Register -->
-                                <div id="editRegisterTypeModal" class="modal fade" tabindex="-1"
-                                    aria-labelledby="editRegisterTypeModalLabel" aria-hidden="true">
+                                <!-- Modal untuk Edit Tipe Activity -->
+                                <div id="editActivityTypeModal" class="modal fade" tabindex="-1"
+                                    aria-labelledby="editActivityTypeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editRegisterTypeModalLabel">Edit Tipe Register</h5>
+                                                <h5 class="modal-title" id="editActivityTypeModalLabel">Edit Tipe Aktivitas</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form id="editRegisterTypeForm" method="POST">
+                                                <form id="editActivityTypeForm" method="POST">
                                                     @csrf
                                                     @method('PUT')
                                                     <input type="hidden" id="edit_id" name="id">
                                                     <div class="mb-3">
-                                                        <label for="edit_name" class="form-label">Nama Tipe Register</label>
+                                                        <label for="edit_name" class="form-label">Nama Tipe Aktivitas</label>
                                                         <input type="text" class="form-control" id="edit_name"
                                                             name="name" required>
                                                     </div>
@@ -110,7 +110,7 @@
                                         <thead>
                                             <tr style="text-align: center">
                                                 <th style="width: 20px">No</th>
-                                                <th>Nama Tipe Register</th>
+                                                <th>Nama Tipe Aktivitas</th>
                                                 <th style="width: 50px">Aksi</th>
                                             </tr>
                                         </thead>
@@ -154,32 +154,32 @@
     <script>
         $(document).ready(function() {
             $("#saveButton").on("click", function() {
-                var formData = $("#RegisterTypeForm").serialize();
+                var formData = $("#ActivityTypeForm").serialize();
 
                 $.ajax({
                     type: "POST",
-                    url: $("#RegisterTypeForm").attr("action"),
+                    url: $("#ActivityTypeForm").attr("action"),
                     data: formData,
                     success: function(response) {
                         $("#myModal").modal("hide");
                         $("#datatable").DataTable().ajax.reload();
                     },
                     error: function(xhr) {
-                        alert("Terjadi kesalahan saat menambahkan Tipe Register.");
+                        alert("Terjadi kesalahan saat menambahkan Tipe Aktivitas.");
                         console.error(xhr);
                     }
                 });
             });
 
             $('#myModal').on('hidden.bs.modal', function() {
-                $("#RegisterTypeForm")[0].reset();
+                $("#ActivityTypeForm")[0].reset();
             });
 
             $("#datatable").DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: "{{ route('register-type.data') }}",
+                ajax: "{{ route('activity-type.data') }}",
                 columns: [{
                         data: null,
                         name: "no",
@@ -236,7 +236,7 @@
 
     <script>
         $(document).ready(function() {
-            $("#addRegisterTypeForm").on("submit", function(e) {
+            $("#addActivityTypeForm").on("submit", function(e) {
                 e.preventDefault();
 
                 $.ajax({
@@ -249,16 +249,16 @@
                         alert(response.success);
                     },
                     error: function(xhr) {
-                        alert("Terjadi kesalahan saat menambahkan Tipe Register.");
+                        alert("Terjadi kesalahan saat menambahkan Tipe Aktivitas.");
                     },
                 });
             });
 
-            $("#editRegisterTypeForm").on("submit", function(e) {
+            $("#editActivityTypeForm").on("submit", function(e) {
                 e.preventDefault();
 
                 $.ajax({
-                    url: '{{ route('register-type.update', ':id') }}'.replace(
+                    url: '{{ route('activity-type.update', ':id') }}'.replace(
                         ":id",
                         $("#edit_id").val()
                     ),
@@ -266,10 +266,10 @@
                     data: $(this).serialize(),
                     success: function(response) {
                         $("#datatable").DataTable().ajax.reload();
-                        $("#editRegisterTypeModal").modal("hide");
+                        $("#editActivityTypeModal").modal("hide");
                     },
                     error: function(xhr) {
-                        alert("Terjadi kesalahan saat memperbarui Tipe Register.");
+                        alert("Terjadi kesalahan saat memperbarui Tipe Activity.");
                     },
                 });
             });
