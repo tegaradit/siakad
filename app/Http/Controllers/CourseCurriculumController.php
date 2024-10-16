@@ -15,47 +15,10 @@ use Yajra\DataTables\DataTables;
 class CourseCurriculumController extends Controller
 {
     // // Display the list of courses for a curriculum
-    // public function index($curriculum_id)
-    // {
-    //     $curriculum = Curriculum::findOrFail($curriculum_id); // Fetch the curriculum
-
-    //     if (request()->ajax()) {
-    //         // Fetch curriculum courses with class count
-    //         $courses = CurriculumCourse::where('curriculum_id', $curriculum_id)
-    //             ->with(['curriculum', 'course']) // Eager load relations
-    //             ->withCount('kelasKuliah') // Menghitung jumlah kelas kuliah terkait
-    //             ->get();
-
-
-    //         return DataTables::of($courses)
-    //             ->addIndexColumn()
-    //             ->addColumn('action', function ($course) {
-    //                 $detailUrl = route('kelas_kuliah.index', [$course->curriculum_id, $course->course_id]);
-    //                 $editUrl = route('curriculum_course.edit', [$course->curriculum_id, $course->id]);
-    //                 $deleteForm = '<form id="delete-form-' . $course->id . '" onsubmit="event.preventDefault(); confirmDelete(\'' . $course->id . '\');" action="' . route('curriculum_course.destroy', [$course->curriculum_id, $course->id]) . '" method="POST">'
-    //                     . csrf_field()
-    //                     . method_field('DELETE')
-    //                     . '<a href="' . $detailUrl . '" class="btn btn-info btn-sm m-0" title="Detail"><i class="fa-solid fa-chalkboard-user"></i> Buat Kelas</a>'
-    //                     . '<a href="' . $editUrl . '" class="btn btn-warning btn-sm edit ms-1 m-0" title="Edit"><i class="fas fa-pencil-alt"></i> Edit</a>'
-    //                     . '<button type="submit" class="btn btn-danger btn-sm delete ms-1"><i class="fas fa-trash-alt"></i> Hapus</button></form>';
-
-    //                 return $deleteForm;
-    //             })
-    //             ->addColumn('course_name', function ($course) {
-    //                 return $course->course ? $course->course->name : '-';
-    //             })
-    //             ->addColumn('class_count', function ($course) {
-    //                 return $course->kelas_kuliah_count; // Ini berasal dari withCount('kelasKuliah')
-    //             })
-    //             ->rawColumns(['action'])
-    //             ->make(true);
-    //     }
-
-    //     // Pass the curriculum to the view
-    //     return view('pages.admin.curriculum_course.index', compact('curriculum'));
-    // }
     public function index($curriculum_id)
     {
+        $menu = 'data';
+        $submenu = 'curriculum';
         // Ambil data kurikulum
         $curriculum = Curriculum::findOrFail($curriculum_id);
 
@@ -96,16 +59,18 @@ class CourseCurriculumController extends Controller
         }
 
         // Kirim data kurikulum ke view
-        return view('pages.admin.curriculum_course.index', compact('curriculum'));
+        return view('pages.admin.curriculum_course.index', compact('curriculum', 'menu', 'submenu'));
     }
 
 
     // Show the form to create a new course
     public function create($curriculum_id)
     {
+        $menu = 'data';
+        $submenu = 'curriculum';
         $curriculum = Curriculum::findOrFail($curriculum_id);
         $semester = Semester::findOrFail($curriculum->semester_id);
-        return view('pages.admin.curriculum_course.form', compact('curriculum', 'semester'));
+        return view('pages.admin.curriculum_course.form', compact('curriculum', 'semester', 'menu', 'submenu'));
     }
 
     // Get courses for Select2
@@ -197,11 +162,13 @@ class CourseCurriculumController extends Controller
     // Show the form to edit an existing course
     public function edit($curriculum_id, $id)
     {
+        $menu = 'data';
+        $submenu = 'curriculum';
         $curriculum = Curriculum::findOrFail($curriculum_id);
         $course = CurriculumCourse::findOrFail($id);
         $semester = Semester::findOrFail($curriculum->semester_id);
         $courses = Course::where("id", "=", $course->course_id)->get();
-        return view('pages.admin.curriculum_course.form', compact('curriculum', 'course', 'semester', 'courses'));
+        return view('pages.admin.curriculum_course.form', compact('curriculum', 'menu', 'submenu', 'course', 'semester', 'courses'));
     }
 
     // Update an existing course

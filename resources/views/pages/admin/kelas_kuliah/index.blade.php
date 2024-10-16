@@ -9,13 +9,15 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Data Kelas Perkuliahan</h4>
+
+                            <!-- Filter Section -->
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="filter_prodi" class="form-label">Program Studi</label>
                                     <select id="filter_prodi" class="form-select">
                                         <option value="">:: Pilih Program Studi ::</option>
                                         @foreach($programs as $program)
-                                        <option value="{{ $program->prodi_id }}">{{ $program->prodi_id }}</option>
+                                        <option value="{{ $program->id_prodi }}">{{ $program->nama_prodi }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -24,11 +26,13 @@
                                     <select id="filter_semester" class="form-select">
                                         <option value="">:: Pilih Tahun Ajaran ::</option>
                                         @foreach($semesters as $semester)
-                                        <option value="{{ $semester->semester_id }}">{{ $semester->semester_id }}</option>
+                                        <option value="{{ $semester->semester_id }}">{{ $semester->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
+
+                            <!-- Data Table -->
                             <table class="table table-bordered table-striped" id="kelasKuliahTable">
                                 <thead>
                                     <tr>
@@ -36,8 +40,6 @@
                                         <th>Kode MK</th>
                                         <th>Nama MK</th>
                                         <th>Kelas</th>
-                                        <th>Jenis</th>
-                                        <th>Bobot</th>
                                         <th>NIDN</th>
                                         <th>Dosen Pengajar</th>
                                         <th>Asisten Dosen</th>
@@ -47,11 +49,11 @@
                                     </tr>
                                 </thead>
                             </table>
-                        </div> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Modal for adding lecturer -->
         <div class="modal fade" id="addLecturerModal" tabindex="-1" aria-labelledby="addLecturerModalLabel" aria-hidden="true">
@@ -64,12 +66,13 @@
                     <div class="modal-body">
                         <form id="addLecturerForm">
                             <div class="mb-3">
-                                <label for="lecturer_name" class="form-label">Nama Dosen</label>
-                                <input type="text" class="form-control" id="lecturer_name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="lecturer_email" class="form-label">Email Dosen</label>
-                                <input type="email" class="form-control" id="lecturer_email" required>
+                                <label for="lecturer_id" class="form-label">Nama Dosen</label>
+                                <select class="form-select" id="lecturer_id" required>
+                                    <option value="">:: Pilih Dosen ::</option>
+                                    @foreach($lecturers as $lecturer)
+                                    <option value="{{ $lecturer->id }}">{{ $lecturer->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <input type="hidden" id="class_id" value="">
                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -79,6 +82,8 @@
             </div>
         </div>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- DataTable Initialization and Event Handling -->
         <script>
             $(document).ready(function() {
                 var table = $('#kelasKuliahTable').DataTable({
@@ -89,20 +94,61 @@
                         data: function(d) {
                             d.prodi_id = $('#filter_prodi').val();
                             d.semester_id = $('#filter_semester').val();
+                            console.log(d);
                         }
                     },
-                    columns: [
-                        { data: 'id', name: 'id' },
-                        { data: 'course_id', name: 'course_id' },
-                        { data: 'nama_kelas', name: 'nama_kelas' },
-                        { data: 'jenis_kelas', name: 'jenis_kelas' },
-                        { data: 'bobot', name: 'bobot' },
-                        { data: 'nidn', name: 'nidn' },
-                        { data: 'dosen_pengajar', name: 'dosen_pengajar', orderable: false, searchable: false },
-                        { data: 'asisten_dosen', name: 'asisten_dosen' },
-                        { data: 'quota', name: 'quota' },
-                        { data: 'peserta_kelas', name: 'peserta_kelas', orderable: false, searchable: false },
-                        { data: 'actions', name: 'actions', orderable: false, searchable: false }
+                    columns: [{
+                            data: null,
+                            name: 'id',
+                            render: function(data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
+                        },
+                        {
+                            data: 'code',
+                            name: 'code'
+                        },
+                        {
+                            data: 'name',
+                            name: 'name'
+                        },
+                        {
+                            data: 'sks_mk',
+                            name: 'sks_mk'
+                        },
+                        {
+                            data: 'nidn',
+                            name: 'nidn'
+                        },
+                        {
+                            data: 'dosen_pengajar',
+                            name: 'dosen_pengajar',
+                            orderable: false,
+                            searchable: false,
+                            render: function() {
+                                return '<button class="btn btn-primary add-lecturer-btn"><i class="fa fa-plus"></i></button>';
+                            }
+                        },
+                        {
+                            data: 'asisten_dosen',
+                            name: 'asisten_dosen'
+                        },
+                        {
+                            data: 'quota',
+                            name: 'quota'
+                        },
+                        {
+                            data: 'peserta_kelas',
+                            name: 'peserta_kelas',
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: 'actions',
+                            name: 'actions',
+                            orderable: false,
+                            searchable: false
+                        }
                     ]
                 });
 
@@ -112,7 +158,7 @@
                 });
 
                 // Show modal on "+" button click
-                $(document).on('click', '.btn-primary', function() {
+                $(document).on('click', '.add-lecturer-btn', function() {
                     var classId = $(this).closest('tr').find('td').eq(0).text(); // Assuming ID is in the first column
                     $('#class_id').val(classId);
                     $('#addLecturerModal').modal('show');
@@ -121,17 +167,15 @@
                 // Handle form submission
                 $('#addLecturerForm').on('submit', function(e) {
                     e.preventDefault();
-                    var lecturerName = $('#lecturer_name').val();
-                    var lecturerEmail = $('#lecturer_email').val();
+                    var lecturerId = $('#lecturer_id').val(); // Get the selected lecturer's ID
                     var classId = $('#class_id').val();
-                    
-                    // Example AJAX call to save the lecturer
+
+                    // AJAX call to save the lecturer
                     $.ajax({
                         url: "{{ route('lecturer.store') }}", // Replace with your route
                         method: 'POST',
                         data: {
-                            name: lecturerName,
-                            email: lecturerEmail,
+                            lecturer_id: lecturerId, // Send lecturer ID
                             class_id: classId,
                             _token: '{{ csrf_token() }}'
                         },
