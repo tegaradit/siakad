@@ -4,6 +4,7 @@ use App\Http\Controllers\AcademicCalendarController;
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AktivitasMahasiswaController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
 use App\Http\Controllers\CourseController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\StudentTypeController;
 use App\Http\Controllers\KelasKuliahController;
 use App\Http\Controllers\RegisterTypeController;
 use App\Http\Middleware\Authenticate;
+use App\Models\AktivitasMahasiswa;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -131,6 +133,10 @@ Route::resource('/admin/register-type', RegisterTypeController::class)->middlewa
 //activitytType
 Route::get('/activity-type/data', [ActivityTypeController::class, 'data'])->name('activity-type.data')->middleware(Authenticate::class);
 Route::resource('/admin/activity-type', ActivityTypeController::class)->middleware(Authenticate::class);
+//aktivitas mahasiswa
+Route::get('/aktivitas-mahasiswa/data', [AktivitasMahasiswaController::class, 'data'])->name('aktivitas-mahasiswa.data')->middleware(Authenticate::class);
+Route::resource('/admin/aktivitas-mahasiswa', AktivitasMahasiswaController::class)->middleware(Authenticate::class);
+
 
 
 

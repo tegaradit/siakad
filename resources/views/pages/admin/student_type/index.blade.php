@@ -15,7 +15,7 @@
                                         <a href="javascript: void(0);">Data Siswa</a>
                                     </li>
                                     <li class="breadcrumb-item active">
-                                        Tipe Siswa
+                                        Jenis Mahasiswa
                                     </li>
                                 </ol>
                             </div>
@@ -28,9 +28,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tabel Tipe Siswa</h4>
+                                <h4 class="card-title">Tabel Jenis Mahasiswa</h4>
                                 <p class="card-title-desc">
-                                    Tabel ini menyimpan data tipe siswa yang ada di
+                                    Tabel ini menyimpan data Jenis Mahasiswa yang ada di
                                     sistem.
                                 </p>
                             </div>
@@ -47,7 +47,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="myModalLabel">Tambah Tipe Siswa</h5>
+                                                <h5 class="modal-title" id="myModalLabel">Tambah Jenis Mahasiswa</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -56,7 +56,7 @@
                                                     method="POST">
                                                     @csrf
                                                     <div class="mb-3">
-                                                        <label for="name" class="form-label">Nama Tipe Siswa</label>
+                                                        <label for="name" class="form-label">Nama Jenis Mahasiswa</label>
                                                         <input type="text" class="form-control" id="name"
                                                             name="name" required>
                                                     </div>
@@ -72,13 +72,13 @@
                                     </div>
                                 </div>
 
-                                <!-- Modal untuk Edit Tipe Siswa -->
+                                <!-- Modal untuk Edit Jenis Mahasiswa -->
                                 <div id="editStudentTypeModal" class="modal fade" tabindex="-1"
                                     aria-labelledby="editStudentTypeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editStudentTypeModalLabel">Edit Tipe Siswa</h5>
+                                                <h5 class="modal-title" id="editStudentTypeModalLabel">Edit Jenis Mahasiswa</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -88,7 +88,7 @@
                                                     @method('PUT')
                                                     <input type="hidden" id="edit_id" name="id">
                                                     <div class="mb-3">
-                                                        <label for="edit_name" class="form-label">Nama Tipe Siswa</label>
+                                                        <label for="edit_name" class="form-label">Nama Jenis Mahasiswa</label>
                                                         <input type="text" class="form-control" id="edit_name"
                                                             name="name" required>
                                                     </div>
@@ -110,7 +110,7 @@
                                         <thead>
                                             <tr style="text-align: center">
                                                 <th style="width: 20px">No</th>
-                                                <th>Nama Tipe Siswa</th>
+                                                <th>Nama Jenis Mahasiswa</th>
                                                 <th style="width: 50px">Aksi</th>
                                             </tr>
                                         </thead>
@@ -165,7 +165,7 @@
                         $("#datatable").DataTable().ajax.reload();
                     },
                     error: function(xhr) {
-                        alert("Terjadi kesalahan saat menambahkan tipe siswa.");
+                        alert("Terjadi kesalahan saat menambahkan Jenis Mahasiswa.");
                         console.error(xhr);
                     }
                 });
@@ -249,7 +249,7 @@
                         alert(response.success);
                     },
                     error: function(xhr) {
-                        alert("Terjadi kesalahan saat menambahkan tipe siswa.");
+                        alert("Terjadi kesalahan saat menambahkan Jenis Mahasiswa.");
                     },
                 });
             });
@@ -269,7 +269,7 @@
                         $("#editStudentTypeModal").modal("hide");
                     },
                     error: function(xhr) {
-                        alert("Terjadi kesalahan saat memperbarui tipe siswa.");
+                        alert("Terjadi kesalahan saat memperbarui Jenis Mahasiswa.");
                     },
                 });
             });

@@ -201,7 +201,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="index.html">
+                            <a href="{{ route('aktivitas-mahasiswa.index') }}">
                                 <span data-key="t-aktivitas-mahasiswa">Aktivitas Mahasiswa</span>
                             </a>
                         </li>

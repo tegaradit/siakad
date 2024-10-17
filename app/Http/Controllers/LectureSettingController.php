@@ -24,10 +24,8 @@ class LectureSettingController extends Controller
     {
         $menu = 'datas';
         $submenu = 'lecture_setting';
-        // Mendapatkan current_id_sp dari IdentitasPt
         $current_id_sp = IdentitasPt::first()->current_id_sp;
 
-        // Mengambil prodi yang sesuai dengan current_id_sp dan status A (Aktif)
         $prodis = All_prodi::where('id_sp', $current_id_sp)
             ->where('status', 'A')
             ->get();
@@ -88,14 +86,10 @@ class LectureSettingController extends Controller
     {
         $menu = 'datas';
         $submenu = 'lecture_setting';
-
-        // Ambil data setting perkuliahan berdasarkan ID
         $data = Lecture_setting::findOrFail($id);
 
-        // Mendapatkan current_id_sp dari IdentitasPt
         $current_id_sp = IdentitasPt::first()->current_id_sp;
 
-        // Mengambil prodi yang sesuai dengan current_id_sp dan status A (Aktif)
         $prodis = All_prodi::where('id_sp', $current_id_sp)
             ->where('status', 'A')
             ->get();
