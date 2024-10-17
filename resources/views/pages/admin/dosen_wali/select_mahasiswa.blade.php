@@ -34,8 +34,6 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-
     <script>
         $(document).ready(function() {
             // Inisialisasi DataTable
@@ -69,33 +67,50 @@
                 ]
             });
         });
-        </script>
-        <script>
-    function setMahasiswa(mahasiswa_id) {
-        // Ambil lecture_id dari URL atau elemen tersembunyi (hidden input)
-        var lecture_id = '{{ $lecture_id_input }}'; // Pastikan kamu mendapatkan lecture_id di blade
+    </script>
 
-        // Kirim data ke server menggunakan AJAX
-        $.ajax({
-            url: "{{ route('dosen_wali.set_mahasiswa') }}",
-            method: "POST",
-            data: {
-                _token: "{{ csrf_token() }}",
-                mahasiswa_id: mahasiswa_id,
-                lecture_id: lecture_id
-            },
-            success: function(response) {
-                // Jika sukses, tampilkan pesan dan pindah ke halaman index
-                alert(response.message);
-                window.location.href = "{{ route('dosen_wali.index', $lecture_id_input) }}";
-            },
-            error: function(xhr) {
-                // Jika ada error, tampilkan pesan error
-                alert(xhr.responseJSON.error);
-            }
-        });
-    }
-    var lecture_id = '{{ $lecture_id_input }}';
-    console.log(lecture_id);
-</script>
+    <script>
+        function setMahasiswa(mahasiswa_id) {
+            var lecture_id = '{{ $lecture_id_input }}'; // Ambil lecture_id dari URL atau elemen tersembunyi
+
+            $.ajax({
+                url: "{{ route('dosen_wali.set_mahasiswa') }}", // URL untuk request AJAX
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}", // Token CSRF
+                    mahasiswa_id: mahasiswa_id, // ID mahasiswa yang dipilih
+                    lecture_id: lecture_id // ID dosen wali
+                },
+                success: function(response) {
+                    // Cek apakah responsnya sukses
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.success, // Tampilkan pesan sukses
+                        });
+                        // Setelah sukses, kembalikan ke halaman index
+                        window.location.href = "{{ route('dosen_wali.index', $lecture_id_input) }}";
+                    }
+
+                    // Cek apakah ada error dari respons
+                    if (response.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: response.error, // Tampilkan pesan error
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    // Jika terjadi kesalahan pada request AJAX
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan saat mengirim data!',
+                    });
+                }
+            });
+        }
+    </script>
 @endsection
