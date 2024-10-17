@@ -445,7 +445,7 @@
                   <div class="col-md-3" id="select-pt">
                      <label for="namaPTAsal" class="form-label">Nama Perguruan Tinggi Asal </label>
                      <select required class="form-control w-100" id="inp-id-pt-asal" name="id_pt_asal">
-                        <option value="{{ old('id_pt_asal', $previousUniversity->id_sp) }}" selected>{{ $previousUniversity->nm_lemb }}</option>
+                        <option value="{{ old('id_pt_asal', $previousUniversity != null && $previousUniversity->id_sp) }}" selected>{{ $previousUniversity != null && $previousUniversity->nm_lemb }}</option>
                      </select>
                      @error('id_pt_asal') <span class="text-danger">{{ $message }}</span> @enderror
                   </div>

@@ -162,7 +162,7 @@ Route::get('/admin/dosen_wali/detail/{lecture_id_input}', [DosenWaliController::
 Route::get('/dosen_wali/select_mahasiswa/{lecture_id_input}', [DosenWaliController::class, 'selectMahasiswa'])->name('dosen_wali.select_mahasiswa');
 Route::post('/dosen_wali/set_mahasiswa', [DosenWaliController::class, 'setMahasiswa'])->name('dosen_wali.set_mahasiswa');
 Route::get('/dosen_wali/{id}/edit', [DosenWaliController::class, 'edit'])->name('dosen_wali.edit');
-Route::delete('/dosen_wali', [DosenWaliController::class, 'destroy'])->name('dosen_wali.destroy');
+Route::delete('/dosen_wali/{id}', [DosenWaliController::class, 'destroy'])->name('dosen_wali.destroy');
 Route::get('/get-nama/{nim}', [DosenWaliController::class, 'getNama'])->name('get.nama');
 Route::post('/dosen-wali/store', [DosenWaliController::class, 'store'])->name('dosen_wali.store');
 Route::get('/dosen-wali/create', [DosenWaliController::class, 'create'])->name('dosen_wali.create');

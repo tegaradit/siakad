@@ -50,9 +50,17 @@ class DosenWaliController extends Controller
     {
         $menu = 'data';
         $submenu = 'lecturer';
-        if (request()->ajax()) {
+
+        if ($request->ajax()) {
+            // Ambil semua mahasiswa yang sudah terdaftar di dosen_wali untuk lecture_id yang diberikan
+            $assignedMahasiswaIds = dosen_wali::where('lecture_id', $lecture_id_input)
+                ->pluck('id_pd')
+                ->toArray();
+
+            // Ambil mahasiswa yang belum terdaftar sebagai dosen wali
             $mahasiswa = MahasiswaPt::select('mahasiswa_pt.nipd', 'mahasiswa.id_pd', 'mahasiswa.nm_pd')
-                ->join('mahasiswa', 'mahasiswa_pt.id_pd', '=', 'mahasiswa.id_pd')
+            ->join('mahasiswa', 'mahasiswa_pt.id_pd', '=', 'mahasiswa.id_pd')
+            ->whereNotIn('mahasiswa.id_pd', $assignedMahasiswaIds) // Mengecualikan mahasiswa yang sudah ada di dosen_wali
                 ->get();
 
             return DataTables::of($mahasiswa)
@@ -63,8 +71,10 @@ class DosenWaliController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+
         return view('pages.admin.dosen_wali.select_mahasiswa', compact('lecture_id_input', 'menu', 'submenu'));
     }
+
 
 
     public function setMahasiswa(Request $request)
@@ -74,18 +84,19 @@ class DosenWaliController extends Controller
                 'mahasiswa_id' => 'required|exists:mahasiswa_pt,id_pd',
                 'lecture_id' => 'required|exists:lecturer,id',
             ]);
-
             // Simpan data dosen wali
             $dosenWali = new dosen_wali();
             $dosenWali->id_pd = $request->input('mahasiswa_id');
             $dosenWali->lecture_id = $request->input('lecture_id');
             $dosenWali->save();
 
-            return response()->json(['message' => 'Mahasiswa berhasil ditetapkan sebagai Dosen Wali!'], 200);
+            return response()->json(['success' => 'Mahasiswa berhasil ditetapkan sebagai Dosen Wali!'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()], 500);
         }
     }
+
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -93,11 +104,17 @@ class DosenWaliController extends Controller
             'nama' => 'required|string',
             'lecture_id' => 'required|exists:lecturer,id',
         ]);
-
         $id_pd = MahasiswaPt::where('nipd', $request->nim)->value('id_pd');
-
         if (!$id_pd) {
             return redirect()->back()->with('error', 'NIPD tidak ditemukan.');
+        }
+        
+        $exists = dosen_wali::where('id_pd', $id_pd)
+        ->where('lecture_id', $request->lecture_id)
+        ->exists();
+
+        if ($exists) {
+            return redirect()->back()->with('error', 'Mahasiswa ini sudah memiliki Dosen Wali yang sama.');
         }
 
         dosen_wali::create([
@@ -122,5 +139,13 @@ class DosenWaliController extends Controller
         }
 
         return response()->json(['nama' => $mahasiswa->nm_pd]);
+    }
+    public function destroy($id)
+    {
+        $dosenWali = dosen_wali::findOrFail($id);
+        $lecture_id_input = $dosenWali->lecture_id;
+        $dosenWali->delete();
+
+        return redirect()->route('dosen_wali.index',['lecture_id_input' => $lecture_id_input])->with('succes', 'Data Dosen Wali berhasil di hapus');
     }
 }

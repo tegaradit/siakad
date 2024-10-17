@@ -100,10 +100,34 @@
             </div>
         </div>
     </div>
+
+    <!-- Notifikasi SweetAlert -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
+
+    @if (session('success'))
+        <script>
+            console.log('Success:', '{{ session('success') }}'); // Untuk memastikan nilai yang dikirim
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+
 
     <script>
         $(document).ready(function() {
@@ -141,7 +165,7 @@
             });
 
             function reloadTable() {
-                table.ajax.reload(null, false); 
+                table.ajax.reload(null, false);
             }
         });
     </script>
@@ -171,5 +195,27 @@
                 $('#nama').val('');
             }
         });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            feather.replace();
+        });
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
     </script>
 @endsection
