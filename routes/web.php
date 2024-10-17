@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcademicCalendarController;
 use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BuildingsController;
 use App\Http\Controllers\CalendarTypeController;
@@ -127,6 +128,9 @@ Route::resource('/admin/student-type', StudentTypeController::class)->middleware
 //studentType
 Route::get('/register-type/data', [RegisterTypeController::class, 'data'])->name('register-type.data')->middleware(Authenticate::class);
 Route::resource('/admin/register-type', RegisterTypeController::class)->middleware(Authenticate::class);
+//activitytType
+Route::get('/activity-type/data', [ActivityTypeController::class, 'data'])->name('activity-type.data')->middleware(Authenticate::class);
+Route::resource('/admin/activity-type', ActivityTypeController::class)->middleware(Authenticate::class);
 
 
 
@@ -209,4 +213,5 @@ Route::post('admin/curriculum/kelas_kuliah/store/{curriculum_id}/{course_id}', [
 Route::get('admin/kelas_perkuliahan/', [KelasKuliahController::class, 'index'])->name('kelas_kuliah.index');
 Route::get('/kelas-kuliah/get-lecturers', [KelasKuliahController::class, 'getLecturers'])->name('kelas_kuliah.getLecturers');
 Route::post('admin/lecture/store', [KelasKuliahController::class, 'store'])->name('kelas_kuliah.store');
-Route::post('kelas-kuliah/store/{course_id}', [KelasKuliahController::class, 'storeClass'])->name('kelas_kuliah.storeClass');
+Route::post('kelas-kuliah/store/{course_id}', [KelasKuliahController::class, 'storeClass'])->name('kelas_kuliah.storeClass');Route::get('admin/kelas_perkuliahan/{id}/edit', [KelasKuliahController::class, 'edit'])->name('kelas_kuliah.edit');
+Route::put('admin/kelas_perkuliahan/{id}', [KelasKuliahController::class, 'update'])->name('kelas_kuliah.update');

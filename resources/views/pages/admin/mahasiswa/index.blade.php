@@ -55,23 +55,17 @@
                                                 <th>Program Studi</th>
                                                 <th>Jenis/Kelas</th>
                                                 <th>Status</th>
-                                                <!-- <th>SINK</th> -->
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                     </table>
-                                    <!-- Pagination will be handled by DataTables -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end col -->
                 </div>
-                <!-- end row -->
             </div>
-            <!-- container-fluid -->
         </div>
-        <!-- End Page-content -->
 
         <footer class="footer">
             <div class="container-fluid">

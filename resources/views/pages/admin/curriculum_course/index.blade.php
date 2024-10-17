@@ -234,7 +234,7 @@
                             alert('Kelas berhasil dibuat.');
                             // Refresh DataTable atau lakukan aksi lain sesuai kebutuhan
                             // $('#your-data-table-id').DataTable().ajax
-                        location.reload(); // Ganti ID tabel sesuai kebutuhan
+                            location.reload(); // Ganti ID tabel sesuai kebutuhan
                         },
                         error: function(xhr) {
                             alert('Gagal membuat kelas: ' + xhr.responseJSON.message);
